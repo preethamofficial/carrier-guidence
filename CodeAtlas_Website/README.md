@@ -23,6 +23,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - **Career Studio:** directional career-fit quiz, local knowledge checks with explanations, role-specific interview question practice, on-device interview notes, editable cover-letter draft generator, official labour-market research links and a 30-day action plan.
 - **Resume vs job match:** local weighted heuristic alignment score, matched terms, potential gaps and exportable suggestions. It is not an employer ATS and does not predict hiring.
 - **Job Board Directory:** searchable and filterable starter directory of company career pages and job-search platforms, with direct links to original sources.
+- **Recent Jobs feed:** `jobs.html` reads `data/jobs.json`, with search, location/source filters, a dated-listings filter and original application links.
 - **Dashboard:** course progress, weekly target, check-ins/streak, focus timer, task list, journal and JSON backup/restore.
 - **PWA/offline shell:** manifest and best-effort cache of core pages after a successful visit. External links still require internet.
 - **Privacy-first defaults:** progress, quiz results, interview notes and planner state use this browser's local storage. There are no accounts or cloud sync in this static build.
@@ -55,6 +56,12 @@ python -m json.tool data/year-curriculum.json
 
 The automated static test checks JSON, page viewport metadata, local references and the service-worker cache list. The GitHub Actions workflow also checks JavaScript syntax. These checks do not replace manual browser testing: test desktop/mobile layouts, keyboard-only navigation, local storage, downloads, offline behavior and browser-console errors before release.
 
+## GitHub Actions automation
+
+Three workflows are included at repository root: `scrape-jobs.yml` checks configured public Greenhouse, Lever and Ashby boards every six hours and commits changed JSON data; `ai-content-update.yml` generates a weekly suggestions report and opens a pull request; `ai-pr-review.yml` posts an AI-assisted review comment on pull requests when GitHub Models access is available. The static-check workflow also compiles the Python scripts.
+
+Before relying on automation, enable Actions read/write permissions for the scraper's commits and allow GitHub Actions to create pull requests for the AI suggestions workflow. GitHub Models access, model identifiers, quotas and inference endpoints may change; confirm access in your repository and inspect the first workflow run. The starter ATS identifiers are unverified examples and some may fail. Check logs, correct board tokens and begin with a small validated list. AI output is a suggestion, not verified market research. Never add API keys to source files. The scraper currently writes JSON to the repository rather than using a database.
+
 ## Security, accuracy and limitations
 
 - Career quiz recommendations are directional reflections, not validated psychometric assessments.
@@ -78,6 +85,9 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `career-studio.html`, `career-studio.js`, `career-studio.css`: Career Studio practice tools.
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `job-boards.html`, `job-boards.js`, `job-boards.css`: job source directory.
+- `jobs.html`, `jobs.js`, `jobs.css`: recent jobs feed.
+- `scripts/scrape_jobs.py`, `scripts/ai_update.py`: scheduled job feed and AI suggestions.
+- `.github/workflows/`: scheduled scraping, AI suggestions, PR review and static validation.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
 - `language-library.html`, `language-library.js`: additional languages.
