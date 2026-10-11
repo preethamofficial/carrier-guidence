@@ -17,7 +17,12 @@ const TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  let urlPath = decodeURIComponent(req.url.split('?')[0]);
+  let urlPath;
+  try {
+    urlPath = decodeURIComponent(req.url.split('?')[0]);
+  } catch (e) {
+    res.writeHead(400, { 'Content-Type': 'text/plain' }); res.end('Bad request'); return;
+  }
   if (urlPath === '/') urlPath = '/index.html';
   const filePath = path.join(ROOT, path.normalize(urlPath).replace(/^([\/\\])+/, ''));
   if (!filePath.startsWith(ROOT)) {
