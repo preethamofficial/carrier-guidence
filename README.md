@@ -18,7 +18,7 @@ Then open http://localhost:8000. Keep the terminal open while using the site. Do
 - **Programming learning map:** interactive lessons and examples for Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#.
 - **52-week course:** a staged beginner-to-advanced foundation curriculum with weekly goals, plain-language explanations, worked examples, practice challenges, hints, solution examples, review questions, mini-projects and free references.
 - **Career Launchpad:** eight IT career roadmaps, free learning resources, a 30-day starter plan, interview practice, resume-readiness checklist and job application tracker.
-- **IT specialisations:** 16 role paths, including Generative AI, RAG, DevOps and .NET/C#.
+- **IT specialisations:** 22 role paths, including Generative AI, RAG, DevOps, .NET/C#, MLOps, SRE/platform engineering, QA automation, data science, Salesforce and blockchain.
 - **Resume vs job match:** a local-only resume/JD comparison with weighted 0–100 alignment score, matched terms, potential gaps and an exportable improvement checklist. It does not predict hiring or reproduce an employer ATS.
 - **Progress:** course completion and planner state save in local browser storage; they do not sync across devices.
 
