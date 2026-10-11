@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Search a curated directory of company career pages and public job boards. Find relevant roles and apply on the original employer site.">
+  <meta name="theme-color" content="#080d19">
+  <title>Job Board Directory — CodeAtlas</title>
+  <link rel="stylesheet" href="job-boards.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="pwa.css">
+  <script src="pwa.js" defer></script>
+  <script src="job-boards.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">C</span><span>CodeAtlas<small>JOB BOARD DIRECTORY</small></span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Learning map</a><a href="dashboard.html">Dashboard</a>
+      <a href="career.html">Career Launchpad</a><a href="career-studio.html">Career Studio</a>
+      <a class="active" href="job-boards.html">Job boards</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <span class="eyebrow">CAREER DISCOVERY · FREE TO USE</span>
+      <h1>Find your next role.<br><em>Start with the source.</em></h1>
+      <p>Search a starter directory of employer job boards and job-search platforms. Open listings on the original site, verify the posting date and requirements, and apply directly.</p>
+      <div class="hero-stats"><div><strong id="resultCount">0</strong><span>directory entries</span></div><div><strong>Official links</strong><span>apply at the source</span></div><div><strong>₹0</strong><span>no paid API required</span></div></div>
+    </section>
+    <section class="notice"><strong>Honest status:</strong> This is the first, static directory release. It does not scrape or aggregate live vacancies yet. Browser-only pages cannot reliably query every ATS API because of cross-origin restrictions. Automatic recent-job collection needs a scheduled backend or workflow; never place database credentials or API secrets in frontend JavaScript.</section>
+    <section class="filters" aria-label="Filter job boards">
+      <label class="search-label" for="searchInput">Search companies or platforms<input id="searchInput" type="search" placeholder="Try GitLab, frontend, Greenhouse…" autocomplete="off"></label>
+      <label for="typeFilter">Source type<select id="typeFilter"><option value="all">All sources</option><option value="company">Company career page</option><option value="platform">Job search platform</option></select></label>
+      <label for="atsFilter">ATS platform<select id="atsFilter"><option value="all">All platforms</option><option value="Greenhouse">Greenhouse</option><option value="Lever">Lever</option><option value="Ashby">Ashby</option><option value="Other">Other / general</option></select></label>
+    </section>
+    <section class="directory-head"><div><span class="eyebrow">DIRECTORY</span><h2>Explore job sources</h2></div><span id="filterSummary" aria-live="polite"></span></section>
+    <section id="directory" class="directory" aria-live="polite"></section>
+    <div id="emptyState" class="empty" hidden><h3>No matching sources</h3><p>Try a shorter keyword or choose a different filter.</p></div>
+    <section class="next-step">
+      <span class="eyebrow">NEXT ITERATION</span><h2>From directory to recent-job aggregator</h2>
+      <p>The planned backend can check approved public ATS endpoints on a schedule, normalize job IDs, record first-seen timestamps, expire removed postings, and expose a recent-jobs API to this site. Start with a small verified employer list before scaling.</p>
+      <ul><li>Greenhouse, Lever and Ashby public job-board endpoints where available</li><li>Scheduled runs using GitHub Actions, with secrets stored in repository settings</li><li>A database for deduplication, active status and first-seen dates</li><li>Filters for role, location, keywords and recent discoveries</li></ul>
+    </section>
+  </main>
+  <footer>CodeAtlas · Directory links lead to third-party sites. Always verify the employer, posting date and application URL.</footer>
+</body>
+</html>
