@@ -14,42 +14,42 @@
   "phases": [
     {
       "name": "Months 1–3: Digital and Python foundations",
-      "weeks": "1–12",
+      "weeks": "1–13",
       "outcome": "Comfortable with tools, programming logic, Python, files, testing, and OOP."
     },
     {
       "name": "Months 4–5: Computer science and professional tools",
-      "weeks": "13–17",
+      "weeks": "14–17",
       "outcome": "Understand algorithms, data structures, Git, and complexity."
     },
     {
       "name": "Months 5–7: Frontend and web foundations",
-      "weeks": "18–23",
+      "weeks": "18–24",
       "outcome": "Build accessible responsive websites with JavaScript, APIs, and TypeScript basics."
     },
     {
       "name": "Months 7–9: Backend and databases",
-      "weeks": "24–29",
+      "weeks": "25–31",
       "outcome": "Build tested APIs, work with relational data, and understand authentication and migrations."
     },
     {
       "name": "Months 9–10: Systems and deployment",
-      "weeks": "30–32",
+      "weeks": "32–34",
       "outcome": "Understand Linux, Docker, CI/CD, and basic operations."
     },
     {
       "name": "Months 10–11: Data, AI and responsible engineering",
-      "weeks": "33–38",
-      "outcome": "Understand data analysis, ML evaluation, security, architecture, and performance."
+      "weeks": "35–41",
+      "outcome": "Understand data analysis, ML evaluation, security, architecture, performance, and system design."
     },
     {
       "name": "Months 11–12: Specialisation and capstone",
-      "weeks": "39–47",
+      "weeks": "42–49",
       "outcome": "Select a primary job path, build a capstone, test it, and document it."
     },
     {
       "name": "Final weeks: Portfolio and job readiness",
-      "weeks": "48–52",
+      "weeks": "50–52",
       "outcome": "Present projects, practise interviews, and prepare a realistic next learning plan."
     }
   ],
@@ -936,50 +936,28 @@
     },
     {
       "week": 41,
-      "title": "Performance and profiling",
+      "title": "Performance, profiling and system design",
       "phase": "Advanced Engineering",
-      "goal": "Measure bottlenecks before optimising and understand caching and complexity trade-offs.",
-      "explanation": "Optimisation should follow measurement. Slow behaviour may come from algorithms, network requests, database queries, rendering, or memory. Caching trades freshness and complexity for reduced repeated work.",
-      "example": "from timeit import timeit\nprint(timeit('sum(range(1000))', number=10000))",
-      "challenge": "Measure two approaches to a real bottleneck and record the test setup and results.",
-      "hint": "Use a profiler or timer; compare equivalent work on representative data.",
-      "solution": "Measure before and after, keep correctness tests, and report the input size and environment so the result is reproducible.",
-      "quiz": "Why is optimising without measurement risky?",
-      "answer": "You may optimise a non-bottleneck or make code harder to maintain without meaningful gains.",
-      "project": "Profile one project and document the measured improvement or why no change was needed.",
-      "resource": "https://docs.python.org/3/library/profile.html",
+      "goal": "Measure bottlenecks before optimising and understand caching and complexity trade-offs. Also learn to sketch reliable systems using clear requirements, timeouts, retries, idempotency, and observability.",
+      "explanation": "Optimisation should follow measurement. Slow behaviour may come from algorithms, network requests, database queries, rendering, or memory. Caching trades freshness and complexity for reduced repeated work. System design starts with requirements and constraints such as traffic, latency, consistency, availability, and cost. Distributed systems can fail partially, so timeouts, bounded retries, idempotency, and observability matter.",
+      "example": "from timeit import timeit\nprint(timeit('sum(range(1000))', number=10000))\n\nSystem design checklist: define requirements, draw the request flow, identify data ownership and failure modes, then add caching or queues only when justified.",
+      "challenge": "Measure two approaches to a real bottleneck and record the test setup and results. Then sketch a learning platform API and identify likely failure modes.",
+      "hint": "Use a profiler or timer; compare equivalent work on representative data. Define requirements first and draw client → API → database; add components only to address a demonstrated need.",
+      "solution": "Measure before and after, keep correctness tests, and report the input size and environment so the result is reproducible.\n\nFor a starter system, use a web client, API, and relational database; add caching/queues only when measured needs justify them. Add request IDs, timeouts, health checks, and useful logs.",
+      "quiz": "Why is optimising without measurement risky? Also explain why retries need idempotency for actions that change data.",
+      "answer": "You may optimise a non-bottleneck or make code harder to maintain without meaningful gains. A retry may repeat an action that already succeeded if the response was lost; idempotency prevents duplicate effects.",
+      "project": "Profile one project and document the measured improvement or why no change was needed. Include a small system-design diagram and explain one trade-off.",
+      "resource": "https://roadmap.sh/system-design",
       "dailyLessons": [
         "Day 1 — Learn the core idea: Performance and profiling. Write a five-sentence explanation in your own words.",
         "Day 2 — Guided practice: follow the example and predict the output before running it.",
         "Day 3 — Independent challenge: Measure two approaches to a real bottleneck and record the test setup and results.",
         "Day 4 — Debug and extend: add one edge case, test it, and explain why it works.",
-        "Day 5 — Review: answer the quiz without notes and record what you still need to practise."
+        "Day 5 — Review performance measurements, sketch a small system, and explain one trade-off."
       ]
     },
     {
       "week": 42,
-      "title": "System design and distributed systems",
-      "phase": "Advanced Engineering",
-      "goal": "Design APIs and services with reliability, scaling, caching, queues, and failure handling.",
-      "explanation": "System design starts with requirements and constraints: traffic, latency, consistency, availability, and cost. Distributed systems fail partially, so timeouts, retries, idempotency, and observability matter.",
-      "example": "# API design checklist: timeout, bounded retries, idempotency key, request ID, metrics",
-      "challenge": "Sketch a design for a learning platform serving users, lessons, progress, and quiz submissions.",
-      "hint": "Define requirements and data ownership first; draw components and identify failure modes.",
-      "solution": "A reasonable starter design: web client -> API -> relational database; add caching/queue only when measured needs justify them; log requests and enforce timeouts.",
-      "quiz": "Why can automatic retries cause duplicate actions?",
-      "answer": "A request may have succeeded even if the response was lost; idempotency helps prevent duplicate effects.",
-      "project": "Create a system design document with a diagram, data model, risks, and trade-offs.",
-      "resource": "https://roadmap.sh/system-design",
-      "dailyLessons": [
-        "Day 1 — Learn the core idea: System design and distributed systems. Write a five-sentence explanation in your own words.",
-        "Day 2 — Guided practice: follow the example and predict the output before running it.",
-        "Day 3 — Independent challenge: Sketch a design for a learning platform serving users, lessons, progress, and quiz submissions.",
-        "Day 4 — Debug and extend: add one edge case, test it, and explain why it works.",
-        "Day 5 — Review: answer the quiz without notes and record what you still need to practise."
-      ]
-    },
-    {
-      "week": 43,
       "title": "Specialisation choice and focused practice",
       "phase": "Career Specialisation",
       "goal": "Choose one primary role and deepen its tools instead of trying to master every IT field at once.",
@@ -1001,7 +979,7 @@
       ]
     },
     {
-      "week": 44,
+      "week": 43,
       "title": "Specialisation module: frontend or full stack",
       "phase": "Career Specialisation",
       "goal": "Build a polished, accessible product with reusable UI and real API integration.",
@@ -1023,7 +1001,7 @@
       ]
     },
     {
-      "week": 45,
+      "week": 44,
       "title": "Specialisation module: backend or cloud",
       "phase": "Career Specialisation",
       "goal": "Deploy a documented API with database, authentication, tests, and monitoring.",
@@ -1045,7 +1023,7 @@
       ]
     },
     {
-      "week": 46,
+      "week": 45,
       "title": "Specialisation module: data or AI",
       "phase": "Career Specialisation",
       "goal": "Deliver a reproducible analysis/model with baselines, evaluation, and honest conclusions.",
@@ -1067,7 +1045,7 @@
       ]
     },
     {
-      "week": 47,
+      "week": 46,
       "title": "Specialisation module: QA or cybersecurity",
       "phase": "Career Specialisation",
       "goal": "Practise disciplined testing or defensive security in legal, controlled environments.",
@@ -1089,7 +1067,7 @@
       ]
     },
     {
-      "week": 48,
+      "week": 47,
       "title": "Capstone planning and requirements",
       "phase": "Capstone",
       "goal": "Turn a real problem into requirements, user stories, architecture, and milestones.",
@@ -1111,7 +1089,7 @@
       ]
     },
     {
-      "week": 49,
+      "week": 48,
       "title": "Capstone implementation sprint",
       "phase": "Capstone",
       "goal": "Build the smallest end-to-end version and keep it working as features grow.",
@@ -1133,7 +1111,7 @@
       ]
     },
     {
-      "week": 50,
+      "week": 49,
       "title": "Capstone testing, accessibility and hardening",
       "phase": "Capstone",
       "goal": "Test edge cases, keyboard use, failure modes, privacy, and security.",
@@ -1155,7 +1133,7 @@
       ]
     },
     {
-      "week": 51,
+      "week": 50,
       "title": "Portfolio, documentation and demo",
       "phase": "Career Preparation",
       "goal": "Explain projects clearly with screenshots, setup steps, architecture, and honest evidence.",
@@ -1177,7 +1155,7 @@
       ]
     },
     {
-      "week": 52,
+      "week": 51,
       "title": "DSA interview practice and problem explanation",
       "phase": "Career Preparation",
       "goal": "Solve problems systematically and explain complexity and trade-offs.",
@@ -1199,47 +1177,25 @@
       ]
     },
     {
-      "week": 53,
-      "title": "Technical interviews and communication",
+      "week": 52,
+      "title": "Technical interviews, communication and job search",
       "phase": "Career Preparation",
-      "goal": "Answer behavioural and technical questions with evidence and clear reasoning.",
-      "explanation": "Use STAR (Situation, Task, Action, Result) for behavioural examples. For technical answers, define the concept, give an example, explain a trade-off, and acknowledge limits.",
-      "example": "# STAR: Situation -> Task -> Action -> Result",
-      "challenge": "Prepare answers about a bug you fixed, a team challenge, a project decision, and something you learned.",
-      "hint": "Use real experiences from coursework and personal projects; never invent job experience or results.",
-      "solution": "Example structure: context, your responsibility, actions you personally took, observable result, and what you would improve.",
-      "quiz": "What makes a strong project explanation?",
-      "answer": "Clear problem, personal contribution, technical choices, testing, result, and reflection.",
-      "project": "Practise a mock interview and write down follow-up questions you struggled with.",
+      "goal": "Answer behavioural and technical questions with evidence and clear reasoning. Learn to map job requirements to evidence, tailor truthful applications, and track next actions.",
+      "explanation": "Use STAR (Situation, Task, Action, Result) for behavioural examples. For technical answers, define the concept, give an example, explain a trade-off, and acknowledge limits. Job readiness is demonstrated through skills and evidence, not course completion alone. Tailor applications honestly, track follow-ups, ask for feedback, and use recurring gaps in job descriptions to guide the next learning sprint.",
+      "example": "# STAR: Situation -> Task -> Action -> Result\n\nBuild a matrix: requirement | evidence link | confidence | next practice task.",
+      "challenge": "Prepare answers about a bug you fixed, a team challenge, a project decision, and something you learned. Choose five suitable entry-level postings and map each repeated requirement to evidence in your projects.",
+      "hint": "Use real experiences from coursework and personal projects; never invent job experience or results. Separate skills you can demonstrate now from gaps that need a focused practice plan.",
+      "solution": "Example structure: context, your responsibility, actions you personally took, observable result, and what you would improve.\n\nCreate a matrix of requirement, evidence link, confidence, and next practice task; tailor the resume to relevant truthful evidence.",
+      "quiz": "What makes a strong project explanation? Does completing a one-year roadmap guarantee a job?",
+      "answer": "Clear problem, personal contribution, technical choices, testing, result, and reflection. No. Hiring depends on many factors; a roadmap builds skills and evidence but cannot guarantee employment.",
+      "project": "Practise a mock interview and write down follow-up questions you struggled with. Finish with a mock interview, a portfolio review, and a personalised next 90-day plan.",
       "resource": "https://roadmap.sh/get-started",
       "dailyLessons": [
         "Day 1 — Learn the core idea: Technical interviews and communication. Write a five-sentence explanation in your own words.",
         "Day 2 — Guided practice: follow the example and predict the output before running it.",
         "Day 3 — Independent challenge: Prepare answers about a bug you fixed, a team challenge, a project decision, and something you learned.",
         "Day 4 — Debug and extend: add one edge case, test it, and explain why it works.",
-        "Day 5 — Review: answer the quiz without notes and record what you still need to practise."
-      ]
-    },
-    {
-      "week": 54,
-      "title": "Job search strategy and final review",
-      "phase": "Career Preparation",
-      "goal": "Apply thoughtfully, map skills to job descriptions, and build a sustainable learning loop.",
-      "explanation": "Job readiness is demonstrated through skills and evidence, not course completion alone. Tailor applications honestly, track follow-ups, ask for feedback, and continue improving based on repeated gaps in job descriptions.",
-      "example": "# Match each job requirement to evidence: project, test, code sample, or explanation.",
-      "challenge": "Choose five suitable entry-level postings, map each requirement to evidence, and identify the top three gaps to address next.",
-      "hint": "Prefer roles whose core requirements you can demonstrate; treat repeated missing skills as your next learning sprint.",
-      "solution": "Build a matrix of requirement, evidence link, confidence, and next practice task; tailor the resume to relevant truthful evidence.",
-      "quiz": "Does completing a one-year roadmap guarantee a job?",
-      "answer": "No; hiring depends on many factors. The roadmap builds skills and evidence but cannot guarantee employment.",
-      "project": "Finish with a portfolio review, mock interview, and a personalised next 90-day plan.",
-      "resource": "https://roadmap.sh/get-started",
-      "dailyLessons": [
-        "Day 1 — Learn the core idea: Job search strategy and final review. Write a five-sentence explanation in your own words.",
-        "Day 2 — Guided practice: follow the example and predict the output before running it.",
-        "Day 3 — Independent challenge: Choose five suitable entry-level postings, map each requirement to evidence, and identify the top three gaps to address next.",
-        "Day 4 — Debug and extend: add one edge case, test it, and explain why it works.",
-        "Day 5 — Review: answer the quiz without notes and record what you still need to practise."
+        "Day 5 — Run a mock interview, review portfolio evidence, and plan the next 90 days."
       ]
     }
   ],
