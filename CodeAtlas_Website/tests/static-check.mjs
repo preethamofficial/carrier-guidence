@@ -18,10 +18,10 @@ check('Career Studio has interactive tools',()=>{const source=fs.readFileSync(st
 const sw=path.join(root,'service-worker.js');
 if(fs.existsSync(sw)){const source=fs.readFileSync(sw,'utf8'),block=source.match(/const CORE=\[([\s\S]*?)\];/);check('Service worker core list',()=>assert.ok(block));if(block)for(const m of block[1].matchAll(/'([^']+)'/g)){const target=path.resolve(root,m[1]);check('Cached asset: '+m[1],()=>assert.ok(fs.existsSync(target),'Not found'))}}
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
-if(failed)process.exitCode=1;
-
 const jobsPage=path.join(root,'jobs.html');
 const jobsScript=path.join(root,'jobs.js');
 check('Recent jobs feed page',()=>{const source=fs.readFileSync(jobsPage,'utf8');assert.ok(source.includes('id="jobs"'));assert.ok(source.includes('data/jobs.json'));});
 check('Recent jobs feed filtering',()=>{const source=fs.readFileSync(jobsScript,'utf8');for(const marker of ['locationFilter','recentOnly','apply_url','first_seen_at'])assert.ok(source.includes(marker),'Missing job-feed feature '+marker);});
 check('Job data schema',()=>{const data=JSON.parse(fs.readFileSync(path.join(root,'data/jobs.json'),'utf8'));assert.ok(Array.isArray(data.jobs),'jobs must be an array');});
+
+if(failed)process.exitCode=1;
