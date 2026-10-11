@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CodeAtlas — interactive programming language mind maps with friendly explanations, code examples, practice and interview questions.">
+  <title>CodeAtlas — Learn by connecting concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="enhance.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" id="homeBrand"><span class="brand-mark">C</span><span>CodeAtlas<small>LEARN BY CONNECTING</small></span></a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <button class="nav-item active" id="navMap"><span>◉</span> Learning map</button>
+      <button class="nav-item" id="navAll"><span>▦</span> All languages</button>
+      <div class="sidebar-label">YOUR LEARNING</div>
+      <div class="progress-card">
+        <div class="progress-top"><span>Overall progress</span><strong id="overallPct">0%</strong></div>
+        <div class="progress-track"><span id="overallBar"></span></div>
+        <small id="overallCount">0 of 96 topics completed</small>
+      </div>
+      <div class="sidebar-label">LANGUAGES</div>
+      <div id="languageNav" class="language-nav"></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> Your progress stays on this device</div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="breadcrumbs" id="breadcrumbs"><span>CodeAtlas</span><b>/</b><strong>Learning map</strong></div>
+        <div class="top-actions">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search topics, examples…" autocomplete="off"><kbd>/</kbd></label>
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle color theme" title="Toggle theme">◐</button>
+        </div>
+      </header>
+      <section id="view" class="view"></section>
+      <footer class="footer"><span>CODEATLAS · A practical learning map</span><span>Learn the concept. Try the code. Explain it back.</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+  <script src="enhance.js"></script>
+</body>
+</html>

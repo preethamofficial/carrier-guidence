@@ -1,0 +1,22 @@
+.hero{background:linear-gradient(120deg,#171d36,#242b50,#403a83,#171d36);background-size:300% 300%;animation:shift 14s ease infinite}
+@keyframes shift{50%{background-position:100% 50%}}
+.hero-code{position:absolute;right:26px;top:24px;width:min(330px,38%);background:#0b1120cc;border:1px solid #ffffff1f;border-radius:12px;padding:14px;font:11px/1.7 'DM Mono',monospace;color:#cfe0ff;z-index:1}
+.hero-code i{font-style:normal;color:#8be9a8}.hero-code b{color:#a8a5ff}.hero-code .cur{display:inline-block;width:6px;height:12px;background:#a8a5ff;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.glyph{position:absolute;font:700 18px 'DM Mono',monospace;color:#ffffff22;animation:floaty linear infinite;pointer-events:none}
+@keyframes floaty{from{transform:translateY(110%) rotate(0)}to{transform:translateY(-140%) rotate(40deg)}}
+.reveal{opacity:0;transform:translateY(16px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.language-card,.topic-card{transition:transform .2s,box-shadow .2s,border .2s}
+.language-card:hover .lang-logo svg{animation:wob .6s}
+@keyframes wob{30%{transform:rotate(-12deg) scale(1.15)}70%{transform:rotate(8deg)}}
+.lang-logo{width:40px!important;height:40px!important;background:none!important}.lang-logo svg{width:100%;height:100%}
+.lang-logo.big{width:64px!important;height:64px!important;float:right;margin-left:16px}
+.language-hero{position:relative;overflow:hidden}.language-hero:after{content:"";position:absolute;inset:auto -40px -60px auto;width:200px;height:200px;border-radius:50%;background:radial-gradient(var(--lang),transparent 70%);opacity:.18;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.25);opacity:.28}}
+.map-root{animation:glow 3s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 0 8px #635bff22,var(--shadow)}}
+#scrollbar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#635bff,#13c29a);z-index:20}
+.progress-track span{transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.topic-card[data-adv]:after{content:"NEW · ADVANCED";position:absolute;top:10px;right:10px;font-size:8px;font-weight:800;letter-spacing:1px;color:#fff;background:linear-gradient(90deg,#635bff,#e0457b);border-radius:20px;padding:3px 7px}
+@media(max-width:760px){.hero-code{position:relative;width:100%;right:auto;top:auto;margin-top:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}

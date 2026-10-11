@@ -1,0 +1,10 @@
+{
+  "Python": "https://docs.python.org/3/tutorial/",
+  "JavaScript": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+  "TypeScript": "https://www.typescriptlang.org/docs/handbook/intro.html",
+  "Java": "https://dev.java/learn/",
+  "SQL (PostgreSQL tutorial; dialect-specific)": "https://www.postgresql.org/docs/current/tutorial.html",
+  "Go": "https://go.dev/doc/tutorial/",
+  "Rust": "https://doc.rust-lang.org/book/",
+  "C#": "https://learn.microsoft.com/en-us/dotnet/csharp/"
+}
