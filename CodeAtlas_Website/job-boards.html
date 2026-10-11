@@ -18,7 +18,7 @@
     <nav aria-label="Main navigation">
       <a href="index.html">Learning map</a><a href="dashboard.html">Dashboard</a>
       <a href="career.html">Career Launchpad</a><a href="career-studio.html">Career Studio</a>
-      <a class="active" href="job-boards.html">Job boards</a>
+      <a class="active" href="job-boards.html">Job boards</a><a href="jobs.html">Recent jobs</a>
     </nav>
   </header>
   <main class="wrap">
@@ -28,7 +28,7 @@
       <p>Search a starter directory of employer job boards and job-search platforms. Open listings on the original site, verify the posting date and requirements, and apply directly.</p>
       <div class="hero-stats"><div><strong id="resultCount">0</strong><span>directory entries</span></div><div><strong>Official links</strong><span>apply at the source</span></div><div><strong>₹0</strong><span>no paid API required</span></div></div>
     </section>
-    <section class="notice"><strong>Honest status:</strong> This is the first, static directory release. It does not scrape or aggregate live vacancies yet. Browser-only pages cannot reliably query every ATS API because of cross-origin restrictions. Automatic recent-job collection needs a scheduled backend or workflow; never place database credentials or API secrets in frontend JavaScript.</section>
+    <section class="notice"><strong>Two ways to search:</strong> Browse the source directory below, or open the <a href="jobs.html">Recent Jobs feed</a> for listings collected by the scheduled GitHub Actions workflow. The feed is best-effort and every vacancy must be verified on the original employer site. Never put API secrets in browser JavaScript.</section>
     <section class="filters" aria-label="Filter job boards">
       <label class="search-label" for="searchInput">Search companies or platforms<input id="searchInput" type="search" placeholder="Try GitLab, frontend, Greenhouse…" autocomplete="off"></label>
       <label for="typeFilter">Source type<select id="typeFilter"><option value="all">All sources</option><option value="company">Company career page</option><option value="platform">Job search platform</option></select></label>
@@ -38,9 +38,9 @@
     <section id="directory" class="directory" aria-live="polite"></section>
     <div id="emptyState" class="empty" hidden><h3>No matching sources</h3><p>Try a shorter keyword or choose a different filter.</p></div>
     <section class="next-step">
-      <span class="eyebrow">NEXT ITERATION</span><h2>From directory to recent-job aggregator</h2>
-      <p>The planned backend can check approved public ATS endpoints on a schedule, normalize job IDs, record first-seen timestamps, expire removed postings, and expose a recent-jobs API to this site. Start with a small verified employer list before scaling.</p>
-      <ul><li>Greenhouse, Lever and Ashby public job-board endpoints where available</li><li>Scheduled runs using GitHub Actions, with secrets stored in repository settings</li><li>A database for deduplication, active status and first-seen dates</li><li>Filters for role, location, keywords and recent discoveries</li></ul>
+      <span class="eyebrow">NEXT ITERATION</span><h2>How the recent-job collector works</h2>
+      <p>A GitHub Actions workflow checks configured public ATS endpoints approximately every six hours, normalizes source job IDs, records first-seen timestamps, expires older records, and writes a JSON feed that the Recent Jobs page reads. The starter board identifiers are not guaranteed to all be valid, so check the workflow logs and expand the list only after testing.</p>
+      <ul><li>Greenhouse, Lever and Ashby public job-board endpoints where available</li><li>Scheduled runs using GitHub Actions, with secrets stored in repository settings</li><li>JSON storage for deduplication and first-seen dates in this starter version; move to a database if the feed grows substantially</li><li>Filters for role, location, keywords and recent discoveries</li></ul>
     </section>
   </main>
   <footer>CodeAtlas · Directory links lead to third-party sites. Always verify the employer, posting date and application URL.</footer>
