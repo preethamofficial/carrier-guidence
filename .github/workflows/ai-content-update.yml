@@ -1,0 +1,42 @@
+name: Weekly AI Content Suggestions
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+concurrency:
+  group: ai-content-suggestions
+  cancel-in-progress: false
+jobs:
+  suggestions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependency
+        run: python -m pip install requests
+      - name: Generate a reviewable suggestions report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/ai_update.py
+      - name: Create pull request for suggestions
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: weekly AI content suggestions"
+          title: "🤖 Weekly AI Content Suggestions"
+          body: |
+            AI-generated suggestions only; this workflow does not directly rewrite published curriculum.
+
+            Please verify every claim against primary sources, check links, and remove unsupported trends or statistics before merging.
+          branch: ai-content-suggestions
+          delete-branch: true
+          add-paths: |
+            CodeAtlas_Website/data/ai-suggestions.md
