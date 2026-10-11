@@ -1,11 +1,12 @@
 'use strict';
-const CACHE_NAME='codeatlas-shell-v1';
+const CACHE_NAME='codeatlas-shell-v2';
 const CORE=[
  './','./index.html','./dashboard.html','./styles.css','./enhance.css','./app.js','./enhance.js',
  './data/curriculum.json','./year-course.html','./year-course.css','./year-course.js','./data/year-curriculum.json',
  './language-library.html','./language-library.css','./language-library.js',
  './specializations.html','./specializations.css','./specializations.js',
  './career.html','./career.css','./career.js',
+ './career-studio.html','./career-studio.css','./career-studio.js',
  './resume-review.html','./resume-review.css','./resume-review.js',
  './dashboard.css','./dashboard.js','./manifest.webmanifest','./assets/codeatlas-icon.svg'
 ];
