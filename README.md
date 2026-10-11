@@ -1,6 +1,6 @@
 # CodeAtlas — Free Programming & Career Learning Hub
 
-CodeAtlas is a beginner-friendly programming learning website. It now includes a structured 52-week learning path alongside the original interactive concept map and Career Launchpad.
+CodeAtlas is a free, browser-based programming and career learning hub. It combines interactive programming lessons, a 52-week foundation plan, 22 IT specialisation paths, resume-to-job matching and a private personal learning dashboard.
 
 ## Run locally (Windows)
 
@@ -20,6 +20,7 @@ Then open http://localhost:8000. Keep the terminal open while using the site. Do
 - **Career Launchpad:** eight IT career roadmaps, free learning resources, a 30-day starter plan, interview practice, resume-readiness checklist and job application tracker.
 - **IT specialisations:** 22 role paths, including Generative AI, RAG, DevOps, .NET/C#, MLOps, SRE/platform engineering, QA automation, data science, Salesforce and blockchain.
 - **Resume vs job match:** a local-only resume/JD comparison with weighted 0–100 alignment score, matched terms, potential gaps and an exportable improvement checklist. It does not predict hiring or reproduce an employer ATS.
+- **Personal learning dashboard:** cross-course progress overview, weekly study target, daily check-ins and streak, Pomodoro focus timer, study task list, learning journal, dark theme, and local JSON backup/restore.
 - **Progress:** course completion and planner state save in local browser storage; they do not sync across devices.
 
 ## View the course
@@ -27,6 +28,7 @@ Then open http://localhost:8000. Keep the terminal open while using the site. Do
 With the local server running, open:
 
 - Main learning map: http://localhost:8000/
+- Personal learning dashboard: http://localhost:8000/dashboard.html
 - Resume vs job match: http://localhost:8000/resume-review.html
 - IT specialisations: http://localhost:8000/specializations.html
 - One-year course: http://localhost:8000/year-course.html
@@ -48,7 +50,8 @@ You can publish a static version with GitHub Pages or another static host. Confi
 
 ## Main files
 
-- `CodeAtlas_Website/index.html`, `app.js`, `styles.css`: original programming learning map.
+- `CodeAtlas_Website/index.html`, `app.js`, `styles.css`: interactive programming learning map.
+- `CodeAtlas_Website/dashboard.html`, `dashboard.css`, `dashboard.js`: progress dashboard, study planner, focus timer, journal and backup tools.
 - `CodeAtlas_Website/data/curriculum.json`: existing topic content.
 - `CodeAtlas_Website/year-course.html`, `year-course.css`, `year-course.js`: interactive 52-week course interface.
 - `CodeAtlas_Website/data/year-curriculum.json`: structured weekly curriculum.
