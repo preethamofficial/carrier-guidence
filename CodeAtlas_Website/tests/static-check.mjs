@@ -20,7 +20,7 @@ if(fs.existsSync(sw)){const source=fs.readFileSync(sw,'utf8'),block=source.match
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 const jobsPage=path.join(root,'jobs.html');
 const jobsScript=path.join(root,'jobs.js');
-check('Recent jobs feed page',()=>{const source=fs.readFileSync(jobsPage,'utf8');assert.ok(source.includes('id="jobs"'));assert.ok(source.includes('data/jobs.json'));});
+check('Recent jobs feed page',()=>{const source=fs.readFileSync(jobsPage,'utf8');assert.ok(source.includes('id="jobs"'));assert.ok(fs.readFileSync(jobsScript,'utf8').includes('./data/jobs.json'));});
 check('Recent jobs feed filtering',()=>{const source=fs.readFileSync(jobsScript,'utf8');for(const marker of ['locationFilter','recentOnly','apply_url','first_seen_at'])assert.ok(source.includes(marker),'Missing job-feed feature '+marker);});
 check('Job data schema',()=>{const data=JSON.parse(fs.readFileSync(path.join(root,'data/jobs.json'),'utf8'));assert.ok(Array.isArray(data.jobs),'jobs must be an array');});
 
