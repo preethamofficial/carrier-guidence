@@ -15,8 +15,8 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 
 ## What is included
 
-- **Programming map:** Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#; 96 topic groups.
-- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash with staged topics and official references.
+- **Unified programming curriculum:** 14 languages in one learning map — Python, JavaScript, TypeScript, Java, SQL, Go, Rust, C#, C, C++, PHP, Kotlin, Swift and Bash — across 168 topic groups.
+- **Lesson depth:** Each topic includes a definition, explanation, analogy, four code examples, five coding challenges with hints/solution guidance, interview questions and official documentation references.
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
@@ -85,6 +85,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `career-studio.html`, `career-studio.js`, `career-studio.css`: Career Studio practice tools.
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `job-boards.html`, `job-boards.js`, `job-boards.css`: job source directory.
+- `language-library.html` redirects to the unified 14-language learning map. All lessons are stored in `data/curriculum.json`.
 - `jobs.html`, `jobs.js`, `jobs.css`: recent jobs feed.
 - `scripts/scrape_jobs.py`, `scripts/ai_update.py`: scheduled job feed and AI suggestions.
 - `.github/workflows/`: scheduled scraping, AI suggestions, PR review and static validation.
