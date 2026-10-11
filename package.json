@@ -12,6 +12,8 @@
     "server": "node server/src/index.js",
     "dev": "node server/src/index.js",
     "validate": "node tools/build-curriculum/validate.js",
+    "validate:careers": "node tools/build-curriculum/validate-careers.js",
+    "build:careers": "node tools/build-curriculum/build-careers.js",
     "coverage": "node tools/build-curriculum/coverage.js",
     "test": "node --test \"tests/**/*.test.js\""
   }

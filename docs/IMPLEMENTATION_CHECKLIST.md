@@ -8,9 +8,10 @@ Legend: [ ] todo · [~] in progress · [x] done & tested · [!] blocked/document
 - [x] Feature branch `feat/platform-upgrade` created before changes
 
 ## PHASE B — Preserve & validate curriculum
-- [ ] `tools/build-curriculum/validate.js` — schema, duplicate IDs, refs, quizzes, URLs
-- [ ] Coverage report generator (`docs/CURRICULUM_COVERAGE.md`, dynamic counts)
-- [ ] Curriculum tests (node:test) green · fix regressions only
+- [x] `tools/build-curriculum/validate.js` — schema, duplicate IDs, refs, quizzes, URLs (0 errors)
+- [x] Careers pipeline: `build-careers.js` + `validate-careers.js` (16 tracks, 85 lessons, 0 errors)
+- [x] Coverage report generator (`docs/CURRICULUM_COVERAGE.md`, dynamic counts incl. career table)
+- [x] Curriculum tests: 12 language + 10 store + 7 careers = 29 green
 
 ## PHASE C — Frontend design & navigation
 - [ ] Design tokens + component CSS (additive files; keep working views)

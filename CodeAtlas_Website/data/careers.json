@@ -1,0 +1,4193 @@
+{
+  "version": "2.0.0",
+  "sharedModules": [
+    {
+      "id": "foundations-tech-career",
+      "level": "Foundations",
+      "title": "How IT careers actually work",
+      "estHours": 4,
+      "lessons": [
+        {
+          "id": "foundations-tech-career-1",
+          "title": "Roles in modern IT teams",
+          "estMinutes": 35,
+          "status": "reviewed",
+          "objectives": [
+            "Name the common entry-level roles in software and IT",
+            "Describe how engineers, analysts, QA, IT support and data roles collaborate"
+          ],
+          "intro": [
+            "Modern IT teams are built from specialised roles that hand work to each other. A typical product team might include frontend engineers (user interface), backend engineers (servers and data), QA engineers (testing), data analysts (metrics), IT support (access and hardware) and a product manager (decides what to build). Entry-level jobs usually sit inside one of these roles, but you will talk to all of them every week.",
+            "Understanding this map helps you choose a first role and explains why nearly every job posting asks for communication skills alongside technical ones: your daily work is translating between roles."
+          ],
+          "keyPoints": [
+            "Entry-level roles include junior developer, QA/test engineer, IT/support engineer, data analyst and DevOps associate.",
+            "Work flows in cycles: plan → build → test → release → monitor → fix.",
+            "Each role owns a different quality attribute: speed, correctness, cost, security or usability.",
+            "Communication is part of the job, not a bonus skill."
+          ],
+          "practice": [
+            "Write three sentences describing what a junior backend engineer does on a normal Tuesday."
+          ],
+          "resources": [
+            {
+              "title": "Google — Career Certificates overview",
+              "url": "https://grow.google/certificates/"
+            }
+          ]
+        },
+        {
+          "id": "foundations-tech-career-2",
+          "title": "Reading job descriptions without panic",
+          "estMinutes": 30,
+          "status": "reviewed",
+          "objectives": [
+            "Decode common job-description phrasing into concrete skills",
+            "Separate \"required\" from \"nice-to-have\" honestly"
+          ],
+          "intro": [
+            "Job descriptions are marketing documents written by several people. \"1–3 years experience\" on an entry-level role usually means \"you should have built a few real projects\". \"Familiarity with the MERN stack\" means MongoDB, Express, React and Node — a checklist you can map to your learning plan.",
+            "A practical method: list every technology mentioned, mark each as (a) already used by you in a project, (b) learned but not in a project, (c) untouched. Apply where (a) and (b) are at least a third of the list."
+          ],
+          "keyPoints": [
+            "Translate vague phrases into specific technologies and skills.",
+            "Compare your project evidence against the list, not your feelings.",
+            "Apply when you match ~1/3 of the list — \"requirements\" are often wish-lists.",
+            "Track every application; rejection rates are high and impersonal for everyone."
+          ],
+          "practice": [
+            "Find one real junior-role description, extract its skill list, and mark each item a/b/c as above."
+          ],
+          "resources": [
+            {
+              "title": "LinkedIn — job interview tips",
+              "url": "https://www.linkedin.com/business/talent/blog/job-interview-tips"
+            }
+          ]
+        },
+        {
+          "id": "foundations-tech-career-3",
+          "title": "Setting up a sustainable study routine",
+          "estMinutes": 25,
+          "status": "reviewed",
+          "objectives": [
+            "Build a realistic weekly study timetable you can keep",
+            "Use deliberate practice instead of passive video watching"
+          ],
+          "intro": [
+            "Consistency beats intensity. One hour of focused building most days outperforms a nine-hour Sunday cram session, because skills consolidate between sessions. Plan around your real life: pick fixed slots, put them in a calendar, and protect them.",
+            "Deliberate practice means: attempt something slightly beyond your comfort zone, struggle productively, then check yourself (run the tests, compare with the official docs, ask for review). Re-watching tutorials feels productive but rarely builds skill on its own."
+          ],
+          "keyPoints": [
+            "Short, frequent sessions beat long, rare ones.",
+            "Every session should include building or answering — not only watching.",
+            "Track hours so progress is visible on hard weeks.",
+            "Rest is part of practice; sleep is when memory consolidates."
+          ],
+          "practice": [
+            "Write a 7-day timetable with at least 5 study blocks, each with a concrete task."
+          ],
+          "resources": []
+        },
+        {
+          "id": "foundations-tech-career-4",
+          "title": "Your first portfolio: what recruiters actually look at",
+          "estMinutes": 30,
+          "status": "reviewed",
+          "objectives": [
+            "Describe what makes a beginner project worth showing",
+            "Plan a README that explains your project clearly"
+          ],
+          "intro": [
+            "Recruiters viewing junior portfolios spend under a minute per candidate on first pass. They look for: does it run, is there a README, does the code look organised, was this copied from a tutorial or extended with your own ideas? One well-explained project with a clear README beats five tutorial clones.",
+            "A strong README answers: what problem does this solve, how do I run it, what did I learn, what would I add next. Screenshots and a live link (or short demo video) help a lot."
+          ],
+          "keyPoints": [
+            "One explained project beats five unexplained clones.",
+            "README must cover: problem, how to run, learnings, next steps.",
+            "Show a live demo or demo video when hosting is hard.",
+            "Original extensions to tutorials are fine if you explain your changes."
+          ],
+          "practice": [
+            "Take your best project and write the four-section README described above."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "foundations-programming",
+      "level": "Foundations",
+      "title": "Programming fundamentals (shared)",
+      "estHours": 20,
+      "lessons": [
+        {
+          "id": "foundations-programming-1",
+          "title": "Variables, types and your first programs",
+          "estMinutes": 40,
+          "status": "reviewed",
+          "objectives": [
+            "Explain what a variable is",
+            "Write and run a small program that reads input and prints output"
+          ],
+          "sharedRefs": [
+            "python-1",
+            "javascript-1"
+          ],
+          "intro": [
+            "A variable is a named box that holds a value your program can use later. Every value has a type — text (string), whole numbers (integer), decimal numbers (float), true/false (boolean) — and types decide what operations make sense.",
+            "The fastest way to learn is to write tiny programs: read a name, print a greeting, add two numbers. The linked Python and JavaScript topics below cover this in depth with runnable examples."
+          ],
+          "keyPoints": [
+            "Variables store values under a name; types define allowed operations.",
+            "Input arrives as text unless you convert it explicitly.",
+            "Print early and often while learning — it is your window into the program.",
+            "Use the linked Python/JavaScript topics for full worked examples."
+          ],
+          "practice": [
+            "Write a program that asks for two numbers and prints their sum and difference."
+          ],
+          "resources": [
+            {
+              "title": "Python — control flow tutorial",
+              "url": "https://docs.python.org/3/tutorial/controlflow.html"
+            }
+          ]
+        },
+        {
+          "id": "foundations-programming-2",
+          "title": "Conditions and loops",
+          "estMinutes": 45,
+          "status": "reviewed",
+          "objectives": [
+            "Use if/else to make decisions",
+            "Repeat work with for and while loops"
+          ],
+          "sharedRefs": [
+            "python-2",
+            "javascript-2"
+          ],
+          "intro": [
+            "Conditions let a program choose between paths; loops let it repeat work without copy-pasting. Together they express almost all procedural logic.",
+            "Classic beginner traps: off-by-one errors in loops, using == when you meant =, and infinite while loops whose condition never becomes false."
+          ],
+          "keyPoints": [
+            "if/else chooses a path; boolean expressions drive the choice.",
+            "for loops suit a known count; while loops suit a condition.",
+            "Test loops with 0, 1 and many items.",
+            "Every while loop needs a change that eventually ends it."
+          ],
+          "practice": [
+            "Print all even numbers from 1 to 20, then all odd numbers from 1 to 20."
+          ],
+          "resources": []
+        },
+        {
+          "id": "foundations-programming-3",
+          "title": "Functions and clean structure",
+          "estMinutes": 45,
+          "status": "reviewed",
+          "objectives": [
+            "Extract repeated logic into functions",
+            "Use parameters and return values correctly"
+          ],
+          "sharedRefs": [
+            "python-3",
+            "javascript-3"
+          ],
+          "intro": [
+            "A function is a named, reusable block of logic with inputs (parameters) and an output (return value). Functions keep programs readable as they grow: each should do one understandable job.",
+            "Signs a function needs splitting: longer than a screen, needs comments to explain each step, or two call sites need slightly different versions of it."
+          ],
+          "keyPoints": [
+            "Functions take parameters, do one job, and return a result.",
+            "Name functions as actions: calculateTotal, sendEmail, isValid.",
+            "Small focused functions are easier to test and reuse.",
+            "Avoid functions that secretly change global state."
+          ],
+          "practice": [
+            "Refactor your sum/difference program into functions calculateSum(a,b) and calculateDifference(a,b)."
+          ],
+          "resources": [
+            {
+              "title": "MDN — JavaScript functions",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions"
+            }
+          ]
+        },
+        {
+          "id": "foundations-programming-4",
+          "title": "Data structures you will use daily",
+          "estMinutes": 50,
+          "status": "reviewed",
+          "objectives": [
+            "Choose between arrays/lists, objects/maps and sets",
+            "Perform common add/search/remove operations"
+          ],
+          "sharedRefs": [
+            "python-5",
+            "javascript-5"
+          ],
+          "intro": [
+            "Almost every program organises data in a handful of structures. Arrays (lists) hold ordered items; objects (maps/dictionaries) hold labelled key→value pairs; sets hold unique values with fast membership tests.",
+            "Choosing the right structure makes code both faster and clearer: a set for \"have I seen this email before?\", a map for \"look up user by id\", a list for \"show tasks in order\"."
+          ],
+          "keyPoints": [
+            "Lists/arrays: ordered, indexed, allow duplicates.",
+            "Maps/objects/dicts: key→value lookup.",
+            "Sets: uniqueness and fast \"contains\" checks.",
+            "Watch data size: O(n) scans inside big loops get slow."
+          ],
+          "practice": [
+            "Write a program that reads words and prints each unique word with how many times it appeared."
+          ],
+          "resources": []
+        }
+      ]
+    },
+    {
+      "id": "foundations-web",
+      "level": "Foundations",
+      "title": "How the web works (shared)",
+      "estHours": 6,
+      "lessons": [
+        {
+          "id": "foundations-web-1",
+          "title": "HTTP, requests and responses",
+          "estMinutes": 35,
+          "status": "reviewed",
+          "objectives": [
+            "Describe what happens when you open a website",
+            "Identify methods, status codes and headers"
+          ],
+          "intro": [
+            "When you visit a URL, your browser sends an HTTP request (method + URL + headers) to a server, which returns a response (status code + headers + body). GET reads data, POST creates it, PUT/PATCH update, DELETE removes.",
+            "Status codes group outcomes: 2xx success, 3xx redirect, 4xx your mistake (404 not found, 403 forbidden), 5xx server fault. Debugging web apps is mostly reading these carefully."
+          ],
+          "keyPoints": [
+            "Browsers speak HTTP: request in, response out.",
+            "Methods encode intent: GET read, POST create, PUT update, DELETE remove.",
+            "2xx success · 4xx client error · 5xx server error.",
+            "Headers carry metadata like content-type and authorisation."
+          ],
+          "practice": [
+            "Open browser dev tools, load any site, and list the requests, methods and status codes you see."
+          ],
+          "resources": [
+            {
+              "title": "MDN — HTTP overview",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"
+            }
+          ]
+        },
+        {
+          "id": "foundations-web-2",
+          "title": "HTML structure and semantics",
+          "estMinutes": 40,
+          "status": "reviewed",
+          "objectives": [
+            "Build a valid page skeleton",
+            "Choose semantic elements over generic divs"
+          ],
+          "intro": [
+            "HTML describes structure and meaning, not appearance. Semantic elements (header, nav, main, article, footer) tell browsers and screen readers what each region is for, improving accessibility and search ranking.",
+            "Forms are central to real apps: learn input types, labels tied to inputs, and basic validation attributes."
+          ],
+          "keyPoints": [
+            "Semantic HTML aids accessibility and SEO.",
+            "Every input should have a matching label.",
+            "Headings should nest in order (h1 → h2 → h3).",
+            "Validate on the client AND the server."
+          ],
+          "practice": [
+            "Build a contact-form page using only semantic HTML, with proper labels and required fields."
+          ],
+          "resources": [
+            {
+              "title": "MDN — HTML guides",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+            }
+          ]
+        },
+        {
+          "id": "foundations-web-3",
+          "title": "CSS layout and responsive design",
+          "estMinutes": 45,
+          "status": "reviewed",
+          "objectives": [
+            "Use flexbox and grid for layout",
+            "Make a page usable on phones"
+          ],
+          "intro": [
+            "CSS controls presentation. Flexbox lays items in one dimension (a row or column); grid lays them in two (rows and columns). Between them you can build almost any layout without floats or hacks.",
+            "Responsive design means your page works from 320px phones to wide desktops: use relative units (%, rem), media queries, and test in dev tools at multiple widths."
+          ],
+          "keyPoints": [
+            "Flexbox for one-dimensional layouts, grid for two-dimensional.",
+            "Prefer rem/% over fixed px for anything scalable.",
+            "Mobile-first: base styles for small screens, enhance upward.",
+            "Test at 320px, 768px and 1280px widths."
+          ],
+          "practice": [
+            "Rebuild your contact-form page as a responsive card that looks good at 360px and 1280px."
+          ],
+          "resources": [
+            {
+              "title": "MDN — CSS layout",
+              "url": "https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tracks": [
+    {
+      "id": "software-engineering",
+      "name": "Software Engineering",
+      "emoji": "⚙️",
+      "color": "#635bff",
+      "tagline": "Design, build and maintain software systems end to end.",
+      "overview": [
+        "Software engineering is the broad discipline of designing, building, testing and maintaining software. A software engineer works across the full stack of concerns — modelling data, writing code, writing tests, reviewing other people’s code and keeping systems running in production.",
+        "For beginners it is the safest generalist entry point: the fundamentals (a language, version control, testing, teamwork) transfer to every specialisation, so you can start here and narrow later toward frontend, backend, data or DevOps without restarting."
+      ],
+      "responsibilities": [
+        "Translate requirements into small, testable units of work",
+        "Write, review and refactor code with clear structure",
+        "Write and maintain automated tests",
+        "Debug production issues and improve reliability",
+        "Collaborate through version control, code review and estimation",
+        "Document decisions so future changes are safe"
+      ],
+      "prerequisites": [
+        "Comfortable using a computer filesystem and terminal basics",
+        "One programming language at beginner level (Python or JavaScript recommended)",
+        "Willingness to read documentation regularly"
+      ],
+      "skills": {
+        "technical": [
+          "Data structures & algorithms basics",
+          "Object-oriented & functional styles",
+          "Testing (unit/integration)",
+          "SQL & relational modelling",
+          "HTTP & REST APIs"
+        ],
+        "tools": [
+          "Git & GitHub",
+          "A code editor (VS Code)",
+          "Debugger & browser dev tools",
+          "Issue tracker",
+          "CI basics"
+        ],
+        "soft": [
+          "Written communication",
+          "Breaking work into small steps",
+          "Giving/receiving code review",
+          "Estimating honestly"
+        ]
+      },
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "estHours": 520,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "se-basics",
+              "title": "Code that other people can read",
+              "lessons": [
+                {
+                  "id": "se-basics-1",
+                  "title": "Readable code: naming, formatting, small functions",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Apply consistent naming rules",
+                    "Split long functions into single-purpose ones"
+                  ],
+                  "intro": [
+                    "Readable code is a professional skill, not a taste preference. Most maintenance time is spent reading, so optimise for the reader: descriptive names (isEmailValid, not chk), one level of indentation per block, functions under roughly 30 lines that do one job.",
+                    "Adopt a formatter (Black for Python, Prettier for JS) and let it remove style debates entirely."
+                  ],
+                  "keyPoints": [
+                    "Name things by what they mean, not how they are stored.",
+                    "Functions should read like a paragraph: one idea.",
+                    "Automate formatting instead of arguing about it.",
+                    "Comments explain why, not what."
+                  ],
+                  "practice": [
+                    "Take any 40-line function you have written and split it into named steps without changing behaviour."
+                  ]
+                },
+                {
+                  "id": "se-basics-2",
+                  "title": "Version control with Git: branch, commit, merge",
+                  "estMinutes": 55,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Create branches and merge cleanly",
+                    "Write useful commit messages",
+                    "Recover from common mistakes"
+                  ],
+                  "intro": [
+                    "Git tracks snapshots of your project. The everyday loop is: create a branch, make small commits with clear messages, open a pull request, address review, merge. Commit early so nothing is lost, and write messages as sentences describing the change (\"Fix off-by-one in pagination\") rather than \"update\".",
+                    "Learn git status, git diff, git log, git branch, git merge and how to undo with git restore before anything fancier."
+                  ],
+                  "keyPoints": [
+                    "One logical change per commit.",
+                    "Commit messages describe the change, not the file.",
+                    "Pull requests are for review, not backup.",
+                    "git status is your best friend when lost."
+                  ],
+                  "practice": [
+                    "Make a repo, commit a file across three branches, merge them, and deliberately create then resolve a conflict."
+                  ],
+                  "resources": [
+                    {
+                      "title": "Git official docs — branching",
+                      "url": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
+                    }
+                  ]
+                },
+                {
+                  "id": "se-basics-3",
+                  "title": "Reading stack traces and debugging systematically",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Read a stack trace to find the fault line",
+                    "Use the scientific method when debugging"
+                  ],
+                  "intro": [
+                    "A stack trace lists the chain of function calls that led to an error — read it looking for the first lines mentioning your own files. Reproduce the bug reliably, form one hypothesis, change one variable, observe. Random fixing wastes hours.",
+                    "Print debugging works; breakpoints in a real debugger work better because you can inspect live values without editing code."
+                  ],
+                  "keyPoints": [
+                    "Find your own code in the stack trace first.",
+                    "Reproduce bugs on demand before fixing.",
+                    "Change one thing at a time.",
+                    "Fix the root cause, not the symptom."
+                  ],
+                  "practice": [
+                    "Write a program with a deliberate off-by-one bug, run it, and use the stack trace to locate and fix it."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "se-testing",
+              "title": "Testing mindset",
+              "lessons": [
+                {
+                  "id": "se-testing-1",
+                  "title": "Unit tests and the AAA pattern",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Write unit tests using Arrange–Act–Assert",
+                    "Cover edge cases, not just happy paths"
+                  ],
+                  "intro": [
+                    "A unit test checks one small piece of code in isolation. Structure tests as Arrange (set up data), Act (call the function), Assert (check the result). Test edge cases deliberately: empty input, zero, negative numbers, very long strings — that is where bugs live.",
+                    "Aim for tests that fail for the right reason: if your test passes when the function is broken, the test is worthless."
+                  ],
+                  "keyPoints": [
+                    "One behaviour per test, named after the behaviour.",
+                    "Test edge cases first; they catch more bugs.",
+                    "Tests that cannot fail are decoration.",
+                    "Keep tests independent so one failure does not cascade."
+                  ],
+                  "practice": [
+                    "Write 5 tests for a function that validates a password, including at least 3 edge cases."
+                  ],
+                  "resources": [
+                    {
+                      "title": "Python — unittest docs",
+                      "url": "https://docs.python.org/3/library/unittest.html"
+                    }
+                  ]
+                },
+                {
+                  "id": "se-testing-2",
+                  "title": "Test-driven development: does it fit you?",
+                  "estMinutes": 45,
+                  "status": "draft",
+                  "objectives": [
+                    "Describe the red–green–refactor cycle",
+                    "Decide when TDD helps and when it slows you down"
+                  ],
+                  "intro": [
+                    "Test-driven development means writing a failing test before the code that passes it: red (test fails), green (minimal code to pass), refactor (clean up). It produces well-tested code and clear design feedback, but can feel slow on exploratory work.",
+                    "Even if you do not practice strict TDD, writing tests right after a feature works well. Choose per task, not by ideology."
+                  ],
+                  "keyPoints": [
+                    "TDD cycle: failing test → minimal pass → refactor.",
+                    "Good for well-specified logic; awkward for UI exploration.",
+                    "Always write tests eventually — timing is the choice."
+                  ],
+                  "practice": [
+                    "Implement a roman-numeral converter using strict red–green–refactor for 3 functions."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "se-systems",
+              "title": "Building reliable services",
+              "lessons": [
+                {
+                  "id": "se-systems-1",
+                  "title": "Designing REST APIs that age well",
+                  "estMinutes": 60,
+                  "status": "draft",
+                  "objectives": [
+                    "Model resources and endpoints consistently",
+                    "Version APIs and handle errors uniformly"
+                  ],
+                  "intro": [
+                    "A REST API exposes resources (nouns) with standard verbs: GET /orders, POST /orders, GET /orders/:id. Consistency matters more than cleverness — the same pagination, error and naming conventions everywhere. Plan for change: version the API and never break existing clients silently.",
+                    "Return proper status codes and a uniform error body so clients can react programmatically."
+                  ],
+                  "keyPoints": [
+                    "Resources are nouns; HTTP methods are verbs.",
+                    "Uniform errors, pagination and auth across endpoints.",
+                    "Version from day one; breaking changes need a new version.",
+                    "Validate input at the boundary."
+                  ],
+                  "practice": [
+                    "Design (on paper) the endpoints for a task-tracker API including pagination and error shapes."
+                  ]
+                },
+                {
+                  "id": "se-systems-2",
+                  "title": "Databases: schema design and safe migrations",
+                  "estMinutes": 65,
+                  "status": "draft",
+                  "objectives": [
+                    "Normalise tables to avoid duplicate data",
+                    "Write reversible, safe migrations"
+                  ],
+                  "intro": [
+                    "Relational databases keep data consistent with schemas, keys and constraints. Model entities and relationships properly (one customer, many orders) and let the database enforce rules with foreign keys and unique constraints rather than trusting application code alone.",
+                    "Migrations are versioned schema changes; write them so they can run on live data and, where possible, be reversed."
+                  ],
+                  "keyPoints": [
+                    "Foreign keys and constraints beat application-only checks.",
+                    "One fact stored in one place (normalisation).",
+                    "Migrations are code: review and test them.",
+                    "Index the columns you filter and sort by."
+                  ],
+                  "practice": [
+                    "Design a schema for a library system (members, books, loans) in SQL and write the CREATE statements."
+                  ],
+                  "resources": [
+                    {
+                      "title": "PostgreSQL — tutorial",
+                      "url": "https://www.postgresql.org/docs/current/tutorial.html"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "se-scale",
+              "title": "Scale and architecture",
+              "lessons": [
+                {
+                  "id": "se-scale-1",
+                  "title": "Performance: measure before optimising",
+                  "estMinutes": 55,
+                  "status": "outline",
+                  "objectives": [
+                    "Profile code to find real bottlenecks",
+                    "Apply complexity reasoning to hot paths"
+                  ],
+                  "intro": [
+                    "Performance work starts with measurement, not intuition. Profile to find which function consumes time, optimise that, then measure again — the bottleneck usually moves somewhere surprising. Reason about complexity to avoid accidental quadratic loops over large data."
+                  ],
+                  "keyPoints": [
+                    "Profile first; optimise second; re-measure always.",
+                    "Nested loops over large inputs are the usual suspects.",
+                    "Caching adds complexity — add it only after measurement."
+                  ],
+                  "practice": [
+                    "Take an O(n²) function, rewrite it with a hash map, and benchmark both on 100k items."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "se-jobprep",
+              "title": "Interviewing for software engineering",
+              "lessons": [
+                {
+                  "id": "se-jobprep-1",
+                  "title": "How coding interviews are actually run",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Explain your thinking while coding",
+                    "Handle the \"what would you improve\" follow-up"
+                  ],
+                  "intro": [
+                    "Most coding interviews are collaborative problem-solving: you think out loud, write code, test it, then discuss trade-offs. Interviewers grade communication as heavily as correctness — an incomplete solution explained clearly often beats a silent complete one.",
+                    "Always narrate: restate the problem, state assumptions, describe your approach before typing, then test with an example."
+                  ],
+                  "keyPoints": [
+                    "Restate, plan, then code — never type silently.",
+                    "Talk through edge cases and complexity.",
+                    "The follow-up tests depth: discuss trade-offs honestly.",
+                    "Practice on a plain editor, not only a full IDE."
+                  ],
+                  "practice": [
+                    "Record yourself solving a two-sum style problem out loud in 15 minutes."
+                  ]
+                },
+                {
+                  "id": "se-jobprep-2",
+                  "title": "Portfolio and GitHub hygiene for applications",
+                  "estMinutes": 40,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Curate a profile that shows your best work",
+                    "Write project READMEs that sell your thinking"
+                  ],
+                  "intro": [
+                    "Recruiters check your GitHub: pinned repositories should be your best 3–6 projects, each with a clear README, screenshots and recent commits. Hide abandoned tutorial clones. Contribution graphs matter far less than the quality of a few pinned projects."
+                  ],
+                  "keyPoints": [
+                    "Pin your best 3–6 repos; hide the rest.",
+                    "README: problem, stack, how to run, screenshots, learnings.",
+                    "Recent, incremental commits show real workflow.",
+                    "A short demo video in the README helps a lot."
+                  ],
+                  "practice": [
+                    "Pin your three best projects and rewrite their READMEs using the four-section structure."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "se-proj-1",
+          "title": "Personal expense tracker (CLI or web)",
+          "difficulty": "beginner",
+          "description": "Track daily expenses, categorise them, and report monthly totals.",
+          "steps": [
+            "Model Expense records",
+            "Add/edit/delete commands",
+            "Aggregate by month and category",
+            "Persist to a file or SQLite"
+          ]
+        },
+        {
+          "id": "se-proj-2",
+          "title": "URL shortener service",
+          "difficulty": "intermediate",
+          "description": "Shorten long URLs, redirect, and show click counts.",
+          "steps": [
+            "Design the schema and API",
+            "Implement shorten + redirect",
+            "Add click tracking",
+            "Handle collisions and validation"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is the difference between an array and a linked list?",
+          "a": "Arrays store items contiguously with O(1) index access but costly mid-insertion; linked lists store nodes with pointers, giving cheap insertion once at a node but O(n) access."
+        },
+        {
+          "q": "What does \"idempotent\" mean for an API?",
+          "a": "An operation is idempotent if repeating it has the same effect as doing it once — PUT to set a value is idempotent; POST that creates a new record is not."
+        },
+        {
+          "q": "How do you decide a function is too long?",
+          "a": "When it has multiple reasons to change, needs comments per section, or testing one part requires running all of it — split by responsibility, not line count."
+        }
+      ],
+      "checklist": [
+        "One language used confidently in at least two projects",
+        "Git workflow with branches and pull requests understood",
+        "Unit tests written for your own code, not only course code",
+        "One REST API built and documented",
+        "Resume reviewed by a human; GitHub profile curated",
+        "Can solve easy algorithm problems while talking through them"
+      ],
+      "resources": [
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/"
+        },
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/"
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming",
+        "foundations-web"
+      ],
+      "status": "reviewed",
+      "id": "frontend-development",
+      "name": "Frontend Development",
+      "emoji": "🎨",
+      "color": "#e34c26",
+      "tagline": "Build the interfaces people actually touch.",
+      "overview": [
+        "Frontend development is everything the user sees and interacts with in a browser: layout, styling, interaction, performance and accessibility. Frontend engineers translate designs into fast, responsive, accessible interfaces and wire them to APIs.",
+        "It is the most visual entry point into software: you get immediate feedback on your work, and the required stack (HTML, CSS, JavaScript) runs everywhere with zero setup. Frameworks like React, Vue or Angular come after the fundamentals are solid."
+      ],
+      "responsibilities": [
+        "Turn designs and requirements into responsive pages",
+        "Integrate frontend with backend APIs",
+        "Ensure accessibility and cross-browser behaviour",
+        "Optimise load time and runtime performance",
+        "Write reusable components and maintain design systems"
+      ],
+      "prerequisites": [
+        "HTML/CSS basics (see shared web foundations)",
+        "Beginner JavaScript",
+        "Eye for detail and patience with browser quirks"
+      ],
+      "skills": {
+        "technical": [
+          "Semantic HTML & modern CSS",
+          "JavaScript (DOM, async, modules)",
+          "A component framework (React/Vue)",
+          "Web performance basics",
+          "Accessibility (WCAG fundamentals)"
+        ],
+        "tools": [
+          "Browser dev tools",
+          "Git",
+          "npm packages",
+          "Linters & formatters",
+          "Lighthouse"
+        ],
+        "soft": [
+          "Collaboration with designers",
+          "Translating visual specs to code",
+          "Writing clear component docs"
+        ]
+      },
+      "estHours": 480,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "fe-basics",
+              "title": "Interfaces that work for everyone",
+              "lessons": [
+                {
+                  "id": "fe-basics-1",
+                  "title": "Semantic HTML and accessibility essentials",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Choose semantic elements over divs",
+                    "Add alt text, labels and focus states correctly"
+                  ],
+                  "intro": [
+                    "Accessibility is not optional polish — many people experience some form of disability, and semantic HTML gives you most of the solution for free. Use button for actions and a for links, label every input, keep headings in order, and provide alt text that describes the image’s purpose.",
+                    "Keyboard navigation is the quick test: unplug your mouse and Tab through the page. If you cannot reach and trigger every control, something is broken."
+                  ],
+                  "keyPoints": [
+                    "Semantics first; ARIA only to fill real gaps.",
+                    "Every input needs a label; every image needs meaningful alt.",
+                    "Visible focus styles are essential, not ugly.",
+                    "Test with keyboard-only navigation every session."
+                  ],
+                  "practice": [
+                    "Take any page you built and make it fully usable with keyboard only."
+                  ],
+                  "resources": [
+                    {
+                      "title": "W3C — WAI tutorials",
+                      "url": "https://www.w3.org/WAI/tutorials/"
+                    }
+                  ]
+                },
+                {
+                  "id": "fe-basics-2",
+                  "title": "Responsive layout with grid and flexbox",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Build a layout that adapts from 320px to 1920px",
+                    "Choose grid vs flexbox per section"
+                  ],
+                  "intro": [
+                    "Grid handles two-dimensional layout (page shells, card galleries); flexbox handles one-dimensional flow (nav bars, toolbars). Real pages combine both: grid for the page, flexbox inside components.",
+                    "Start from the small screen: define the phone layout first, then add media queries for tablets and desktops. This avoids the trap of removing desktop features downwards."
+                  ],
+                  "keyPoints": [
+                    "Grid = rows + columns; flexbox = one axis.",
+                    "Mobile-first media queries: min-width upward.",
+                    "minmax() and auto-fit make responsive galleries without extra breakpoints.",
+                    "Use relative units (rem, %, vw) for anything scalable."
+                  ],
+                  "practice": [
+                    "Build a responsive gallery: 1 column on phones, 2 on tablets, 4 on desktop — no horizontal scroll."
+                  ]
+                },
+                {
+                  "id": "fe-basics-3",
+                  "title": "DOM manipulation and events in JavaScript",
+                  "estMinutes": 55,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Select and update elements safely",
+                    "Handle user events and form input"
+                  ],
+                  "intro": [
+                    "The DOM is your page as a tree of objects JavaScript can read and change. querySelector finds elements; textContent and classList change them; addEventListener reacts to clicks, input and key presses. Use event delegation for dynamic lists.",
+                    "Forms are central: read values, validate before submit, prevent the default reload, and give clear inline error messages tied to the offending input."
+                  ],
+                  "keyPoints": [
+                    "querySelector / querySelectorAll to select.",
+                    "Prefer event delegation on containers for dynamic content.",
+                    "preventDefault() stops page reloads on submit.",
+                    "Show validation errors next to the input, in text."
+                  ],
+                  "practice": [
+                    "Build a todo list: add, toggle-complete and delete items using only DOM APIs — no framework."
+                  ],
+                  "resources": [
+                    {
+                      "title": "MDN — Introduction to the DOM",
+                      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "fe-frameworks",
+              "title": "Component frameworks",
+              "lessons": [
+                {
+                  "id": "fe-frameworks-1",
+                  "title": "Thinking in components",
+                  "estMinutes": 55,
+                  "status": "draft",
+                  "objectives": [
+                    "Split a page into reusable components",
+                    "Manage state where it belongs"
+                  ],
+                  "intro": [
+                    "Component frameworks (React, Vue, Svelte) treat UI as functions of state: given the same data, the same interface appears. Split UI by responsibility — a Card, a NavBar, a LoginForm — each owning its markup, styles and behaviour.",
+                    "Keep state as low as possible: only lift it up when two siblings genuinely need it. Prop-drilling through five layers usually signals a missing context or store."
+                  ],
+                  "keyPoints": [
+                    "One component = one responsibility.",
+                    "State lives at the lowest common ancestor that needs it.",
+                    "Props flow down; events flow up.",
+                    "Extract components when markup repeats, not before."
+                  ],
+                  "practice": [
+                    "Rebuild your todo list as a component tree with at least three components."
+                  ],
+                  "resources": [
+                    {
+                      "title": "React — Describing the UI",
+                      "url": "https://react.dev/learn/describing-the-ui"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "fe-perf",
+              "title": "Performance and architecture",
+              "lessons": [
+                {
+                  "id": "fe-perf-1",
+                  "title": "Measuring and fixing web performance",
+                  "estMinutes": 60,
+                  "status": "outline",
+                  "objectives": [
+                    "Use Core Web Vitals to find real problems",
+                    "Apply targeted fixes (lazy loading, code splitting)"
+                  ],
+                  "intro": [
+                    "Frontend performance has three user-facing metrics: LCP (how fast the main content appears), INP (how fast it responds to input) and CLS (how much the layout jumps). Measure with Lighthouse and real-user monitoring, then fix the biggest offender first — usually images, blocking scripts or heavy hydration."
+                  ],
+                  "keyPoints": [
+                    "Measure Core Web Vitals before optimising.",
+                    "Compress and lazy-load images; serve modern formats.",
+                    "Code-split so users download only what the page needs.",
+                    "Debounce expensive handlers; avoid layout thrash."
+                  ],
+                  "practice": [
+                    "Audit any site with Lighthouse, list its top three issues, and fix one on your own project."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "fe-jobprep",
+              "title": "Frontend interviews and take-homes",
+              "lessons": [
+                {
+                  "id": "fe-jobprep-1",
+                  "title": "CSS and JS interview questions you will actually face",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Explain the cascade, specificity and the box model",
+                    "Answer common JS questions with examples"
+                  ],
+                  "intro": [
+                    "Frontend interviews mix live coding (build a component or fix CSS) with conceptual questions. Be ready to explain: the box model and box-sizing, cascade and specificity, event bubbling and delegation, closures, the event loop, and the difference between == and ===.",
+                    "For take-home tasks: read requirements twice, ship something working, then polish README and tests. Reviewers value clarity over feature count."
+                  ],
+                  "keyPoints": [
+                    "Box model, specificity, cascade — explain with examples.",
+                    "Closures and the event loop appear constantly.",
+                    "Take-homes: working beats exhaustive; document trade-offs.",
+                    "Talk through your UI decisions while coding."
+                  ],
+                  "practice": [
+                    "Answer \"explain event delegation\" out loud in under two minutes, with a code example."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "fe-proj-1",
+          "title": "Responsive portfolio website",
+          "difficulty": "beginner",
+          "description": "A personal portfolio with projects section, contact form and dark mode, fully responsive.",
+          "steps": [
+            "Plan sections and wireframe",
+            "Build semantic HTML + CSS layout",
+            "Add theme toggle and form validation",
+            "Deploy and link from your résumé"
+          ]
+        },
+        {
+          "id": "fe-proj-2",
+          "title": "Weather dashboard consuming a public API",
+          "difficulty": "intermediate",
+          "description": "Search a city, show current weather and a 5-day forecast with loading and error states.",
+          "steps": [
+            "Read the API docs and get a key",
+            "Build search UI with states",
+            "Render forecast cards",
+            "Handle errors and rate limits"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Explain the CSS box model and box-sizing.",
+          "a": "Every element is a box of content, padding, border and margin. box-sizing: border-box makes width include padding and border, matching how designers usually specify sizes."
+        },
+        {
+          "q": "What is event delegation?",
+          "a": "Listening on a common ancestor instead of each child; events bubble up, so one handler can manage all children — essential for dynamic lists."
+        },
+        {
+          "q": "Difference between == and ===?",
+          "a": "== compares after type coercion (\"\" == 0 is true); === compares value and type with no coercion. Prefer ===."
+        }
+      ],
+      "checklist": [
+        "Semantic, accessible HTML in every project",
+        "Responsive layouts tested at 320/768/1280px",
+        "One framework used in at least one real project",
+        "Portfolio live with 3+ explained projects",
+        "Comfortable using dev tools to debug CSS and JS"
+      ],
+      "resources": [
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/"
+        },
+        {
+          "title": "web.dev — Core Web Vitals",
+          "url": "https://web.dev/articles/vitals"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming",
+        "foundations-web"
+      ],
+      "status": "reviewed",
+      "id": "backend-development",
+      "name": "Backend Development",
+      "emoji": "🗄️",
+      "color": "#3776ab",
+      "tagline": "Servers, APIs, databases — the machinery behind the screen.",
+      "overview": [
+        "Backend development powers everything the browser asks for: APIs, business logic, data storage, authentication and integrations. Backend engineers design endpoints, model data, keep systems fast and secure, and make sure the app still works when a thousand users arrive at once.",
+        "A practical entry path: pick one language (Python, JavaScript/Node, Go or Java), learn HTTP and SQL deeply, build a few CRUD APIs with authentication, then add testing and deployment."
+      ],
+      "responsibilities": [
+        "Design and implement APIs",
+        "Model and query databases efficiently",
+        "Implement authentication and authorisation",
+        "Handle errors, logging and monitoring",
+        "Optimise slow queries and endpoints"
+      ],
+      "prerequisites": [
+        "Beginner programming (Python or JavaScript)",
+        "Comfort with the terminal",
+        "Basic SQL (see the SQL language path)"
+      ],
+      "skills": {
+        "technical": [
+          "HTTP & REST/GraphQL",
+          "SQL & one database",
+          "Authentication (sessions, JWT, OAuth)",
+          "Caching & async basics",
+          "Testing & profiling"
+        ],
+        "tools": [
+          "Git",
+          "Postman/curl",
+          "Docker basics",
+          "A cloud (any free tier)",
+          "Log viewers"
+        ],
+        "soft": [
+          "Breaking requirements into endpoints",
+          "Writing API docs",
+          "On-call debugging discipline"
+        ]
+      },
+      "estHours": 500,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "be-basics",
+              "title": "Your first API",
+              "lessons": [
+                {
+                  "id": "be-basics-1",
+                  "title": "Request to response: what a server actually does",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Trace a request through routing, handler and response",
+                    "Return JSON with correct status codes"
+                  ],
+                  "intro": [
+                    "A web server listens on a port, matches each incoming request to a route, runs a handler function, and returns a response — usually JSON. The handler reads the request (path, query, body, headers), does work (query the database, compute), and returns a status code plus body.",
+                    "Status codes are part of your API contract: 200 for success, 201 for created, 400 for bad input, 401/403 for auth problems, 404 for missing, 500 for your bug."
+                  ],
+                  "keyPoints": [
+                    "Route → handler → response is the core loop.",
+                    "Return meaningful status codes, not always 200.",
+                    "JSON is the default data format for web APIs.",
+                    "Validate input at the boundary; never trust the client."
+                  ],
+                  "practice": [
+                    "Build an API with one GET endpoint that returns a hard-coded list of users as JSON."
+                  ],
+                  "resources": [
+                    {
+                      "title": "MDN — An overview of HTTP",
+                      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"
+                    }
+                  ]
+                },
+                {
+                  "id": "be-basics-2",
+                  "title": "CRUD APIs with a real database",
+                  "estMinutes": 60,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Implement create/read/update/delete endpoints",
+                    "Map HTTP verbs and status codes to CRUD correctly"
+                  ],
+                  "intro": [
+                    "CRUD (Create, Read, Update, Delete) maps neatly onto HTTP: POST creates (201), GET reads (200), PUT/PATCH updates (200), DELETE removes (204). Pair each with a database table and you have the backbone of most apps.",
+                    "Always validate the body before writing to the database, use parameterised queries to prevent SQL injection, and return 404 for resources that do not exist rather than an empty success."
+                  ],
+                  "keyPoints": [
+                    "POST 201 · GET 200 · DELETE 204 is a sane convention.",
+                    "Parameterised queries prevent SQL injection.",
+                    "Validate every field before it reaches the database.",
+                    "Return 404 for missing resources."
+                  ],
+                  "practice": [
+                    "Build a notes API (create, list, get one, update, delete) backed by SQLite or Postgres."
+                  ],
+                  "resources": [
+                    {
+                      "title": "PostgreSQL — tutorial",
+                      "url": "https://www.postgresql.org/docs/current/tutorial.html"
+                    }
+                  ]
+                },
+                {
+                  "id": "be-basics-3",
+                  "title": "Authentication without rolling your own crypto",
+                  "estMinutes": 55,
+                  "status": "draft",
+                  "objectives": [
+                    "Explain password hashing and why plain text is unacceptable",
+                    "Implement session or token login safely"
+                  ],
+                  "intro": [
+                    "Store passwords only as hashes made with a slow, salted algorithm (bcrypt, scrypt, argon2) — never plain text, never fast hashes like bare SHA-256. On login, hash the attempt and compare.",
+                    "Choose sessions (server-side state in a cookie) or tokens (JWT or opaque tokens returned by a login endpoint). Sessions are simpler to revoke; make cookies HttpOnly and Secure."
+                  ],
+                  "keyPoints": [
+                    "Hash with bcrypt/scrypt/argon2 + per-user salt.",
+                    "Use established libraries; never invent crypto.",
+                    "HttpOnly, Secure cookies for session tokens.",
+                    "Rate-limit login endpoints against brute force."
+                  ],
+                  "practice": [
+                    "Add signup/login with hashed passwords to your notes API, and protect two endpoints."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "be-scale",
+              "title": "Performance and reliability",
+              "lessons": [
+                {
+                  "id": "be-scale-1",
+                  "title": "Indexes, N+1 queries and caching basics",
+                  "estMinutes": 55,
+                  "status": "draft",
+                  "objectives": [
+                    "Spot and fix N+1 query patterns",
+                    "Add indexes for hot query paths"
+                  ],
+                  "intro": [
+                    "The most common backend performance bug is the N+1 query: loading a list, then making one extra query per row. Fix it with JOINs or batch loading. The second most common is missing indexes — check EXPLAIN before assuming a query is \"just slow\".",
+                    "Caching (in-memory or Redis) helps read-heavy endpoints, but adds staleness bugs: cache deliberately, with explicit expiry."
+                  ],
+                  "keyPoints": [
+                    "N+1 queries: one list query + one per item — fix with JOINs.",
+                    "Index columns used in WHERE, JOIN and ORDER BY.",
+                    "Measure with EXPLAIN, not guesses.",
+                    "Caching trades staleness for speed — be explicit."
+                  ],
+                  "practice": [
+                    "Take a slow list endpoint, log its queries, and reduce the query count to a constant."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "be-arch",
+              "title": "Distributed thinking",
+              "lessons": [
+                {
+                  "id": "be-arch-1",
+                  "title": "Message queues, idempotency and eventual consistency",
+                  "estMinutes": 60,
+                  "status": "outline",
+                  "objectives": [
+                    "Describe when a queue beats a direct call",
+                    "Design idempotent consumers"
+                  ],
+                  "intro": [
+                    "Queues decouple producers from consumers so slow or flaky work (emails, image processing) cannot take down the request path. The catch: messages can arrive twice or out of order, so consumers must be idempotent — applying the same message twice has the same effect as once."
+                  ],
+                  "keyPoints": [
+                    "Queues absorb bursts and isolate failures.",
+                    "At-least-once delivery means idempotent consumers.",
+                    "Use idempotency keys for unsafe operations.",
+                    "Eventual consistency is a product decision, not only a technical one."
+                  ],
+                  "practice": [
+                    "Design an email-sending flow with a queue, retries and deduplication — on paper."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "be-jobprep",
+              "title": "Backend interview patterns",
+              "lessons": [
+                {
+                  "id": "be-jobprep-1",
+                  "title": "System design for juniors and SQL interviews",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Structure a small system-design answer",
+                    "Write complex SQL under time pressure"
+                  ],
+                  "intro": [
+                    "Junior system design questions are deliberately small (\"design a URL shortener\"): clarify requirements, propose the data model, sketch the API, note one bottleneck and how you would scale it. Depth on one design beats shallow talk of five technologies.",
+                    "SQL interviews test joins, aggregation and window functions. Practice SELECT with GROUP BY, HAVING and simple window functions until writing them is mechanical."
+                  ],
+                  "keyPoints": [
+                    "Clarify → data model → API → bottleneck → scale.",
+                    "Practice joins, GROUP BY, HAVING, window functions.",
+                    "Explain trade-offs out loud; interviewers want reasoning.",
+                    "Ask clarifying questions — it is scored positively."
+                  ],
+                  "practice": [
+                    "Time yourself designing a URL shortener in 15 minutes, speaking aloud."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "be-proj-1",
+          "title": "Task management API",
+          "difficulty": "beginner",
+          "description": "REST API for projects and tasks with user auth, filtering and pagination.",
+          "steps": [
+            "Schema: users, projects, tasks",
+            "CRUD endpoints with validation",
+            "Signup/login with hashed passwords",
+            "Filters, pagination and tests"
+          ]
+        },
+        {
+          "id": "be-proj-2",
+          "title": "Rate-limited URL shortener API",
+          "difficulty": "intermediate",
+          "description": "Shorten URLs, redirect with click counting, rate-limit by API key.",
+          "steps": [
+            "Collision-safe short codes",
+            "Redirect handler with counters",
+            "API keys and rate limiting",
+            "Load-test with a simple script"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is the N+1 query problem?",
+          "a": "Loading a list of items and then issuing one separate query per item inside a loop. Fix by joining or batch-loading so the total query count is constant."
+        },
+        {
+          "q": "Sessions vs JWT — when would you pick each?",
+          "a": "Sessions are simple to revoke (delete server state) and fit monoliths; JWTs are stateless and fit distributed services but need rotation and careful revocation design."
+        },
+        {
+          "q": "How do you prevent SQL injection?",
+          "a": "Use parameterised queries / prepared statements from your driver or ORM; never concatenate user input into SQL strings."
+        }
+      ],
+      "checklist": [
+        "One CRUD API with auth, deployed somewhere",
+        "SQL: joins, aggregation, indexes understood",
+        "Password hashing done with a real library",
+        "Tests covering happy path and error cases",
+        "Can explain one design trade-off from your own project"
+      ],
+      "resources": [
+        {
+          "title": "MDN — HTTP overview",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"
+        },
+        {
+          "title": "PostgreSQL docs",
+          "url": "https://www.postgresql.org/docs/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming",
+        "foundations-web"
+      ],
+      "status": "reviewed",
+      "id": "fullstack-development",
+      "name": "Full-Stack Development",
+      "emoji": "🔁",
+      "color": "#13c29a",
+      "tagline": "Own a feature from database table to rendered pixel.",
+      "overview": [
+        "Full-stack developers work across both the frontend and backend of an application: designing the data model and API, then building the interface that uses them. In small teams and startups this breadth is essential; in larger organisations full-stack roles still exist but tend to lean toward one side.",
+        "The learning path combines the frontend and backend tracks. The advantage is understanding the whole request cycle; the risk is depthlessness — mitigate it by going deep on one side first, whichever you enjoy more."
+      ],
+      "responsibilities": [
+        "Build features across API and UI layers",
+        "Design data models that fit the product",
+        "Wire authentication end to end",
+        "Write tests on both sides of the stack",
+        "Deploy and monitor the whole application"
+      ],
+      "prerequisites": [
+        "Beginner JavaScript or Python",
+        "HTML/CSS and JS DOM basics",
+        "Willingness to work in both browser and server tooling"
+      ],
+      "skills": {
+        "technical": [
+          "One frontend framework",
+          "One backend framework",
+          "SQL data modelling",
+          "Auth end-to-end",
+          "Deployment pipelines"
+        ],
+        "tools": [
+          "Git",
+          "Node/npm",
+          "A database",
+          "Docker basics",
+          "Hosting platform"
+        ],
+        "soft": [
+          "Switching context productively",
+          "Explaining full flows to non-engineers",
+          "Owning a feature end to end"
+        ]
+      },
+      "estHours": 600,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "fs-basics",
+              "title": "Connect the two halves",
+              "lessons": [
+                {
+                  "id": "fs-basics-1",
+                  "title": "Thinking in full request cycles",
+                  "estMinutes": 45,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Trace a full-stack request from click to database and back",
+                    "Identify where each layer’s responsibility ends"
+                  ],
+                  "intro": [
+                    "A full-stack feature is one continuous cycle: the UI captures intent, the frontend validates and sends an HTTP request, the backend authorises, validates and queries the database, then serialises a response the UI renders. Being able to narrate this cycle for your own project is the single best interview story you can have.",
+                    "Practise drawing the cycle for any feature you build: boxes for UI, API, DB, with the data moving between them labelled."
+                  ],
+                  "keyPoints": [
+                    "Trace: UI event → request → handler → DB → response → render.",
+                    "Each layer validates again — never trust the layer before you.",
+                    "Auth checks belong at the API, not only the UI.",
+                    "Draw the cycle; diagrams expose missing steps."
+                  ],
+                  "practice": [
+                    "Pick one feature in your project and write out its full request cycle in 6 steps."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "fs-auth",
+              "title": "Full-stack auth done properly",
+              "lessons": [
+                {
+                  "id": "fs-auth-1",
+                  "title": "Sessions vs tokens across the stack",
+                  "estMinutes": 55,
+                  "status": "outline",
+                  "objectives": [
+                    "Compare session-cookie and token auth flows",
+                    "Explain CSRF and XSS defences"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "fs-scale",
+              "title": "End-to-end performance",
+              "lessons": [
+                {
+                  "id": "fs-scale-1",
+                  "title": "Profiling a slow feature across layers",
+                  "estMinutes": 60,
+                  "status": "outline",
+                  "objectives": [
+                    "Measure frontend and backend latency separately",
+                    "Identify the dominant cost"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "fs-jobprep",
+              "title": "Full-stack interview stories",
+              "lessons": [
+                {
+                  "id": "fs-jobprep-1",
+                  "title": "STAR stories from your own projects",
+                  "estMinutes": 40,
+                  "status": "outline",
+                  "objectives": [
+                    "Structure project stories using Situation-Task-Action-Result",
+                    "Quantify outcomes honestly"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "fs-proj-1",
+          "title": "Blogging platform with auth",
+          "difficulty": "beginner",
+          "description": "Users sign up, write posts, edit and delete their own; the public sees all posts.",
+          "steps": [
+            "Schema: users, posts",
+            "Auth API + hashed passwords",
+            "Post CRUD API",
+            "UI: list, detail, editor"
+          ]
+        },
+        {
+          "id": "fs-proj-2",
+          "title": "Expense sharing app (Splitwise-lite)",
+          "difficulty": "intermediate",
+          "description": "Groups, expenses, per-member balances and settlement suggestions.",
+          "steps": [
+            "Model groups/members/expenses",
+            "Balance calculation logic with tests",
+            "API + UI",
+            "Export balances as CSV"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Walk me through what happens when a user submits a login form.",
+          "a": "The browser POSTs credentials; the server rate-limits, validates format, looks up the user, compares the password hash, then creates a session (Set-Cookie) or returns a token; the client includes it in subsequent requests; the server authorises each request against it."
+        },
+        {
+          "q": "Where should validation live?",
+          "a": "In the UI for feedback, and always again in the API — the UI can be bypassed with curl, so the server is the authority."
+        },
+        {
+          "q": "How do you keep frontend and backend types in sync?",
+          "a": "Shared type definitions (TypeScript types or an OpenAPI schema) generated from one source of truth, plus contract tests on critical endpoints."
+        }
+      ],
+      "checklist": [
+        "One deployed full-stack app with auth",
+        "Can trace and explain every request cycle in your project",
+        "SQL modelling understood, not only ORM magic",
+        "Frontend and backend tests both exist",
+        "Comfortable debugging across layers with logs"
+      ],
+      "resources": [
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/"
+        },
+        {
+          "title": "Node.js docs",
+          "url": "https://nodejs.org/docs/latest/api/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "reviewed",
+      "id": "data-analytics",
+      "name": "Data Analytics & Business Intelligence",
+      "emoji": "📊",
+      "color": "#f59e0b",
+      "tagline": "Turn raw data into decisions people can act on.",
+      "overview": [
+        "Data analysts answer questions business people actually have: why did sales drop, which segment churns most, is the new feature working. The day-to-day toolkit is SQL for extracting data, a spreadsheet or Python/R for wrangling and statistics, and a visualisation tool (Power BI, Tableau or Python) for communicating findings.",
+        "It is an accessible entry point if you like questions more than code: SQL can be learned in weeks, and analysis quality comes from framing the right question and communicating clearly more than from fancy models."
+      ],
+      "responsibilities": [
+        "Translate business questions into data queries",
+        "Clean and validate messy datasets",
+        "Build dashboards and reports",
+        "Communicate findings to non-technical stakeholders",
+        "Define metrics and track them over time"
+      ],
+      "prerequisites": [
+        "Comfort with spreadsheets",
+        "Basic maths (percentages, averages, rates)",
+        "Curiosity about why numbers move"
+      ],
+      "skills": {
+        "technical": [
+          "SQL (joins, aggregation, window functions)",
+          "Spreadsheets at power-user level",
+          "Statistics foundations",
+          "A visualisation tool",
+          "Python or R basics"
+        ],
+        "tools": [
+          "SQL database",
+          "Power BI or Tableau",
+          "Excel/Sheets",
+          "Jupyter notebooks",
+          "Git for analysis code"
+        ],
+        "soft": [
+          "Storytelling with data",
+          "Asking clarifying questions",
+          "Writing concise reports"
+        ]
+      },
+      "estHours": 380,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "da-basics",
+              "title": "Questions, data and your first insights",
+              "lessons": [
+                {
+                  "id": "da-basics-1",
+                  "title": "Framing questions the data can actually answer",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Frame a vague business question as an answerable data question",
+                    "Identify what data you would need"
+                  ],
+                  "intro": [
+                    "\"Is the business doing well?\" is not answerable; \"did weekly active users grow or shrink over the last quarter, and in which region?\" is. Analysts spend their early career learning to sharpen questions like this.",
+                    "Before touching SQL, write down: the metric, the comparison (vs last month? vs target?), the segment, and the time range. This prevents beautiful analyses of the wrong question."
+                  ],
+                  "keyPoints": [
+                    "A good data question names metric, segment, comparison and time range.",
+                    "Always ask what decision the answer will drive.",
+                    "Write the question down before writing any query.",
+                    "Garbage in, garbage out: check data quality first."
+                  ],
+                  "practice": [
+                    "Take three vague questions (\"are customers happy?\", \"is marketing working?\", \"is the app slow?\") and rewrite each as an answerable data question."
+                  ],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "da-inter",
+              "title": "Analysis in depth",
+              "lessons": [
+                {
+                  "id": "da-inter-1",
+                  "title": "Advanced SQL: window functions and CTEs",
+                  "estMinutes": 55,
+                  "status": "outline",
+                  "objectives": [
+                    "Write window functions for running totals and rankings",
+                    "Use CTEs for readable multi-step queries"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "da-adv",
+              "title": "Scale and experimentation",
+              "lessons": [
+                {
+                  "id": "da-adv-1",
+                  "title": "A/B testing and statistical significance",
+                  "estMinutes": 60,
+                  "status": "outline",
+                  "objectives": [
+                    "Design a valid A/B test",
+                    "Interpret results without common pitfalls"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "da-job",
+              "title": "Communicating like an analyst",
+              "lessons": [
+                {
+                  "id": "da-job-1",
+                  "title": "Presenting findings to stakeholders",
+                  "estMinutes": 50,
+                  "status": "reviewed",
+                  "objectives": [
+                    "Structure an insight deck (situation→insight→recommendation)",
+                    "Choose the right chart for the message"
+                  ],
+                  "intro": [
+                    "You have a dataset and a stakeholder who needs an answer. Lead with the decision, not the method: one slide situation, one slide what the data says, one slide what you recommend, then appendix with method.",
+                    "Practice the \"one-minute summary\": if you cannot state the finding in a minute, you have not finished thinking."
+                  ],
+                  "keyPoints": [
+                    "Lead with the decision, not the method.",
+                    "One chart, one message.",
+                    "State confidence and caveats honestly.",
+                    "Appendix holds method details; main deck holds the story."
+                  ],
+                  "practice": [
+                    "Summarise a real or public dataset’s top three findings in a 3-slide outline."
+                  ],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "da-proj-1",
+          "title": "Sales dashboard from a public dataset",
+          "difficulty": "beginner",
+          "description": "Load a sales CSV, answer 5 business questions in SQL, and visualise monthly trends.",
+          "steps": [
+            "Clean and load data",
+            "Write 5 analytical queries",
+            "Build a dashboard with 3 charts",
+            "Write a 1-page findings summary"
+          ]
+        },
+        {
+          "id": "da-proj-2",
+          "title": "Customer churn analysis",
+          "difficulty": "intermediate",
+          "description": "Identify which customer segments churn most and why, with evidence.",
+          "steps": [
+            "Define churn precisely",
+            "Cohort analysis by signup month",
+            "Segment by behaviour/demographics",
+            "Present top 3 drivers with charts"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Difference between INNER JOIN and LEFT JOIN?",
+          "a": "INNER JOIN returns only rows matching in both tables; LEFT JOIN returns all rows from the left table plus matching rows from the right (NULL where no match)."
+        },
+        {
+          "q": "What is a window function and when do you use one?",
+          "a": "A window function computes across a set of rows related to the current row without collapsing them (running totals, rankings, per-segment averages) — unlike GROUP BY which aggregates many rows into one."
+        },
+        {
+          "q": "How would you explain a p-value to a non-technical manager?",
+          "a": "It is the probability of seeing an effect this big in the test data if there were actually no real difference — small p-values mean the result would be surprising under \"no effect\"."
+        }
+      ],
+      "checklist": [
+        "SQL: joins, GROUP BY, window functions comfortable",
+        "One dashboard built and shared",
+        "Can explain a metric definition precisely",
+        "Statistics: distributions, confidence, significance basics",
+        "One written analysis with a clear recommendation"
+      ],
+      "resources": [
+        {
+          "title": "SQLBolt — interactive SQL lessons",
+          "url": "https://sqlbolt.com/"
+        },
+        {
+          "title": "Kaggle Learn",
+          "url": "https://www.kaggle.com/learn"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "ai-app-development",
+      "name": "AI Application Development & Automation",
+      "emoji": "🤖",
+      "color": "#06b6d4",
+      "tagline": "Build practical products on top of AI models and automation.",
+      "overview": [
+        "This track sits between raw ML engineering and product development: building applications that call existing AI models (including large language models), add retrieval from your own data, and automate workflows with reliable guardrails. It needs strong software engineering more than maths.",
+        "Demand grew with accessible LLM APIs. Entry is realistic for developers who already write APIs and want to add AI features responsibly — with evaluation, cost control and safety in mind."
+      ],
+      "responsibilities": [
+        "Integrate AI model APIs into products",
+        "Build retrieval/augmentation pipelines",
+        "Design prompt and evaluation harnesses",
+        "Add guardrails, logging and cost controls",
+        "Automate business workflows end to end"
+      ],
+      "prerequisites": [
+        "Solid backend or full-stack skills",
+        "Comfort with HTTP APIs and JSON",
+        "Understanding of data privacy basics"
+      ],
+      "skills": {
+        "technical": [
+          "LLM API integration",
+          "Retrieval-augmented generation (RAG)",
+          "Evaluation and prompt engineering",
+          "Vector databases basics",
+          "Workflow automation"
+        ],
+        "tools": [
+          "Python or Node",
+          "Model provider APIs",
+          "Vector store",
+          "Observability tools",
+          "Git"
+        ],
+        "soft": [
+          "Scoping AI features honestly",
+          "Explaining model limits to users",
+          "Safety and ethics awareness"
+        ]
+      },
+      "estHours": 420,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "aia-beg",
+              "title": "AI-powered features from API to product",
+              "lessons": [
+                {
+                  "id": "aia-beg-1",
+                  "title": "Calling a model API safely",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Integrate a chat model behind your own API",
+                    "Handle timeouts, retries and errors"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "aia-beg-2",
+                  "title": "Prompting as engineering",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Write system prompts with clear constraints",
+                    "Version and test prompts"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "aia-inter",
+              "title": "Retrieval and grounding",
+              "lessons": [
+                {
+                  "id": "aia-inter-1",
+                  "title": "RAG pipelines",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Chunk, embed and retrieve domain documents",
+                    "Ground answers and cite sources"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "aia-adv",
+              "title": "Reliable AI systems",
+              "lessons": [
+                {
+                  "id": "aia-adv-1",
+                  "title": "Evaluation harnesses",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Build regression sets for AI features",
+                    "Measure quality, cost and latency"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "aia-job",
+              "title": "AI product interviews",
+              "lessons": [
+                {
+                  "id": "aia-job-1",
+                  "title": "Explaining an AI project end to end",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Describe architecture, evals and guardrails",
+                    "Discuss failure modes you handled"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "aia-proj-1",
+          "title": "Document Q&A assistant over your own notes",
+          "difficulty": "beginner",
+          "description": "Upload text/PDF notes; ask questions; get grounded answers with sources.",
+          "steps": [
+            "Chunk + embed documents",
+            "Retrieve top-k passages",
+            "Prompt model with context",
+            "Show sources; add feedback loop"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "How do you prevent a chatbot from inventing facts?",
+          "a": "Ground it with retrieval over trusted documents, require citations, restrict answers to retrieved context, and measure hallucination rate on a fixed test set."
+        },
+        {
+          "q": "How do you control cost for an LLM feature?",
+          "a": "Cap input/output tokens, cache repeated prompts, use smaller models for simple subtasks, and monitor spend per request with alerts."
+        }
+      ],
+      "checklist": [
+        "One AI feature shipped end to end",
+        "Evaluation set and harness built",
+        "Understands RAG trade-offs",
+        "Cost and safety guardrails in place",
+        "Can explain failure modes honestly"
+      ],
+      "resources": [
+        {
+          "title": "OpenAI API docs",
+          "url": "https://platform.openai.com/docs"
+        },
+        {
+          "title": "LangChain docs",
+          "url": "https://python.langchain.com/docs/introduction/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "cybersecurity",
+      "name": "Cybersecurity",
+      "emoji": "🛡️",
+      "color": "#ef4444",
+      "tagline": "Defend systems, find weaknesses, respond to incidents.",
+      "overview": [
+        "Cybersecurity protects the confidentiality, integrity and availability of systems and data. Roles range from defensive (security operations, monitoring, hardening) to offensive (penetration testing) to governance (risk, compliance).",
+        "Entry often comes via IT support or networking roles plus self-study and labs; certifications (Security+, CySA+) help open doors. Expect continuous learning. This platform teaches defensive fundamentals and does not teach attacking systems you do not own."
+      ],
+      "responsibilities": [
+        "Monitor and triage security alerts",
+        "Harden systems and configurations",
+        "Run vulnerability scans and track remediation",
+        "Respond to incidents and document them",
+        "Educate users on safe practices"
+      ],
+      "prerequisites": [
+        "Networking fundamentals (TCP/IP, DNS, HTTP)",
+        "Comfort with Linux command line",
+        "Systems or IT support experience helps"
+      ],
+      "skills": {
+        "technical": [
+          "Network security fundamentals",
+          "Linux/Windows hardening",
+          "Vulnerability management",
+          "Logging and SIEM basics",
+          "Scripting (Python/Bash)"
+        ],
+        "tools": [
+          "Linux CLI",
+          "Wireshark (your own traffic)",
+          "Nmap (authorised targets only)",
+          "A SIEM (e.g. Elastic)",
+          "Password managers and MFA"
+        ],
+        "soft": [
+          "Clear incident reporting",
+          "Scepticism without paranoia",
+          "Ethics and legal awareness"
+        ]
+      },
+      "estHours": 500,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "cy-beg",
+              "title": "Security foundations",
+              "lessons": [
+                {
+                  "id": "cy-beg-1",
+                  "title": "CIA triad and threat modelling",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Identify assets, threats and mitigations",
+                    "Apply the CIA triad to real scenarios"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "cy-beg-2",
+                  "title": "Safe hands-on labs",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Set up an isolated practice lab",
+                    "Practise hardening a local VM"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "cy-inter",
+              "title": "Defensive operations",
+              "lessons": [
+                {
+                  "id": "cy-inter-1",
+                  "title": "Log analysis and alert triage",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Read auth and access logs",
+                    "Prioritise alerts by severity"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "cy-adv",
+              "title": "Offensive awareness",
+              "lessons": [
+                {
+                  "id": "cy-adv-1",
+                  "title": "Vulnerability assessment",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Scan and report on systems you own/authorised",
+                    "Write actionable remediation steps"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "cy-job",
+              "title": "Security interviews",
+              "lessons": [
+                {
+                  "id": "cy-job-1",
+                  "title": "Thinking like a defender in interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Structure incident-response answers",
+                    "Explain a vulnerability you fixed"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "cy-proj-1",
+          "title": "Home lab hardening project",
+          "difficulty": "beginner",
+          "description": "Build an isolated VM lab, apply a hardening checklist, and document before/after.",
+          "steps": [
+            "Snapshot a vulnerable VM",
+            "Apply CIS-style hardening",
+            "Verify with scans on your lab",
+            "Write a remediation report"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Explain the difference between authentication and authorisation.",
+          "a": "Authentication verifies who you are; authorisation decides what that identity may do. They are separate layers and both must be enforced."
+        },
+        {
+          "q": "What is the first step in incident response?",
+          "a": "Preparation, then detection and analysis: confirm the alert is real, scope it, and preserve evidence before containment."
+        },
+        {
+          "q": "How does MFA resist password theft?",
+          "a": "A stolen password alone is insufficient; the attacker also needs the second factor (phone app, hardware key), much harder to phish at scale."
+        }
+      ],
+      "checklist": [
+        "Networking fundamentals solid",
+        "Isolated lab built and used regularly",
+        "One hardening project documented",
+        "Logs and SIEM basics understood",
+        "Ethics and legal boundaries clear"
+      ],
+      "resources": [
+        {
+          "title": "OWASP — web security top ten",
+          "url": "https://owasp.org/www-project-top-ten/"
+        },
+        {
+          "title": "NIST Cybersecurity Framework",
+          "url": "https://www.nist.gov/cyberframework"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "cloud-computing",
+      "name": "Cloud Computing",
+      "emoji": "☁️",
+      "color": "#0ea5e9",
+      "tagline": "Run reliable systems on rented infrastructure — smartly.",
+      "overview": [
+        "Cloud computing means running workloads on someone else’s computers, metered by usage. Cloud engineers design how applications use compute, storage and networking in the cloud, keeping them available and cost-effective. It underpins nearly every modern software team.",
+        "A practical entry: pick one provider (AWS, Azure or GCP), get hands-on with free tiers, and automate with infrastructure-as-code. Certifications help pass résumé screens; projects prove you can actually build."
+      ],
+      "responsibilities": [
+        "Provision and manage cloud resources",
+        "Design for high availability and recovery",
+        "Monitor performance and cost",
+        "Automate infrastructure with code",
+        "Support developers with environments and pipelines"
+      ],
+      "prerequisites": [
+        "Networking basics (IP, DNS, HTTP)",
+        "Linux command line",
+        "Some scripting (Bash or Python)"
+      ],
+      "skills": {
+        "technical": [
+          "Compute, storage and networking primitives",
+          "IAM and security basics",
+          "Infrastructure as code",
+          "Monitoring and alerting",
+          "Cost management"
+        ],
+        "tools": [
+          "One cloud console + CLI",
+          "Terraform or provider IaC",
+          "Docker basics",
+          "Git",
+          "Monitoring dashboards"
+        ],
+        "soft": [
+          "Cost awareness as an engineering value",
+          "Writing runbooks",
+          "Communicating outages clearly"
+        ]
+      },
+      "estHours": 450,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "cl-beg",
+              "title": "Cloud fundamentals",
+              "lessons": [
+                {
+                  "id": "cl-beg-1",
+                  "title": "How the cloud actually works",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Explain regions, AZs and shared responsibility",
+                    "Compare IaaS/PaaS/SaaS"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "cl-beg-2",
+                  "title": "Your first VM and storage",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Launch a VM and object storage bucket",
+                    "Apply least-privilege access"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "cl-inter",
+              "title": "Designing for reliability",
+              "lessons": [
+                {
+                  "id": "cl-inter-1",
+                  "title": "High availability patterns",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Design across availability zones",
+                    "Plan backups and recovery drills"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "cl-adv",
+              "title": "Infrastructure as code",
+              "lessons": [
+                {
+                  "id": "cl-adv-1",
+                  "title": "Terraform fundamentals",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Write, plan and apply infrastructure",
+                    "Manage state safely"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "cl-job",
+              "title": "Cloud interviews",
+              "lessons": [
+                {
+                  "id": "cl-job-1",
+                  "title": "Architecting for interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Structure a cloud design answer",
+                    "Discuss cost alongside reliability"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "cl-proj-1",
+          "title": "Static site + API on cloud with CI/CD",
+          "difficulty": "beginner",
+          "description": "Host a static site and a small API on your chosen cloud, deployed via CI.",
+          "steps": [
+            "Provision with IaC",
+            "Deploy static assets",
+            "Deploy API with managed runtime",
+            "Add monitoring and cost alerts"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is the shared responsibility model?",
+          "a": "The provider secures the cloud infrastructure; you secure what you put in it — configs, data, access controls. Misunderstanding this causes most cloud breaches."
+        },
+        {
+          "q": "Difference between scalability and elasticity?",
+          "a": "Scalability is handling growth; elasticity is automatic scaling up AND down with demand to control cost."
+        },
+        {
+          "q": "What is high availability?",
+          "a": "Designing so the system keeps working when components fail, usually by removing single points of failure and running across multiple zones."
+        }
+      ],
+      "checklist": [
+        "One cloud provider used hands-on",
+        "IaC project committed to Git",
+        "Monitoring and cost alerts configured",
+        "Backups tested with a restore drill",
+        "One associate-level certification studied for"
+      ],
+      "resources": [
+        {
+          "title": "AWS free tier",
+          "url": "https://aws.amazon.com/free/"
+        },
+        {
+          "title": "Terraform docs",
+          "url": "https://developer.hashicorp.com/terraform/docs"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "devops",
+      "name": "DevOps & Platform Engineering",
+      "emoji": "🔁",
+      "color": "#64748b",
+      "tagline": "Automate the path from code to production, safely.",
+      "overview": [
+        "DevOps joins development and operations: building the pipelines, environments and tooling that let teams ship software quickly and reliably. Platform engineering extends this into internal products that other developers self-serve.",
+        "The field rewards breadth: scripting, Linux, networking, cloud and developer empathy. An entry path is through backend, IT support or QA roles while picking up CI/CD, containers and infrastructure-as-code on the side."
+      ],
+      "responsibilities": [
+        "Build and maintain CI/CD pipelines",
+        "Manage containerised workloads",
+        "Automate infrastructure",
+        "Improve reliability with monitoring and on-call practices",
+        "Support developer experience"
+      ],
+      "prerequisites": [
+        "Strong scripting (Bash/Python)",
+        "Linux and networking comfort",
+        "Some backend or systems experience"
+      ],
+      "skills": {
+        "technical": [
+          "CI/CD systems",
+          "Containers and Kubernetes basics",
+          "Infrastructure as code",
+          "Observability (metrics, logs, traces)",
+          "Incident response"
+        ],
+        "tools": [
+          "GitHub Actions or GitLab CI",
+          "Docker + Kubernetes",
+          "Terraform",
+          "Prometheus/Grafana",
+          "Shell scripting"
+        ],
+        "soft": [
+          "Blameless post-mortem facilitation",
+          "Documentation as a product",
+          "Empathy for developers"
+        ]
+      },
+      "estHours": 520,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "dv-beg",
+              "title": "Delivery fundamentals",
+              "lessons": [
+                {
+                  "id": "dv-beg-1",
+                  "title": "CI/CD from first principles",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Build a pipeline that tests and deploys automatically",
+                    "Understand gates and rollbacks"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "dv-beg-2",
+                  "title": "Containers basics",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Containerise an app with Docker",
+                    "Explain images vs containers"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "dv-inter",
+              "title": "Orchestration",
+              "lessons": [
+                {
+                  "id": "dv-inter-1",
+                  "title": "Kubernetes essentials",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Deploy and scale with Kubernetes",
+                    "Debug a failing pod"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "dv-adv",
+              "title": "Reliability engineering",
+              "lessons": [
+                {
+                  "id": "dv-adv-1",
+                  "title": "SLOs and observability",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Define service level objectives",
+                    "Build a useful dashboard and alerts"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "dv-job",
+              "title": "DevOps interviews",
+              "lessons": [
+                {
+                  "id": "dv-job-1",
+                  "title": "Explaining a delivery improvement",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Quantify a pipeline improvement you made",
+                    "Discuss failure and rollback honestly"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "dv-proj-1",
+          "title": "Full CI/CD pipeline for a web app",
+          "difficulty": "intermediate",
+          "description": "Pipeline: lint, test, build container, deploy to a cloud VM with rollback.",
+          "steps": [
+            "Containerise the app",
+            "CI: lint + test on push",
+            "CD: deploy with health checks",
+            "Add rollback and notifications"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is infrastructure as code and why does it matter?",
+          "a": "Defining infrastructure in version-controlled files instead of clicking in a console: reproducible, reviewable, diffable environments."
+        },
+        {
+          "q": "Blue-green vs canary deployments?",
+          "a": "Blue-green switches all traffic to a new environment at once (fast rollback, needs double capacity); canary shifts traffic gradually (safer, slower)."
+        },
+        {
+          "q": "What makes a good alert?",
+          "a": "It is actionable, tied to a user-facing problem, has a documented response, and fires rarely enough that people still pay attention."
+        }
+      ],
+      "checklist": [
+        "CI/CD pipeline built end to end",
+        "Docker and one orchestrator used hands-on",
+        "IaC for a real environment",
+        "Monitoring and alerting with clear runbooks",
+        "One blameless post-mortem written"
+      ],
+      "resources": [
+        {
+          "title": "GitHub Actions docs",
+          "url": "https://docs.github.com/en/actions"
+        },
+        {
+          "title": "Kubernetes docs",
+          "url": "https://kubernetes.io/docs/home/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "testing-qa",
+      "name": "Software Testing & QA Automation",
+      "emoji": "🧪",
+      "color": "#84cc16",
+      "tagline": "Prove software works — and keep proving it automatically.",
+      "overview": [
+        "QA engineers protect users by finding defects before release and building automation that catches regressions forever. Modern QA blends manual exploratory testing with coded automation, and increasingly shifts left into design and requirements reviews.",
+        "It is one of the most accessible software entries: strong analytical thinking plus one scripting language and a test framework can qualify you for junior roles, especially with domain curiosity."
+      ],
+      "responsibilities": [
+        "Design test plans from requirements",
+        "Perform exploratory testing",
+        "Build and maintain automated test suites",
+        "Report defects clearly",
+        "Champion quality in releases"
+      ],
+      "prerequisites": [
+        "Comfort with one programming language",
+        "Analytical, detail-oriented mindset",
+        "Clear written communication"
+      ],
+      "skills": {
+        "technical": [
+          "Test design techniques",
+          "UI automation (Playwright/Selenium)",
+          "API testing (Postman/code)",
+          "SQL for data checks",
+          "CI integration"
+        ],
+        "tools": [
+          "Playwright or Cypress",
+          "Postman or REST-assured",
+          "Git",
+          "A test management tool",
+          "Bug trackers"
+        ],
+        "soft": [
+          "Writing reproducible bug reports",
+          "Risk-based thinking",
+          "Advocating for quality politely"
+        ]
+      },
+      "estHours": 360,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "qa-beg",
+              "title": "Testing foundations",
+              "lessons": [
+                {
+                  "id": "qa-beg-1",
+                  "title": "Test design that finds real bugs",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Apply boundary and equivalence partitioning",
+                    "Write clear, reproducible bug reports"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "qa-beg-2",
+                  "title": "Your first automated test",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Write a UI test with Playwright",
+                    "Run it in CI"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "qa-inter",
+              "title": "Automation at scale",
+              "lessons": [
+                {
+                  "id": "qa-inter-1",
+                  "title": "Flake-free suites",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Diagnose and fix flaky tests",
+                    "Structure suites for speed"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "qa-adv",
+              "title": "Quality engineering",
+              "lessons": [
+                {
+                  "id": "qa-adv-1",
+                  "title": "Testing strategy and risk",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Design a risk-based test strategy",
+                    "Shift quality left into requirements"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "qa-job",
+              "title": "QA interviews",
+              "lessons": [
+                {
+                  "id": "qa-job-1",
+                  "title": "Demonstrating testing thinking live",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Explore an unfamiliar app and narrate findings",
+                    "Structure a test plan on the spot"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "qa-proj-1",
+          "title": "Automated test suite for a public website",
+          "difficulty": "beginner",
+          "description": "Write 20 Playwright tests covering a real site’s critical journeys; run in CI.",
+          "steps": [
+            "Map critical user journeys",
+            "Write stable selectors and tests",
+            "Add reporting and CI run",
+            "Triage and fix flakes"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is exploratory testing?",
+          "a": "Simultaneous learning, design and execution of tests without a fixed script — testers use domain knowledge and curiosity to find issues scripted tests miss."
+        },
+        {
+          "q": "How do you handle a flaky test?",
+          "a": "Quarantine it so it blocks no one, reproduce the root cause (timing, data, order dependence), fix properly, and track flake rate as a metric."
+        },
+        {
+          "q": "What belongs in a good bug report?",
+          "a": "Clear title, environment/version, exact steps to reproduce, expected vs actual, severity, and evidence (logs/screenshots)."
+        }
+      ],
+      "checklist": [
+        "Test design techniques applied to real apps",
+        "UI automation suite in CI",
+        "API testing with code",
+        "Bug reports a developer can act on immediately",
+        "One testing portfolio write-up"
+      ],
+      "resources": [
+        {
+          "title": "Playwright docs",
+          "url": "https://playwright.dev/"
+        },
+        {
+          "title": "Ministry of Testing",
+          "url": "https://www.ministryoftesting.com/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "data-engineering",
+      "name": "Database Development & Data Engineering",
+      "emoji": "🏗️",
+      "color": "#a855f7",
+      "tagline": "Design the pipelines and stores that make analytics possible.",
+      "overview": [
+        "Data engineers build and maintain the systems that collect, store, transform and serve data: warehouses, pipelines, orchestration and quality checks. Analysts and ML engineers are your customers; reliability and correctness are your product.",
+        "A realistic entry comes from backend or analytics backgrounds: strong SQL plus Python, then batch/stream processing tools (dbt, Airflow, Spark) and warehouse platforms (Snowflake, BigQuery, Redshift)."
+      ],
+      "responsibilities": [
+        "Design data models for analytics",
+        "Build and schedule data pipelines",
+        "Ensure data quality and lineage",
+        "Optimise storage and query performance",
+        "Govern access and privacy"
+      ],
+      "prerequisites": [
+        "Strong SQL",
+        "Python programming",
+        "Backend or analytics experience helps"
+      ],
+      "skills": {
+        "technical": [
+          "SQL advanced (modelling, performance)",
+          "Orchestration (Airflow/Dagster)",
+          "Transformation (dbt)",
+          "Batch and streaming concepts",
+          "Warehouse platforms"
+        ],
+        "tools": [
+          "Python",
+          "dbt",
+          "Airflow",
+          "A cloud warehouse",
+          "Git"
+        ],
+        "soft": [
+          "Data contracts with stakeholders",
+          "Writing clear runbooks",
+          "Thinking in SLAs"
+        ]
+      },
+      "estHours": 480,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "de-beg",
+              "title": "Data modelling foundations",
+              "lessons": [
+                {
+                  "id": "de-beg-1",
+                  "title": "Dimensional modelling basics",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Design star schemas",
+                    "Choose keys and grain deliberately"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "de-beg-2",
+                  "title": "Pipeline anatomy",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Build an ELT pipeline with tests",
+                    "Schedule and monitor it"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "de-inter",
+              "title": "Modern data stack",
+              "lessons": [
+                {
+                  "id": "de-inter-1",
+                  "title": "dbt and transformation",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Model layered transformations in dbt",
+                    "Add data tests and documentation"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "de-adv",
+              "title": "Scale and streaming",
+              "lessons": [
+                {
+                  "id": "de-adv-1",
+                  "title": "Streaming fundamentals",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Describe event streams vs batches",
+                    "Design idempotent stream processing"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "de-job",
+              "title": "Data engineering interviews",
+              "lessons": [
+                {
+                  "id": "de-job-1",
+                  "title": "SQL and modelling interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Solve complex SQL under time pressure",
+                    "Defend a modelling choice"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "de-proj-1",
+          "title": "Analytics pipeline from raw data to dashboard",
+          "difficulty": "intermediate",
+          "description": "Ingest raw CSVs/APIs, transform with dbt, expose clean tables to a BI tool.",
+          "steps": [
+            "Extract and land raw data",
+            "Model in dbt with tests",
+            "Schedule with Airflow",
+            "Document lineage"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Star schema vs snowflake schema?",
+          "a": "Star schema keeps dimension tables denormalised for simple, fast queries; snowflake normalises dimensions to save space at the cost of more joins."
+        },
+        {
+          "q": "What is idempotency in pipelines?",
+          "a": "Re-running a pipeline produces the same result — achieved by deterministic transformations and upserts keyed on stable identifiers."
+        },
+        {
+          "q": "How do you ensure data quality?",
+          "a": "Tests on rows, ranges and relationships (e.g. dbt tests), freshness checks, anomaly detection, and clear ownership when data breaks."
+        }
+      ],
+      "checklist": [
+        "SQL advanced modelling comfortable",
+        "One orchestrated pipeline in a production-like setup",
+        "Transformation layer with tests (dbt or similar)",
+        "Data quality checks automated",
+        "Can explain lineage of any table you own"
+      ],
+      "resources": [
+        {
+          "title": "dbt docs",
+          "url": "https://docs.getdbt.com/"
+        },
+        {
+          "title": "Apache Airflow docs",
+          "url": "https://airflow.apache.org/docs/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "mobile-development",
+      "name": "Mobile App Development",
+      "emoji": "📱",
+      "color": "#f97316",
+      "tagline": "Ship apps people carry in their pockets.",
+      "overview": [
+        "Mobile developers build applications for phones and tablets, either natively (Swift/Kotlin) or cross-platform (Flutter, React Native). Mobile work blends UI craft with platform constraints: battery, screen sizes, offline states and strict app-store review.",
+        "Entry paths differ: native requires learning a platform’s language and tooling; cross-platform lets web developers move faster with existing JavaScript skills. Both need real published (or well-tested) projects to show."
+      ],
+      "responsibilities": [
+        "Build responsive mobile interfaces",
+        "Integrate with backend APIs",
+        "Handle offline and background states",
+        "Meet platform performance expectations",
+        "Navigate app-store release processes"
+      ],
+      "prerequisites": [
+        "Programming fundamentals",
+        "Either Swift/Kotlin basics or JavaScript for cross-platform",
+        "Patience with device-specific quirks"
+      ],
+      "skills": {
+        "technical": [
+          "Platform UI frameworks",
+          "State management",
+          "Local storage and offline sync",
+          "Push notifications basics",
+          "App store distribution"
+        ],
+        "tools": [
+          "Xcode or Android Studio",
+          "Flutter or React Native",
+          "Git",
+          "A backend API",
+          "Device emulators + real devices"
+        ],
+        "soft": [
+          "Design collaboration",
+          "Writing store listings",
+          "Prioritising battery/performance trade-offs"
+        ]
+      },
+      "estHours": 470,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "mob-beg",
+              "title": "Mobile foundations",
+              "lessons": [
+                {
+                  "id": "mob-beg-1",
+                  "title": "Platform choice and first app",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Compare native vs cross-platform honestly",
+                    "Build and run a starter app on a device"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "mob-beg-2",
+                  "title": "UI and navigation",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Implement common navigation patterns",
+                    "Handle screen sizes and orientation"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "mob-inter",
+              "title": "Data and state",
+              "lessons": [
+                {
+                  "id": "mob-inter-1",
+                  "title": "Offline-first thinking",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Cache data locally and sync",
+                    "Handle conflict resolution basics"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "mob-adv",
+              "title": "Performance and release",
+              "lessons": [
+                {
+                  "id": "mob-adv-1",
+                  "title": "Profiling and store release",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Profile jank and memory",
+                    "Prepare icons, listings and release builds"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "mob-job",
+              "title": "Mobile interviews",
+              "lessons": [
+                {
+                  "id": "mob-job-1",
+                  "title": "Demo-driven interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Record a crisp app walkthrough",
+                    "Explain one architecture decision"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "mob-proj-1",
+          "title": "Habit tracker app with offline support",
+          "difficulty": "beginner",
+          "description": "Daily habit check-ins stored locally, charts of streaks, works fully offline.",
+          "steps": [
+            "Data model + local storage",
+            "Check-in UI with streak logic",
+            "Charts screen",
+            "Test on two screen sizes"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Native vs cross-platform — when which?",
+          "a": "Native for maximum platform fidelity/performance; cross-platform (Flutter/RN) for speed and shared code across iOS/Android, with some trade-offs in deep platform integration."
+        },
+        {
+          "q": "How do you handle app state?",
+          "a": "With a predictable pattern (provider, bloc, Redux-like store) separating UI state from business logic, so screens are testable and debuggable."
+        },
+        {
+          "q": "What causes app store rejections?",
+          "a": "Crashes on review, broken links, misleading metadata, privacy violations (missing permission explanations), and policy non-compliance around payments or content."
+        }
+      ],
+      "checklist": [
+        "One app run on a real device",
+        "Offline/local storage handled deliberately",
+        "State management pattern applied",
+        "Performance profiled and improved once",
+        "Store-ready assets prepared"
+      ],
+      "resources": [
+        {
+          "title": "Flutter docs",
+          "url": "https://docs.flutter.dev/"
+        },
+        {
+          "title": "React Native docs",
+          "url": "https://reactnative.dev/docs/getting-started"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career"
+      ],
+      "status": "outline",
+      "id": "it-support-networking",
+      "name": "IT Support & Networking",
+      "emoji": "🖧",
+      "color": "#14b8a6",
+      "tagline": "Keep people and systems connected and working.",
+      "overview": [
+        "IT support and networking professionals are the backbone of every organisation: they resolve user issues, manage hardware and accounts, and keep networks running. It is the most common on-ramp into a tech career, with clear progression into sysadmin, security or cloud roles.",
+        "Core skills are troubleshooting method, networking fundamentals (TCP/IP, DNS, DHCP), ticketing discipline and communication under pressure. Certifications like CompTIA A+ and Network+ are recognised entry credentials."
+      ],
+      "responsibilities": [
+        "Resolve user tickets promptly and clearly",
+        "Manage accounts, devices and permissions",
+        "Monitor and troubleshoot networks",
+        "Document fixes and known issues",
+        "Onboard and offboard users securely"
+      ],
+      "prerequisites": [
+        "Strong troubleshooting temperament",
+        "Willingness to learn command line",
+        "Clear, patient communication"
+      ],
+      "skills": {
+        "technical": [
+          "TCP/IP, DNS, DHCP, VPN",
+          "Windows/macOS/Linux admin basics",
+          "Ticketing systems",
+          "Scripting for repetitive tasks",
+          "Security hygiene"
+        ],
+        "tools": [
+          "Active Directory basics",
+          "Ticketing (Jira/ServiceNow)",
+          "Network diagnostics (ping, traceroute)",
+          "Remote support tools",
+          "PowerShell or Bash"
+        ],
+        "soft": [
+          "Explaining tech to non-technical users",
+          "Prioritising under pressure",
+          "Writing documentation people read"
+        ]
+      },
+      "estHours": 300,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "it-beg",
+              "title": "Support fundamentals",
+              "lessons": [
+                {
+                  "id": "it-beg-1",
+                  "title": "Structured troubleshooting",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Apply a repeatable diagnostic method",
+                    "Write clear ticket updates"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "it-beg-2",
+                  "title": "Networking basics",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Explain IP, DNS and DHCP flow",
+                    "Diagnose common connectivity issues"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "it-inter",
+              "title": "Systems administration",
+              "lessons": [
+                {
+                  "id": "it-inter-1",
+                  "title": "User and device management",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Manage accounts and permissions safely",
+                    "Automate with PowerShell/Bash"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "it-adv",
+              "title": "Growth into ops",
+              "lessons": [
+                {
+                  "id": "it-adv-1",
+                  "title": "From support to sysadmin/cloud",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Script away repetitive tickets",
+                    "Build a home lab for practice"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "it-job",
+              "title": "Support interviews",
+              "lessons": [
+                {
+                  "id": "it-job-1",
+                  "title": "Scenario-based interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Talk through a live triage out loud",
+                    "Show empathy and structure together"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "it-proj-1",
+          "title": "Home network setup and documentation",
+          "difficulty": "beginner",
+          "description": "Configure a segmented home network; document topology, addressing and troubleshooting steps.",
+          "steps": [
+            "Map current network",
+            "Segment guest/IoT networks",
+            "Document IP scheme and rules",
+            "Write a troubleshooting runbook"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "User says \"the internet is down\" — first steps?",
+          "a": "Confirm scope (one user or many), check physical links and IP config, test name resolution vs connectivity, then escalate with findings if it is network-wide."
+        },
+        {
+          "q": "What is DNS and what fails when it breaks?",
+          "a": "The system translating domain names to IP addresses; when it fails, sites \"stop working\" by name even though raw IP connectivity may still work."
+        },
+        {
+          "q": "How do you prioritise a full ticket queue?",
+          "a": "By impact and urgency: many users blocked > one user blocked > individual annoyance; communicate ETAs so nobody is surprised."
+        }
+      ],
+      "checklist": [
+        "Networking fundamentals solid (TCP/IP, DNS, DHCP)",
+        "One OS administered comfortably",
+        "Scripting a repetitive task automated",
+        "Documentation written for a real fix",
+        "A+ or Network+ studied (optional but helpful)"
+      ],
+      "resources": [
+        {
+          "title": "CompTIA IT certifications",
+          "url": "https://www.comptia.org/en-us/it-certifications/"
+        },
+        {
+          "title": "Cloudflare Learning — what is DNS",
+          "url": "https://www.cloudflare.com/learning/dns/what-is-dns/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-web"
+      ],
+      "status": "outline",
+      "id": "ui-ux-design",
+      "name": "UI/UX & Product Design",
+      "emoji": "✏️",
+      "color": "#ec4899",
+      "tagline": "Design products that are usable, useful and desirable.",
+      "overview": [
+        "Product designers own how a product looks, feels and flows: research, information architecture, interaction design, visual design and prototyping. UX is the structure and usability; UI is the visual layer; real products need both.",
+        "A portfolio of end-to-end case studies matters far more than degrees: show the problem, your research, iterations with rationale, and the shipped outcome. Designers who can also implement (HTML/CSS, basic front-end) collaborate better with engineers."
+      ],
+      "responsibilities": [
+        "Run user research and synthesize findings",
+        "Design flows, wireframes and prototypes",
+        "Build and maintain design systems",
+        "Usability-test and iterate",
+        "Collaborate daily with engineering and product"
+      ],
+      "prerequisites": [
+        "Visual fundamentals (hierarchy, spacing, type)",
+        "Empathy and curiosity about users",
+        "Tools: Figma or similar"
+      ],
+      "skills": {
+        "technical": [
+          "Interaction design",
+          "Information architecture",
+          "Visual design systems",
+          "Prototyping",
+          "Usability testing"
+        ],
+        "tools": [
+          "Figma",
+          "Prototyping tools",
+          "Analytics tools",
+          "Design systems",
+          "Basic HTML/CSS"
+        ],
+        "soft": [
+          "Empathetic interviews",
+          "Defending design decisions with evidence",
+          "Receiving critique gracefully"
+        ]
+      },
+      "estHours": 400,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "ux-beg",
+              "title": "Design foundations",
+              "lessons": [
+                {
+                  "id": "ux-beg-1",
+                  "title": "Visual hierarchy and layout",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Apply hierarchy, spacing and type systematically",
+                    "Critique a screen using principles"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "ux-beg-2",
+                  "title": "Research basics",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Run a short user interview",
+                    "Synthesize findings into insights"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "ux-inter",
+              "title": "Interaction design",
+              "lessons": [
+                {
+                  "id": "ux-inter-1",
+                  "title": "Flows and prototypes",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Map a task flow end to end",
+                    "Prototype and usability-test it"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "ux-adv",
+              "title": "Design systems",
+              "lessons": [
+                {
+                  "id": "ux-adv-1",
+                  "title": "Components and tokens",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Build a small component library",
+                    "Document usage rules"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "ux-job",
+              "title": "Design interviews",
+              "lessons": [
+                {
+                  "id": "ux-job-1",
+                  "title": "Portfolio case studies",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Structure a case study: problem→research→design→outcome",
+                    "Present and defend decisions"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "ux-proj-1",
+          "title": "Redesign a confusing flow you use daily",
+          "difficulty": "beginner",
+          "description": "Pick a real pain point; research, redesign, prototype and usability-test it.",
+          "steps": [
+            "Identify and scope the problem",
+            "Interview 3–5 users",
+            "Redesign with rationale",
+            "Usability-test and iterate"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "Walk me through a case study.",
+          "a": "Problem and constraints → research insights → design decisions and alternatives considered → validation results → shipped outcome and learnings."
+        },
+        {
+          "q": "How do you handle disagreement with an engineer?",
+          "a": "Understand the constraint first, then iterate on the design within it; use data or a quick test to break ties instead of authority."
+        },
+        {
+          "q": "What makes a good design system?",
+          "a": "Consistent tokens and components, clear documentation, contribution rules, and adoption support — a product, not a static file."
+        }
+      ],
+      "checklist": [
+        "3+ end-to-end case studies",
+        "Usability testing done and shown",
+        "Figma proficiency with components/tokens",
+        "One design system contributed to",
+        "Basic HTML/CSS literacy"
+      ],
+      "resources": [
+        {
+          "title": "Nielsen Norman Group — articles",
+          "url": "https://www.nngroup.com/articles/"
+        },
+        {
+          "title": "Figma help center",
+          "url": "https://help.figma.com/"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career"
+      ],
+      "status": "outline",
+      "id": "business-analysis",
+      "name": "Business Analysis & Product Operations",
+      "emoji": "📈",
+      "color": "#eab308",
+      "tagline": "Bridge between what the business needs and what gets built.",
+      "overview": [
+        "Business analysts translate business goals into requirements engineers can build, and keep stakeholders aligned. Product operations supports the product org itself: process, data, tooling and rituals that help product teams move faster.",
+        "This is a strong path for communicators who like structure and problem framing more than coding — though technical literacy dramatically increases effectiveness. Domain expertise (finance, healthcare, retail) compounds over time."
+      ],
+      "responsibilities": [
+        "Elicit and document requirements",
+        "Map and improve processes",
+        "Analyse data to support decisions",
+        "Facilitate alignment across teams",
+        "Support product operations and reporting"
+      ],
+      "prerequisites": [
+        "Excellent written and verbal communication",
+        "Comfort with spreadsheets and basic analysis",
+        "Domain curiosity"
+      ],
+      "skills": {
+        "technical": [
+          "Requirements elicitation and documentation",
+          "Process mapping (BPMN basics)",
+          "SQL/spreadsheet analysis",
+          "Product metrics",
+          "Tooling (Jira, Confluence)"
+        ],
+        "tools": [
+          "Jira/Confluence",
+          "SQL",
+          "Spreadsheets",
+          "Diagramming tools",
+          "BI dashboards"
+        ],
+        "soft": [
+          "Active listening",
+          "Facilitation",
+          "Saying no with alternatives",
+          "Stakeholder management"
+        ]
+      },
+      "estHours": 320,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "ba-beg",
+              "title": "Analysis foundations",
+              "lessons": [
+                {
+                  "id": "ba-beg-1",
+                  "title": "Requirements that engineers trust",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Elicit real needs vs stated wants",
+                    "Write testable requirement statements"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "ba-beg-2",
+                  "title": "Process mapping",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Map an \"as-is\" process",
+                    "Identify bottlenecks and waste"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "ba-inter",
+              "title": "Data-informed analysis",
+              "lessons": [
+                {
+                  "id": "ba-inter-1",
+                  "title": "Metrics and reporting",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Define a metric tree for a product",
+                    "Build a small dashboard"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "ba-adv",
+              "title": "Product operations",
+              "lessons": [
+                {
+                  "id": "ba-adv-1",
+                  "title": "Running the product engine",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Improve a ritual (e.g. planning) with data",
+                    "Design a reporting cadence"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "ba-job",
+              "title": "BA interviews",
+              "lessons": [
+                {
+                  "id": "ba-job-1",
+                  "title": "Case and competency interviews",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Structure a business case answer",
+                    "Demonstrate stakeholder scenarios"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "ba-proj-1",
+          "title": "Requirements pack for a small app",
+          "difficulty": "beginner",
+          "description": "Take a vague idea; produce vision, user stories, acceptance criteria and a process map.",
+          "steps": [
+            "Stakeholder interviews",
+            "Process map as-is/to-be",
+            "User stories with acceptance criteria",
+            "Prioritised backlog with rationale"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "How do you handle conflicting stakeholder priorities?",
+          "a": "Surface the conflict with data on goals/impact, facilitate a trade-off discussion against agreed criteria, and document the decision with rationale."
+        },
+        {
+          "q": "What makes a good user story?",
+          "a": "A clear user/value framing plus testable acceptance criteria — \"As a X, I want Y so that Z\" with conditions of satisfaction everyone can verify."
+        },
+        {
+          "q": "How do you know requirements are complete?",
+          "a": "They are testable, unambiguous to developers, cover edge cases and errors, and have sign-off from the people accountable for the outcome."
+        }
+      ],
+      "checklist": [
+        "One complete requirements pack written",
+        "Process mapping applied to a real process",
+        "SQL/spreadsheet analysis demonstrated",
+        "Facilitation experience (even meetups)",
+        "Domain knowledge developed deliberately"
+      ],
+      "resources": [
+        {
+          "title": "IIBA — business analysis resources",
+          "url": "https://www.iiba.org/"
+        },
+        {
+          "title": "Atlassian — user story guide",
+          "url": "https://www.atlassian.com/agile/project-management/user-stories"
+        }
+      ]
+    },
+    {
+      "sharedModules": [
+        "foundations-tech-career",
+        "foundations-programming"
+      ],
+      "status": "outline",
+      "id": "ai-ml",
+      "name": "Artificial Intelligence & Machine Learning",
+      "emoji": "🧠",
+      "color": "#8b5cf6",
+      "tagline": "Teach computers to learn patterns from data.",
+      "overview": [
+        "Machine learning engineers build systems that improve from data: predicting churn, ranking search results, detecting fraud, transcribing speech. The role blends software engineering with statistics and careful experiment design.",
+        "Entry is demanding on maths (linear algebra, probability, calculus basics) and Python, but realistic through data analytics or backend routes plus focused ML study. Portfolios of well-evaluated models matter more than certificates."
+      ],
+      "responsibilities": [
+        "Frame problems as learnable prediction tasks",
+        "Prepare and validate datasets",
+        "Train, evaluate and tune models",
+        "Deploy models with monitoring for drift",
+        "Communicate uncertainty and limits honestly"
+      ],
+      "prerequisites": [
+        "Strong Python (incl. NumPy/pandas basics)",
+        "Statistics and probability foundations",
+        "Linear algebra and calculus basics",
+        "SQL comfort"
+      ],
+      "skills": {
+        "technical": [
+          "Supervised/unsupervised learning concepts",
+          "Model evaluation (train/val/test, cross-validation)",
+          "Feature engineering",
+          "Deep learning basics (PyTorch or TensorFlow)",
+          "MLOps basics (versioning, serving, monitoring)"
+        ],
+        "tools": [
+          "Python + scikit-learn",
+          "PyTorch or TensorFlow",
+          "Jupyter notebooks",
+          "Git + experiment tracking",
+          "A cloud GPU option for larger training"
+        ],
+        "soft": [
+          "Scepticism about metrics",
+          "Explaining model behaviour to non-experts",
+          "Ethics and bias awareness"
+        ]
+      },
+      "estHours": 600,
+      "levels": [
+        {
+          "id": "Beginner",
+          "title": "Beginner",
+          "modules": [
+            {
+              "id": "ml-beg",
+              "title": "ML foundations",
+              "lessons": [
+                {
+                  "id": "ml-beg-1",
+                  "title": "How learning from data works",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Explain train/validation/test splits",
+                    "Describe overfitting and how to detect it"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                },
+                {
+                  "id": "ml-beg-2",
+                  "title": "Your first classifier end to end",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Train and evaluate a scikit-learn model",
+                    "Report precision, recall and a confusion matrix"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Intermediate",
+          "title": "Intermediate",
+          "modules": [
+            {
+              "id": "ml-inter",
+              "title": "Models that generalise",
+              "lessons": [
+                {
+                  "id": "ml-inter-1",
+                  "title": "Regularisation and validation",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Tune models with cross-validation",
+                    "Compare models fairly on held-out data"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Advanced",
+          "title": "Advanced",
+          "modules": [
+            {
+              "id": "ml-adv",
+              "title": "Deep learning and deployment",
+              "lessons": [
+                {
+                  "id": "ml-adv-1",
+                  "title": "Neural network basics",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Train a small neural net on a real dataset",
+                    "Monitor training and prevent overfitting"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Job preparation",
+          "title": "Job preparation",
+          "modules": [
+            {
+              "id": "ml-job",
+              "title": "ML interviews",
+              "lessons": [
+                {
+                  "id": "ml-job-1",
+                  "title": "Explaining a model project end to end",
+                  "estMinutes": 45,
+                  "status": "outline",
+                  "objectives": [
+                    "Walk through data, features, evaluation and deployment",
+                    "Discuss what you would try next"
+                  ],
+                  "intro": [],
+                  "keyPoints": [],
+                  "practice": [],
+                  "resources": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "ml-proj-1",
+          "title": "Tabular prediction with honest evaluation",
+          "difficulty": "beginner",
+          "description": "Pick a public tabular dataset; build a classifier with a proper held-out test set and a short write-up.",
+          "steps": [
+            "Define the prediction task",
+            "Clean and split data correctly",
+            "Train baselines then iterate",
+            "Write up metrics with caveats"
+          ]
+        }
+      ],
+      "interview": [
+        {
+          "q": "What is overfitting and how do you detect it?",
+          "a": "The model memorises training noise instead of general patterns; detected when training performance is much better than validation/test performance on unseen data."
+        },
+        {
+          "q": "Why split data into train/validation/test?",
+          "a": "Train fits the model, validation guides choices (hyperparameters, model selection), and a held-out test estimates real-world performance once — keeping each role separate avoids optimistic bias."
+        },
+        {
+          "q": "Precision vs recall — when does each matter?",
+          "a": "Precision: of flagged items, how many were right (matters when false alarms are costly). Recall: of real positives, how many were caught (matters when misses are costly, e.g. disease screening)."
+        }
+      ],
+      "checklist": [
+        "Python + statistics foundations solid",
+        "One end-to-end model with honest held-out evaluation",
+        "Can explain overfitting and validation clearly",
+        "Deep learning basics attempted hands-on",
+        "Model limitations communicated without hype"
+      ],
+      "resources": [
+        {
+          "title": "Google Machine Learning crash course",
+          "url": "https://developers.google.com/machine-learning/crash-course"
+        },
+        {
+          "title": "scikit-learn tutorials",
+          "url": "https://scikit-learn.org/stable/tutorial/index.html"
+        }
+      ]
+    }
+  ]
+}

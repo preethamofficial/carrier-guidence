@@ -10,6 +10,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CURRICULUM = path.join(ROOT, 'CodeAtlas_Website', 'data', 'curriculum.json');
+const CAREERS = path.join(ROOT, 'CodeAtlas_Website', 'data', 'careers.json');
 const OUT = path.join(ROOT, 'docs', 'CURRICULUM_COVERAGE.md');
 
 const REQUIRED_TOPIC_FIELDS = ['id', 'title', 'level', 'definition', 'analogy', 'keyPoints', 'basicExamples', 'guidedExamples', 'advancedExamples', 'practice', 'interview', 'intro'];
@@ -82,6 +83,43 @@ lines.push('## Status legend');
 lines.push('');
 lines.push('Statuses apply to *career tracks* (see `data/careers.json`): `outline` → `draft` → `reviewed` → `published`. A track is only `published` when every required section exists and passes validation. Language topics use the substantive-content metric above.');
 lines.push('');
+
+lines.push('## Career tracks');
+lines.push('');
+try {
+  const careers = JSON.parse(fs.readFileSync(CAREERS, 'utf8'));
+  lines.push(`Career data: \`CodeAtlas_Website/data/careers.json\` (version ${careers.version}) — **${careers.tracks.length} tracks**, **${careers.sharedModules.length} shared foundation modules**.`);
+  lines.push('');
+  lines.push('| Track | Levels | Modules | Lessons | Content lessons* | Outline | Draft | Reviewed | Projects | Interview Qs | Checklist | Resources |');
+  lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|');
+  let ct = { lessons: 0, content: 0, outline: 0, draft: 0, reviewed: 0, published: 0, projects: 0, interview: 0 };
+  for (const t of careers.tracks) {
+    let modules = 0, lessons = 0; const byStatus = { outline: 0, draft: 0, reviewed: 0, published: 0 };
+    for (const lvl of t.levels || []) for (const m of lvl.modules || []) {
+      modules++;
+      for (const l of m.lessons || []) {
+        lessons++;
+        byStatus[l.status] = (byStatus[l.status] || 0) + 1;
+        const prose = Array.isArray(l.intro) ? l.intro.join(' ').trim().length : 0;
+        if (prose >= 40 && Array.isArray(l.keyPoints) && l.keyPoints.length && Array.isArray(l.practice) && l.practice.length) ct.content++;
+      }
+    }
+    ct.lessons += lessons;
+    ct.outline += byStatus.outline || 0; ct.draft += byStatus.draft || 0;
+    ct.reviewed += byStatus.reviewed || 0; ct.published += byStatus.published || 0;
+    ct.projects += (t.projects || []).length;
+    ct.interview += (t.interview || []).length;
+    lines.push(`| ${t.name} | ${(t.levels || []).length} | ${modules} | ${lessons} | ${(byStatus.reviewed || 0) + (byStatus.published || 0)} | ${byStatus.outline || 0} | ${byStatus.draft || 0} | ${byStatus.reviewed || 0} | ${(t.projects || []).length} | ${(t.interview || []).length} | ${(t.checklist || []).length} | ${(t.resources || []).length} |`);
+  }
+  lines.push('');
+  lines.push(`Totals: **${ct.lessons}** track lessons (${ct.content} substantive) · outline **${ct.outline}** · draft **${ct.draft}** · reviewed **${ct.reviewed}** · published **${ct.published}** · projects **${ct.projects}** · interview Qs **${ct.interview}**.`);
+  lines.push('');
+  lines.push('*Content lessons = lessons with substantive prose + keyPoints + practice. Shared foundation modules are referenced by tracks (not duplicated): ' + careers.sharedModules.map((s) => `\`${s.id}\` (${s.lessons.length} lessons)`).join(', ') + '.');
+  lines.push('');
+} catch (e) {
+  lines.push(`Career data: could not be read (${e.message}). Run \`node tools/build-curriculum/build-careers.js\` to regenerate \`data/careers.json\`.`);
+  lines.push('');
+}
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, lines.join('\n'));

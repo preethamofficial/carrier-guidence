@@ -32,3 +32,4 @@ const languages = LANGS.map(meta => {
 const out = { title: "CodeAtlas", version: "2.0.0", languages: languages };
 fs.writeFileSync(path.join(__dirname, "..", "..", "CodeAtlas_Website", "data", "curriculum.json"), JSON.stringify(out, null, 2));
 console.log("Built curriculum v2.0.0: " + languages.map(l => l.id + ":" + l.topics.length).join(" "));
+console.log("NOTE: run node deepen.js afterwards to re-inject the rich intro paragraphs (deepen.js is idempotent).");

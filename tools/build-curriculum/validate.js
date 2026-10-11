@@ -7,9 +7,11 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const { validateCareers, careerStats } = require('./validate-careers');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CURRICULUM = path.join(ROOT, 'CodeAtlas_Website', 'data', 'curriculum.json');
+const CAREERS = path.join(ROOT, 'CodeAtlas_Website', 'data', 'careers.json');
 const RESOURCES = path.join(ROOT, 'CodeAtlas_Website', 'OFFICIAL_RESOURCES.json');
 
 const errors = [];
@@ -132,6 +134,8 @@ function validate() {
   } catch (e) {
     warn(`OFFICIAL_RESOURCES.json not parseable: ${e.message}`);
   }
+
+  validateCareers(errors, warnings);
 
   return data;
 }
