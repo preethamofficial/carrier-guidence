@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A free, practical IT career learning hub with role roadmaps, weekly study plans, interview practice and job application tracking.">
+  <meta name="theme-color" content="#111827">
+  <title>Career Launchpad — CodeAtlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="career.css">
+  <script src="career.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">C</span><span>CodeAtlas<small>CAREER LAUNCHPAD</small></span></a>
+    <nav aria-label="Main navigation"><a href="index.html">Learning map</a><a href="year-course.html">52-week course</a><a href="language-library.html">More languages</a><a href="specializations.html">IT specialisations</a><a class="active" href="#roadmaps">Career paths</a><a href="#study-plan">Study plan</a><a href="#applications">Job tracker</a></nav>
+    <button class="btn btn-quiet" id="themeBtn" aria-label="Toggle dark mode">◐ Theme</button>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">YOUR FREE IT CAREER WORKSPACE</div>
+      <h1>Learn with a plan.<br><span>Build proof. Get job-ready.</span></h1>
+      <p>A clear starting point for beginners: choose a role, follow a realistic study plan, build projects, practise interviews and track applications. No paid course required.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#roadmaps">Explore career paths →</a><a class="btn btn-glass" href="#study-plan">Start my study plan</a></div>
+      <div class="hero-note"><span class="pulse"></span> Free resources · Beginner-friendly · Progress saved on this device</div>
+    </section>
+    <section class="stats" aria-label="Your progress">
+      <article class="stat"><span>Study plan</span><strong id="statPlan">0%</strong><div class="progress"><i id="statPlanBar"></i></div><small id="statPlanText">0 of 30 tasks complete</small></article>
+      <article class="stat"><span>Resume checklist</span><strong id="statResume">0%</strong><div class="progress"><i id="statResumeBar"></i></div><small id="statResumeText">0 of 8 items ready</small></article>
+      <article class="stat"><span>Applications tracked</span><strong id="statApps">0</strong><div class="progress"><i id="statAppsBar"></i></div><small>Keep your next step visible</small></article>
+    </section>
+    <section id="roadmaps" class="section">
+      <div class="section-heading"><div><div class="eyebrow">01 / CHOOSE A DIRECTION</div><h2>Find a career path that fits you</h2><p>Each roadmap lists skills, portfolio projects and free official learning links. You can switch paths whenever your interests change.</p></div></div>
+      <div class="toolbar"><label class="search"><span>⌕</span><input id="roleSearch" type="search" placeholder="Search roles or skills…" aria-label="Search career paths"></label><select id="levelFilter" aria-label="Filter by starting level"><option value="all">All starting levels</option><option value="beginner">Beginner-friendly</option><option value="some">Some coding helpful</option></select></div>
+      <div id="roleGrid" class="role-grid"></div>
+      <div id="roleDetails" class="role-details" hidden></div>
+    </section>
+    <section id="study-plan" class="section">
+      <div class="section-heading"><div><div class="eyebrow">02 / MAKE CONSISTENT PROGRESS</div><h2>Your 30-day starter plan</h2><p>Designed for about 60–90 minutes a day. Tick off each task as you finish; adjust the pace to fit your schedule.</p></div><button class="btn btn-outline" id="resetPlan">Reset plan</button></div>
+      <div class="plan-layout"><div id="planList" class="plan-list"></div><aside class="tip-card"><span class="tip-icon">✦</span><h3>How to use this plan</h3><ol><li>Learn one small concept.</li><li>Write and run the code yourself.</li><li>Explain what you learned in simple words.</li><li>Save your work to a GitHub repository.</li><li>Review weekly and keep going.</li></ol><p class="note">A plan helps you practise; it cannot guarantee a job. Hiring depends on your skills, projects, communication and the roles you apply for.</p></aside></div>
+    </section>
+    <section id="projects" class="section">
+      <div class="section-heading"><div><div class="eyebrow">03 / SHOW WHAT YOU CAN DO</div><h2>Portfolio projects that teach real skills</h2><p>Build small, finished projects instead of collecting tutorials. Write a README that explains the problem, setup and decisions.</p></div></div>
+      <div class="project-grid">
+        <article class="project-card"><span class="project-level">FOUNDATION</span><h3>Personal portfolio</h3><p>A responsive site with your introduction, skills, projects and contact links.</p><div class="chips"><span>HTML</span><span>CSS</span><span>JavaScript</span></div><a href="https://developer.mozilla.org/en-US/docs/Learn" target="_blank" rel="noopener noreferrer">Free web learning ↗</a></article>
+        <article class="project-card"><span class="project-level">PRACTICE</span><h3>Task manager with storage</h3><p>Add, complete, filter and delete tasks. Save state locally and handle empty states.</p><div class="chips"><span>JavaScript</span><span>DOM</span><span>Testing</span></div><a href="https://javascript.info/" target="_blank" rel="noopener noreferrer">JavaScript tutorial ↗</a></article>
+        <article class="project-card"><span class="project-level">BACKEND</span><h3>REST API + database</h3><p>Create a CRUD API, validate inputs, handle errors and document endpoints.</p><div class="chips"><span>Python</span><span>SQL</span><span>Git</span></div><a href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener noreferrer">Python tutorial ↗</a></article>
+        <article class="project-card"><span class="project-level">DATA</span><h3>Data story dashboard</h3><p>Clean a public dataset, answer a question and show the results with clear charts.</p><div class="chips"><span>Python</span><span>SQL</span><span>Charts</span></div><a href="https://www.kaggle.com/learn" target="_blank" rel="noopener noreferrer">Free Kaggle lessons ↗</a></article>
+      </div>
+    </section>
+    <section id="interviews" class="section">
+      <div class="section-heading"><div><div class="eyebrow">04 / PRACTISE OUT LOUD</div><h2>Interview practice room</h2><p>Try answering before revealing the sample guidance. Use your own words; memorising paragraphs is less useful than understanding.</p></div></div>
+      <div id="questionList" class="question-list"></div>
+      <div class="resource-row"><a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">Developer roadmaps ↗</a><a href="https://github.com/skills" target="_blank" rel="noopener noreferrer">GitHub Skills ↗</a><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp ↗</a><a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer">Coding practice ↗</a></div>
+    </section>
+    <section id="resume" class="section">
+      <div class="section-heading"><div><div class="eyebrow">05 / PREPARE YOUR APPLICATION</div><h2>Resume readiness checklist</h2><p>Tick an item only when you can show evidence for it. Keep your resume truthful and specific.</p></div></div>
+      <div id="resumeList" class="resume-list"></div>
+      <div class="resume-note"><strong>Simple project bullet formula</strong><p>Built <em>[what you made]</em> using <em>[tools]</em> to solve <em>[problem]</em>; implemented <em>[specific feature]</em> and verified it with <em>[test/result you can prove]</em>.</p><button class="btn btn-outline" id="copyBullet">Copy bullet template</button></div>
+    </section>
+    <section id="applications" class="section">
+      <div class="section-heading"><div><div class="eyebrow">06 / KEEP THE SEARCH ORGANIZED</div><h2>Job application tracker</h2><p>Store a simple local record of roles, dates and next actions. This information stays in this browser on this device.</p></div></div>
+      <form id="appForm" class="application-form">
+        <label>Company<input id="companyInput" required maxlength="100" placeholder="Company name"></label>
+        <label>Role<input id="jobInput" required maxlength="120" placeholder="e.g. Junior Python Developer"></label>
+        <label>Status<select id="statusInput"><option>Interested</option><option>Applied</option><option>Assessment</option><option>Interview</option><option>Offer</option><option>Rejected</option></select></label>
+        <label>Next follow-up<input id="followInput" type="date"></label>
+        <button class="btn btn-primary" type="submit">＋ Add application</button>
+      </form>
+      <div id="applicationList" class="application-list"></div>
+      <div class="privacy-note">🔒 Privacy note: progress, checklist items and application notes use browser local storage. They do not sync across devices. Avoid saving sensitive personal information on a shared computer.</div>
+    </section>
+    <section class="section free-ai">
+      <div><div class="eyebrow">OPTIONAL AI HELP</div><h2>AI is a helper, not a requirement</h2><p>Use AI to ask for explanations, quiz questions or feedback on code you understand. Verify answers against official docs and never paste passwords, API keys or private employer data.</p></div>
+      <div class="ai-warning"><strong>Safe integration principle</strong><p>This static website does not ask for an AI API key. Do not put secret API keys in browser JavaScript or commit them to GitHub. If AI providers are added later, route requests through a small server-side proxy with rate limits and environment variables.</p></div>
+    </section>
+    <footer class="footer"><a href="index.html">← Back to CodeAtlas learning map</a><span>Made for learning · Free resources · No job guarantees</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

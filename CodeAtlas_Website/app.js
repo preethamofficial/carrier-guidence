@@ -2,7 +2,14 @@ const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 let curriculum, currentLanguage=null, currentTopic=null, activeTab='basic', searchQuery='';
 const STORE='codeatlas-progress-v1';
-const state=JSON.parse(localStorage.getItem(STORE)||'{"completed":[],"bookmarks":[]}');
+function loadProgress(){
+  try {
+    const parsed=JSON.parse(localStorage.getItem(STORE)||'{"completed":[],"bookmarks":[]}');
+    if(!parsed || typeof parsed!=='object' || Array.isArray(parsed)) return {completed:[],bookmarks:[]};
+    return {completed:Array.isArray(parsed.completed)?parsed.completed:[],bookmarks:Array.isArray(parsed.bookmarks)?parsed.bookmarks:[]};
+  } catch { return {completed:[],bookmarks:[]}; }
+}
+const state=loadProgress();
 const view=$('#view');
 
 async function init(){
@@ -15,10 +22,10 @@ async function init(){
   $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
   $('#searchInput').addEventListener('keydown',e=>{if(e.key==='Escape'){e.target.value='';searchQuery='';showHome()}});
   document.addEventListener('keydown',e=>{if(e.key==='/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}});
-  $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')});
-  if(localStorage.getItem('codeatlas-theme')==='dark') document.body.classList.add('dark');
+  $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');try{localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')}catch{toast('Theme changed, but could not be saved.')}});
+  try{if(localStorage.getItem('codeatlas-theme')==='dark') document.body.classList.add('dark')}catch{}
 }
-function save(){localStorage.setItem(STORE,JSON.stringify(state));updateProgress();renderLanguageNav()}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state))}catch{toast('Progress could not be saved in this browser.')}updateProgress();renderLanguageNav()}
 function allTopics(){return curriculum.languages.flatMap(l=>l.topics.map(t=>({...t,language:l})))}
 function isDone(id){return state.completed.includes(id)}
 function updateProgress(){
@@ -35,9 +42,9 @@ function showHome(){
   currentLanguage=null;currentTopic=null;renderLanguageNav();setCrumbs([{label:'CodeAtlas'},{label:'Learning map'}]);
   const topics=allTopics().length, codeBlocks=allTopics().reduce((s,t)=>s+t.basicExamples.length+t.guidedExamples.length+t.advancedExamples.length,0);
   view.innerHTML=`
-  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Eight languages, practical explanations, friendly Indian everyday examples, guided code, advanced patterns and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-stats"><div class="hero-stat"><strong>08</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
+  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Eight core languages, plus six additional language paths with practical examples and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-stats"><div class="hero-stat"><strong>${String(curriculum.languages.length).padStart(2,'0')}</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
   <div class="section-head"><div><h2>Explore the learning map</h2><p>Select a language node to enter its topic map.</p></div><button class="subtle-button" id="allLangBtn">View all languages ↗</button></div>
-  <section class="map-canvas"><div class="map-root"><strong>⌘ CodeAtlas</strong><small>Programming language knowledge map</small></div><div class="map-grid">${curriculum.languages.map(l=>`<button class="language-card" style="--lang:${l.color}" data-open-lang="${l.id}"><div class="lang-card-top"><span class="lang-logo">${l.name==='TypeScript'?'TS':l.name==='JavaScript'?'JS':l.name==='C#'?'C#':l.name==='SQL'?'DB':l.name==='Python'?'Py':l.name==='Rust'?'Rs':l.name==='Java'?'Jv':'Go'}</span><strong>${l.name}</strong></div><p>${l.purpose}</p><div class="card-bottom"><span>${l.topics.filter(t=>isDone(t.id)).length}/${l.topics.length} topics complete</span><b>Open map ↗</b></div></button>`).join('')}</div></section>
+  <section class="map-canvas"><div class="map-root"><strong>⌘ CodeAtlas</strong><small>Programming language knowledge map</small></div><div class="map-grid">${curriculum.languages.map(l=>`<button class="language-card" style="--lang:${l.color}" data-open-lang="${l.id}"><div class="lang-card-top"><span class="lang-logo">${l.name.slice(0,2).toUpperCase()}</span><strong>${l.name}</strong></div><p>${l.purpose}</p><div class="card-bottom"><span>${l.topics.filter(t=>isDone(t.id)).length}/${l.topics.length} topics complete</span><b>Open map ↗</b></div></button>`).join('')}</div></section>
   <div class="section-head"><div><h2>A learning path that sticks</h2><p>Move from understanding to implementation, then prove what you know.</p></div></div>
   <div class="path-list"><div class="path-step"><span class="step-num">01 / UNDERSTAND</span><strong>Definition + everyday analogy</strong><p>Learn the formal idea, then connect it to a familiar real-life situation.</p></div><div class="path-step"><span class="step-num">02 / TRACE</span><strong>Read code line by line</strong><p>Follow inputs, values and outputs before writing code from scratch.</p></div><div class="path-step"><span class="step-num">03 / BUILD</span><strong>Try advanced patterns</strong><p>Extend the examples with validation, error handling and maintainable design.</p></div><div class="path-step"><span class="step-num">04 / PROVE</span><strong>Practice + interview</strong><p>Attempt questions before revealing the answer and explain your reasoning.</p></div></div>
   <div class="section-head"><div><h2>Continue learning</h2><p>Your next incomplete topic across all languages.</p></div></div>
