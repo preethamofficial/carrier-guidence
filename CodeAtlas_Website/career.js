@@ -3,7 +3,8 @@
   const KEY='codeatlas-career-v1';
   const $=s=>document.querySelector(s);
   const safeLoad=()=>{try{const v=JSON.parse(localStorage.getItem(KEY)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch{return {}}};
-  const state={plan:[],resume:[],apps:[],theme:'',...safeLoad()};
+  const saved=safeLoad();
+  const state={plan:Array.isArray(saved.plan)?saved.plan:[],resume:Array.isArray(saved.resume)?saved.resume:[],apps:Array.isArray(saved.apps)?saved.apps:[],theme:typeof saved.theme==='string'?saved.theme:''};
   state.plan=Array.isArray(state.plan)?state.plan:[];
   state.resume=Array.isArray(state.resume)?state.resume:[];
   state.apps=Array.isArray(state.apps)?state.apps:[];
