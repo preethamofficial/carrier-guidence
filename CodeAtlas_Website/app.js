@@ -2,7 +2,14 @@ const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 let curriculum, currentLanguage=null, currentTopic=null, activeTab='basic', searchQuery='';
 const STORE='codeatlas-progress-v1';
-const state=JSON.parse(localStorage.getItem(STORE)||'{"completed":[],"bookmarks":[]}');
+function loadProgress(){
+  try {
+    const parsed=JSON.parse(localStorage.getItem(STORE)||'{"completed":[],"bookmarks":[]}');
+    if(!parsed || typeof parsed!=='object' || Array.isArray(parsed)) return {completed:[],bookmarks:[]};
+    return {completed:Array.isArray(parsed.completed)?parsed.completed:[],bookmarks:Array.isArray(parsed.bookmarks)?parsed.bookmarks:[]};
+  } catch { return {completed:[],bookmarks:[]}; }
+}
+const state=loadProgress();
 const view=$('#view');
 
 async function init(){
@@ -15,10 +22,10 @@ async function init(){
   $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
   $('#searchInput').addEventListener('keydown',e=>{if(e.key==='Escape'){e.target.value='';searchQuery='';showHome()}});
   document.addEventListener('keydown',e=>{if(e.key==='/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}});
-  $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')});
-  if(localStorage.getItem('codeatlas-theme')==='dark') document.body.classList.add('dark');
+  $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');try{localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')}catch{toast('Theme changed, but could not be saved.')}});
+  try{if(localStorage.getItem('codeatlas-theme')==='dark') document.body.classList.add('dark')}catch{}
 }
-function save(){localStorage.setItem(STORE,JSON.stringify(state));updateProgress();renderLanguageNav()}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state))}catch{toast('Progress could not be saved in this browser.')}updateProgress();renderLanguageNav()}
 function allTopics(){return curriculum.languages.flatMap(l=>l.topics.map(t=>({...t,language:l})))}
 function isDone(id){return state.completed.includes(id)}
 function updateProgress(){
