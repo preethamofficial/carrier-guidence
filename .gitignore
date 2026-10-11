@@ -1,0 +1,22 @@
+# Dependencies / builds
+node_modules/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Runtime data
+server/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# OS noise
+Thumbs.db
+.DS_Store
