@@ -28,3 +28,13 @@ This checklist documents manual checks; it is not evidence that the checks have 
 - [ ] Reset dashboard-only data and confirm course progress remains intact.
 - [ ] Test responsive layout, keyboard focus, dark theme and reduced-motion preferences.
 - [ ] Test resume review with empty, short, ordinary and adversarial-looking text; verify score explanation remains visible.
+
+
+## Installable/offline smoke checks
+
+- [ ] Verify the manifest loads and the browser offers installation when supported.
+- [ ] Confirm the service worker registers on localhost or HTTPS.
+- [ ] Visit the learning pages online once, then test cached pages in offline mode.
+- [ ] Verify the app falls back to a cached page when the network is unavailable.
+- [ ] Confirm external links and resources correctly remain unavailable offline.
+- [ ] After a service-worker update, verify the new cache activates and stale CodeAtlas caches are removed.
