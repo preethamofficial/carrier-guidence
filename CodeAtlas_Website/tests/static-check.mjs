@@ -25,3 +25,9 @@ check('Recent jobs feed filtering',()=>{const source=fs.readFileSync(jobsScript,
 check('Job data schema',()=>{const data=JSON.parse(fs.readFileSync(path.join(root,'data/jobs.json'),'utf8'));assert.ok(Array.isArray(data.jobs),'jobs must be an array');});
 
 if(failed)process.exitCode=1;
+
+const curriculumFile=path.join(root,'data','curriculum.json');
+check('Unified 14-language curriculum',()=>{const c=JSON.parse(fs.readFileSync(curriculumFile,'utf8'));assert.equal(c.languages.length,14);assert.equal(c.languages.flatMap(l=>l.topics).length,168);const ids=c.languages.flatMap(l=>l.topics.map(t=>t.id));assert.equal(new Set(ids).size,ids.length);});
+check('Every lesson has explanations, examples, challenges, and references',()=>{const c=JSON.parse(fs.readFileSync(curriculumFile,'utf8'));for(const l of c.languages)for(const t of l.topics){assert.ok(t.definition&&t.definition.length>40,l.name+' '+t.id+' definition');assert.ok((t.basicExamples||[]).length+(t.guidedExamples||[]).length+(t.advancedExamples||[]).length>=4,l.name+' '+t.id+' examples');assert.ok((t.practice||[]).length>=5,l.name+' '+t.id+' challenges');assert.ok(t.references?.some(x=>x.url),l.name+' '+t.id+' official reference');}});
+
+if(failed)process.exitCode=1;
