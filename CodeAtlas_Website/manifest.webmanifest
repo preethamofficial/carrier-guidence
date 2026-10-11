@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "CodeAtlas — Learn, Build, Grow",
+  "short_name": "CodeAtlas",
+  "description": "A free programming learning and IT career preparation hub.",
+  "start_url": "./dashboard.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#171d36",
+  "icons": [
+    {
+      "src": "./assets/codeatlas-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

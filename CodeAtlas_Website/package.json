@@ -1,0 +1,8 @@
+{
+  "name": "codeatlas-learning-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static programming and IT career learning website",
+  "scripts": { "test": "node tests/static-check.mjs" },
+  "engines": { "node": ">=18" }
+}

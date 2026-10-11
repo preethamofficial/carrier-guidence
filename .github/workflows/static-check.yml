@@ -1,0 +1,23 @@
+name: Static website checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check JavaScript syntax
+        run: find . -name '*.js' -print0 | xargs -0 -n1 node --check
+        working-directory: CodeAtlas_Website
+      - name: Validate local assets and JSON
+        run: npm test
+        working-directory: CodeAtlas_Website
