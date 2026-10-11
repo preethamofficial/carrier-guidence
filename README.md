@@ -21,6 +21,7 @@ Then open http://localhost:8000. Keep the terminal open while using the site. Do
 - **IT specialisations:** 22 role paths, including Generative AI, RAG, DevOps, .NET/C#, MLOps, SRE/platform engineering, QA automation, data science, Salesforce and blockchain.
 - **Resume vs job match:** a local-only resume/JD comparison with weighted 0–100 alignment score, matched terms, potential gaps and an exportable improvement checklist. It does not predict hiring or reproduce an employer ATS.
 - **Personal learning dashboard:** cross-course progress overview, weekly study target, daily check-ins and streak, Pomodoro focus timer, study task list, learning journal, dark theme, and local JSON backup/restore.
+- **Installable/offline shell:** a web app manifest and service worker cache core learning pages and assets after the first successful visit. Offline availability depends on what has been cached; live AI and external resources are not provided.
 - **Progress:** course completion and planner state save in local browser storage; they do not sync across devices.
 
 ## View the course
@@ -52,6 +53,7 @@ You can publish a static version with GitHub Pages or another static host. Confi
 
 - `CodeAtlas_Website/index.html`, `app.js`, `styles.css`: interactive programming learning map.
 - `CodeAtlas_Website/dashboard.html`, `dashboard.css`, `dashboard.js`: progress dashboard, study planner, focus timer, journal and backup tools.
+- `CodeAtlas_Website/manifest.webmanifest`, `service-worker.js`, `pwa.js`, `pwa.css`: install prompt and offline shell.
 - `CodeAtlas_Website/data/curriculum.json`: existing topic content.
 - `CodeAtlas_Website/year-course.html`, `year-course.css`, `year-course.js`: interactive 52-week course interface.
 - `CodeAtlas_Website/data/year-curriculum.json`: structured weekly curriculum.
