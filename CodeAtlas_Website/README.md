@@ -16,7 +16,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 ## What is included
 
 - **Unified programming curriculum:** 14 languages in one learning map — Python, JavaScript, TypeScript, Java, SQL, Go, Rust, C#, C, C++, PHP, Kotlin, Swift and Bash — across 168 topic groups.
-- **Lesson depth:** Each topic includes a definition, explanation, analogy, four code examples, five coding challenges with hints/solution guidance, interview questions and official documentation references.
+- **Lesson depth:** Each topic includes a definition, explanation, analogy, four code examples, five coding challenges with hints/solution guidance and official documentation references; core-language lessons also include interview practice.
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
@@ -38,7 +38,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - Resume match: http://localhost:8000/resume-review.html
 - IT specialisations: http://localhost:8000/specializations.html
 - One-year course: http://localhost:8000/year-course.html
-- Additional languages: http://localhost:8000/language-library.html
+- All 14 languages: http://localhost:8000/ (choose **All languages** in the learning map)
 
 ## Job aggregation roadmap and limitations
 
@@ -91,7 +91,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `.github/workflows/`: scheduled scraping, AI suggestions, PR review and static validation.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
-- `language-library.html`, `language-library.js`: additional languages.
+- `language-library.html`: redirects to the unified curriculum in `index.html`.
 - `specializations.html`, `specializations.js`: specialisation paths.
 - `manifest.webmanifest`, `service-worker.js`, `pwa.js`: PWA shell.
 - `tests/static-check.mjs`, `.github/workflows/static-check.yml`: static validation and CI.
