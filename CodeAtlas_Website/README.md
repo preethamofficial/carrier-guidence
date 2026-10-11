@@ -1,6 +1,6 @@
 # CodeAtlas — Free Programming & IT Career Learning Hub
 
-CodeAtlas is a free, browser-based learning hub with an interactive programming map, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, and Career Studio practice tools.
+CodeAtlas is a free, browser-based learning hub with an interactive programming map, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
 
 ## Run locally on Windows
 
@@ -22,6 +22,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
 - **Career Studio:** directional career-fit quiz, local knowledge checks with explanations, role-specific interview question practice, on-device interview notes, editable cover-letter draft generator, official labour-market research links and a 30-day action plan.
 - **Resume vs job match:** local weighted heuristic alignment score, matched terms, potential gaps and exportable suggestions. It is not an employer ATS and does not predict hiring.
+- **Job Board Directory:** searchable and filterable starter directory of company career pages and job-search platforms, with direct links to original sources.
 - **Dashboard:** course progress, weekly target, check-ins/streak, focus timer, task list, journal and JSON backup/restore.
 - **PWA/offline shell:** manifest and best-effort cache of core pages after a successful visit. External links still require internet.
 - **Privacy-first defaults:** progress, quiz results, interview notes and planner state use this browser's local storage. There are no accounts or cloud sync in this static build.
@@ -32,15 +33,21 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - Dashboard: http://localhost:8000/dashboard.html
 - Career Studio: http://localhost:8000/career-studio.html
 - Career Launchpad: http://localhost:8000/career.html
+- Job Board Directory: http://localhost:8000/job-boards.html
 - Resume match: http://localhost:8000/resume-review.html
 - IT specialisations: http://localhost:8000/specializations.html
 - One-year course: http://localhost:8000/year-course.html
 - Additional languages: http://localhost:8000/language-library.html
 
+## Job aggregation roadmap and limitations
+
+The directory is a static starter feature: it does **not** currently fetch live vacancies, crawl thousands of companies, or send alerts. Browsers cannot reliably query every third-party ATS endpoint because of cross-origin restrictions. To implement automated recent-job aggregation, add a scheduled backend/workflow, a verified employer/ATS identifier list, deduplication and expiry logic, and a database or generated data feed. Keep all credentials in server-side environment variables or GitHub Actions secrets—never in browser JavaScript. Begin with a small, tested list and respect each provider's API terms and rate limits. A first-seen timestamp is useful for detecting newly discovered postings when the source does not provide a trustworthy posting date.
+
 ## Validation
 
 ```powershell
 node --check career-studio.js
+node --check job-boards.js
 npm test
 python -m json.tool data/curriculum.json
 python -m json.tool data/year-curriculum.json
@@ -70,6 +77,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `dashboard.html`, `dashboard.js`, `dashboard.css`: learning dashboard.
 - `career-studio.html`, `career-studio.js`, `career-studio.css`: Career Studio practice tools.
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
+- `job-boards.html`, `job-boards.js`, `job-boards.css`: job source directory.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
 - `language-library.html`, `language-library.js`: additional languages.
