@@ -23,7 +23,7 @@ check('Additional language catalog has six complete topic paths',()=>{
 check('Every additional topic has focused learning content',()=>{
  const source=fs.readFileSync(languageLibrary,'utf8');
  for(const name of ['LESSON_FOCUS','LESSON_ANALOGIES','LESSON_PITFALLS','LESSON_TASKS','ALT_EXAMPLES'])assert.ok(source.includes('const '+name+' ='),'Missing '+name+' lesson data');
- const extract=name=>{const marker='const '+name+' = ';const start=source.indexOf(marker);assert.ok(start>=0,'Missing '+name);const end=source.indexOf(';',start);return JSON.parse(source.slice(start+marker.length,end));};
+ const extract=name=>{const marker='const '+name+' = ';const start=source.indexOf(marker);assert.ok(start>=0,'Missing '+name);const rest=source.slice(start+marker.length);const match=rest.match(/^(\\{[\\s\\S]*?\\});\\nconst /);assert.ok(match,'Could not parse '+name+' data');return JSON.parse(match[1]);};
  const focus=extract('LESSON_FOCUS'), analogies=extract('LESSON_ANALOGIES'), pitfalls=extract('LESSON_PITFALLS'), tasks=extract('LESSON_TASKS'), alternatives=extract('ALT_EXAMPLES');
  for(const id of ['c','cpp','php','kotlin','swift','bash'])for(const [label,data] of [['focus',focus],['analogy',analogies],['pitfall',pitfalls],['task',tasks],['alternative',alternatives]])assert.equal(data[id]?.length,12,id+' has incomplete '+label+' data');
 });
