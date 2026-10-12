@@ -7,7 +7,9 @@ recent postings; first_seen_at records when this collector discovered a listing.
 from __future__ import annotations
 
 import json
+import re
 import time
+from html import unescape
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -77,6 +79,20 @@ def fetch_json(url: str) -> dict[str, Any] | list[Any] | None:
         return None
 
 
+def plain_description(value: Any) -> str | None:
+    """Convert ATS HTML or text into safe, readable plain text for the static feed."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    text = unescape(value)
+    text = re.sub(r"(?is)<(script|style)\b[^>]*>.*?</\1\s*>", " ", text)
+    text = re.sub(r"(?i)<br\s*/?>|</(p|div|li|h[1-6]|section|tr)\s*>", "\n", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"[ \t\xa0]+", " ", text)
+    text = re.sub(r"\n\s*\n+", "\n\n", text)
+    text = text.strip()
+    return text[:12000] if text else None
+
+
 def scrape_greenhouse(token: str) -> list[dict[str, Any]] | None:
     payload = fetch_json(f"https://boards-api.greenhouse.io/v1/boards/{token}/jobs?content=true")
     if not isinstance(payload, dict) or not isinstance(payload.get("jobs"), list):
@@ -87,7 +103,7 @@ def scrape_greenhouse(token: str) -> list[dict[str, Any]] | None:
         "location": (job.get("location") or {}).get("name") if isinstance(job.get("location"), dict) else None,
         "apply_url": job.get("absolute_url"),
         "posted_date": job.get("updated_at") or job.get("created_at"),
-        "description": None,
+        "description": plain_description(job.get("content")),
     } for job in payload["jobs"]]
 
 
@@ -106,7 +122,7 @@ def scrape_lever(token: str) -> list[dict[str, Any]] | None:
             "location": categories.get("location") if isinstance(categories, dict) else None,
             "apply_url": job.get("hostedUrl"),
             "posted_date": posted,
-            "description": None,
+            "description": plain_description(job.get("descriptionPlain") or job.get("description")),
         })
     return result
 
@@ -121,7 +137,7 @@ def scrape_ashby(token: str) -> list[dict[str, Any]] | None:
         "location": job.get("location"),
         "apply_url": job.get("jobUrl") or job.get("applyUrl"),
         "posted_date": job.get("publishedAt"),
-        "description": None,
+        "description": plain_description(job.get("descriptionPlain") or job.get("descriptionHtml")),
     } for job in payload["jobs"]]
 
 
