@@ -20,11 +20,6 @@
     "token": "figma"
   },
   {
-    "name": "Notion",
-    "ats": "greenhouse",
-    "token": "notion"
-  },
-  {
     "name": "Databricks",
     "ats": "greenhouse",
     "token": "databricks"
@@ -48,21 +43,6 @@
     "name": "Dropbox",
     "ats": "greenhouse",
     "token": "dropbox"
-  },
-  {
-    "name": "Netflix",
-    "ats": "lever",
-    "token": "netflix"
-  },
-  {
-    "name": "Shopify",
-    "ats": "lever",
-    "token": "shopify"
-  },
-  {
-    "name": "Figma",
-    "ats": "lever",
-    "token": "figma"
   },
   {
     "name": "Vercel",
@@ -93,10 +73,5 @@
     "name": "Scale AI",
     "ats": "greenhouse",
     "token": "scaleai"
-  },
-  {
-    "name": "Hugging Face",
-    "ats": "lever",
-    "token": "huggingface"
   }
 ]
