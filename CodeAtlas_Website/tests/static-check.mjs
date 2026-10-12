@@ -111,10 +111,22 @@ check('Company directory and recent jobs pages are connected',()=>{
  assert.ok(Array.isArray(payload.jobs),'jobs feed should expose an array');
  for(const job of payload.jobs){assert.ok(job.title&&job.company&&job.apply_url,'Incomplete job listing');assert.match(job.apply_url,/^https:\/\//,'Application links must use HTTPS');}
 });
-check('Scheduled scraper is review-gated and does not push directly to main',()=>{
+check('Job feed is scheduled daily at 9 AM IST and auto-published',()=>{
  const workflow=fs.readFileSync(path.resolve(root,'../.github/workflows/scrape-jobs.yml'),'utf8');
- assert.ok(workflow.includes('peter-evans/create-pull-request'),'Scheduled data must be proposed via PR');
- assert.ok(!/git push\s*$/m.test(workflow),'Workflow must not push to main directly');
+ assert.ok(workflow.includes('cron: "30 3 * * *"'),'03:30 UTC is 09:00 IST');
+ assert.ok(workflow.includes('git push origin HEAD:main'),'Daily feed changes must publish automatically');
+ assert.ok(workflow.includes('workflow_dispatch'),'Manual refresh must be available');
+ assert.ok(workflow.includes('contents: write'),'Workflow needs content write permission');
+});
+check('Scraper extracts and renders job descriptions safely',()=>{
+ const scraper=fs.readFileSync(path.resolve(root,'../scripts/scrape_jobs.py'),'utf8');
+ const renderer=fs.readFileSync(path.join(root,'jobs.js'),'utf8');
+ assert.ok(scraper.includes('plain_description(job.get("content"))'),'Greenhouse descriptions');
+ assert.ok(scraper.includes('job.get("descriptionPlain") or job.get("description")'),'Lever descriptions');
+ assert.ok(scraper.includes('job.get("descriptionPlain") or job.get("descriptionHtml")'),'Ashby descriptions');
+ assert.ok(scraper.includes('return text[:12000]'),'Descriptions must be size-limited');
+ assert.ok(renderer.includes('full.textContent = descriptionText'),'Descriptions must not be injected as HTML');
+ assert.ok(renderer.includes('Read full job description'),'Full descriptions must be expandable');
 });
 check('Unified lessons keep the deep-learning path reachable',()=>{
  const html=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
