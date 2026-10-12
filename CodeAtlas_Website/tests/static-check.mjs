@@ -27,6 +27,20 @@ check('Every additional topic has focused learning content',()=>{
  const focus=extract('LESSON_FOCUS'), analogies=extract('LESSON_ANALOGIES'), pitfalls=extract('LESSON_PITFALLS'), tasks=extract('LESSON_TASKS'), alternatives=extract('ALT_EXAMPLES');
  for(const id of ['c','cpp','php','kotlin','swift','bash'])for(const [label,data] of [['focus',focus],['analogy',analogies],['pitfall',pitfalls],['task',tasks],['alternative',alternatives]])assert.equal(data[id]?.length,12,id+' has incomplete '+label+' data');
 });
+check('Core curriculum has complete guided and interview content',()=>{
+ const curriculum=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
+ assert.equal(curriculum.languages.length,8,'Expected eight core language paths');
+ const required=['definition','analogy','keyPoints','basicExamples','guidedExamples','advancedExamples','practice','interview'];
+ for(const lang of curriculum.languages){
+  assert.equal(lang.topics.length,12,lang.name+' should have 12 topics');
+  for(const topic of lang.topics){
+   for(const key of required)assert.ok(topic[key]&&(Array.isArray(topic[key])?topic[key].length>0:true),lang.name+'/'+topic.title+' missing '+key);
+   assert.ok(topic.basicExamples.length>=2&&topic.guidedExamples.length>=2&&topic.advancedExamples.length>=2,lang.name+'/'+topic.title+' needs basic, guided and advanced examples');
+   for(const example of [...topic.basicExamples,...topic.guidedExamples])assert.ok(example.lineByLine?.length,lang.name+'/'+topic.title+' has an example without line explanations');
+   for(const q of [...topic.practice,...topic.interview])assert.ok(q.question&&q.answer,lang.name+'/'+topic.title+' has a question without an answer');
+  }
+ }
+});
 check('Additional lesson renderer exposes learning and progress controls',()=>{
  const source=fs.readFileSync(languageLibrary,'utf8');
  for(const marker of ['Everyday Indian example','Alternative example / extension','Line-by-line study guide','Common mistakes and debugging','Practice ladder','id="done"','id="prev"','id="next"','localStorage'])assert.ok(source.includes(marker),'Missing lesson feature '+marker);
