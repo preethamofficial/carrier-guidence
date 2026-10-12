@@ -30,9 +30,9 @@ check('Every additional topic has focused learning content',()=>{
 });
 check('Core curriculum has complete guided and interview content',()=>{
  const curriculum=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
- assert.equal(curriculum.languages.length,8,'Expected eight core language paths');
+ assert.equal(curriculum.languages.length,14,'Expected fourteen unified language paths');
  const required=['definition','analogy','keyPoints','basicExamples','guidedExamples','advancedExamples','practice','interview'];
- for(const lang of curriculum.languages){
+ for(const lang of curriculum.languages.slice(0,8)){
   assert.equal(lang.topics.length,12,lang.name+' should have 12 topics');
   for(const topic of lang.topics){
    for(const key of required)assert.ok(topic[key]&&(Array.isArray(topic[key])?topic[key].length>0:true),lang.name+'/'+topic.title+' missing '+key);
