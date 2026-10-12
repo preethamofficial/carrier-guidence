@@ -160,7 +160,18 @@ def main() -> None:
     if not isinstance(companies, list):
         raise ValueError("companies.json must contain a JSON array")
     old_jobs = existing_data.get("jobs", []) if isinstance(existing_data, dict) else []
-    old_by_key = {job_key(job): job for job in old_jobs if isinstance(job, dict) and job_key(job)}
+    configured_boards = {
+        (str(company.get("ats", "")).lower(), str(company.get("token", "")).strip())
+        for company in companies
+        if isinstance(company, dict) and company.get("ats") and company.get("token")
+    }
+    # Drop stale listings from boards that were removed from the configured source list.
+    old_by_key = {
+        job_key(job): job for job in old_jobs
+        if isinstance(job, dict)
+        and job_key(job)
+        and (str(job.get("ats", "")).lower(), str(job.get("board_token", "")).strip()) in configured_boards
+    }
     seen_at = iso_now()
     checked = errors = discovered = 0
     cutoff_recent = now_utc() - timedelta(days=RECENT_DAYS)
@@ -226,6 +237,7 @@ def main() -> None:
         "newly_discovered": discovered,
         "request_or_parse_errors": errors,
         "jobs_retained": len(retained),
+        "jobs_with_description": sum(bool(job.get("description")) for job in retained),
     })
     print(f"Checked {checked} boards; {discovered} newly discovered listings; {errors} board errors.")
 
