@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const files=[];
@@ -40,6 +41,40 @@ check('Core curriculum has complete guided and interview content',()=>{
    for(const q of [...topic.practice,...topic.interview])assert.ok(q.question&&q.answer,lang.name+'/'+topic.title+' has a question without an answer');
   }
  }
+});
+check('Additional language UI renders and navigation/progress interactions work',()=>{
+ const source=fs.readFileSync(languageLibrary,'utf8');
+ const storage=new Map();
+ const elements=new Map();
+ class FakeElement{
+  constructor(id){this.id=id;this._html='';this.textContent='';this.value='';this.href='';this.hidden=false;this.onclick=null;this.oninput=null;this.onchange=null;this.disabled=false;this.dataset={};this.children=[];}
+  set innerHTML(value){this._html=String(value);this.children=[];
+   const attr=this.id==='languageList'?'data-lang':this.id==='topicList'?'data-topic':null;
+   if(attr){const re=new RegExp('<button[^>]*'+attr+'="([^"]+)"[^>]*>([\\s\\S]*?)</button>','g');let m;while((m=re.exec(this._html))){const b=new FakeElement('button');b.dataset[attr==='data-lang'?'lang':'topic']=m[1];b.innerHTML=m[2];b.hidden=false;this.children.push(b);}}
+  }
+  get innerHTML(){return this._html;}
+  querySelectorAll(selector){if(selector==='[data-lang]'||selector==='[data-topic]')return this.children;return [];}
+ }
+ const ids=['search','languageList','languageTitle','languagePurpose','languageProgress','topicList','lesson','docsLink'];
+ for(const id of ids)elements.set(id,new FakeElement(id));
+ const document={querySelector(selector){const id=selector.startsWith('#')?selector.slice(1):selector;if(!elements.has(id))elements.set(id,new FakeElement(id));const el=elements.get(id);if(id==='lesson'&&el._html){for(const key of ['done','prev','next']){const re=new RegExp('<(input|button)[^>]*id="'+key+'"[^>]*>');const m=el._html.match(re);if(m){const item=new FakeElement(key);item.checked=/\\bchecked\\b/.test(m[0]);item.disabled=/\\bdisabled\\b/.test(m[0]);elements.set(key,item);}}}return elements.get(id);}};
+ const localStorage={getItem:key=>storage.has(key)?storage.get(key):null,setItem:(key,value)=>storage.set(key,String(value))};
+ vm.runInNewContext(source,{document,localStorage,console});
+ assert.match(elements.get('lesson').innerHTML,/Core concept/);
+ assert.match(elements.get('lesson').innerHTML,/Suggested solution approach/);
+ assert.equal(elements.get('languageTitle').textContent,'C');
+ elements.get('next').onclick();
+ assert.match(elements.get('lesson').innerHTML,/Types, variables and operators/);
+ elements.get('languageList').children.find(b=>b.dataset.lang==='kotlin').onclick();
+ assert.equal(elements.get('languageTitle').textContent,'Kotlin');
+ assert.match(elements.get('lesson').innerHTML,/Everyday Indian example/);
+ elements.get('done').onchange({target:{checked:true}});
+ const saved=JSON.parse(storage.get('codeatlas-extra-languages-v1'));
+ assert.equal(saved['kotlin-1'],true,'Completion should persist to localStorage');
+ elements.get('search').value='swift';
+ elements.get('search').oninput();
+ assert.equal(elements.get('languageList').children.find(b=>b.dataset.lang==='swift').hidden,false);
+ assert.equal(elements.get('languageList').children.find(b=>b.dataset.lang==='c').hidden,true);
 });
 check('Additional lesson renderer exposes learning and progress controls',()=>{
  const source=fs.readFileSync(languageLibrary,'utf8');
