@@ -1,0 +1,43 @@
+name: Refresh public job feed (review required)
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: public-job-feed
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install scraper dependency
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Compile scraper
+        run: python -m py_compile scripts/scrape_jobs.py
+      - name: Collect configured public listings
+        run: python scripts/scrape_jobs.py
+      - name: Propose feed update for review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: refresh public job feed"
+          title: "chore: refresh public job feed"
+          body: |
+            Automated update from configured public ATS boards.
+            Review listing freshness, duplicate entries, and application links before merging.
+            The collector does not push generated job data directly to main.
+          branch: automation/public-job-feed
+          delete-branch: true
+          add-paths: |
+            CodeAtlas_Website/data/jobs.json
+            CodeAtlas_Website/data/scrape-log.json

@@ -18,6 +18,11 @@ jobs:
       - name: Check JavaScript syntax
         run: find . -name '*.js' -print0 | xargs -0 -n1 node --check
         working-directory: CodeAtlas_Website
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile scraper Python
+        run: python -m py_compile scripts/scrape_jobs.py
       - name: Validate local assets and JSON
         run: npm test
         working-directory: CodeAtlas_Website

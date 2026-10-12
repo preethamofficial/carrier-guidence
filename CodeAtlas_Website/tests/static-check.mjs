@@ -30,9 +30,9 @@ check('Every additional topic has focused learning content',()=>{
 });
 check('Core curriculum has complete guided and interview content',()=>{
  const curriculum=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
- assert.equal(curriculum.languages.length,8,'Expected eight core language paths');
+ assert.equal(curriculum.languages.length,14,'Expected fourteen unified language paths');
  const required=['definition','analogy','keyPoints','basicExamples','guidedExamples','advancedExamples','practice','interview'];
- for(const lang of curriculum.languages){
+ for(const lang of curriculum.languages.slice(0,8)){
   assert.equal(lang.topics.length,12,lang.name+' should have 12 topics');
   for(const topic of lang.topics){
    for(const key of required)assert.ok(topic[key]&&(Array.isArray(topic[key])?topic[key].length>0:true),lang.name+'/'+topic.title+' missing '+key);
@@ -86,5 +86,42 @@ check('Career Studio required sections',()=>{const source=fs.readFileSync(studio
 check('Career Studio has interactive tools',()=>{const source=fs.readFileSync(studioJs,'utf8');for(const marker of ['quizQuestions','interviewBank','careerPaths','letterForm','downloadPlan','codeatlas.studio.plan'])assert.ok(source.includes(marker),'Missing tool marker '+marker);});
 const sw=path.join(root,'service-worker.js');
 if(fs.existsSync(sw)){const source=fs.readFileSync(sw,'utf8'),block=source.match(/const CORE=\[([\s\S]*?)\];/);check('Service worker core list',()=>assert.ok(block));if(block)for(const m of block[1].matchAll(/'([^']+)'/g)){const target=path.resolve(root,m[1]);check('Cached asset: '+m[1],()=>assert.ok(fs.existsSync(target),'Not found'))}}
+check('Unified curriculum has all 14 languages and 168 unique topics',()=>{
+ const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
+ assert.equal(data.languages.length,14);
+ const all=data.languages.flatMap(l=>l.topics);
+ assert.equal(all.length,168);
+ assert.equal(new Set(all.map(t=>t.id)).size,168);
+ for(const lang of data.languages){assert.equal(lang.topics.length,12,lang.name+' topic count');const doc=lang.docs||lang.references?.find(r=>r.url)?.url||'';assert.ok(/^https:\/\//.test(doc),lang.name+' official reference');}
+});
+check('All curriculum topics have learning content and practice',()=>{
+ const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
+ for(const lang of data.languages)for(const topic of lang.topics){
+  assert.ok(typeof topic.definition==='string'&&topic.definition.length>25,lang.name+'/'+topic.id+' definition');
+  assert.ok((topic.basicExamples||[]).length+(topic.guidedExamples||[]).length+(topic.advancedExamples||[]).length>=4,lang.name+'/'+topic.id+' examples');
+  assert.ok((topic.practice||[]).length>=(data.languages.indexOf(lang)<8?4:5),lang.name+'/'+topic.id+' practice prompts');
+ }
+});
+check('Company directory and recent jobs pages are connected',()=>{
+ for(const file of ['job-boards.html','job-boards.css','job-boards.js','jobs.html','jobs.css','jobs.js','data/companies.json','data/jobs.json','data/scrape-log.json'])assert.ok(fs.existsSync(path.join(root,file)),'Missing '+file);
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.ok(home.includes('href="job-boards.html"'),'Missing directory navigation');
+ assert.ok(home.includes('href="jobs.html"'),'Missing jobs navigation');
+ const payload=JSON.parse(fs.readFileSync(path.join(root,'data/jobs.json'),'utf8'));
+ assert.ok(Array.isArray(payload.jobs),'jobs feed should expose an array');
+ for(const job of payload.jobs){assert.ok(job.title&&job.company&&job.apply_url,'Incomplete job listing');assert.match(job.apply_url,/^https:\/\//,'Application links must use HTTPS');}
+});
+check('Scheduled scraper is review-gated and does not push directly to main',()=>{
+ const workflow=fs.readFileSync(path.resolve(root,'../.github/workflows/scrape-jobs.yml'),'utf8');
+ assert.ok(workflow.includes('peter-evans/create-pull-request'),'Scheduled data must be proposed via PR');
+ assert.ok(!/git push\s*$/m.test(workflow),'Workflow must not push to main directly');
+});
+check('Unified lessons keep the deep-learning path reachable',()=>{
+ const html=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
+ assert.ok(html.includes('language-library.js'),'Deep lesson renderer should remain accessible');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ for(const item of ['./job-boards.html','./jobs.html','./data/jobs.json'])assert.ok(sw.includes(item),'Missing service-worker asset '+item);
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;

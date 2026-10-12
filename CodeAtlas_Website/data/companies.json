@@ -1,0 +1,102 @@
+[
+  {
+    "name": "GitLab",
+    "ats": "greenhouse",
+    "token": "gitlab"
+  },
+  {
+    "name": "Stripe",
+    "ats": "greenhouse",
+    "token": "stripe"
+  },
+  {
+    "name": "Airbnb",
+    "ats": "greenhouse",
+    "token": "airbnb"
+  },
+  {
+    "name": "Figma",
+    "ats": "greenhouse",
+    "token": "figma"
+  },
+  {
+    "name": "Notion",
+    "ats": "greenhouse",
+    "token": "notion"
+  },
+  {
+    "name": "Databricks",
+    "ats": "greenhouse",
+    "token": "databricks"
+  },
+  {
+    "name": "Coinbase",
+    "ats": "greenhouse",
+    "token": "coinbase"
+  },
+  {
+    "name": "Reddit",
+    "ats": "greenhouse",
+    "token": "reddit"
+  },
+  {
+    "name": "Discord",
+    "ats": "greenhouse",
+    "token": "discord"
+  },
+  {
+    "name": "Dropbox",
+    "ats": "greenhouse",
+    "token": "dropbox"
+  },
+  {
+    "name": "Netflix",
+    "ats": "lever",
+    "token": "netflix"
+  },
+  {
+    "name": "Shopify",
+    "ats": "lever",
+    "token": "shopify"
+  },
+  {
+    "name": "Figma",
+    "ats": "lever",
+    "token": "figma"
+  },
+  {
+    "name": "Vercel",
+    "ats": "ashby",
+    "token": "vercel"
+  },
+  {
+    "name": "Linear",
+    "ats": "ashby",
+    "token": "linear"
+  },
+  {
+    "name": "Ramp",
+    "ats": "ashby",
+    "token": "ramp"
+  },
+  {
+    "name": "OpenAI",
+    "ats": "ashby",
+    "token": "openai"
+  },
+  {
+    "name": "Anthropic",
+    "ats": "greenhouse",
+    "token": "anthropic"
+  },
+  {
+    "name": "Scale AI",
+    "ats": "greenhouse",
+    "token": "scaleai"
+  },
+  {
+    "name": "Hugging Face",
+    "ats": "lever",
+    "token": "huggingface"
+  }
+]
