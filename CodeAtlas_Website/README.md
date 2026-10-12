@@ -1,6 +1,6 @@
 # CodeAtlas — Free Programming & IT Career Learning Hub
 
-CodeAtlas is a free, browser-based learning hub with an interactive programming map, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, and Career Studio practice tools.
+CodeAtlas is a free, browser-based learning hub with an interactive programming map with 14 languages, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
 
 ## Run locally on Windows
 
@@ -21,7 +21,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
 - **Career Studio:** directional career-fit quiz, local knowledge checks with explanations, role-specific interview question practice, on-device interview notes, editable cover-letter draft generator, official labour-market research links and a 30-day action plan.
-- **Resume vs job match:** local weighted heuristic alignment score, matched terms, potential gaps and exportable suggestions. It is not an employer ATS and does not predict hiring.
+- **Resume vs job match:** local weighted heuristic alignment score, matched terms, potential gaps and exportable suggestions. It is not an employer ATS and does not predict hiring.\n- **Job Board Directory:** searchable company career pages and job-search resources with original links.\n- **Recent Jobs feed:** source-labeled listings with search, location/source filters, and a recent-date filter. It starts empty until a successful scheduled scrape runs; posting date and freshness are not guaranteed.
 - **Dashboard:** course progress, weekly target, check-ins/streak, focus timer, task list, journal and JSON backup/restore.
 - **PWA/offline shell:** manifest and best-effort cache of core pages after a successful visit. External links still require internet.
 - **Privacy-first defaults:** progress, quiz results, interview notes and planner state use this browser's local storage. There are no accounts or cloud sync in this static build.
@@ -35,7 +35,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - Resume match: http://localhost:8000/resume-review.html
 - IT specialisations: http://localhost:8000/specializations.html
 - One-year course: http://localhost:8000/year-course.html
-- Additional languages: http://localhost:8000/language-library.html
+- Deep language lessons: http://localhost:8000/language-library.html\n- Job Board Directory: http://localhost:8000/job-boards.html\n- Recent Jobs feed: http://localhost:8000/jobs.html
 
 ## Validation
 
@@ -46,9 +46,9 @@ python -m json.tool data/curriculum.json
 python -m json.tool data/year-curriculum.json
 ```
 
-The automated static test checks JSON, page viewport metadata, local references, the service-worker cache list, and the six additional-language catalogs and lesson metadata. The GitHub Actions workflow also checks JavaScript syntax. These checks do not replace manual browser testing: test desktop/mobile layouts, keyboard-only navigation, local storage, downloads, offline behavior and browser-console errors before release.
+The automated static test checks JSON, page viewport metadata, local references, the service-worker cache list, the core and additional language lesson catalogs, and the new jobs and company-directory pages. The GitHub Actions workflow also checks JavaScript syntax. These checks do not replace manual browser testing: test desktop/mobile layouts, keyboard-only navigation, local storage, downloads, offline behavior and browser-console errors before release.
 
-## Security, accuracy and limitations
+## Job data collection and automation\n\nThe feed uses configured public Greenhouse, Lever, and Ashby board identifiers. Scheduled collection proposes data-only updates through a pull request for human review rather than pushing directly to `main`. Missing posting dates are marked unknown; first-seen time is not the same as employer posting date. Verify each listing on the employer's official careers page.\n\n## Security, accuracy and limitations
 
 - Career quiz recommendations are directional reflections, not validated psychometric assessments.
 - Knowledge-check scores are practice feedback, not professional certification.
