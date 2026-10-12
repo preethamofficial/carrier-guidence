@@ -16,7 +16,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 ## What is included
 
 - **Programming map:** Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#; 96 topic groups.
-- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash with staged topics and official references.
+- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash; each has 12 staged topics, topic-specific learning objectives, distinct everyday analogies, starter and alternative snippets, syntax-aware line-tracing prompts, topic-specific pitfalls, practice challenges and local progress tracking. Snippets that depend on project setup or surrounding declarations are labeled as illustrative; always run them in the appropriate toolchain.
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
@@ -46,7 +46,7 @@ python -m json.tool data/curriculum.json
 python -m json.tool data/year-curriculum.json
 ```
 
-The automated static test checks JSON, page viewport metadata, local references and the service-worker cache list. The GitHub Actions workflow also checks JavaScript syntax. These checks do not replace manual browser testing: test desktop/mobile layouts, keyboard-only navigation, local storage, downloads, offline behavior and browser-console errors before release.
+The automated static test checks JSON, page viewport metadata, local references, the service-worker cache list, and the six additional-language catalogs and lesson metadata. The GitHub Actions workflow also checks JavaScript syntax. These checks do not replace manual browser testing: test desktop/mobile layouts, keyboard-only navigation, local storage, downloads, offline behavior and browser-console errors before release.
 
 ## Security, accuracy and limitations
 
