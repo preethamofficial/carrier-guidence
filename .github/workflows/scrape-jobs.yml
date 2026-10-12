@@ -1,5 +1,12 @@
 name: Refresh public job feed (daily at 9 AM IST)
 on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/scrape_jobs.py"
+      - "scripts/requirements.txt"
+      - "CodeAtlas_Website/data/companies.json"
+      - ".github/workflows/scrape-jobs.yml"
   schedule:
     # GitHub cron uses UTC. 03:30 UTC = 09:00 Asia/Kolkata (IST).
     - cron: "30 3 * * *"
