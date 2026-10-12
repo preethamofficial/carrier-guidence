@@ -27,10 +27,20 @@
       for (const label of [job.location || "Location not specified",job.ats || "Source unknown",job.is_recent ? "Source date within 7 days" : (job.date_status === "unknown" ? "Date unverified" : "Date may reflect an update")]) {
         const chip = document.createElement("span"); chip.className = "chip"; chip.textContent = label; meta.append(chip);
       }
+      const descriptionText = String(job.description || "").trim();
+      const description = document.createElement("p"); description.className = "description-preview";
+      description.textContent = descriptionText ? descriptionText.slice(0, 420) + (descriptionText.length > 420 ? "…" : "") : "The employer's public feed did not provide a description. Open the original posting for full details.";
       const date = document.createElement("div"); date.className = "date";
       date.textContent = job.posted_date ? "Source date: " + formatDate(job.posted_date) : "First discovered: " + formatDate(job.first_seen_at) + " · source posting date unknown";
       const link = document.createElement("a"); link.className = "apply"; link.href = job.apply_url || "#"; link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "View original posting ↗";
-      card.append(company,title,meta,date,link); jobsEl.append(card);
+      card.append(company,title,meta,description);
+      if (descriptionText) {
+        const details = document.createElement("details"); details.className = "description-details";
+        const summary = document.createElement("summary"); summary.textContent = "Read full job description";
+        const full = document.createElement("div"); full.className = "description-full"; full.textContent = descriptionText;
+        details.append(summary,full); card.append(details);
+      }
+      card.append(date,link); jobsEl.append(card);
     }
     $("#filterSummary").textContent = `Showing ${filtered.length} of ${allJobs.length} listings`;
     emptyEl.hidden = filtered.length !== 0;
