@@ -1,11 +1,11 @@
-name: Refresh public job feed (review required)
+name: Refresh public job feed (daily at 9 AM IST)
 on:
   schedule:
-    - cron: "17 3 * * *"
+    # GitHub cron uses UTC. 03:30 UTC = 09:00 Asia/Kolkata (IST).
+    - cron: "30 3 * * *"
   workflow_dispatch:
 permissions:
   contents: write
-  pull-requests: write
 concurrency:
   group: public-job-feed
   cancel-in-progress: false
@@ -14,7 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out the default branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -24,20 +27,29 @@ jobs:
         run: python -m pip install -r scripts/requirements.txt
       - name: Compile scraper
         run: python -m py_compile scripts/scrape_jobs.py
-      - name: Collect configured public listings
+      - name: Refresh public listings and descriptions
         run: python scripts/scrape_jobs.py
-      - name: Propose feed update for review
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: refresh public job feed"
-          title: "chore: refresh public job feed"
-          body: |
-            Automated update from configured public ATS boards.
-            Review listing freshness, duplicate entries, and application links before merging.
-            The collector does not push generated job data directly to main.
-          branch: automation/public-job-feed
-          delete-branch: true
-          add-paths: |
-            CodeAtlas_Website/data/jobs.json
-            CodeAtlas_Website/data/scrape-log.json
+      - name: Validate generated feed
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          feed = json.loads(Path("CodeAtlas_Website/data/jobs.json").read_text(encoding="utf-8"))
+          assert isinstance(feed.get("jobs"), list), "jobs must be an array"
+          for job in feed["jobs"]:
+              assert job.get("title") and job.get("company"), "job is missing title/company"
+              assert str(job.get("apply_url", "")).startswith("https://"), "job URL must use HTTPS"
+              assert len(str(job.get("description") or "")) <= 12000, "description too long"
+          print(f"Validated {len(feed['jobs'])} listings from {feed.get('companies_checked', 0)} boards")
+          PY
+      - name: Commit refreshed feed to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CodeAtlas_Website/data/jobs.json CodeAtlas_Website/data/scrape-log.json
+          if git diff --cached --quiet; then
+            echo "No job feed changes to publish."
+            exit 0
+          fi
+          git commit -m "chore: refresh public job listings [skip ci]"
+          git push origin HEAD:main
