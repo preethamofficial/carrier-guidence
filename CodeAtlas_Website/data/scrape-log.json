@@ -1,9 +1,9 @@
 {
-  "last_run": "2026-10-18T08:13:09.854443+00:00",
+  "last_run": "2026-10-19T09:11:20.033839+00:00",
   "companies_configured": 15,
   "companies_checked": 15,
-  "newly_discovered": 1176,
+  "newly_discovered": 1207,
   "request_or_parse_errors": 0,
-  "jobs_retained": 3528,
-  "jobs_with_description": 3528
+  "jobs_retained": 3529,
+  "jobs_with_description": 3529
 }
