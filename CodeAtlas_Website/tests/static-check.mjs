@@ -135,5 +135,17 @@ check('Unified lessons keep the deep-learning path reachable',()=>{
  for(const item of ['./job-boards.html','./jobs.html','./data/jobs.json'])assert.ok(sw.includes(item),'Missing service-worker asset '+item);
 });
 
+
+check('Career Growth Planner section and controls',()=>{
+ const html=fs.readFileSync(path.join(root,'career-studio.html'),'utf8');
+ for(const id of ['growth-planner','growthForm','growthRole','growthTime','growthSkills','growthJobDescription','growthResult','growthReset','growthExport'])assert.ok(html.includes('id="'+id+'"'),'Missing growth planner control '+id);
+});
+check('Career Growth Planner covers eight roles and local progress',()=>{
+ const source=fs.readFileSync(path.join(root,'career-studio.js'),'utf8');
+ for(const marker of ['const growthCatalog','ai:{title:','backend:{title:','python:{title:','frontend:{title:','data:{title:','qa:{title:','devops:{title:','security:{title:','codeatlas.growth-planner.v1','createGrowthPlan','exportGrowthPlan'])assert.ok(source.includes(marker),'Missing growth planner behavior '+marker);
+ assert.ok(source.includes('localStorage'),'Growth plan must persist locally');
+ assert.ok(source.includes('Self-assessment only'),'Growth output must avoid hiring guarantees');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
