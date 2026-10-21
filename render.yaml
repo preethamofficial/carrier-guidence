@@ -2,7 +2,7 @@ services:
   - type: web
     name: codeatlas-career-guidance
     runtime: static
-    buildCommand: ""
+    buildCommand: echo "Static site; no build step required"
     staticPublishPath: ./CodeAtlas_Website
     headers:
       - path: /*
