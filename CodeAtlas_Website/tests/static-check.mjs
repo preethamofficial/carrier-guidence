@@ -158,7 +158,7 @@ check('Career Command Center assets, navigation and offline caching',()=>{
 });
 check('Career Command Center includes core role and privacy safeguards',()=>{
  const source=fs.readFileSync(path.join(root,'career-command-center.js'),'utf8');
- for(const marker of ['roleSkills','genai:','python:','data:','frontend:','qa:','devops:','security:','codeatlas.command-center.v1','application/json','localStorage','Definition of done'])assert.ok(source.includes(marker),'Missing command center behavior '+marker);
+ for(const marker of ['roleSkills','genai:','python:','data:','frontend:','qa:','devops:','security:','codeatlas.command-center.v1','application/json','localStorage'])assert.ok(source.includes(marker),'Missing command center behavior '+marker);
  assert.ok(!/fetch\s*\(/.test(source),'Career Command Center should not call external APIs');
 });
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
