@@ -147,5 +147,19 @@ check('Career Growth Planner covers eight roles and local progress',()=>{
  assert.ok(source.includes('Self-assessment only'),'Growth output must avoid hiring guarantees');
 });
 
+check('Career Command Center assets, navigation and offline caching',()=>{
+ for(const file of ['career-command-center.html','career-command-center.css','career-command-center.js'])assert.ok(fs.existsSync(path.join(root,file)),'Missing '+file);
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.ok(home.includes('href="career-command-center.html"'),'Career Command Center must be reachable from home');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ for(const file of ['./career-command-center.html','./career-command-center.css','./career-command-center.js'])assert.ok(sw.includes(file),'Missing cached asset '+file);
+ const html=fs.readFileSync(path.join(root,'career-command-center.html'),'utf8');
+ for(const id of ['direction','skills','goals','sprint','portfolio','applications','review','exportAll','importFile','clearWorkspace'])assert.ok(html.includes('id="'+id+'"'),'Missing command center control '+id);
+});
+check('Career Command Center includes core role and privacy safeguards',()=>{
+ const source=fs.readFileSync(path.join(root,'career-command-center.js'),'utf8');
+ for(const marker of ['roleSkills','genai:','python:','data:','frontend:','qa:','devops:','security:','codeatlas.command-center.v1','application/json','localStorage'])assert.ok(source.includes(marker),'Missing command center behavior '+marker);
+ assert.ok(!/fetch\s*\(/.test(source),'Career Command Center should not call external APIs');
+});
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;

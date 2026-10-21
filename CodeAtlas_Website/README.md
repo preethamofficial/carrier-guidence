@@ -20,6 +20,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
+- **Career Command Center:** advanced offline-first workspace for a target-role skills matrix with evidence notes, goals and definitions of done, weekly sprint planning against a time budget, portfolio project tracking, application pipeline, weekly retrospectives, and JSON backup/restore. It uses browser storage and transparent self-assessment; it does not call paid APIs or predict hiring outcomes.
 - **Career Studio:** directional career-fit quiz, local knowledge checks with explanations, role-specific interview question practice, on-device interview notes, editable cover-letter draft generator, official labour-market research links, a 30-day action plan and a personalized Career Growth Planner for eight role families. The planner compares self-declared demonstrated skills with a role checklist, creates a 30-day milestone plan, saves progress in local storage and exports a text copy; it is not an ATS score or hiring prediction.
 - **Resume vs job match:** local weighted heuristic alignment score, matched terms, potential gaps and exportable suggestions. It is not an employer ATS and does not predict hiring.\n- **Job Board Directory:** searchable company career pages and job-search resources with original links.\n- **Recent Jobs feed:** source-labeled listings with search, location/source filters, and a recent-date filter. It starts empty until a successful scheduled scrape runs; posting date and freshness are not guaranteed.
 - **Dashboard:** course progress, weekly target, check-ins/streak, focus timer, task list, journal and JSON backup/restore.
@@ -31,6 +32,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 - Main learning map: http://localhost:8000/
 - Dashboard: http://localhost:8000/dashboard.html
 - Career Studio: http://localhost:8000/career-studio.html
+- Career Command Center: http://localhost:8000/career-command-center.html
 - Career Launchpad: http://localhost:8000/career.html
 - Resume match: http://localhost:8000/resume-review.html
 - IT specialisations: http://localhost:8000/specializations.html
@@ -69,6 +71,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `index.html`, `app.js`, `styles.css`: learning map.
 - `dashboard.html`, `dashboard.js`, `dashboard.css`: learning dashboard.
 - `career-studio.html`, `career-studio.js`, `career-studio.css`: Career Studio practice tools.
+- `career-command-center.html`, `career-command-center.js`, `career-command-center.css`: advanced local career planning workspace.
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
