@@ -39,6 +39,20 @@
 <a class="resource-card" href="https://survey.stackoverflow.co/" target="_blank" rel="noopener noreferrer"><span>Developer survey</span><h3>Stack Overflow Developer Survey</h3><p>Annual survey context on developer tools, technologies and work practices.</p><b>Open survey ↗</b></a>
 <a class="resource-card" href="https://github.com/trending" target="_blank" rel="noopener noreferrer"><span>Open-source activity</span><h3>GitHub Trending</h3><p>Discover projects people are exploring. Trending repositories are signals, not a reliable labour-market forecast.</p><b>Explore projects ↗</b></a>
 </div><p class="notice">Salary varies by country, city, company, seniority and skill level. Compare multiple current sources and record the date and geography before making decisions.</p></section>
+
+<section class="section" id="growth-planner">
+<div class="section-head"><div><p class="eyebrow">07 / BUILD YOUR CAREER ROADMAP</p><h2>Career Growth Planner</h2><p>Compare skills you can demonstrate with a target role, then turn gaps into a focused 30-day action plan. This is self-assessment, not a hiring score.</p></div><span class="pill">Saved on this device</span></div>
+<div class="panel growth-panel">
+<form id="growthForm" class="form-grid">
+<label>Target role<select id="growthRole" required><option value="ai">AI / GenAI / RAG Engineer</option><option value="backend">Backend Developer</option><option value="python">Python Developer</option><option value="frontend">Frontend Developer</option><option value="data">Data Analyst</option><option value="qa">QA / Test Automation</option><option value="devops">DevOps / Cloud</option><option value="security">Cybersecurity</option></select></label>
+<label>Daily study time<select id="growthTime"><option value="30">30 minutes</option><option value="60" selected>1 hour</option><option value="90">1.5 hours</option><option value="120">2 hours</option></select></label>
+<label class="wide">Skills you can currently demonstrate<p class="tiny">Select only skills you can explain or show through practical work.</p><div id="growthSkills" class="growth-skills" aria-live="polite"></div></label>
+<label class="wide">Target job description (optional)<textarea id="growthJobDescription" rows="4" maxlength="8000" placeholder="Paste role requirements. Do not include private contact details."></textarea></label>
+<div class="wide growth-actions"><button class="primary" type="submit">Generate my growth plan</button><button id="growthReset" class="secondary" type="button">Reset planner</button><button id="growthExport" class="secondary" type="button">Export plan</button></div>
+</form><div id="growthResult" class="growth-result" aria-live="polite" hidden></div>
+<p class="tiny">Planner data stays in this browser. Job-description text is not uploaded. Keyword hints are approximate; review the job posting manually.</p>
+</div>
+</section>
 <section class="section" id="roadmap"><div class="section-head"><div><p class="eyebrow">06 / YOUR NEXT 30 DAYS</p><h2>Beginner-to-job-ready action plan</h2><p>Tick off each milestone; completion is stored locally.</p></div><button id="resetPlan" class="quiet" type="button">Reset plan</button></div><div id="planList" class="plan-list"></div><div class="plan-footer"><span id="planProgress">0 of 8 milestones complete</span><button id="downloadPlan" class="secondary" type="button">Export plan</button></div></section>
 <footer class="footer"><p>CodeAtlas is a learning aid. Career-fit suggestions are directional, quiz scores are practice feedback, and resume matching is heuristic—not a guarantee of interview selection or employment.</p><p><a href="index.html">Learning map</a> · <a href="year-course.html">52-week course</a> · <a href="specializations.html">All IT paths</a> · <a href="resume-review.html">Resume match</a></p></footer>
 </main></body></html>
