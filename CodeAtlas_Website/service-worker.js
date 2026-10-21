@@ -1,12 +1,12 @@
 'use strict';
-const CACHE_NAME='codeatlas-shell-v6';
+const CACHE_NAME='codeatlas-shell-v7';
 const CORE=[
  './','./index.html','./dashboard.html','./styles.css','./enhance.css','./app.js','./enhance.js',
  './data/curriculum.json','./year-course.html','./year-course.css','./year-course.js','./data/year-curriculum.json',
  './language-library.html','./language-library.css','./language-library.js',
  './specializations.html','./specializations.css','./specializations.js',
  './career.html','./career.css','./career.js',
- './career-studio.html','./career-studio.css','./career-studio.js',
+ './career-studio.html','./career-studio.css','./career-studio.js','./career-command-center.html','./career-command-center.css','./career-command-center.js',
  './resume-review.html','./resume-review.css','./resume-review.js',
  './dashboard.css','./dashboard.js','./job-boards.html','./job-boards.css','./job-boards.js','./jobs.html','./jobs.css','./jobs.js','./data/jobs.json','./manifest.webmanifest','./assets/codeatlas-icon.svg'
 ];
