@@ -963,6 +963,176 @@
       interview: "Describe a production readiness checklist for PHP, including configuration, security, observability, dependency updates and deployment reproducibility."
     }
   });
+  add({
+    "kotlin-1": {
+      concept: "Kotlin compiles to a target such as JVM bytecode or JavaScript depending on the project configuration. Its syntax supports concise expression-oriented code, but project setup still needs explicit toolchain, dependency and target choices.",
+      mechanics: "Gradle commonly manages Kotlin builds and plugins. The main function is an entry point for command-line apps; packages and imports organize names. Kotlin compiler and language versions affect syntax and standard-library APIs.",
+      pitfalls: "Confusing Kotlin language version with JVM target, mixing incompatible Gradle plugin versions, relying on IDE-only settings, and assuming concise syntax removes the need to understand generated behavior.",
+      challenge: "Create a Kotlin project with a reusable module and unit test, configure the target explicitly, and reproduce build and test from a clean checkout.",
+      interview: "Explain Kotlin's compilation targets, the role of Gradle, and why language version and runtime target are separate settings."
+    },
+    "kotlin-2": {
+      concept: "Kotlin distinguishes nullable and non-nullable types in the type system. Null safety reduces accidental null dereferences, but platform types from Java and unsafe assertions can reintroduce risk. val prevents reassignment of a binding; it does not make referenced objects deeply immutable.",
+      mechanics: "A nullable type uses a question mark; safe calls return null when the receiver is null, and the Elvis operator supplies a fallback. The not-null assertion throws if its operand is null. Smart casts depend on compiler knowledge that a value has not changed.",
+      pitfalls: "Using !! as a routine escape hatch, assuming Java platform types are safe, confusing val with deep immutability, and using a fallback that silently converts invalid data into a valid-looking default.",
+      challenge: "Parse optional user input into a domain value, use safe calls and explicit validation, and test null, blank and malformed inputs without using !!.",
+      interview: "Explain nullable types, safe calls, Elvis and not-null assertion, and why Kotlin cannot guarantee null safety across every Java boundary."
+    },
+    "kotlin-3": {
+      concept: "Kotlin control flow uses conditions, loops and ranges; many constructs are expressions that produce values. A when expression can replace long conditional chains, while range boundaries and collection iteration still require precise reasoning.",
+      mechanics: "Ranges such as 1..5 include both endpoints; until excludes the upper bound. downTo and step define descending or stepped ranges. when can match values, types or conditions, and exhaustive when expressions over sealed or enum types help catch missing cases.",
+      pitfalls: "Assuming until includes its endpoint, creating an incorrect step direction, using a non-exhaustive branch where a value is required, and confusing iteration over indices with iteration over values.",
+      challenge: "Build a score classifier using when, iterate over an inclusive and exclusive range, and test the smallest and largest permitted values.",
+      interview: "Compare .. and until, explain when exhaustiveness, and identify when direct collection iteration is clearer than index iteration."
+    },
+    "kotlin-4": {
+      concept: "Functions declare a contract; lambdas and higher-order functions let behavior be passed as a value. Kotlin supports named and default arguments, extension functions and inline functions, each serving a different readability or performance purpose.",
+      mechanics: "A trailing lambda can be placed outside parentheses when the final parameter is a function. An extension function adds callable syntax without changing the original class. Inline can reduce lambda allocation in some cases and enables reified type parameters, but should not be used without understanding its semantics.",
+      pitfalls: "Overusing extension functions until APIs become hard to discover, creating ambiguous overloads with default arguments, capturing mutable state in a lambda, and assuming inline always improves performance.",
+      challenge: "Write a higher-order filtering function and a small extension function for a domain type. Compare the result with an ordinary helper and test whether the extension name communicates its responsibility.",
+      interview: "Explain higher-order functions, trailing lambdas, extension functions and when inline/reified features are appropriate."
+    },
+    "kotlin-5": {
+      concept: "Classes model identity-bearing objects; data classes model values with generated equality and copy behavior. Constructors and visibility should preserve invariants, while sealed classes or interfaces can represent a finite set of domain states.",
+      mechanics: "A data class generates equals, hashCode, toString and copy based on primary-constructor properties. copy is shallow, so nested mutable values may still be shared. A companion object holds class-associated members but is itself an object.",
+      pitfalls: "Assuming copy is deep, placing mutable state in a data class used as a hash key, exposing invalid state through public setters, and using inheritance when composition expresses the relationship better.",
+      challenge: "Model an order with immutable data and a sealed status type. Demonstrate shallow copy behavior and test that invalid status transitions cannot be created through the public API.",
+      interview: "Compare data classes and ordinary classes, explain generated equality and shallow copy, and describe the purpose of sealed hierarchies."
+    },
+    "kotlin-6": {
+      concept: "Collections can be read-only or mutable through a given interface. List, Set and Map encode different semantics; sequences can defer transformations until elements are consumed. Read-only access is not the same as guaranteed deep immutability.",
+      mechanics: "map transforms, filter selects and groupBy partitions values by key. Collection operations commonly create intermediate collections; Sequence pipelines are lazy and may reduce intermediate allocations for large or multi-step processing. Iteration order depends on the concrete collection type.",
+      pitfalls: "Assuming List guarantees an immutable underlying object, mutating through another reference, choosing Sequence for tiny data without measuring, and using a mutable object as a map key after changing its equality-relevant fields.",
+      challenge: "Group records by category, compute summaries and compare List operations with a Sequence pipeline. Test empty data and verify the output ordering assumptions.",
+      interview: "Compare List and MutableList, read-only views and immutable data, and eager collection transformations versus lazy sequences."
+    },
+    "kotlin-7": {
+      concept: "Exceptions signal failures, while sealed result types can represent expected outcomes explicitly. The choice depends on whether the caller can reasonably recover from the condition and whether every caller must handle each outcome.",
+      mechanics: "try can be an expression, but Kotlin does not have checked exceptions. Result and sealed classes can encode success/failure variants. Use finally for cleanup, and preserve error causes when translating infrastructure failures into domain errors.",
+      pitfalls: "Catching Throwable for ordinary errors, swallowing exceptions, using exceptions for every expected branch, and representing a rich failure as an unstructured string lose important diagnostic information.",
+      challenge: "Implement a configuration parser that returns a sealed success/failure result for expected validation errors and still propagates unexpected programming defects. Test every result variant.",
+      interview: "Explain Kotlin's unchecked exception model, try as an expression, and when a sealed result is clearer than throwing an exception."
+    },
+    "kotlin-8": {
+      concept: "Coroutines represent suspendable computations. A coroutine can suspend without blocking its underlying thread, but it still needs a coroutine context and dispatcher. Structured concurrency ties child work to a parent scope so cancellation and failures have a predictable owner.",
+      mechanics: "suspend marks a function that can suspend; it does not automatically create a new thread. launch starts work without returning a direct result, while async returns a Deferred result. Cancellation is cooperative and propagates through structured scopes when code uses cancellable suspension points.",
+      pitfalls: "Using GlobalScope for request-owned work, blocking a dispatcher with CPU-heavy tasks, swallowing CancellationException, launching unbounded child tasks, and assuming suspend means background-thread execution.",
+      challenge: "Fetch two independent resources concurrently inside a structured scope, add a timeout and cancellation handling, and test that child work stops when the parent operation is cancelled.",
+      interview: "Compare launch and async, explain dispatchers and structured concurrency, and describe why cancellation must not be swallowed."
+    },
+    "kotlin-9": {
+      concept: "Gradle describes build tasks and dependencies; tests protect behavior and module boundaries reduce coupling. A reliable Kotlin project should make toolchain versions, dependency resolution and test commands reproducible.",
+      mechanics: "The Gradle wrapper pins the Gradle distribution used by the project. Unit tests isolate logic; integration tests verify framework, storage or network boundaries. Dependency scopes control what is available at compile time and runtime.",
+      pitfalls: "Using a global Gradle installation instead of the wrapper, dependency version drift, tests depending on execution order, and confusing compilation success with a working runtime package.",
+      challenge: "Add a unit test and one integration test to a Kotlin module, run them through the Gradle wrapper, and document the dependency scopes used.",
+      interview: "Explain the Gradle wrapper, dependency scopes, unit versus integration tests, and how reproducible builds reduce environment-only failures."
+    },
+    "kotlin-10": {
+      concept: "Android apps are driven by lifecycle events and state changes rather than a single main function. Architecture separates UI rendering, state ownership and data access so configuration changes and process recreation do not silently destroy important state.",
+      mechanics: "Activities and fragments have lifecycle callbacks; ViewModel can retain UI-related state across configuration changes, while persistent data requires storage. Coroutines should be scoped to the lifecycle or owner that needs them, and UI updates must follow main-thread rules.",
+      pitfalls: "Starting long-lived work in an activity without cancellation, storing durable data only in UI state, leaking context references, and treating a configuration change as if the process can never be recreated.",
+      challenge: "Build a simple screen with loading, content and error states, a ViewModel-backed state holder and a repository abstraction. Test recreation and cancellation behavior.",
+      interview: "Explain Android lifecycle, ViewModel responsibilities, lifecycle-aware coroutine scopes and the difference between in-memory UI state and persistence."
+    },
+    "kotlin-11": {
+      concept: "Networking, persistence and security are external boundaries. A well-designed app validates response data, handles timeouts and cancellation, stores sensitive values in appropriate storage, and separates repository logic from UI code.",
+      mechanics: "HTTP clients should use explicit timeouts and handle status codes before parsing bodies. A repository can coordinate remote and local sources. Sensitive tokens should use platform-appropriate protected storage and should not appear in logs or analytics events.",
+      pitfalls: "Trusting JSON shape, logging access tokens, storing secrets in ordinary preferences, ignoring cancellation, and assuming a successful HTTP status guarantees a valid domain response.",
+      challenge: "Implement a repository that fetches and validates a record, caches safe data, handles offline/error states, and keeps credentials out of logs. Test malformed response and timeout cases.",
+      interview: "Explain repository boundaries, network timeout/error handling, safe token storage, and why API response parsing must include validation."
+    },
+    "kotlin-12": {
+      concept: "A Kotlin capstone should combine domain modeling, structured concurrency, testing and a reproducible build. The goal is to make invalid states difficult to represent and make resource ownership and cancellation explicit.",
+      mechanics: "Use immutable data where practical, sealed types for finite state, injected interfaces for external dependencies and coroutine scopes with clear owners. Test business logic independently from UI or network frameworks and run static checks in CI.",
+      pitfalls: "Global coroutine scopes, unvalidated external data, UI logic mixed with persistence, tests tied to real networks and build settings that only work in one IDE.",
+      challenge: "Deliver a task or expense tracker with a typed domain model, repository, offline/error handling, coroutine cancellation, unit tests and a documented clean build.",
+      interview: "Explain the architecture boundaries, state model, coroutine lifecycle and testing strategy of the capstone."
+    },
+    "swift-1": {
+      concept: "Swift source is compiled by the Swift toolchain and organized into modules and packages. Swift supports multiple platforms, so project settings determine the target, available APIs and build products. Package configuration and compiler version are part of reproducibility.",
+      mechanics: "swift build and swift test are available through Swift Package Manager for package-based projects. The compiler performs type checking and emits target-specific code. Import statements make module APIs available, and access control determines which declarations are exposed.",
+      pitfalls: "Using APIs unavailable on the deployment target, assuming an Xcode project and Swift package share identical settings, ignoring compiler version constraints, and putting all application logic in one entry file.",
+      challenge: "Create a Swift package with a library, executable and test target. Build and test from the command line and document the supported Swift version.",
+      interview: "Explain Swift compilation, module boundaries, Swift Package Manager and why target availability matters."
+    },
+    "swift-2": {
+      concept: "Swift uses constants, variables and a strong type system. Optionals explicitly represent the possible absence of a value, preventing missing data from being silently treated as an ordinary value. Value types and reference types also affect mutation and copying semantics.",
+      mechanics: "let binds a constant and var a mutable variable. Optional binding with if let or guard let unwraps a value safely; nil-coalescing supplies a fallback. Force unwrap with ! traps when the value is nil. Structs and enums are value types, while classes are reference types.",
+      pitfalls: "Force-unwrapping external data, confusing a constant reference with immutable referenced state, assuming struct copies deeply duplicate reference-type members, and using a fallback that hides invalid input.",
+      challenge: "Parse optional configuration into validated domain values using guard let and explicit error reporting. Test missing, malformed and valid input without force-unwrapping.",
+      interview: "Explain optionals, optional binding, force unwrap, and value versus reference semantics in Swift."
+    },
+    "swift-3": {
+      concept: "Control flow and functions define how work is selected and reused. Swift's guard statement handles conditions that must be true to continue, enabling early exits that keep the main path less nested. Functions can use argument labels to make call sites self-documenting.",
+      mechanics: "for-in iterates over sequences, while repeat-while evaluates its condition after the body. guard must exit the current scope when its condition fails. Function argument labels are part of the API surface, and return types can use optionals or Result when absence/failure is expected.",
+      pitfalls: "Ignoring guard's required exit, creating deeply nested conditionals, using confusing argument labels, and hiding invalid input behind a default value.",
+      challenge: "Write a function that validates an order request with guard, returns a typed result and tests each early-exit condition.",
+      interview: "Compare if let and guard let, explain argument labels, and describe how early exits improve readability without hiding failure behavior."
+    },
+    "swift-4": {
+      concept: "Arrays, sets and dictionaries are value types in Swift, so mutation follows value semantics even when implementations optimize copying. Value semantics make reasoning easier, but copying behavior should still be considered for large collections and nested reference values.",
+      mechanics: "Array preserves order and duplicates, Set stores unique Hashable values, and Dictionary maps Hashable keys to values. Collection methods such as map, filter and reduce return transformed results. Copy-on-write can delay physical copying until mutation requires independent storage.",
+      pitfalls: "Assuming nested reference objects are deeply copied, using a mutable key whose hash/equality changes, mutating a collection while iterating, and using reduce when map or filter is clearer.",
+      challenge: "Transform a collection of transactions into totals by category, handle empty input and duplicate identifiers, and demonstrate value semantics with a nested class reference.",
+      interview: "Compare Array, Set and Dictionary, explain value semantics and copy-on-write, and describe the role of Hashable."
+    },
+    "swift-5": {
+      concept: "Structs and enums model values and finite state; protocols define requirements that unrelated types can adopt. Protocol-oriented design uses behavior contracts instead of requiring a shared class hierarchy.",
+      mechanics: "A struct gets memberwise initialization by default in many cases; enums can carry associated values. Protocol extensions can provide default implementations, and generic constraints can require protocol conformance. Classes support identity and inheritance, while structs and enums use value semantics.",
+      pitfalls: "Choosing a class when value semantics fit better, adding too many protocol extensions with surprising defaults, using associated values without exhaustive handling, and assuming copying a struct deeply clones reference-valued fields.",
+      challenge: "Represent a download state with an enum carrying progress or error details, define a protocol for storage, and test two implementations through that protocol.",
+      interview: "Compare structs and classes, explain associated-value enums, and describe protocol-oriented design and its trade-offs."
+    },
+    "swift-6": {
+      concept: "Swift errors use throwing functions and do-catch, while tests verify behavior across valid and invalid inputs. Resource cleanup should be deterministic, and tests should not depend on mutable global state or real external services unless they are integration tests.",
+      mechanics: "A function marked throws can propagate an error; try marks a call that may throw. defer schedules cleanup at scope exit. XCTest or Swift Testing can verify behavior, and test doubles isolate external dependencies.",
+      pitfalls: "Using try! on external data, catching an error and returning a misleading success value, forgetting defer for cleanup, and writing tests that depend on order or live network availability.",
+      challenge: "Write a throwing file parser with cleanup and domain-specific errors. Test valid data, malformed data and file-access failure using an injected reader or temporary file.",
+      interview: "Explain throws/try/do-catch, defer, and how to design deterministic unit tests for code that reads files or calls a service."
+    },
+    "swift-7": {
+      concept: "Generics and protocol-oriented design allow code to work with multiple types while preserving type safety. Opaque result types hide a concrete implementation behind a protocol contract, while existential values store values of types conforming to a protocol.",
+      mechanics: "A generic constraint uses where clauses to express requirements. some Protocol returns or stores one hidden concrete type with a known conformance; any Protocol can hold values of different conforming types subject to existential rules. Associated types and Self requirements affect which protocols can be used as existentials.",
+      pitfalls: "Using any and some interchangeably, over-generalizing a simple helper, hiding expensive copies behind abstraction, and ignoring associated-type constraints when designing a protocol API.",
+      challenge: "Create a generic collection helper constrained by a protocol, then expose an opaque return type. Explain which implementation details are hidden and which guarantees callers still receive.",
+      interview: "Compare generics, some and any, explain associated types, and describe when protocol existentials are useful."
+    },
+    "swift-8": {
+      concept: "Swift concurrency provides async/await, tasks and actors to express asynchronous work and isolate mutable state. Structured concurrency ties child tasks to their parent; actors serialize access to actor-isolated state, but code must still reason about cancellation and reentrancy.",
+      mechanics: "An async function can suspend at await. Task groups manage child tasks and propagate cancellation through structured scopes. Actors protect isolated state, but an actor method can be re-entered at suspension points, so invariants must be rechecked after await when necessary.",
+      pitfalls: "Launching unstructured tasks without an owner, assuming an actor makes an entire multi-await operation atomic, ignoring cancellation, and blocking a cooperative executor with synchronous heavy work.",
+      challenge: "Implement concurrent loading of independent resources with a task group and an actor-backed cache. Test cancellation and a state change that occurs while an actor method is suspended.",
+      interview: "Explain structured concurrency, actor isolation, cancellation, and actor reentrancy across await points."
+    },
+    "swift-9": {
+      concept: "Swift Package Manager defines packages, targets and dependencies. Modular boundaries make code reusable and testable, while explicit platform and deployment targets constrain which APIs are available.",
+      mechanics: "Package.swift describes targets and dependencies. A library target exposes a module; a test target imports it. Semantic version constraints and resolved package state influence repeatability, while build configurations and platform deployment settings affect actual app compatibility.",
+      pitfalls: "Circular target dependencies, exposing implementation details as public API, using an API newer than the deployment target, and assuming a package builds identically under every platform configuration.",
+      challenge: "Split a utility library from an application target, add unit tests and a dependency, and build/test from a clean checkout with the declared toolchain.",
+      interview: "Explain package versus target, public API boundaries, dependency resolution and platform availability checks."
+    },
+    "swift-10": {
+      concept: "SwiftUI describes UI as a function of state. When state changes, the framework recomputes affected view descriptions; state ownership and identity determine whether the right values persist through view updates.",
+      mechanics: "@State stores view-owned mutable state, @Binding passes a reference-like connection to state owned elsewhere, and observable models expose changes to views. View structs are recreated frequently, so transient local variables are not persistent UI state. Side effects belong in lifecycle-aware tasks or explicit actions.",
+      pitfalls: "Storing persistent state in ordinary view properties, creating network side effects during body evaluation, using the wrong state owner, and ignoring task cancellation when a view disappears or its inputs change.",
+      challenge: "Build a form with validation, loading and error states using a view model or observable model. Ensure network work is cancellable and the UI remains consistent after repeated submissions.",
+      interview: "Explain SwiftUI's state-driven rendering, State versus Binding, and why side effects should not be placed directly in body."
+    },
+    "swift-11": {
+      concept: "Networking, persistence and privacy involve data crossing trust boundaries. A robust app validates decoded payloads, handles cancellation and HTTP failures, stores sensitive information appropriately, and minimizes data collection and logging.",
+      mechanics: "URLSession performs asynchronous network operations; Codable decodes structured payloads but decoding success does not prove domain validity. Keychain is intended for sensitive credentials; ordinary preferences suit non-sensitive settings. App transport security and permission prompts should match the actual data flow.",
+      pitfalls: "Trusting decoded fields without domain validation, logging tokens, storing credentials in ordinary preferences, assuming all non-2xx responses throw, and failing to handle cancellation or offline state.",
+      challenge: "Create a repository that fetches a Codable response, validates business constraints, caches non-sensitive data and reports offline/error states. Keep credentials out of logs and test malformed payloads.",
+      interview: "Explain decoding versus validation, Keychain versus preferences, HTTP error handling, and privacy-by-design for an iOS feature."
+    },
+    "swift-12": {
+      concept: "A production iOS capstone combines state modeling, modular domain logic, concurrency, persistence, privacy and automated tests. Swift language safety helps, but API contracts, cancellation and user-data handling remain design responsibilities.",
+      mechanics: "Keep views thin, place business rules in testable types, isolate networking behind a repository, use structured tasks and explicit error states, and define data retention behavior. Validate platform permissions and deployment-target availability before release.",
+      pitfalls: "Networking inside view body, force unwraps in production paths, unstructured tasks, secrets in logs, untested offline behavior and state that disappears unexpectedly during view recreation.",
+      challenge: "Build a small habit or expense tracker with local persistence, a remote sync boundary, cancellable async work, clear loading/error states, unit tests and a privacy checklist.",
+      interview: "Explain the capstone's state ownership, async cancellation strategy, persistence boundary and privacy decisions."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
