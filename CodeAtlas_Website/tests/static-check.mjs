@@ -202,5 +202,35 @@ check('Runtime curriculum adds missing topics and deep guides to every language'
  }
 });
 
+
+check('Web Development roadmap is loaded, searchable and fully structured',()=>{
+ const roadmapFile=path.join(root,'web-development-roadmap.js');
+ assert.ok(fs.existsSync(roadmapFile),'Missing Web Development roadmap');
+ const source=fs.readFileSync(roadmapFile,'utf8');
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ assert.ok(home.includes('web-development-roadmap.js'),'Main page must load roadmap before app.js');
+ assert.ok(home.indexOf('web-development-roadmap.js')<home.indexOf('app.js'),'Roadmap data must load before app logic');
+ assert.ok(app.includes('showWebDevelopmentRoadmap'),'App must expose the roadmap view');
+ assert.ok(app.includes('web\\\\s*development'),'Search must recognize web development requests');
+ assert.ok(app.includes('data-roadmap-open'),'Roadmap nodes must link to related lessons');
+ assert.ok(sw.includes('./web-development-roadmap.js'),'Offline cache must include roadmap data');
+ const context={window:{},console};
+ vm.runInNewContext(source,context);
+ const html=context.window.CodeAtlasWebRoadmap.render();
+ assert.equal(context.window.CodeAtlasWebRoadmap.phases.length,4);
+ assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),23);
+ for(const phase of context.window.CodeAtlasWebRoadmap.phases){
+  assert.ok(phase.goal&&phase.topics.length,'Each roadmap phase needs a goal and topics');
+  for(const topic of phase.topics){
+   for(const key of ['title','track','needle','why','learn','code','challenge'])assert.ok(topic[key],phase.name+' missing '+key);
+   assert.ok(topic.learn.length>=3,topic.title+' needs explicit learning objectives');
+   assert.ok(topic.challenge.length>25,topic.title+' needs a practical challenge');
+  }
+ }
+ assert.ok(html.includes('Complete mind map')&&html.includes('Practice challenge')&&html.includes('Open related lesson'),'Roadmap must expose map, challenges and lesson links');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
