@@ -1265,6 +1265,38 @@
       lessons[id].example2 = pair[1];
     }
   });
+  const examples2 = {
+    "kotlin-1": ["fun main() { println(\"Hello, Kotlin\") }", "fun main(args: Array<String>) { println(\"Argument count: \" + args.size) }"],
+    "kotlin-2": ["fun displayName(name: String?): String = name?.trim()?.takeIf { it.isNotEmpty() } ?: \"Guest\"", "val rawCount: String? = \"42\"\nval count = rawCount?.toIntOrNull() ?: 0"],
+    "kotlin-3": ["for (score in 1..5) println(score)\nfor (index in 0 until 5) println(index)", "fun grade(mark: Int) = when {\n    mark !in 0..100 -> \"invalid\"\n    mark >= 40 -> \"pass\"\n    else -> \"retry\"\n}"],
+    "kotlin-4": ["fun transform(values: List<Int>, operation: (Int) -> Int) = values.map(operation)\nval doubled = transform(listOf(1, 2, 3)) { it * 2 }", "fun String.initials(): String = trim().split(Regex(\"\\\\s+\")).mapNotNull { it.firstOrNull()?.uppercase() }.joinToString(\"\")"],
+    "kotlin-5": ["data class User(val id: Long, val name: String)\nval original = User(1, \"Asha\")\nval renamed = original.copy(name = \"Anu\")", "sealed interface LoadState\ndata class Success(val count: Int) : LoadState\ndata class Failure(val message: String) : LoadState"],
+    "kotlin-6": ["val marks = listOf(72, 84, 91)\nval passed = marks.filter { it >= 80 }\nprintln(passed)", "val total = generateSequence(1) { it + 1 }.take(1_000_000).sum()"],
+    "kotlin-7": ["sealed interface ParseResult\ndata class Parsed(val value: Int) : ParseResult\ndata class Invalid(val reason: String) : ParseResult", "fun parseCount(text: String): Result<Int> = runCatching { text.toInt().also { require(it >= 0) } }"],
+    "kotlin-8": ["suspend fun loadPair() = coroutineScope {\n    val first = async { loadFirst() }\n    val second = async { loadSecond() }\n    first.await() to second.await()\n}", "suspend fun fetchWithDeadline() = withTimeout(2000) { fetchRemoteData() }"],
+    "kotlin-9": ["class CalculatorTest {\n    @Test fun addsValues() { assertEquals(5, Calculator.add(2, 3)) }\n}", "tasks.register(\"verifyLessons\") { dependsOn(\"test\") }"],
+    "kotlin-10": ["class TasksViewModel : ViewModel() {\n    private val _state = MutableStateFlow<UiState>(UiState.Loading)\n    val state: StateFlow<UiState> = _state.asStateFlow()\n}", "viewLifecycleOwner.lifecycleScope.launch {\n    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {\n        viewModel.state.collect { state -> render(state) }\n    }\n}"],
+    "kotlin-11": ["suspend fun loadUser(client: HttpClient, id: String): User {\n    val response = client.get(\"/users/\" + id)\n    if (response.status.value !in 200..299) error(\"User request failed\")\n    return response.body()\n}", "suspend fun refresh(repository: UserRepository) {\n    try { repository.refresh() }\n    catch (cancelled: CancellationException) { throw cancelled }\n    catch (error: IOException) { reportOfflineState() }\n}"],
+    "kotlin-12": ["data class Task(val id: String, val title: String, val done: Boolean = false)\nfun Task.complete() = copy(done = true)", "sealed interface ScreenState\ndata object Loading : ScreenState\ndata class Content(val tasks: List<Task>) : ScreenState\ndata class Error(val message: String) : ScreenState"],
+    "swift-1": ["import Foundation\nprint(\"Hello, Swift\")", "let version = ProcessInfo.processInfo.operatingSystemVersion\nprint(\"Major OS version: \\(version.majorVersion)\")"],
+    "swift-2": ["func displayName(_ name: String?) -> String {\n    guard let name, !name.isEmpty else { return \"Guest\" }\n    return name\n}", "let rawCount: String? = \"42\"\nlet count = rawCount.flatMap(Int.init) ?? 0"],
+    "swift-3": ["func grade(_ mark: Int) -> String {\n    guard (0...100).contains(mark) else { return \"invalid\" }\n    if mark >= 40 { return \"pass\" }\n    return \"retry\"\n}", "for score in 1...5 { print(score) }\nfor index in 0..<5 { print(index) }"],
+    "swift-4": ["let marks = [72, 84, 91]\nlet passed = marks.filter { $0 >= 80 }\nlet doubled = marks.map { $0 * 2 }", "let counts = [\"books\": 3, \"pens\": 5]\nlet total = counts.values.reduce(0, +)"],
+    "swift-5": ["enum DownloadState {\n    case idle\n    case loading(progress: Double)\n    case success(Data)\n    case failed(Error)\n}", "protocol Store {\n    associatedtype Item\n    func load(id: String) throws -> Item?\n}"],
+    "swift-6": ["enum ParseError: Error { case invalidInput }\nfunc parsePositive(_ text: String) throws -> Int {\n    guard let value = Int(text), value > 0 else { throw ParseError.invalidInput }\n    return value\n}", "func readReport() throws -> String {\n    let handle = try FileHandle(forReadingFrom: URL(fileURLWithPath: \"report.txt\"))\n    defer { try? handle.close() }\n    return String(decoding: try handle.readToEnd() ?? Data(), as: UTF8.self)\n}"],
+    "swift-7": ["func first<T>(_ values: [T]) -> T? { values.first }\nlet result = first([\"a\", \"b\"])", "protocol Identified { associatedtype ID: Hashable; var id: ID { get } }\nfunc lookup<T: Identified>(_ value: T) -> T.ID { value.id }"],
+    "swift-8": ["actor Counter {\n    private var value = 0\n    func increment() { value += 1 }\n    func current() -> Int { value }\n}", "func loadBoth() async throws -> (User, Settings) {\n    async let user = loadUser()\n    async let settings = loadSettings()\n    return try await (user, settings)\n}"],
+    "swift-9": ["// Package.swift target sketch: .target(name: \"Domain\") and .testTarget(name: \"DomainTests\", dependencies: [\"Domain\"])", "import Foundation\nstruct OrderID: Hashable { let rawValue: UUID }"],
+    "swift-10": ["struct CounterView: View {\n    @State private var count = 0\n    var body: some View { Button(\"Count: \\(count)\") { count += 1 } }\n}", "struct ProfileView: View {\n    @Binding var name: String\n    var body: some View { TextField(\"Name\", text: $name) }\n}"],
+    "swift-11": ["func fetchUser() async throws -> User {\n    let url = URL(string: \"https://example.com/user\")!\n    let (data, response) = try await URLSession.shared.data(from: url)\n    guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }\n    return try JSONDecoder().decode(User.self, from: data)\n}", "struct User: Decodable { let id: Int; let name: String }"],
+    "swift-12": ["struct TaskItem: Identifiable, Codable {\n    let id: UUID\n    var title: String\n    var isComplete: Bool = false\n}", "enum ViewState<Value> { case loading; case loaded(Value); case failed(String) }"]
+  };
+  Object.entries(examples2).forEach(([id, pair]) => {
+    if (lessons[id]) {
+      lessons[id].example = pair[0];
+      lessons[id].example2 = pair[1];
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
