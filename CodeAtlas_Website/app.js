@@ -61,7 +61,7 @@ function showCareerSkillsDirectory(){
  currentLanguage=null;currentTopic=null;
  setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Career roadmaps'}]);
  view.innerHTML=window.CodeAtlasCareerSkills.renderDirectory();
- $('[data-skill-track]').forEach(b=>b.onclick=()=>b.dataset.skillTrack==='web'?showWebDevelopmentRoadmap():showCareerSkillTrack(b.dataset.skillTrack));
+ $$('[data-skill-track]').forEach(b=>b.onclick=()=>b.dataset.skillTrack==='web'?showWebDevelopmentRoadmap():showCareerSkillTrack(b.dataset.skillTrack));
 }
 function showCareerSkillTrack(trackId,openIndex=null){
  if(!window.CodeAtlasCareerSkills){toast('Career roadmaps are still loading.');return;}
@@ -70,8 +70,8 @@ function showCareerSkillTrack(trackId,openIndex=null){
  if(!track){showCareerSkillsDirectory();return;}
  setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Career roadmaps',action:'career-skills'},{label:track.title}]);
  view.innerHTML=window.CodeAtlasCareerSkills.renderTrack(trackId);
- $('[data-skills-back]').forEach(b=>b.onclick=showCareerSkillsDirectory);
- $('[data-skills-start]').forEach(b=>b.onclick=()=>{const first=view.querySelector('.skills-topic');if(first){first.open=true;first.scrollIntoView({behavior:'smooth',block:'start'});}});
+ $$('[data-skills-back]').forEach(b=>b.onclick=showCareerSkillsDirectory);
+ $$('[data-skills-start]').forEach(b=>b.onclick=()=>{const first=view.querySelector('.skills-topic');if(first){first.open=true;first.scrollIntoView({behavior:'smooth',block:'start'});}});
  if(openIndex!==null){const node=view.querySelector('#skill-'+trackId+'-'+openIndex);if(node){node.open=true;node.scrollIntoView({behavior:'smooth',block:'start'});}}
 }
 function showAllLanguages(){
