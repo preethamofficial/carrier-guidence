@@ -181,16 +181,17 @@ check('Runtime curriculum adds missing topics and deep guides to every language'
  const context={window:{},console};
  vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-a.js'),'utf8'),context);
  vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-b.js'),'utf8'),context);
+ vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-c.js'),'utf8'),context);
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
  context.window.CodeAtlasComprehensiveStudy.enrichCurriculum(data);
  const all=data.languages.flatMap(l=>l.topics);
- assert.equal(data.languages.length,14);
- assert.equal(all.length,224);
- assert.equal(new Set(all.map(t=>t.id)).size,224);
+ assert.equal(data.languages.length,20);
+ assert.equal(all.length,296);
+ assert.equal(new Set(all.map(t=>t.id)).size,296);
  for(const lang of data.languages){
-  assert.equal(lang.topics.length,16,lang.name+' expanded topic count');
-  assert.ok(lang.coverageAudit&&lang.coverageAudit.newTopicsAdded===4,lang.name+' missing-topic audit');
+  assert.equal(lang.topics.length,lang.isNewTrack?12:16,lang.name+' expanded topic count');
+  assert.ok(lang.coverageAudit&&lang.coverageAudit.newTopicsAdded===(lang.isNewTrack?12:4),lang.name+' missing-topic audit');
   for(const topic of lang.topics){
    assert.ok(topic.deepDive&&topic.deepDive.learningObjectives.length>=5,lang.name+'/'+topic.id+' deep guide');
    assert.ok(topic.deepDive.edgeCases.length>=4,lang.name+'/'+topic.id+' edge cases');
