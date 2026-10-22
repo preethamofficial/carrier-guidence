@@ -20,7 +20,7 @@ async function init(){
   $('#navMap').addEventListener('click',showHome);
   $('#navAll').addEventListener('click',showAllLanguages);
   $('#homeBrand').addEventListener('click',e=>{e.preventDefault();showHome()});
-  $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(/\bweb\s*development\b|\bweb\s*dev\b|\bfull\s*stack\s*(roadmap|development)?\b|\bfrontend\s*roadmap\b|\bwebsite\s*roadmap\b/.test(searchQuery)) showWebDevelopmentRoadmap(); else if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
+  $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(/\bweb\s*development\b|\bweb\s*dev\b|\bfull\s*stack\s*(roadmap|development)?\b|\bfrontend\s*roadmap\b|\bwebsite\s*roadmap\b/.test(searchQuery)) showWebDevelopmentRoadmap(); else if(window.CodeAtlasCareerSkills && /\b(ai tools?|ai utilization|productivity tools|automation tools)\b/.test(searchQuery)) showCareerSkillTrack('aitools'); else if(window.CodeAtlasCareerSkills && /\b(ai|artificial intelligence|genai|generative ai|llm|rag|agentic ai|machine learning)\b/.test(searchQuery)) showCareerSkillTrack('ai'); else if(window.CodeAtlasCareerSkills && /\b(devops|cloud|platform engineering|kubernetes|docker|ci\/?cd|sre)\b/.test(searchQuery)) showCareerSkillTrack('devops'); else if(window.CodeAtlasCareerSkills && /\b(cyber ?security|cybersecurity|ethical hacking|appsec|soc analyst|blue team|security roadmap)\b/.test(searchQuery)) showCareerSkillTrack('cyber'); else if(window.CodeAtlasCareerSkills && /\b(linux|bash|shell scripting|networking|tcp\/?ip|system administration)\b/.test(searchQuery)) showCareerSkillTrack('linux'); else if(window.CodeAtlasCareerSkills && /\b(data engineering|data analytics|mlops|machine learning operations|data pipeline|data warehouse)\b/.test(searchQuery)) showCareerSkillTrack('data'); else if(window.CodeAtlasCareerSkills && /\b(career roadmaps|technology roadmaps|skill roadmaps|all roadmaps)\b/.test(searchQuery)) showCareerSkillsDirectory(); else if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
   $('#searchInput').addEventListener('keydown',e=>{if(e.key==='Escape'){e.target.value='';searchQuery='';showHome()}});
   document.addEventListener('keydown',e=>{if(e.key==='/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}});
   $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');try{localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')}catch{toast('Theme changed, but could not be saved.')}});
@@ -38,12 +38,12 @@ function renderLanguageNav(){
   $('#languageNav').innerHTML=curriculum.languages.map(l=>`<button class="lang-link ${currentLanguage?.id===l.id?'selected':''}" data-lang="${l.id}"><i class="lang-dot" style="background:${l.color}"></i>${l.name}<span class="count">${l.topics.filter(t=>isDone(t.id)).length}/${l.topics.length}</span></button>`).join('');
   $$('[data-lang]',$('#languageNav')).forEach(b=>b.onclick=()=>showLanguage(b.dataset.lang));
 }
-function setCrumbs(items){$('#breadcrumbs').innerHTML=items.map((x,i)=>`${i?'<b>/</b>':''}${x.action?`<button data-crumb="${x.action}" class="crumb-btn">${x.label}</button>`:i===items.length-1?`<strong>${x.label}</strong>`:`<span>${x.label}</span>`}`).join('');$$('[data-crumb]').forEach(b=>b.onclick=()=>b.dataset.crumb==='home'?showHome():showLanguage(b.dataset.crumb))}
+function setCrumbs(items){$('#breadcrumbs').innerHTML=items.map((x,i)=>`${i?'<b>/</b>':''}${x.action?`<button data-crumb="${x.action}" class="crumb-btn">${x.label}</button>`:i===items.length-1?`<strong>${x.label}</strong>`:`<span>${x.label}</span>`}`).join('');$$('[data-crumb]').forEach(b=>b.onclick=()=>b.dataset.crumb==='home'?showHome():b.dataset.crumb==='career-skills'?showCareerSkillsDirectory():showLanguage(b.dataset.crumb))}
 function showHome(){
   currentLanguage=null;currentTopic=null;renderLanguageNav();setCrumbs([{label:'CodeAtlas'},{label:'Learning map'}]);
   const topics=allTopics().length, codeBlocks=allTopics().reduce((s,t)=>s+t.basicExamples.length+t.guidedExamples.length+t.advancedExamples.length,0);
   view.innerHTML=`
-  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Programming languages, web foundations and engineering skills in one unified curriculum, with deeper explanations, code examples, challenges, and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-quick-actions"><button class="primary-button" id="webRoadmapBtn">Open Web Development Roadmap ↗</button></div><div class="hero-stats"><div class="hero-stat"><strong>${String(curriculum.languages.length).padStart(2,'0')}</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
+  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Programming languages, web foundations and engineering skills in one unified curriculum, with deeper explanations, code examples, challenges, and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-quick-actions"><button class="primary-button" id="webRoadmapBtn">Open Web Development Roadmap ↗</button><button class="outline-button" id="careerSkillsBtn">Explore AI, DevOps, Cybersecurity &amp; More ↗</button></div><div class="hero-stats"><div class="hero-stat"><strong>${String(curriculum.languages.length).padStart(2,'0')}</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
   <div class="section-head"><div><h2>Explore the learning map</h2><p>Select a language node to enter its topic map.</p></div><button class="subtle-button" id="allLangBtn">View all languages ↗</button></div>
   <section class="map-canvas"><div class="map-root"><strong>⌘ CodeAtlas</strong><small>Programming language knowledge map</small></div><div class="map-grid">${curriculum.languages.map(l=>`<button class="language-card" style="--lang:${l.color}" data-open-lang="${l.id}"><div class="lang-card-top"><span class="lang-logo">${l.name.slice(0,2).toUpperCase()}</span><strong>${l.name}</strong></div><p>${l.purpose}</p><div class="card-bottom"><span>${l.topics.filter(t=>isDone(t.id)).length}/${l.topics.length} topics complete</span><b>Open map ↗</b></div></button>`).join('')}</div></section>
   <div class="section-head"><div><h2>A learning path that sticks</h2><p>Move from understanding to implementation, then prove what you know.</p></div></div>
@@ -52,8 +52,27 @@ function showHome(){
   <div class="topic-grid">${curriculum.languages.map(l=>{const t=l.topics.find(x=>!isDone(x.id))||l.topics[0];return `<button class="topic-card" style="--lang:${l.color}" data-open-topic="${l.id}|${t.id}"><span class="topic-index">${l.name.toUpperCase()} · ${String(l.topics.indexOf(t)+1).padStart(2,'0')}</span><h3>${t.title}</h3><p>${t.definition}</p><div class="topic-card-foot"><span>Continue path</span><span>↗</span></div></button>`}).join('')}</div>`;
   $('#allLangBtn').onclick=showAllLanguages;
   $('#webRoadmapBtn').onclick=showWebDevelopmentRoadmap;
+  $('#careerSkillsBtn').onclick=showCareerSkillsDirectory;
   $$('[data-open-lang]').forEach(b=>b.onclick=()=>showLanguage(b.dataset.openLang));
   $$('[data-open-topic]').forEach(b=>b.onclick=()=>{const [l,t]=b.dataset.openTopic.split('|');showLesson(l,t)});
+}
+function showCareerSkillsDirectory(){
+ if(!window.CodeAtlasCareerSkills){toast('Career roadmaps are still loading.');return;}
+ currentLanguage=null;currentTopic=null;
+ setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Career roadmaps'}]);
+ view.innerHTML=window.CodeAtlasCareerSkills.renderDirectory();
+ $('[data-skill-track]').forEach(b=>b.onclick=()=>b.dataset.skillTrack==='web'?showWebDevelopmentRoadmap():showCareerSkillTrack(b.dataset.skillTrack));
+}
+function showCareerSkillTrack(trackId,openIndex=null){
+ if(!window.CodeAtlasCareerSkills){toast('Career roadmaps are still loading.');return;}
+ currentLanguage=null;currentTopic=null;
+ const track=window.CodeAtlasCareerSkills.tracks.find(t=>t.id===trackId);
+ if(!track){showCareerSkillsDirectory();return;}
+ setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Career roadmaps',action:'career-skills'},{label:track.title}]);
+ view.innerHTML=window.CodeAtlasCareerSkills.renderTrack(trackId);
+ $('[data-skills-back]').forEach(b=>b.onclick=showCareerSkillsDirectory);
+ $('[data-skills-start]').forEach(b=>b.onclick=()=>{const first=view.querySelector('.skills-topic');if(first){first.open=true;first.scrollIntoView({behavior:'smooth',block:'start'});}});
+ if(openIndex!==null){const node=view.querySelector('#skill-'+trackId+'-'+openIndex);if(node){node.open=true;node.scrollIntoView({behavior:'smooth',block:'start'});}}
 }
 function showAllLanguages(){
  currentLanguage=null;currentTopic=null;setCrumbs([{label:'CodeAtlas',action:'home'},{label:'All languages'}]);
