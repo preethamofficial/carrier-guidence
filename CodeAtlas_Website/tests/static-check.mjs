@@ -182,6 +182,7 @@ check('Runtime curriculum adds missing topics and deep guides to every language'
  vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-a.js'),'utf8'),context);
  vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-b.js'),'utf8'),context);
  vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-c.js'),'utf8'),context);
+ vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-d.js'),'utf8'),context);
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
  context.window.CodeAtlasComprehensiveStudy.enrichCurriculum(data);
