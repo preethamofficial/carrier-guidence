@@ -793,6 +793,176 @@
       interview: "Describe how you would structure a maintainable C project, audit its memory ownership, test failure paths and measure performance without sacrificing correctness."
     }
   });
+  add({
+    "cpp-1": {
+      concept: "Modern C++ is compiled, statically typed and multi-paradigm. The language offers low-level control but also standard abstractions for ownership, containers and algorithms. The chosen language standard and build system determine which features and libraries are available.",
+      mechanics: "The compiler processes translation units and the linker resolves symbols and libraries. CMake can describe targets and dependencies independently of a particular IDE. Header inclusion and one-definition rules affect how declarations and definitions are organized across files.",
+      pitfalls: "Using a compiler default without documenting the standard, including headers only indirectly, defining non-inline symbols in headers included by many translation units, and treating a successful build as proof of runtime safety.",
+      challenge: "Create a CMake project with a library, executable and test target. Compile under a chosen standard with warnings enabled and reproduce the build from a clean directory.",
+      interview: "Explain compilation and linking, the role of CMake targets, and why modern C++ favors explicit standard selection and direct header inclusion."
+    },
+    "cpp-2": {
+      concept: "C++ types express representation and operations, while const, references and value categories communicate mutation and ownership. Passing by value can be ideal for small types; const references avoid copies for larger read-only values, but introduce lifetime considerations.",
+      mechanics: "An lvalue identifies an object with a location; an rvalue often represents a temporary or expiring value. Move operations can transfer resources from an object, but std::move itself is a cast and does not move anything unless a suitable operation consumes the result. const limits mutation through a particular access path.",
+      pitfalls: "Returning references to local objects, assuming std::move guarantees a move, accidental copies of large containers, dangling references and using signed/unsigned conversions without checking range.",
+      challenge: "Write an API that accepts a small integer by value and a large record by const reference. Add a move-aware type and instrument copy/move operations to observe which operations actually occur.",
+      interview: "Explain value categories, std::move, copy versus move semantics, and when pass-by-value or const reference is appropriate."
+    },
+    "cpp-3": {
+      concept: "Control flow determines execution; functions expose reusable contracts. Modern C++ range-based loops and algorithms often communicate intent more clearly than hand-written index logic, while return types and const qualification make a function's behavior easier to reason about.",
+      mechanics: "A loop condition is checked at defined points, and early return can reduce nested branching. Standard algorithms operate on iterator ranges and rely on the operations their iterator and value types support. Integer overflow and invalid indexing remain correctness concerns even in modern C++.",
+      pitfalls: "Off-by-one iterator ranges, modifying a container while iterating, functions with hidden global side effects, and choosing a complex algorithm when a direct loop is clearer.",
+      challenge: "Summarize a vector with min, max and count_if, test empty input and repeated values, and compare a standard algorithm with a manual loop for readability.",
+      interview: "Explain iterator range boundaries, const member functions, early return, and when a standard algorithm improves clarity."
+    },
+    "cpp-4": {
+      concept: "A class defines a type and its invariants: conditions that must remain true for every valid object. Constructors establish a valid initial state, and public methods should preserve that state. Encapsulation is about controlling state transitions, not merely making fields private.",
+      mechanics: "Member initialization lists initialize members before the constructor body. RAII often follows from giving resources to members with appropriate lifetime. Copy/move constructors and assignment operators determine how objects duplicate or transfer their state; the rule of zero is preferred when standard members already manage resources.",
+      pitfalls: "Leaving an object invalid after construction, using raw owning pointers, defining only some copy/move operations without considering the rest, and exposing setters that allow invalid state transitions.",
+      challenge: "Design a bounded inventory counter whose constructor and methods preserve nonnegative stock. Add tests for overflow, invalid decrement and copy behavior, and implement it using standard value members.",
+      interview: "Explain class invariants, member initialization order, rule of zero versus rule of five, and how encapsulation prevents invalid states."
+    },
+    "cpp-5": {
+      concept: "RAII ties resource lifetime to object lifetime. When an owning object is destroyed, its destructor releases the resource, including when control exits through an exception. This is the central C++ technique for exception-safe memory, files, locks and other resources.",
+      mechanics: "A local object's destructor runs at scope exit. unique_ptr expresses exclusive dynamic ownership; vector and string own their storage; lock_guard releases a mutex when its scope ends. Destructors should generally not throw, because throwing during stack unwinding can terminate the program.",
+      pitfalls: "Raw owning pointers, manually paired new/delete, double release, leaking resources through early returns, and destructors that throw can break exception safety.",
+      challenge: "Replace a manually managed buffer with vector or unique_ptr, then add an early-return error path and prove cleanup still occurs.",
+      interview: "Explain RAII, deterministic destruction, exception safety, and why the rule of zero is preferable when standard resource-owning types are available."
+    },
+    "cpp-6": {
+      concept: "Standard containers encode storage and lookup trade-offs; algorithms express operations over iterator ranges. Choosing a container requires understanding ordering, duplicate policy, iterator invalidation, complexity and memory layout.",
+      mechanics: "vector stores elements contiguously and supports fast indexing; map maintains ordered keys; unordered_map uses hashing with average-case constant lookup; set models unique values. Some vector operations invalidate iterators and references when reallocation occurs. Algorithms such as sort require their range and value type to meet specified requirements.",
+      pitfalls: "Keeping invalidated iterators, assuming unordered iteration is stable, choosing a node-based container without a need for it, and using an algorithm with a range that does not meet its preconditions.",
+      challenge: "Implement a frequency counter, sort records by a comparator, and document why the chosen container fits the required order and access pattern. Add tests for duplicates and empty data.",
+      interview: "Compare vector, map and unordered_map; explain iterator invalidation; and describe how algorithm complexity and container choice interact."
+    },
+    "cpp-7": {
+      concept: "A pointer provides indirect access to an object, while smart pointers encode ownership. unique_ptr represents exclusive ownership, shared_ptr shared ownership, and weak_ptr a non-owning reference to a shared_ptr-managed object. Prefer values or containers unless dynamic lifetime is required.",
+      mechanics: "make_unique and make_shared create managed objects safely. A shared_ptr control block tracks owners; reference cycles can keep objects alive indefinitely. References and raw pointers commonly express non-owning access, but they do not extend the lifetime of the referenced object.",
+      pitfalls: "Dangling references, shared_ptr cycles, unnecessary shared ownership, using get() to transfer ownership, and manually deleting memory owned by a smart pointer cause lifetime defects.",
+      challenge: "Build a tree with unique_ptr children and a separate observer reference. Explain who owns each node and test destruction behavior without introducing shared_ptr cycles.",
+      interview: "Compare unique_ptr, shared_ptr and weak_ptr, explain ownership versus observation, and identify how shared ownership cycles are broken."
+    },
+    "cpp-8": {
+      concept: "Templates let algorithms and data structures work with types that meet a set of requirements. Generic programming preserves type information at compile time and can avoid virtual dispatch, but template errors and overly abstract interfaces can become difficult to maintain.",
+      mechanics: "Template arguments may be deduced from call-site values. Concepts can constrain a template with named requirements in modern C++. Type traits inspect type properties; specialization customizes behavior for selected types. Template definitions are commonly visible in headers so the compiler can instantiate them.",
+      pitfalls: "Unclear compiler diagnostics from unconstrained templates, accidental copies of expensive values, overusing specialization, and placing non-inline ordinary definitions in headers alongside templates can cause build or maintenance problems.",
+      challenge: "Write a generic clamp or lookup utility with an explicit concept, test it with two suitable types, and add a compile-time example that demonstrates rejection of an unsupported type.",
+      interview: "Explain template argument deduction, concepts, specialization and why template definitions are commonly included in headers."
+    },
+    "cpp-9": {
+      concept: "Exceptions propagate failures through stack unwinding; result-like types represent expected success or failure as a value. The right design depends on whether failure is exceptional, part of ordinary control flow, or must be explicitly handled by every caller.",
+      mechanics: "Throwing an exception transfers control to a matching handler and destroys automatic objects during unwinding. Catch by const reference to avoid slicing. std::optional models presence/absence, while std::expected is available in C++23 implementations and models a value or error.",
+      pitfalls: "Catching and discarding exceptions, throwing from destructors, catching a base exception by value, using exceptions for ordinary high-frequency branching without a clear policy, and returning ambiguous sentinel values.",
+      challenge: "Design a parser that distinguishes malformed input from a valid zero value. Implement one exception-based API and one result-based API, then compare call-site clarity and test coverage.",
+      interview: "Explain stack unwinding, exception safety guarantees, optional versus expected, and why exceptions should not be silently swallowed."
+    },
+    "cpp-10": {
+      concept: "Concurrency permits overlapping execution; the C++ memory model defines which interactions between threads are valid. A data race on non-atomic shared memory is undefined behavior. Synchronization establishes ordering and visibility, not just mutual exclusion.",
+      mechanics: "mutex and lock_guard protect critical sections; atomic operations provide specific memory-order guarantees; condition_variable coordinates waiting on a predicate. Thread lifetime and joining/detaching matter. A program must avoid circular lock acquisition and define shutdown behavior.",
+      pitfalls: "Data races, deadlocks, waiting without a predicate, detached threads outliving referenced objects, and choosing relaxed atomics without understanding the required ordering.",
+      challenge: "Protect a shared counter with a mutex, then implement a producer-consumer queue using a condition variable and predicate. Run under a thread sanitizer where available.",
+      interview: "Explain data races and undefined behavior, mutex versus atomic, condition-variable predicates, and how deadlocks arise."
+    },
+    "cpp-11": {
+      concept: "Tests verify contracts, build systems define reproducible targets, and profilers identify measured bottlenecks. Correctness comes before optimization; a benchmark must represent realistic input and separate setup overhead from the operation being measured.",
+      mechanics: "CMake targets declare sources, include directories and dependencies. Unit tests should isolate domain logic; integration tests validate boundaries. Debug builds and sanitizers find different defect classes, while profilers report CPU, memory or contention evidence.",
+      pitfalls: "Tests without meaningful assertions, nondeterministic timing thresholds, benchmarks that measure setup accidentally, optimizing an unmeasured path, and using one build configuration as proof that every configuration is correct.",
+      challenge: "Create a CMake test target, add tests for normal and invalid inputs, run sanitizers, and capture a benchmark baseline before optimizing one measured hotspot.",
+      interview: "Explain unit versus integration tests, how CMake models targets, and why profiling and reproducible benchmarks should guide optimization."
+    },
+    "cpp-12": {
+      concept: "A capstone demonstrates integrated engineering: domain modeling, explicit ownership, stable interfaces, error handling, tests and reproducible builds. Advanced C++ should use language features to make invariants visible rather than merely showcasing syntax.",
+      mechanics: "Separate domain logic from persistence and CLI/API layers. Prefer standard containers and RAII, minimize shared mutable state, document any unsafe assumptions around raw memory, and test copy/move and error paths. Measure performance before introducing custom allocators or complex concurrency.",
+      pitfalls: "Scope creep, unclear ownership, raw resource management, no failure-path tests, undefined behavior hidden by one compiler, and optimization without representative benchmarks.",
+      challenge: "Build a task tracker or inventory CLI with CRUD operations, persistent storage, input validation, unit tests, CMake, CI and a benchmark for a justified hot path.",
+      interview: "Explain how your design manages ownership and errors, which invariants are tested, and how you would prove a claimed performance improvement."
+    },
+    "php-1": {
+      concept: "PHP is commonly executed by a server-side runtime for each request or through CLI scripts. The web server, PHP runtime, dependency manager and framework are distinct layers. Project setup should declare supported PHP versions and dependencies rather than relying on a machine's global configuration.",
+      mechanics: "The PHP interpreter parses and executes source; Composer resolves package dependencies and autoloads classes. Web requests expose server and request data through defined APIs, while CLI scripts have a different execution context. The current working directory and include paths affect file loading.",
+      pitfalls: "Assuming browser and CLI environments expose the same globals, committing vendor files without a project policy, relying on a different PHP version locally than in production, and using ambiguous include paths.",
+      challenge: "Create a Composer project with PSR-4 autoloading, a CLI entry point and one unit test. Document the required PHP version and reproduce installation from composer.lock.",
+      interview: "Explain the PHP runtime, Composer and autoloading, and how CLI execution differs from an HTTP request."
+    },
+    "php-2": {
+      concept: "PHP variables are dynamically typed values prefixed with a dollar sign. Loose comparison may coerce values, while strict comparison checks type as well as value. Type declarations and return types make contracts clearer but do not replace validation of external input.",
+      mechanics: "Scalar type declarations and strict_types affect argument coercion behavior. Arrays are ordered maps, and nullability should be explicit in modern signatures. Numeric strings and booleans can behave unexpectedly under loose comparison, so parsing should be deliberate.",
+      pitfalls: "Using == on untrusted values, trusting type declarations as request validation, relying on implicit numeric-string conversion, and treating empty string, null and zero as interchangeable.",
+      challenge: "Build a form parser that validates quantity and price, uses strict comparisons, and reports malformed values separately from valid zero values.",
+      interview: "Compare loose and strict comparison, explain type declarations and strict_types, and describe why request data must be validated explicitly."
+    },
+    "php-3": {
+      concept: "Conditions and loops control execution, while functions package behavior into reusable contracts. PHP supports named functions, closures and arrow functions, each with different capture and scope rules. Clear return values make application logic easier to test.",
+      mechanics: "A function declares parameters and return type; closures can capture variables with use, while arrow functions automatically capture referenced outer variables by value. foreach iterates arrays and traversables. Return types should match all intended paths.",
+      pitfalls: "Missing return paths, capturing a variable by reference unexpectedly, modifying an array during foreach without understanding the effect, and combining request handling with domain calculations inside one function.",
+      challenge: "Write a pure function that calculates a cart total, then call it from a separate request handler. Test empty input, invalid quantities and closure capture behavior.",
+      interview: "Compare closures and arrow functions, explain variable capture, and describe why separating pure logic from request handling improves testing."
+    },
+    "php-4": {
+      concept: "PHP arrays act as ordered maps and can represent lists, dictionaries and mixed-key structures. Data transformation should make key preservation, reindexing, mutation and empty-input behavior explicit because array functions differ in these details.",
+      mechanics: "array_map transforms values, array_filter keeps elements matching a predicate, and array_reduce accumulates a result. Some functions preserve keys while others reindex; strict comparison flags can matter for membership checks. Copy-on-write is an implementation optimization, not a substitute for understanding references.",
+      pitfalls: "Assuming all array functions preserve keys, confusing list and map shapes, using loose membership checks for security-sensitive values, and mutating data through references without clear ownership.",
+      challenge: "Transform a list of order records into totals by category, preserve required keys, handle empty arrays and duplicate IDs, and test the output shape.",
+      interview: "Explain PHP arrays as ordered maps, compare array_map/filter/reduce, and describe why key preservation and strict comparisons matter."
+    },
+    "php-5": {
+      concept: "A form is an untrusted input boundary. Validation checks whether input meets domain rules; normalization creates a consistent representation; output escaping ensures data is interpreted as text in its destination context. These are separate operations and none can replace the others.",
+      mechanics: "Validate request method and expected fields, use filter/validation functions where appropriate, and escape HTML output with a context-aware API such as htmlspecialchars. CSRF tokens protect state-changing browser requests; server-side validation remains authoritative.",
+      pitfalls: "Trusting browser validation, using raw input in HTML or SQL, treating sanitization as universal, failing to validate array-shaped request data, and omitting CSRF protection on state-changing forms.",
+      challenge: "Implement a registration form with server-side validation, context-aware output escaping, CSRF protection and safe error redisplay. Test malformed input and strings containing HTML markup.",
+      interview: "Compare validation, normalization and output escaping; explain XSS and CSRF; and state why client-side validation cannot be the security boundary."
+    },
+    "php-6": {
+      concept: "HTTP routing maps a request method and path to application behavior. Sessions maintain state across requests using a session identifier, but session data and cookies are security-sensitive and need appropriate lifecycle controls.",
+      mechanics: "A response has a status code, headers and body; headers must be sent before output. Session cookies should use secure attributes appropriate to HTTPS deployment. Routes should validate method, authorization and input before performing state changes.",
+      pitfalls: "Changing headers after output, trusting session identifiers without regeneration at authentication boundaries, allowing state-changing GET requests, and exposing detailed server errors to clients.",
+      challenge: "Implement a small authenticated route with session regeneration on login, logout invalidation, authorization checks and tests for unauthorized requests.",
+      interview: "Explain HTTP methods and status codes, session cookies, session fixation, and why GET should not perform state-changing operations."
+    },
+    "php-7": {
+      concept: "Classes group behavior and state, namespaces avoid name collisions, and Composer manages dependencies and autoloading. Modern PHP uses type declarations, interfaces and dependency injection to make boundaries clearer and testing easier.",
+      mechanics: "Namespaces define qualified names; PSR-4 maps namespaces to directory paths. Interfaces express contracts and constructor injection supplies collaborators. Composer's lock file records resolved dependency versions for repeatable installs.",
+      pitfalls: "Large classes with unrelated responsibilities, static service lookups that hide dependencies, autoloading that differs by environment, and committing credentials or unstable dependency ranges without a lock file.",
+      challenge: "Build a namespaced service with an injected repository interface, a Composer PSR-4 mapping and a unit test using an in-memory fake.",
+      interview: "Explain namespaces, PSR-4 autoloading, Composer lock files and dependency injection."
+    },
+    "php-8": {
+      concept: "Database access must separate SQL instructions from input values and define transaction boundaries for multi-step changes. PDO provides a consistent interface across supported database drivers, but placeholder syntax and some behaviors can depend on driver configuration.",
+      mechanics: "Prepared statements bind values separately from SQL text. Transactions group statements and allow rollback when supported by the storage engine. Constraints enforce invariants at the database boundary, and row-count semantics vary by driver and statement type.",
+      pitfalls: "Building SQL through string concatenation, assuming every driver handles placeholders identically, leaving a transaction open after failure, and relying only on application validation for integrity.",
+      challenge: "Create a PDO repository that uses prepared statements, performs a multi-step update transactionally and distinguishes not-found from database failure. Test rollback behavior.",
+      interview: "Explain PDO prepared statements, transaction commit/rollback, and why parameterization prevents SQL injection."
+    },
+    "php-9": {
+      concept: "A framework provides conventions for routing, dependency injection, validation, persistence and middleware. It does not remove the need to understand HTTP, authorization, database transactions or error boundaries. Framework-specific behavior should be tied to a documented version.",
+      mechanics: "A request typically passes through middleware, routing, controller/action logic and response serialization. Domain services should contain business rules; repositories or framework data layers manage persistence. Dependency injection resolves collaborators according to configuration.",
+      pitfalls: "Putting all business logic in controllers, trusting framework defaults without checking configuration, leaking ORM entities directly as public API contracts, and using global state that makes tests order-dependent.",
+      challenge: "Implement one endpoint with request validation, authorization, a domain service, a persistence boundary and integration tests for invalid and unauthorized requests.",
+      interview: "Explain middleware and dependency injection, controller versus service responsibilities, and why framework familiarity does not replace understanding HTTP and data integrity."
+    },
+    "php-10": {
+      concept: "Authentication establishes who a user is; authorization decides what that user may do. Password storage, session handling, CSRF protection, output escaping and least-privilege database access address different threats and must be applied together.",
+      mechanics: "Use password_hash/password_verify with supported algorithms rather than custom hashing. Regenerate session identifiers after authentication, validate CSRF tokens for state-changing browser requests, parameterize SQL and escape output for the destination context.",
+      pitfalls: "Storing plaintext or fast-hashed passwords, checking permissions only in the UI, accepting user IDs as proof of authorization, logging credentials, and trusting raw HTML from users.",
+      challenge: "Build a small account flow with password hashing, session regeneration, server-side authorization, CSRF checks and tests for privilege escalation attempts.",
+      interview: "Differentiate authentication and authorization, explain password hashing versus encryption, and outline defenses against CSRF, XSS and SQL injection."
+    },
+    "php-11": {
+      concept: "Automated tests protect behavior; queues move work outside the request path; caches reduce repeated work but introduce freshness and invalidation problems. These systems require explicit failure, retry and observability policies.",
+      mechanics: "Unit tests isolate business logic; integration tests exercise database or HTTP boundaries. Queue workers need idempotent handlers because jobs may be retried. Cache keys should include all inputs that affect the result, and invalidation should follow the data update contract.",
+      pitfalls: "Non-idempotent jobs that double-charge or duplicate records, retry storms, stale cached authorization data, testing only a synchronous happy path, and logging secrets in job payloads.",
+      challenge: "Implement a queued report-generation job that can safely retry, uses a cache with a documented invalidation rule and has tests for duplicate delivery and dependency failure.",
+      interview: "Explain queue retries and idempotency, cache invalidation, and the difference between unit and integration tests."
+    },
+    "php-12": {
+      concept: "A production PHP project needs stable dependency resolution, environment-based configuration, safe HTTP handling, observability and repeatable deployment. A working local page is not sufficient evidence that security and operational behavior are correct.",
+      mechanics: "Use environment configuration for secrets, structured logging, request limits and timeouts, health checks and a tested deployment process. Separate domain rules from HTTP and persistence. Keep framework and runtime versions explicit and run tests during CI.",
+      pitfalls: "Debug output in production, hard-coded credentials, missing timeouts, unbounded request bodies, public error traces and deployment steps that depend on a developer's local machine.",
+      challenge: "Deliver a small PHP API with validated configuration, safe persistence, authentication/authorization tests, health checks and a documented clean deployment.",
+      interview: "Describe a production readiness checklist for PHP, including configuration, security, observability, dependency updates and deployment reproducibility."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
