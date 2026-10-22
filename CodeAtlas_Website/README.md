@@ -1,6 +1,6 @@
 # CodeAtlas — Free Programming & IT Career Learning Hub
 
-CodeAtlas is a free, browser-based learning hub with an interactive programming map with 20 language and engineering learning tracks, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
+CodeAtlas is a free, browser-based learning hub with an interactive programming map with 24 language and engineering learning tracks, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
 
 ## Run locally on Windows
 
@@ -75,7 +75,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
-- `language-library.html`, `language-library.js`, `extra-deep-lessons.js`, `comprehensive-lessons.js`: additional language pages connected to the expanded curriculum, including HTML, CSS, React, Node.js, Git and GitHub, and Data Structures & Algorithms.
+- `language-library.html`, `language-library.js`, `extra-deep-lessons.js`, `comprehensive-lessons.js`: additional language pages connected to the expanded curriculum, including HTML, CSS, React, Node.js, Dart/Flutter, Git/GitHub, Linux/Shell, REST APIs, Docker/DevOps, and Data Structures & Algorithms. The combined runtime curriculum has 24 tracks and 344 topics: the original 14 language paths expanded to 16 topics each, plus 10 new tracks with 12 topics each.
 - `specializations.html`, `specializations.js`: specialisation paths.
 - `manifest.webmanifest`, `service-worker.js`, `pwa.js`: PWA shell.
 - `tests/static-check.mjs`, `.github/workflows/static-check.yml`: static validation and CI.
