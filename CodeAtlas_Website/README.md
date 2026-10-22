@@ -15,8 +15,8 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 
 ## What is included
 
-- **Programming map:** Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#; 96 topic groups.
-- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash; each has 12 staged topics, topic-specific learning objectives, distinct everyday analogies, starter and alternative snippets, syntax-aware line-tracing prompts, topic-specific pitfalls, practice challenges and local progress tracking. Snippets that depend on project setup or surrounding declarations are labeled as illustrative; always run them in the appropriate toolchain.
+- **Programming map:** Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#; 96 topic groups, now with expanded topic-level explanations, worked examples, execution walkthroughs, practical engineering guidance, common failure modes and project challenges.
+- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash; each has 12 staged topics, topic-specific learning objectives, everyday analogies, alternative snippets, line-tracing prompts, topic-specific pitfalls, practice challenges and local progress tracking. The unified learning map now adds a comprehensive explanation layer with deeper concept descriptions, code walkthroughs, common mistakes, production-readiness checklists and practical challenges. Snippets that depend on project setup or surrounding declarations are labeled as illustrative; always run them in the appropriate toolchain.
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
@@ -68,14 +68,14 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 
 ## Main files
 
-- `index.html`, `app.js`, `styles.css`: learning map.
+- `index.html`, `app.js`, `styles.css`, `comprehensive-lessons.js`: learning map and in-depth explanation layer.
 - `dashboard.html`, `dashboard.js`, `dashboard.css`: learning dashboard.
 - `career-studio.html`, `career-studio.js`, `career-studio.css`: Career Studio practice tools.
 - `career-command-center.html`, `career-command-center.js`, `career-command-center.css`: advanced local career planning workspace.
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
-- `language-library.html`, `language-library.js`: additional languages.
+- `language-library.html`, `language-library.js`, `extra-deep-lessons.js`, `comprehensive-lessons.js`: additional languages and expanded explanations.
 - `specializations.html`, `specializations.js`: specialisation paths.
 - `manifest.webmanifest`, `service-worker.js`, `pwa.js`: PWA shell.
 - `tests/static-check.mjs`, `.github/workflows/static-check.yml`: static validation and CI.
