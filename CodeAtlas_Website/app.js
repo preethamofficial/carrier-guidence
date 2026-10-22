@@ -93,10 +93,17 @@ function mindMap(lang){
   });
   return svg+'</svg>';
 }
+function coverageAuditHtml(lang) {
+ if(!lang.coverageAudit) return '';
+ const count=lang.coverageAudit.newTopicsAdded||0;
+ const added=count?lang.topics.slice(-count):[];
+ return '<section class="lesson-block"><div class="block-heading"><span class="block-icon">+</span><h2>Curriculum coverage audit</h2></div><p>Reviewed '+lang.coverageAudit.existingTopicsReviewed+' existing topics and added '+count+' missing-topic lessons to broaden coverage.</p><ul class="key-points">'+added.map(t=>'<li><strong>'+escapeHtml(t.title)+'</strong></li>').join('')+'</ul></section>';
+}
 function showLanguage(id){
  currentLanguage=curriculum.languages.find(l=>l.id===id);currentTopic=null;renderLanguageNav();
  setCrumbs([{label:'CodeAtlas',action:'home'},{label:currentLanguage.name}]);
  view.innerHTML=`<section class="language-hero" style="--lang:${currentLanguage.color}"><div><span class="pill">LEARNING PATH · ${currentLanguage.topics.length} TOPICS</span><h1>${currentLanguage.name}</h1><p>${currentLanguage.purpose}. Follow the map from foundational concepts through advanced practices, then reinforce each topic with exercises and interview questions.</p><p style="margin-top:10px"><a class="resource-link" href="${currentLanguage.docs}" target="_blank" rel="noreferrer">Official learning documentation ↗</a></p></div><button class="primary-button" id="firstLesson">Start learning →</button></section>
+ ${coverageAuditHtml(currentLanguage)}
  <div class="section-head"><div><h2>${currentLanguage.name} mind map</h2><p>Visual learning map — click any node to open its complete lesson.</p></div><span class="pill done">${currentLanguage.topics.filter(t=>isDone(t.id)).length}/${currentLanguage.topics.length} COMPLETE</span></div>
   <div class="mindmap-legend"><span class="lg" style="--c:#3fae72">Beginner</span><span class="lg" style="--c:#e8a93a">Intermediate</span><span class="lg" style="--c:#e2685a">Advanced</span></div>
   <div class="mindmap-wrap">${mindMap(currentLanguage)}</div>
