@@ -81,7 +81,8 @@ function profile(lang, topic) {
   security:'Authentication, authorization, safe output and least privilege must be enforced at server-side trust boundaries.',
   testing:'CI pipelines, regression suites and performance checks turn assumptions into repeatable evidence.',
   files:'Batch imports, configuration loading and scheduled jobs need reliable paths, cleanup and partial-failure handling.',
-  analytics:'Reporting pipelines need correct row grain, joins, null semantics and time windows before interpreting business metrics.'
+  analytics:'Reporting pipelines need correct row grain, joins, null semantics and time windows before interpreting business metrics.',
+  general:'Apply the concept at a clearly defined boundary, document assumptions and verify normal, boundary and failure behavior.'
  };
  const production={
   setup:'Pin supported tool/runtime versions, document clean setup, validate configuration at startup and run build/tests in CI.',
@@ -98,7 +99,8 @@ function profile(lang, topic) {
   security:'Use least privilege, secure secret storage, server-side authorization and redacted logs; test denied access.',
   testing:'Automate unit/integration checks, retain regression cases and benchmark only representative workloads.',
   files:'Check I/O results, use explicit encodings and paths, clean up resources and handle permissions and partial writes.',
-  analytics:'Document metric definitions and SQL dialect, verify query grain and reconcile aggregates against known data.'
+  analytics:'Document metric definitions and SQL dialect, verify query grain and reconcile aggregates against known data.',
+  general:'Document the contract, validate inputs, preserve useful error context and add automated tests before shipping.'
  };
  function explainPoint(point) {
   const q=String(point).toLowerCase();
