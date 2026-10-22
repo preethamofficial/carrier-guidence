@@ -220,7 +220,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  vm.runInNewContext(source,context);
  const html=context.window.CodeAtlasWebRoadmap.render();
  assert.equal(context.window.CodeAtlasWebRoadmap.phases.length,4);
- assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),25);
+ assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),26);
  for(const phase of context.window.CodeAtlasWebRoadmap.phases){
   assert.ok(phase.goal&&phase.topics.length,'Each roadmap phase needs a goal and topics');
   for(const topic of phase.topics){
