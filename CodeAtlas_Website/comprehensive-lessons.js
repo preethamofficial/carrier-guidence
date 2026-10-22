@@ -317,7 +317,7 @@
          'Deploy a small service with configuration validation, health checks, integration tests and an incident-ready log format.']
       ]
     }
-  };
+  }
   const generic = {
     intro: 'A reliable learning path connects syntax to a mental model, testable behavior and production trade-offs. For each concept, understand the problem it solves, observe the code in execution, and test ordinary, boundary and failure cases.',
     topics: [
