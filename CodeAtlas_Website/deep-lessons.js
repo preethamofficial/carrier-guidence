@@ -1,0 +1,115 @@
+/* CodeAtlas deep lesson companion. Adds a language-aware study layer to every core topic. */
+(function () {
+  'use strict';
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
+  const lessons = [
+    [/setup|toolchain|program structure|syntax|runtime|compiler|build|module|package|project structure/i,
+      'From source code to a running program',
+      'A language toolchain turns source text into behavior. Depending on the language, this can involve parsing, type checking, compilation, interpretation, linking, module loading or a runtime executing the result.',
+      ['Confirm the supported language/runtime version and project layout.','Run the smallest valid program before adding dependencies.','Read the first compiler or runtime error carefully; later messages may be consequences of the first.'],
+      'New repositories, CI pipelines, deployment images and developer workstations.',
+      'Assuming code that works in one editor or machine is automatically portable. Document commands and verify a clean checkout.'],
+    [/type|variable|constant|operator|null|optional|value semantics|primitive/i,
+      'Values, types and state',
+      'A variable name refers to a value or storage location. Types define valid values and operations; mutability rules decide whether a binding or stored value may change.',
+      ['Identify the type and initial value.','Trace each reassignment or transformation.','Check missing values, conversions and boundary values explicitly.'],
+      'User profiles, prices, configuration, API payloads and application status.',
+      'Relying on implicit conversions, confusing missing with zero/empty text, or changing shared state without a clear contract.'],
+    [/condition|control flow|loop|iteration|branch|range|switch|pattern match/i,
+      'How execution chooses a path',
+      'Control flow determines which statement runs next. Conditions select branches; loops repeat work until their stopping rule is met. Correctness depends on both the condition and its boundary.',
+      ['Write the condition in plain language.','Trace normal inputs and values immediately before, at and after a threshold.','For each loop, verify that state changes toward termination.'],
+      'Validation, business rules, processing records, files, events and API results.',
+      'Off-by-one errors, unreachable branches, loops that never terminate and assuming a truthy value is necessarily valid data.'],
+    [/function|method|lambda|closure|higher.order|recursion|scope/i,
+      'Designing a function with a clear contract',
+      'A function packages an operation behind inputs and an optional result. Its contract should make valid inputs, outputs, side effects and failure behavior clear.',
+      ['Choose a name that describes the operation.','Keep parameters focused and avoid hidden global-state changes.','Test typical, invalid and boundary inputs independently.'],
+      'Validation, pricing rules, data transformations and service operations.',
+      'Functions that do too many unrelated things, surprising side effects or missing invalid-input handling.'],
+    [/array|collection|list|map|set|dictionary|sequence|iterator|generator|data structure/i,
+      'Choosing and transforming a collection',
+      'Collections group values so code can search, update, order, deduplicate or transform them. The right structure depends on which operations the application performs most often.',
+      ['Decide whether order and duplicate values matter.','Choose a structure based on lookup, insertion, deletion and iteration needs.','Check empty collections and duplicate keys, and determine whether transformations mutate or copy.'],
+      'Shopping carts, user lists, event batches, search results and aggregation pipelines.',
+      'Assuming every lookup is constant-time, modifying a collection while iterating, or overlooking ordering and duplicate behavior.'],
+    [/string|text|regex|encoding|formatting|parsing/i,
+      'Working with text safely',
+      'Text processing often combines parsing, normalization, validation and presentation. Text that looks identical may differ in encoding, whitespace or Unicode representation.',
+      ['Separate raw input, normalized data and displayed output.','Validate format and length before relying on parsed fields.','Use library APIs for encoding and escaping rather than hand-built transformations.'],
+      'Usernames, CSV imports, logs, search, URLs, file paths and form submissions.',
+      'Building commands or SQL from raw strings, assuming ASCII, or confusing validation with HTML output escaping.'],
+    [/class|object|oop|inheritance|polymorphism|interface|protocol|encapsulation|struct|enum/i,
+      'Modeling a domain with types',
+      'Types and objects group related data and behavior. Encapsulation protects invariants; interfaces or protocols let different implementations satisfy the same contract.',
+      ['Name the domain concept and the rule it must preserve.','Expose operations that keep state valid.','Prefer composition and small interfaces when inheritance would couple unrelated behavior.'],
+      'Orders, payments, users, notifications, files and external-service clients.',
+      'Huge classes, exposing mutable internals, inheritance used only for code reuse, and allowing invalid states.'],
+    [/pointer|memory|ownership|lifetime|raii|borrow|reference|allocation|resource/i,
+      'Memory, ownership and resource lifetime',
+      'Programs manage values and external resources such as memory, file handles, locks and sockets. Languages use different lifetime models, including manual management, garbage collection, reference counting or ownership checking.',
+      ['Identify who creates and releases the resource.','Keep it alive for every use and release it on success and failure paths.','Prefer safe abstractions; check bounds and allocation results.'],
+      'Systems software, high-throughput services, file processing and network clients.',
+      'Leaks, use-after-free, double release, out-of-bounds access, data races and assuming garbage collection handles every resource.'],
+    [/error|exception|failure|result type|validation|debug|logging|diagnostic/i,
+      'Make failure states explicit',
+      'Reliable programs treat failure as part of normal design. Errors should preserve enough context to diagnose the cause while leaving the application in a safe state.',
+      ['List what can fail: invalid input, missing data, permissions, timeouts or unavailable dependencies.','Use the language-idiomatic error mechanism at the correct boundary.','Log useful context without exposing credentials or private data.'],
+      'Payment flows, database operations, network requests and background jobs.',
+      'Swallowing errors, catching too broadly, reporting success after partial failure, or logging secrets.'],
+    [/file|stream|input.output|serialization|json|csv|network|http|api|request|response/i,
+      'Crossing a system boundary',
+      'Files, networks and APIs are external boundaries: data can be malformed, missing, delayed or unavailable. Validate input and treat I/O as fallible.',
+      ['Validate the shape and size of incoming data.','Guarantee resource cleanup with the language’s scoped-resource tools.','Set network timeouts and distinguish transport failures from invalid responses.'],
+      'Import/export tools, web APIs, configuration loading and service integrations.',
+      'Trusting external data, leaving resources open, omitting timeouts, or retrying non-idempotent operations unsafely.'],
+    [/sql|database|query|transaction|index|join|persistence|repository/i,
+      'Correctness when data is persistent',
+      'Database code translates application intent into durable operations. Query structure, constraints, indexes and transaction boundaries affect correctness, security and performance.',
+      ['Parameterize values instead of concatenating input into query text.','Use constraints and transactions to protect multi-step invariants.','Measure query plans and index columns against real filters and joins.'],
+      'Accounts, orders, reporting, inventory and workflows that must survive restarts.',
+      'SQL injection, lost updates, inconsistent writes, N+1 queries and indexes added without measuring their cost.'],
+    [/async|concurr|thread|parallel|coroutine|actor|channel|mutex|task|event/i,
+      'Coordinating overlapping work',
+      'Asynchronous and concurrent programs progress while waiting or running on multiple execution contexts. The design must address shared state, cancellation, ordering and failure.',
+      ['Decide whether work is I/O-bound or CPU-bound.','Minimize shared mutable state and use the language’s synchronization/isolation tools.','Define cancellation, timeout and error propagation behavior.'],
+      'Web servers, downloads, background processing and responsive applications.',
+      'Race conditions, unbounded tasks, forgotten cancellation, deadlocks and assuming async automatically means faster.'],
+    [/test|testing|quality|ci|profil|performance|benchmark|fuzz/i,
+      'Prove behavior instead of assuming it',
+      'Tests turn expectations into repeatable checks. Unit tests isolate rules; integration tests verify boundaries; profilers and benchmarks answer performance questions with measurements.',
+      ['Write expected behavior before implementation.','Cover typical, boundary and failure cases.','Run tests after changes and measure before optimizing.'],
+      'Refactoring, payment rules, API contracts, transformations and release pipelines.',
+      'Testing only the happy path, depending on unstable external services, and optimizing without measurements.'],
+    [/security|auth|permission|crypt|injection|secret|privacy/i,
+      'Security is part of the design',
+      'Security controls are most effective at trust boundaries. Validate data, minimize privileges, use established security libraries and avoid exposing secrets in output or logs.',
+      ['Identify untrusted input and protected actions/data.','Use parameterized queries, context-appropriate output encoding and least privilege.','Keep credentials outside source control and test unauthorized paths.'],
+      'Sign-in flows, APIs, user-generated content, database access and deployments.',
+      'Hand-rolled cryptography, trusting client-only validation, plaintext passwords, exposed secrets and confusing authentication with authorization.'],
+    [/algorithm|complexity|search|sort|graph|tree|recursion|dynamic programming/i,
+      'Reason about correctness and cost',
+      'An algorithm transforms input into an answer. Correctness asks whether it handles every valid case; complexity estimates how time and memory grow as input grows.',
+      ['State the input, output and constraints.','Work through a small example and an edge case before coding.','Estimate growth and compare correct alternatives.'],
+      'Search, ranking, scheduling, deduplication, graph traversal and data processing.',
+      'Optimizing before understanding constraints, missing empty/duplicate cases, and assuming a small-input demo proves scalability.']
+  ];
+  window.CodeAtlasDeepStudy = function(topic, language) {
+    const title=String(topic.title||'').toLowerCase();
+    const item=lessons.find(x=>x[0].test(title));
+    const g=item ? {heading:item[1],why:item[2],steps:item[3],real:item[4],mistakes:item[5]} : {
+      heading:'Turn the concept into a reliable technique',
+      why:'A concept is useful when you can explain the problem it solves, predict its behavior and recognize its limits. Connect the rule to the data entering the program, the transformations performed and the result produced.',
+      steps:['State the concept in one sentence and name the problem it solves.','Trace a small example by hand before running it.','Change one input at a time, including an empty, invalid or boundary case.'],
+      real:'Apply this concept in a small component with a clear input, a clear result and an observable failure mode.',
+      mistakes:'Memorizing syntax without understanding execution, ignoring edge cases and copying an example without adapting it.'
+    };
+    const first=topic.basicExamples?.[0], second=topic.guidedExamples?.[0], advanced=topic.advancedExamples?.[0];
+    const sample=first?'<div class="code-card"><div class="code-top"><strong>'+esc(language.name)+' · worked example</strong><button data-copy="'+encodeURIComponent(first.code)+'">Copy code</button></div><pre><code>'+esc(first.code)+'</code></pre></div><p><strong>Read it actively:</strong> '+esc(first.note||first.title||'Trace each statement and record the values it reads and produces.')+'</p>':'';
+    const alt=second?'<h3>Compare another approach</h3><p><strong>'+esc(second.title)+':</strong> '+esc(second.note||'Compare structure, clarity and trade-offs with the first example.')+'</p><pre><code>'+esc(second.code)+'</code></pre>':'';
+    const advancedNote=advanced?'<p><strong>Advanced extension:</strong> '+esc(advanced.title)+'. '+esc(advanced.note||'Extend the example while preserving correctness and clarity.')+'</p>':'';
+    return '<section class="lesson-block prose-block" id="deep-study"><div class="block-heading"><span class="block-icon">◆</span><h2>Deep explanation & practical reasoning</h2></div><div class="prose-section"><h3>'+esc(g.heading)+'</h3><p>'+esc(g.why)+'</p><p><strong>Language context:</strong> '+esc(language.name)+' is used for '+esc(language.purpose||'software development')+'. Apply this language’s conventions instead of assuming syntax and behavior are universal.</p></div><div class="prose-section"><h3>Reason through the concept</h3><ol>'+g.steps.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></div><div class="prose-section"><h3>Worked example and code reading</h3><p>Predict the result before running the code. Execute it with the official toolchain, compare the observed behavior with your prediction, and explain every difference.</p>'+sample+alt+advancedNote+'</div><div class="prose-section"><h3>Where it appears in real software</h3><p>'+esc(g.real)+'</p><p>In a production review, ask whether the behavior is explicit, edge cases are covered and another developer could maintain it without guessing the intent.</p></div><div class="prose-section"><h3>Common failure modes</h3><p>'+esc(g.mistakes)+'</p><ul><li>Test a normal case, a boundary case and a failure case.</li><li>Inspect intermediate values with a debugger or temporary logging; remove sensitive diagnostics before release.</li><li>Check the official reference for language-version and standard-library behavior.</li></ul></div><div class="prose-section"><h3>Build challenge</h3><p>Create a small '+esc(language.name)+' feature that applies <strong>'+esc(topic.title)+'</strong> to a realistic problem. Give it a clear input and output, reject invalid data and document your design decision.</p><ol><li>Write the smallest correct implementation.</li><li>Add tests for normal, boundary and failure inputs.</li><li>Refactor names and structure so the intent is obvious.</li><li>Explain one alternative and why you did not choose it.</li></ol></div></section>';
+  };
+})();
