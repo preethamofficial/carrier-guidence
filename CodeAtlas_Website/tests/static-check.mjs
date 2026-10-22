@@ -170,11 +170,11 @@ check('Topic-specific lesson engine and curated catalogs are wired into both lea
  const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
  assert.ok(app.includes('CodeAtlasComprehensiveStudy.renderLesson'),'Main topic renderer must use comprehensive explanations');
  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
- assert.ok(home.includes('topic-additions-a.js')&&home.includes('topic-additions-b.js')&&home.includes('comprehensive-lessons.js'),'Main page must load curated topic data and explanation engine');
+ assert.ok(home.includes('topic-additions-a.js')&&home.includes('topic-additions-b.js')&&home.includes('topic-additions-c.js')&&home.includes('comprehensive-lessons.js'),'Main page must load all curated topic catalogs and explanation engine');
  const library=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
- assert.ok(library.includes('topic-additions-a.js')&&library.includes('topic-additions-b.js')&&library.includes('comprehensive-lessons.js'),'Additional language page must load curated topic data and explanation engine');
+ assert.ok(library.includes('topic-additions-a.js')&&library.includes('topic-additions-b.js')&&library.includes('topic-additions-c.js')&&library.includes('comprehensive-lessons.js'),'Language library must load all curated topic catalogs and explanation engine');
  const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
- assert.ok(sw.includes('./topic-additions-a.js')&&sw.includes('./topic-additions-b.js')&&sw.includes('./comprehensive-lessons.js'),'Service worker must cache all lesson assets');
+ assert.ok(sw.includes('./topic-additions-a.js')&&sw.includes('./topic-additions-b.js')&&sw.includes('./topic-additions-c.js')&&sw.includes('./comprehensive-lessons.js'),'Service worker must cache all lesson assets');
 });
 
 check('Runtime curriculum adds missing topics and deep guides to every language',()=>{
