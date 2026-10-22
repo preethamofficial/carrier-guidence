@@ -161,6 +161,123 @@ const M = {
 ['Release & evidence','Automated tests and CI; deployment/health/rollback; logs and security review; README, demo script and measurable outcomes']
 ]
 };
+
+const lessons = {
+  "JavaScript values, functions and control flow": {
+    "intro": "JavaScript is the programming language that runs in the browser and can also run on servers with Node.js. It lets a page make decisions, transform data, respond to user actions, and communicate with APIs. Start by understanding how values are stored and how instructions execute from top to bottom.",
+    "sections": [
+      [
+        "1. Variables and values",
+        "Use const when a variable will not be reassigned and let when its binding must change. Avoid var in modern code because its function-scoped behavior can be surprising. A variable stores a value such as a string, number, boolean, undefined, null, object, or array. const prevents reassignment of the binding; it does not freeze an object or array."
+      ],
+      [
+        "2. Types, equality and conversion",
+        "Primitive values include string, number, bigint, boolean, undefined, null and symbol. Objects and arrays are reference values. Use === and !== for comparisons to avoid most implicit-coercion surprises. Convert external input deliberately: Number(\"12\") gives 12, while Number(\"hello\") gives NaN. Validate before using user-provided values."
+      ],
+      [
+        "3. Conditions and loops",
+        "Use if/else when different paths depend on a condition, switch for a set of discrete cases, and for/of to iterate values in arrays or other iterables. Use forEach when you need an action for every item, and map/filter/reduce when transforming collections. Ensure loops make progress and handle empty collections."
+      ],
+      [
+        "4. Functions, scope and return values",
+        "A function packages reusable behavior. Parameters are inputs; return sends a result back to the caller. Arrow functions are concise callbacks, but do not create their own this binding. Scope determines where a variable can be accessed. Keep functions small, name them by intent, and avoid hidden side effects when a pure transformation is possible."
+      ],
+      [
+        "5. Arrays, objects and immutability",
+        "Objects model named properties; arrays model ordered collections. Destructuring extracts properties, spread syntax copies enumerable properties, and map/filter/find/reduce support common transformations. Spread makes a shallow copy, not a deep copy. Avoid mutating shared data when other parts of the UI depend on it."
+      ],
+      [
+        "6. Errors and debugging",
+        "Check edge cases such as empty strings, missing properties, null values, zero, and invalid numbers. Throw Error objects when an operation cannot continue safely; catch errors at a boundary where you can recover or show useful feedback. Use browser DevTools breakpoints, console output, and small test cases to inspect assumptions."
+      ]
+    ],
+    "exampleTitle": "Example: validate input and calculate a summary",
+    "example": "function summarizeScores(values) {\\n  if (!Array.isArray(values)) {\\n    throw new TypeError(\"Expected an array of scores\");\\n  }\\n\\n  const valid = values\\n    .map(Number)\\n    .filter(score => Number.isFinite(score) && score >= 0 && score <= 100);\\n\\n  const average = valid.length\\n    ? valid.reduce((sum, score) => sum + score, 0) / valid.length\\n    : 0;\\n\\n  return { count: valid.length, average, passed: average >= 40 };\\n}\\n\\nconsole.log(summarizeScores([80, \"70\", -4, \"missing\"]));\\n// { count: 2, average: 75, passed: true }",
+    "explanation": "The function first verifies the input shape, converts each item to a number, removes values outside the accepted range, and computes an average only when at least one valid score remains. The returned object keeps related results together. In a real application, decide whether invalid entries should be ignored or reported to the user.",
+    "practice": [
+      "Write isAdult(age) that rejects invalid ages and returns true only for ages 18 or above.",
+      "Create a function that counts words in a sentence, ignoring extra spaces and letter case.",
+      "Given an array of products, use filter and reduce to calculate the total price of in-stock products.",
+      "Test empty arrays, null input, numeric strings, NaN, negative values and boundary values."
+    ]
+  },
+  "DOM, events and browser forms": {
+    "intro": "The Document Object Model (DOM) is the browser's object representation of an HTML document. JavaScript can query DOM nodes, change text and attributes, create elements, and respond to events such as clicks and form submissions. The DOM is the interface to the page, not a replacement for well-structured HTML.",
+    "sections": [
+      [
+        "1. Selecting elements",
+        "Use document.querySelector for the first matching CSS selector and querySelectorAll for all matches. Check whether a query returned null before using the result. Prefer stable IDs or meaningful data attributes over fragile selectors tied to visual styling."
+      ],
+      [
+        "2. Changing content safely",
+        "Use textContent when displaying text from a user or API. Assigning untrusted strings to innerHTML can create cross-site scripting (XSS) vulnerabilities because the browser parses them as markup. Use createElement and append when building a list of elements from data."
+      ],
+      [
+        "3. Events and event objects",
+        "addEventListener registers a handler for an event. The event object contains details such as the target. preventDefault cancels a browser default action, such as a form navigation; stopPropagation stops the event from travelling further through the event path. They solve different problems."
+      ],
+      [
+        "4. Event bubbling and delegation",
+        "Many events bubble from the target to parent elements. Delegation means attaching one handler to a stable parent and checking which child triggered the event. It is useful for dynamic lists because newly added children can work without individual listeners."
+      ],
+      [
+        "5. Forms and FormData",
+        "Listen to the submit event rather than only a button click, because users can submit with Enter. Call preventDefault when handling submission in JavaScript. FormData(form) reads named controls; browser constraints such as required and type=email improve usability, but server-side validation is still required."
+      ],
+      [
+        "6. UI state and accessibility",
+        "Keep the displayed page consistent with application data. Provide visible labels, keyboard-operable controls, clear success/error messages and focus management when appropriate. Remove event listeners or cancel outstanding work when a component is no longer needed."
+      ]
+    ],
+    "exampleTitle": "Example: handle a signup form safely",
+    "example": "const form = document.querySelector(\"#signup\");\\nconst status = document.querySelector(\"#status\");\\n\\nform.addEventListener(\"submit\", event => {\\n  event.preventDefault();\\n  const data = new FormData(form);\\n  const email = String(data.get(\"email\") ?? \"\").trim();\\n\\n  if (!email) {\\n    status.textContent = \"Enter your email address.\";\\n    return;\\n  }\\n\\n  // Display as text, never parse user input as HTML.\\n  status.textContent = `Ready to register: ${email}`;\\n});",
+    "explanation": "This example finds the form and status element once, handles the form's submit event, reads the named email control, validates that it is not empty, and writes feedback as plain text. The HTML should include a label and an input with name=\"email\". A real app must submit to a backend and validate the address again on the server.",
+    "practice": [
+      "Build a task list with add, complete and delete actions.",
+      "Use event delegation so one list handler can process clicks on dynamically created delete buttons.",
+      "Create a form with required name and email fields and show field-specific errors.",
+      "Test the page using only a keyboard and verify that untrusted text is displayed literally."
+    ]
+  },
+  "Asynchronous JavaScript and fetch": {
+    "intro": "JavaScript often needs to wait for work that completes later, including HTTP requests, timers and file operations. Asynchronous code lets the browser continue responding while that work is pending. Promises represent future completion; async/await provides a readable way to work with promises, but errors and loading states still need to be handled explicitly.",
+    "sections": [
+      [
+        "1. Synchronous versus asynchronous work",
+        "Synchronous statements run in sequence and can block the current task. Network requests take unpredictable time, so browsers expose asynchronous APIs. JavaScript uses an event loop to schedule callbacks and promise reactions when the current work allows them to run."
+      ],
+      [
+        "2. Promises and async/await",
+        "A Promise is pending, fulfilled or rejected. .then handles fulfillment, .catch handles rejection, and .finally runs cleanup. An async function always returns a Promise. await pauses that async function until the Promise settles; it does not freeze the whole browser."
+      ],
+      [
+        "3. Making a fetch request",
+        "fetch(url) sends an HTTP request and resolves to a Response when headers arrive. A 404 or 500 response does not automatically reject the Promise, so check response.ok or response.status. Then parse the body with response.json(); body parsing can also fail if the response is not valid JSON."
+      ],
+      [
+        "4. Loading, empty, success and error states",
+        "A useful UI distinguishes loading, successful results, no results, and failure. Disable duplicate submissions when necessary, show an actionable error, and provide a retry when retrying is safe. Do not leave a spinner running forever after a request fails."
+      ],
+      [
+        "5. Cancellation and stale responses",
+        "AbortController can cancel a fetch when a user navigates away or starts a newer search. In type-ahead search, a slower earlier request can finish after a newer one; cancel old requests or verify that the response still matches the latest query before rendering it."
+      ],
+      [
+        "6. Security and reliability",
+        "Do not put secrets in browser JavaScript. CORS is a browser-enforced server policy, not authentication or authorization. Use HTTPS, validate data on the server, apply appropriate timeouts and payload limits, and avoid logging tokens or private response bodies."
+      ]
+    ],
+    "exampleTitle": "Example: request data and handle HTTP errors",
+    "example": "async function loadCourses() {\\n  const response = await fetch(\"/api/courses\");\\n\\n  // fetch does not reject just because the server returned 404/500.\\n  if (!response.ok) {\\n    throw new Error(`Request failed: HTTP ${response.status}`);\\n  }\\n\\n  const courses = await response.json();\\n  if (!Array.isArray(courses)) {\\n    throw new TypeError(\"Expected the API to return a course array\");\\n  }\\n  return courses;\\n}\\n\\nloadCourses()\\n  .then(courses => console.log(\"Courses:\", courses))\\n  .catch(error => console.error(\"Could not load courses:\", error.message));",
+    "explanation": "The function waits for the response, checks the HTTP status, parses JSON, and checks the shape of the returned data. The catch handler handles network errors, non-success status errors thrown by this function, and JSON parsing errors. In a UI, set loading state before calling it and always restore the UI in a finally block or equivalent state transition.",
+    "practice": [
+      "Build a course list that displays loading, empty, success and error states.",
+      "Simulate an API failure and add a retry button.",
+      "Use AbortController to cancel a request when a search query changes.",
+      "Test network failure, 404, 500, invalid JSON and an empty successful response."
+    ]
+  }
+};
 const references = {
 'How the web works':[['MDN: How the web works','https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works'],['MDN: How browsers load websites','https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_browsers_load_websites']],
 'HTML document structure':[['MDN: Structuring content with HTML','https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content'],['WHATWG HTML Standard','https://html.spec.whatwg.org/']],
@@ -190,13 +307,20 @@ const references = {
 'Capstone: full-stack course platform':[['MDN Curriculum','https://developer.mozilla.org/en-US/curriculum/'],['web.dev Learn','https://web.dev/learn/']]
 };
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function renderLesson(lesson){
+ const sections=lesson.sections.map(s=>'<article class="javascript-lesson-section"><h4>'+esc(s[0])+'</h4><p>'+esc(s[1])+'</p></article>').join('');
+ const practice=lesson.practice.map((p,i)=>'<li><label><input type="checkbox"> <span>'+esc(p)+'</span></label></li>').join('');
+ return '<section class="javascript-deep-lesson"><span class="eyebrow">FULL LESSON · BEGINNER FRIENDLY</span><h3>Understand the concept step by step</h3><p class="javascript-lesson-intro">'+esc(lesson.intro)+'</p><div class="javascript-lesson-sections">'+sections+'</div><h4>'+esc(lesson.exampleTitle)+'</h4><pre><code>'+esc(lesson.example)+'</code></pre><p>'+esc(lesson.explanation)+'</p><h4>Practice exercises</h4><ol class="javascript-practice-list">'+practice+'</ol></section>';
+}
+
 function render(topic){
  const branches=M[topic.title];
  if(!branches)return '<p class="roadmap-map-fallback">Use the learning objectives above as the topic checklist.</p>';
  const links=references[topic.title]||[];
  const branchHtml=branches.map((b,i)=>'<article class="topic-map-branch"><header><span class="topic-map-index">'+String(i+1).padStart(2,'0')+'</span><div><h4>'+esc(b[0])+'</h4><p>Explore this branch</p></div></header><ul>'+b[1].split('; ').map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></article>').join('');
  const checks=branches.map(b=>b[0]).map(x=>'<label class="topic-map-check"><input type="checkbox"> <span>'+esc(x)+'</span></label>').join('');
- return '<section class="topic-map-deep"><div class="topic-map-heading"><div><span class="eyebrow">TOPIC KNOWLEDGE GRAPH</span><h3>Deep mind map: '+esc(topic.title)+'</h3><p>Study the center first, then follow each branch. Mark a branch complete only after you can explain it and demonstrate it in code.</p></div><span class="topic-map-badge">4 branches · '+branches.reduce((n,b)=>n+b[1].split('; ').length,0)+' concepts</span></div><div class="topic-map-canvas"><div class="topic-map-center"><span>CORE TOPIC</span><strong>'+esc(topic.title)+'</strong><small>Understand → Implement → Verify</small></div><div class="topic-map-connect" aria-hidden="true"></div><div class="topic-map-branches">'+branchHtml+'</div></div><div class="topic-map-mastery"><div><h4>Mastery checklist</h4><p>Use this checklist as a self-assessment; browser storage is not used.</p></div><div class="topic-map-checks">'+checks+'</div></div><div class="topic-map-resources"><h4>Research and reference material</h4><p>Start with the standards or official documentation; use examples to verify your understanding.</p><div>'+links.map(l=>'<a href="'+esc(l[1])+'" target="_blank" rel="noopener noreferrer">'+esc(l[0])+' ↗</a>').join('')+'</div></div></section>';
+ return '<section class="topic-map-deep"><div class="topic-map-heading"><div><span class="eyebrow">TOPIC KNOWLEDGE GRAPH</span><h3>Deep mind map: '+esc(topic.title)+'</h3><p>Study the center first, then follow each branch. Mark a branch complete only after you can explain it and demonstrate it in code.</p></div><span class="topic-map-badge">4 branches · '+branches.reduce((n,b)=>n+b[1].split('; ').length,0)+' concepts</span></div>'+(lessons[topic.title]?renderLesson(lessons[topic.title]):'')+'<div class="topic-map-canvas"><div class="topic-map-center"><span>CORE TOPIC</span><strong>'+esc(topic.title)+'</strong><small>Understand → Implement → Verify</small></div><div class="topic-map-connect" aria-hidden="true"></div><div class="topic-map-branches">'+branchHtml+'</div></div><div class="topic-map-mastery"><div><h4>Mastery checklist</h4><p>Use this checklist as a self-assessment; browser storage is not used.</p></div><div class="topic-map-checks">'+checks+'</div></div><div class="topic-map-resources"><h4>Research and reference material</h4><p>Start with the standards or official documentation; use examples to verify your understanding.</p><div>'+links.map(l=>'<a href="'+esc(l[1])+'" target="_blank" rel="noopener noreferrer">'+esc(l[0])+' ↗</a>').join('')+'</div></div></section>';
 }
 window.CodeAtlasWebTopicMaps={render,maps:M,references};
 })();
