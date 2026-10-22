@@ -54,6 +54,8 @@ function profile(lang, topic) {
  }[c];
  const points=Array.isArray(topic.keyPoints)?topic.keyPoints:[];
  const edgeMap={
+  html:['Test keyboard-only navigation through every interactive element.','Test forms with empty, malformed and valid values.','Inspect alternative text and semantic landmarks with accessibility tools.','Test narrow viewports and malformed or untrusted content.'],
+  css:['Test at narrow, medium and wide viewports.','Test long text, empty content and enlarged browser text.','Verify visible keyboard focus and sufficient contrast.','Enable reduced-motion preferences and check layout overflow.'],
   setup:['Run from a clean checkout with the documented runtime version.','Check execution from the intended working directory and with required dependencies absent.','Test invalid command-line arguments and missing environment settings.','Confirm the result is reproducible in CI, not only in an IDE.'],
   types:['Test zero, negative, maximum and out-of-range values.','Check null/None/nil/undefined or missing fields where the language allows them.','Test conversions that may lose precision or change signedness.','Verify external JSON/database values before trusting the declared type.'],
   text:['Test empty strings, whitespace-only strings and embedded delimiters.','Include Unicode and non-ASCII characters.','Test malformed encoding or malformed structured text.','Verify escaping at the destination context: SQL, HTML, shell or JSON.'],
@@ -71,6 +73,8 @@ function profile(lang, topic) {
   analytics:['Test duplicate join keys and reconcile row counts before/after joins.','Check NULL values and groups with no matching rows.','Test adjacent date windows and timezone boundaries.','Verify a small result manually to confirm the intended grain and metric.']
  }[c]||['Test missing input.','Test boundary values.','Force a failure.','Repeat the operation and compare state.'];
  const scenarios={
+  html:'Accessible content pages, forms, product documentation, learning resources and search-friendly web documents rely on semantic HTML.',
+  css:'Responsive dashboards, forms, navigation, cards and design systems rely on predictable layout, tokens and accessible interaction states.',
   setup:'New repositories, developer workstations, CI runners and deployment images must use the same documented commands and versions.',
   types:'API requests, database records and configuration values must be validated before business logic relies on their types.',
   text:'Text appears in logs, CSV/JSON imports, web forms and protocol payloads; encoding and escaping must match the destination.',
@@ -89,6 +93,8 @@ function profile(lang, topic) {
   general:'Apply the concept at a clearly defined boundary, document assumptions and verify normal, boundary and failure behavior.'
  };
  const production={
+  html:'Use semantic elements, unique IDs, meaningful labels and alt text; validate markup and keep untrusted data out of executable HTML contexts.',
+  css:'Use responsive constraints and design tokens, preserve focus styles, check contrast, respect reduced motion and remove debug rules.',
   setup:'Pin supported tool/runtime versions, document clean setup, validate configuration at startup and run build/tests in CI.',
   types:'Validate external data at runtime, define nullability/range rules and avoid unchecked conversions at trust boundaries.',
   text:'Specify encoding, validate input size, escape for the output context and avoid parsing structured data with ad hoc string matching.',
