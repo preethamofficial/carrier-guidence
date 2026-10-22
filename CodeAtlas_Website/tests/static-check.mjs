@@ -162,19 +162,35 @@ check('Career Command Center includes core role and privacy safeguards',()=>{
  assert.ok(!/fetch\s*\(/.test(source),'Career Command Center should not call external APIs');
 });
 
-check('Comprehensive explanation layer is wired into all existing topic pages',()=>{
- const lessonFile=path.join(root,'comprehensive-lessons.js');
- assert.ok(fs.existsSync(lessonFile),'Missing comprehensive explanation layer');
+check('Every curriculum topic has an individually authored deep lesson',()=>{
+ const curriculum=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
+ const lessonFile=path.join(root,'topic-depth-lessons.js');
+ assert.ok(fs.existsSync(lessonFile),'Missing topic-by-topic lesson content');
  const lessonSource=fs.readFileSync(lessonFile,'utf8');
- for(const marker of ['In-depth explanation','Execution walkthrough','Common mistakes and debugging','Practice challenge','Production-readiness review'])assert.ok(lessonSource.includes(marker),'Missing explanation section '+marker);
+ const sandbox={window:{}};
+ vm.runInNewContext(lessonSource,sandbox);
+ const depth=sandbox.window.CodeAtlasTopicDepth;
+ assert.ok(depth,'Topic-depth renderer was not registered');
+ const topics=curriculum.languages.flatMap(language=>language.topics.map(topic=>({language,topic})));
+ assert.equal(topics.length,168,'Expected all 14 existing language paths and 168 topics');
+ assert.equal(depth.count(),168,'Every existing topic must have a unique authored deep lesson');
+ for(const {language,topic} of topics){
+  assert.ok(depth.has(topic.id),'Missing authored lesson for '+topic.id+' '+topic.title);
+  const html=depth.render(language,topic);
+  assert.ok(html.length>1000,'Deep lesson is too short for '+topic.id);
+  for(const marker of ['Mental model and purpose','How it works in','Worked example','Failure modes and debugging','Practice task','Interview check'])assert.ok(html.includes(marker),'Missing section '+marker+' in '+topic.id);
+ }
  const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
- assert.ok(app.includes('CodeAtlasComprehensiveStudy.renderLesson'),'Main topic renderer must use comprehensive explanations');
+ assert.ok(app.includes('CodeAtlasTopicDepth.render'),'Main topic renderer must use topic-specific lessons');
  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
- assert.ok(home.includes('comprehensive-lessons.js'),'Main page must load comprehensive explanations');
+ assert.ok(home.includes('topic-depth-lessons.js'),'Main page must load topic-specific lessons');
  const library=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
- assert.ok(library.includes('comprehensive-lessons.js'),'Additional language page must load explanations');
+ assert.ok(library.includes('topic-depth-lessons.js'),'Additional language page must load topic-specific lessons');
+ const libraryJs=fs.readFileSync(path.join(root,'language-library.js'),'utf8');
+ assert.ok(libraryJs.includes('CodeAtlasTopicDepth.render'),'Additional-language renderer must use topic-specific lessons');
  const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
- assert.ok(sw.includes('./comprehensive-lessons.js'),'Service worker must cache the new lesson file');
+ assert.ok(sw.includes('./topic-depth-lessons.js'),'Service worker must cache topic-specific lessons');
+ assert.ok(sw.includes('codeatlas-shell-v10'),'Service worker cache version must refresh after content updates');
 });
 
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
