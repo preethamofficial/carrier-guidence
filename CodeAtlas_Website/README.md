@@ -1,6 +1,6 @@
 # CodeAtlas — Free Programming & IT Career Learning Hub
 
-CodeAtlas is a free, browser-based learning hub with an interactive programming map with 14 languages, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
+CodeAtlas is a free, browser-based learning hub with an interactive programming map with 20 language and engineering learning tracks, 52-week foundation course, 22 IT specialisation paths, local learning dashboard, resume-to-job matcher, Career Studio practice tools, and a searchable company job-board directory.
 
 ## Run locally on Windows
 
@@ -16,7 +16,7 @@ Open http://localhost:8000 and keep the terminal running. Use a local server rat
 ## What is included
 
 - **Programming map:** Python, JavaScript, TypeScript, Java, SQL, Go, Rust and C#; 128 topic lessons across these eight language paths, with topic-specific concept breakdowns, prerequisites, worked examples, edge cases, debugging, production guidance, practice and interview preparation.
-- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash; each path now includes 16 topics, including missing subjects such as C preprocessor/macro safety, C++ move semantics, PHP REST APIs, Kotlin Flow, Swift ARC and Bash JSON automation. All 14 language paths now expose a topic-specific study guide with prerequisites, concept breakdowns, worked examples, failure modes, edge cases, debugging checklists, real-world applications, production/security considerations, exercises, interview preparation and official documentation links. Snippets that depend on project setup or surrounding declarations are labeled as illustrative; always run them in the appropriate toolchain.
+- **Additional languages:** C, C++, PHP, Kotlin, Swift and Bash; each path now includes 16 topics, including missing subjects such as C preprocessor/macro safety, C++ move semantics, PHP REST APIs, Kotlin Flow, Swift ARC and Bash JSON automation. All existing language paths now expose a topic-specific study guide with prerequisites, concept breakdowns, worked examples, failure modes, edge cases, debugging checklists, real-world applications, production/security considerations, exercises, interview preparation and official documentation links. Snippets that depend on project setup or surrounding declarations are labeled as illustrative; always run them in the appropriate toolchain.
 - **52-week curriculum:** foundations, programming, algorithms, web, APIs, databases, tests, Linux, containers, deployment, data/ML/security foundations and job readiness.
 - **22 IT specialisations:** paths include frontend, backend, full-stack, mobile, data, AI/ML, GenAI, RAG, DevOps, .NET/C#, MLOps, SRE, QA automation, cybersecurity, Salesforce and blockchain. Each has staged modules and a capstone.
 - **Career Launchpad:** existing role roadmaps, resource links, job-application tracker and planning tools.
@@ -75,7 +75,7 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `career.html`, `career.js`, `career.css`: Career Launchpad.
 - `resume-review.html`, `resume-review.js`, `resume-review.css`: resume matcher.
 - `year-course.html`, `year-course.js`, `data/year-curriculum.json`: 52-week course.
-- `language-library.html`, `language-library.js`, `extra-deep-lessons.js`, `comprehensive-lessons.js`: additional language pages connected to the expanded curriculum.
+- `language-library.html`, `language-library.js`, `extra-deep-lessons.js`, `comprehensive-lessons.js`: additional language pages connected to the expanded curriculum, including HTML, CSS, React, Node.js, Git and GitHub, and Data Structures & Algorithms.
 - `specializations.html`, `specializations.js`: specialisation paths.
 - `manifest.webmanifest`, `service-worker.js`, `pwa.js`: PWA shell.
 - `tests/static-check.mjs`, `.github/workflows/static-check.yml`: static validation and CI.
