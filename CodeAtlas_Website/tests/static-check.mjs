@@ -221,7 +221,10 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  const topicMapFile=path.join(root,'web-development-topic-maps.js');
  assert.ok(fs.existsSync(topicMapFile),'Missing topic-specific advanced mind maps');
  const mapSource=fs.readFileSync(topicMapFile,'utf8');
+ const comprehensiveFile=path.join(root,'comprehensive-lessons.js');
+ assert.ok(fs.existsSync(comprehensiveFile),'Missing comprehensive lesson engine');
  const context={window:{},console};
+ vm.runInNewContext(fs.readFileSync(comprehensiveFile,'utf8'),context);
  vm.runInNewContext(mapSource,context);
  vm.runInNewContext(source,context);
  const html=context.window.CodeAtlasWebRoadmap.render();
@@ -245,6 +248,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   }
  }
  assert.ok(html.includes('complete mind map')&&html.includes('Practice challenge')&&html.includes('Open related lesson'),'Roadmap must expose map, challenges and lesson links');
+ assert.ok(html.includes('DEEP STUDY GUIDE')&&html.includes('Core concepts explained')&&html.includes('Common mistakes to avoid'),'Every web roadmap node must render the comprehensive study guide');
 });
 
 {
@@ -252,6 +256,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  assert.ok(fs.existsSync(skillsFile),'Missing career skills roadmaps module');
  const source=fs.readFileSync(skillsFile,'utf8');
  const context={window:{},console};
+ vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
  assert.ok(atlas&&atlas.tracks.length===7,'Expected seven additional career roadmaps');
@@ -264,7 +269,9 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
    assert.ok(topic[0]&&topic[1]&&topic[3]&&topic[4],track.title+' contains an incomplete module');
    assert.ok(topic[2].split('; ').length>=12,topic[0]+' needs at least 12 sub-concepts');
   }
-  assert.ok(atlas.renderTrack(track.id).includes('TOPIC MIND MAP'),track.title+' should render topic maps');
+  const rendered=atlas.renderTrack(track.id);
+  assert.ok(rendered.includes('TOPIC MIND MAP'),track.title+' should render topic maps');
+  assert.ok(rendered.includes('DEEP STUDY GUIDE')&&rendered.includes('Core concepts explained')&&rendered.includes('Practical lab'),track.title+' modules must render complete study guides');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
  console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
