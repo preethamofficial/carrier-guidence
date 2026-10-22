@@ -276,5 +276,16 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
  console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
 }
+
+check('Career roadmaps cover all 41 roles and connect from the homepage',()=>{
+ const page=fs.readFileSync(path.join(root,'role-roadmaps.html'),'utf8');
+ const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
+ assert.ok(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('href="role-roadmaps.html"'),'Homepage navigation must link to career roadmaps');
+ for(const role of ["Full Stack Developer","Backend Developer","Frontend Developer","Java Developer","Python Developer","Mobile App Developer (iOS / Android)","Embedded Systems / Firmware Engineer","Game Developer","API / Integration Engineer","AI Engineer","Machine Learning Engineer","Data Scientist","Data Engineer","MLOps Engineer","Prompt / Generative AI Engineer","Data Analyst","Computer Vision Engineer","NLP Engineer","Ethical Hacker / Penetration Tester","Security Analyst (SOC Analyst)","Security Engineer","Incident Response Specialist","Application Security (AppSec) Engineer","Cloud Security Engineer","Digital Forensics Investigator","Cloud Engineer","DevOps Engineer","Site Reliability Engineer (SRE)","Platform Engineer","Cloud Solutions Architect","System / Linux Administrator","Network Engineer","QA Automation Engineer","Performance / Load Testing Engineer","Blockchain / Web3 Engineer","Database Administrator (DBA)","Technical Product Manager","UI/UX Designer","Scrum Master / Agile Project Manager","Solutions Engineer / Technical Sales Engineer","Business Analyst (IT)"])assert.ok(source.includes(role), 'Missing career role: '+role);
+ assert.ok(source.includes("roles.length*12"),'Each role should expose twelve ordered topics');
+ assert.ok(source.includes('Stage 1 · Beginner')&&source.includes('Stage 4 · Advanced'),'Roadmaps must span beginner to advanced');
+ for(const feature of ['data-complete','Export my progress','Common mistakes to avoid','Final portfolio project','Official documentation'])assert.ok(source.includes(feature)||page.includes(feature),'Missing roadmap feature: '+feature);
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
