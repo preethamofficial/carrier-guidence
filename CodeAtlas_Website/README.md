@@ -79,3 +79,8 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 - `specializations.html`, `specializations.js`: specialisation paths.
 - `manifest.webmanifest`, `service-worker.js`, `pwa.js`: PWA shell.
 - `tests/static-check.mjs`, `.github/workflows/static-check.yml`: static validation and CI.
+
+
+## Web Development Roadmap
+
+The main learning map includes an interactive end-to-end Web Development Roadmap. Search for **web development**, **web dev**, **full stack roadmap**, or **frontend roadmap**, or use the home-page button. The roadmap has four phases and 25 expandable topics across web foundations, frontend programming, backend/data, and production readiness. Each topic includes learning objectives, a representative code pattern, a practical challenge, and a link into the relevant language or engineering lesson. The roadmap script is `web-development-roadmap.js`, styled in `styles.css`, and cached by the service worker for offline access. Runtime tests validate roadmap structure, topic fields, search routing, related lesson links and the total topic count.
