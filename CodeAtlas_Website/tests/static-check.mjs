@@ -229,7 +229,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
    assert.ok(topic.challenge.length>25,topic.title+' needs a practical challenge');
   }
  }
- assert.ok(html.includes('Complete mind map')&&html.includes('Practice challenge')&&html.includes('Open related lesson'),'Roadmap must expose map, challenges and lesson links');
+ assert.ok(html.includes('complete mind map')&&html.includes('Practice challenge')&&html.includes('Open related lesson'),'Roadmap must expose map, challenges and lesson links');
 });
 
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
