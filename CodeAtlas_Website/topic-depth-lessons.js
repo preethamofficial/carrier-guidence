@@ -1297,6 +1297,26 @@
       lessons[id].example2 = pair[1];
     }
   });
+  const bashExamples = {
+    "bash-1": ["#!/usr/bin/env bash\nset -u\nprintf 'Hello, shell\\n'", "command -v bash\nbash --version\nprintf 'script path: %s\\n' \"$0\""],
+    "bash-2": ["#!/usr/bin/env bash\nname=\"Asha Rao\"\nargs=(\"$@\")\nprintf 'Hello, %s\\n' \"$name\"\nprintf 'First argument: %s\\n' \"$1\"", "path=\"$1\"\n[[ -e \"$path\" ]] || { printf 'Missing path: %s\\n' \"$path\" >&2; exit 1; }"],
+    "bash-3": ["#!/usr/bin/env bash\nset -o pipefail\ngrep -i 'error' app.log | sort | uniq -c > error-summary.txt", "command > output.log 2> errors.log\n# Capture both streams in one file:\ncommand > combined.log 2>&1"],
+    "bash-4": ["for path in \"$@\"; do\n    if [[ -f \"$path\" ]]; then printf 'file: %s\\n' \"$path\"; else printf 'missing: %s\\n' \"$path\" >&2; fi\ndone", "if [[ $# -lt 1 ]]; then printf 'usage: %s PATH...\\n' \"$0\" >&2; exit 2; fi"],
+    "bash-5": ["validate_file() {\n    local path=\"$1\"\n    [[ -f \"$path\" ]] || return 1\n    printf '%s\\n' \"$path\"\n}\nif result=$(validate_file \"$1\"); then printf '%s\\n' \"$result\"; fi", "log_error() { printf '[ERROR] %s\\n' \"$*\" >&2; }"],
+    "bash-6": ["find ./logs -type f -name '*.log' -print0 | while IFS= read -r -d '' file; do printf 'checking: %s\\n' \"$file\"; done", "tmp=$(mktemp) || exit 1\ntrap 'rm -f \"$tmp\"' EXIT\nprintf 'temporary result\\n' > \"$tmp\"\nmv -- \"$tmp\" report.txt"],
+    "bash-7": ["#!/usr/bin/env bash\nset -euo pipefail\nworker() { sleep 1; printf 'worker done\\n'; }\nworker & pid=$!\nwait \"$pid\"", "cleanup() { if [[ -n \"$child_pid\" ]]; then kill \"$child_pid\" 2>/dev/null || true; fi; }\nchild_pid=\"\"\ntrap cleanup EXIT INT TERM"],
+    "bash-8": ["curl --fail --show-error --silent --connect-timeout 3 --max-time 10 https://example.com/health", "status=$(curl --silent --output /dev/null --write-out '%{http_code}' --max-time 5 https://example.com/health) || exit 2\n[[ \"$status\" == 200 ]] || exit 1"],
+    "bash-9": ["#!/usr/bin/env bash\nexec 9>\"/tmp/report.lock\"\nflock -n 9 || { echo 'already running' >&2; exit 1; }\n./generate-report.sh", "tmp=$(mktemp ./report.XXXXXX)\ntrap 'rm -f \"$tmp\"' EXIT\n./build-report > \"$tmp\"\nmv -- \"$tmp\" report.txt\ntrap - EXIT"],
+    "bash-10": ["#!/usr/bin/env bash\nset -euo pipefail\n: \"$API_TOKEN\"\n# Do not echo the token or enable xtrace around secret use.\ncurl --header \"Authorization: Bearer $API_TOKEN\" https://example.com/api", "case \"$1\" in\n    --dry-run) printf 'Would deploy\\n' ;;\n    --deploy) ./deploy.sh ;;\n    *) printf 'Unknown option\\n' >&2; exit 2 ;;\nesac"],
+    "bash-11": ["#!/usr/bin/env bash\nset -euo pipefail\nif [[ $# -lt 1 ]]; then echo 'usage: script PATH' >&2; exit 2; fi\n[[ -e \"$1\" ]]", "# Static analysis and tests:\nshellcheck script.sh\nbats tests/"],
+    "bash-12": ["#!/usr/bin/env bash\nset -euo pipefail\nDRY_RUN=1\nrun() { if [[ \"$DRY_RUN\" == 1 ]]; then printf 'DRY RUN:'; printf ' %q' \"$@\"; printf '\\n'; else \"$@\"; fi; }\nrun mkdir -p /srv/app", "backup() {\n    local source=\"$1\" destination=\"$2\"\n    [[ -r \"$source\" ]] || return 1\n    cp -- \"$source\" \"$destination\"\n    cmp -s -- \"$source\" \"$destination\"\n}"]
+  };
+  Object.entries(bashExamples).forEach(([id, pair]) => {
+    if (lessons[id]) {
+      lessons[id].example = pair[0];
+      lessons[id].example2 = pair[1];
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
