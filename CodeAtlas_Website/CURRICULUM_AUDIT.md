@@ -45,3 +45,12 @@ GitHub Actions checks JavaScript syntax, local assets, JSON and the static test 
 ## Reference policy
 
 Each lesson links to official language documentation. Use the language's official reference to confirm version-specific syntax and behavior; SQL examples explicitly call out dialect-specific syntax where applicable. Examples that require surrounding imports, declarations, project setup or a database schema are learning fragments and should be run in the appropriate toolchain before reuse.
+
+
+## Follow-up expansion: web foundations and engineering tracks (October 2026)
+
+The learning map now includes **24 tracks and 344 runtime topics**. The original 14 language paths have 16 topics each (224 topics); 10 new tracks add 120 topics (12 each). New tracks are HTML, CSS, React, Node.js, Dart & Flutter, Git & GitHub, Data Structures & Algorithms, REST APIs, Docker & DevOps, and Linux & Shell.
+
+HTML covers document structure, semantics, navigation, images/alt text, forms, tables, media, metadata, ARIA, security boundaries and validation. CSS covers the cascade, box model, typography, Flexbox, Grid, responsive design, positioning, design tokens, motion, focus/accessibility, architecture and debugging. Framework and engineering tracks cover components/state/hooks/routing, Node runtime/HTTP/database/security/deployment, Dart/Flutter widgets/state/layout/networking, version-control collaboration, algorithmic patterns, HTTP contracts, containers/CI/CD, and Linux operations.
+
+All tracks are registered through the same curriculum enrichment engine, expose a visible coverage audit, and are included in the language library, offline cache and runtime tests. The runtime test checks the total topic count, unique IDs, guide sections, edge cases, practice and interview prompts. Examples remain instructional; verify version-specific syntax and execute examples in the appropriate toolchain before production use.
