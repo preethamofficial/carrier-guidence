@@ -393,6 +393,7 @@
        'Work from requirements to tests, then implementation, review and deployment; keep decisions documented.',
        'Scope creep, missing error behavior and a project that only works on the author’s machine.',
        'Deliver one end-to-end feature with tests, documentation, security considerations and repeatable deployment.']
+    ]
   };
   function renderLesson(lang, topic, index) {
     const data = (catalogs[lang.id] || generic).topics[index] || generic.topics[index] || generic.topics[0];
