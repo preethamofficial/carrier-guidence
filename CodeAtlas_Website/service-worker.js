@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='codeatlas-shell-v17';
+const CACHE_NAME='codeatlas-shell-v18';
 const CORE=[
  './','./index.html','./dashboard.html','./styles.css','./enhance.css','./app.js','./enhance.js',
  './data/curriculum.json','./year-course.html','./year-course.css','./year-course.js','./data/year-curriculum.json',
