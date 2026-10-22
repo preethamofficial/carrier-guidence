@@ -309,7 +309,7 @@ check('All 492 career topics render deep lessons with topic-specific steps, exam
   list.listeners.click({target:{closest:()=>({dataset:{role}})}});
   for(let i=0;i<12;i++){
    stage.listeners.click({target:{closest:()=>({dataset:{topic:String(i)}})}});
-   for(const marker of ['Prerequisites and mental model','Worked example: ','Guided practice with solution','Advanced checklist','data-complete='])assert.ok(panel.innerHTML.includes(marker),role+' topic '+i+' missing '+marker);
+   for(const marker of ['Prerequisites and mental model','Think of it like this:','Key words:','Worked example: ','Line-by-line walkthrough','Guided practice with solution','Advanced checklist','data-complete='])assert.ok(panel.innerHTML.includes(marker),role+' topic '+i+' missing '+marker);
    assert.ok(panel.innerHTML.includes('<pre><code>'),'Topic '+role+'/'+i+' has no worked example');
    rendered++;
   }
