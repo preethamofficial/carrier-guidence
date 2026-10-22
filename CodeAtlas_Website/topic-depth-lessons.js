@@ -113,6 +113,176 @@
       interview: "Compare unit, integration and regression tests; explain why code coverage is not correctness; describe how virtual environments and dependency lock files contribute to reproducibility."
     }
   });
+  add({
+    "javascript-1": {
+      concept: "JavaScript source runs inside an engine hosted by a browser, Node.js, or another runtime. The language defines expressions and objects; the host provides APIs such as the DOM, timers, filesystem and networking. Separating language features from host APIs explains environment-specific failures.",
+      mechanics: "Modern engines parse source, create internal representations and may optimize frequently executed paths. Browser files can be classic scripts or ES modules; Node interprets files according to package and extension rules. Runtime version and module mode are part of the project's contract.",
+      pitfalls: "Assuming window exists in Node, mixing CommonJS and ES modules without configuration, relying on the current working directory, and assuming code that parses must work in its host environment.",
+      challenge: "Create a Node script and a browser module that share a pure calculation function. Document the runtime versions and identify which APIs belong to JavaScript and which belong to the host.",
+      interview: "Explain the difference between the JavaScript language and its host, how an engine executes code at a high level, and why browser and Node globals differ."
+    },
+    "javascript-2": {
+      concept: "JavaScript values have types, and variables hold references to values. Primitive values are copied as values; objects and arrays are accessed through references, so two variables can observe the same object's mutations. Equality operators matter because coercion changes comparison results.",
+      mechanics: "Strict equality with === avoids broad type coercion. typeof null historically returns object; arrays are detected with Array.isArray. NaN is unequal to itself, so Number.isNaN is clearer. const prevents rebinding, not mutation of an object.",
+      pitfalls: "Using == without understanding coercion, confusing const with deep immutability, relying on truthiness for empty arrays, and treating typeof as a complete type-inspection API.",
+      challenge: "Write a numeric parser for form input, reject empty and non-finite values, and demonstrate mutating an object versus reassigning a const binding.",
+      interview: "Compare == and ===, explain primitive values versus object references, describe the typeof null quirk, and clarify what const guarantees."
+    },
+    "javascript-3": {
+      concept: "Control flow selects which statements run. JavaScript truthiness differs from some languages: empty arrays and objects are truthy, while 0, empty text, null, undefined and NaN are falsy. Loops should make the iteration set and termination condition explicit.",
+      mechanics: "for...of iterates values from an iterable; for...in iterates enumerable property keys and is usually not suitable for array values. switch uses strict comparison. Short-circuit operators can return an operand, and optional chaining short-circuits only on nullish values.",
+      pitfalls: "Using for...in for array values, writing a loop that cannot terminate, confusing || with ?? when zero or empty text are valid, and relying on implicit coercion.",
+      challenge: "Implement validation that accepts zero as a valid numeric value, rejects missing input, and processes a list with for...of. Test empty arrays and nullish values.",
+      interview: "Compare for...of with for...in, explain truthy/falsy values, and describe when nullish coalescing is safer than logical OR."
+    },
+    "javascript-4": {
+      concept: "Functions are first-class values that can be stored, passed and returned. A function can capture its lexical environment through a closure. Declaration form, arrow syntax and this binding affect hoisting, call behavior and API design.",
+      mechanics: "Function declarations are initialized during scope setup; function expressions follow the initialization rules of their binding. Arrow functions capture this lexically and have no own arguments object. let and const are block-scoped, while var is function-scoped.",
+      pitfalls: "Assuming arrow functions bind this like methods, closing over a changing loop variable, calling a function expression before its binding initializes, and mixing function declaration with invocation responsibilities.",
+      challenge: "Build a counter factory that returns increment/read functions, then implement an object method that uses this. Demonstrate why replacing the method with an arrow function changes behavior.",
+      interview: "Explain closures, lexical scope, hoisting, var versus let/const, and how arrow functions differ from ordinary functions in this and arguments."
+    },
+    "javascript-5": {
+      concept: "Arrays are ordered objects with indexed elements; ordinary objects represent keyed properties. Choose among object, Map, array and Set based on whether the data models a sequence, key/value lookup, or uniqueness.",
+      mechanics: "map transforms every element, filter keeps matching elements, and reduce combines elements into an accumulator. These methods normally produce results instead of mutating the source. Object spread is shallow, and ordinary object keys are strings or symbols.",
+      pitfalls: "Expecting map to mutate the source, using reduce for a simple transformation, assuming spread clones nested objects, and using untrusted strings as object keys without considering prototype-related hazards.",
+      challenge: "Transform order records into a customer summary, preserve the original data, handle empty input, and explain whether Map better fits the requirement.",
+      interview: "Compare map, filter and reduce; explain shallow copying with spread; choose among object, Map, Set and array for a concrete task."
+    },
+    "javascript-6": {
+      concept: "The Document Object Model represents an HTML document as a tree of nodes. JavaScript queries and updates that tree. DOM changes are application state, so user input must remain separate from trusted markup.",
+      mechanics: "querySelector returns the first matching element or null; textContent writes text, whereas innerHTML parses markup. Event listeners respond to actions. DOM operations require a browser document and should run after the relevant nodes exist.",
+      pitfalls: "Dereferencing a missing element, inserting untrusted input through innerHTML, appending duplicate nodes during rerender, and scattering presentation changes across unrelated handlers can create fragile UI and XSS risk.",
+      challenge: "Create a searchable list using textContent, handle a missing input element safely, and add/remove a CSS class from a click event. Show that input containing markup is displayed as text.",
+      interview: "Explain the DOM tree, querySelector nullability, the security difference between textContent and innerHTML, and event delegation."
+    },
+    "javascript-7": {
+      concept: "Destructuring extracts array positions or object properties; spread expands iterable values or enumerable object properties; rest collects remaining values. These features express data flow but do not perform deep copies.",
+      mechanics: "Array destructuring follows position; object destructuring follows property names and supports renaming and defaults for undefined. Spread creates shallow copies; later object properties overwrite earlier keys. Rest must occupy a permitted final position.",
+      pitfalls: "Assuming spread deep-clones nested values, expecting a default to replace explicit null, overwriting properties unintentionally through spread order, and destructuring optional data without a fallback.",
+      challenge: "Merge two configuration objects with a documented precedence order, preserve the source objects, and safely extract optional nested data. Test missing properties and explicit null.",
+      interview: "Compare rest and spread, explain object spread precedence and shallow-copy behavior, and distinguish a destructuring default from nullish coalescing."
+    },
+    "javascript-8": {
+      concept: "Promises represent the eventual outcome of asynchronous work. Async functions always return promises; await pauses that async function until an awaited value settles without blocking the entire JavaScript thread. Receiving a response is not the same as validating its HTTP status or parsing its body.",
+      mechanics: "A promise transitions from pending to fulfilled or rejected. then chains transformations and catch handles rejection. fetch normally rejects for network-level failures, not simply for HTTP 404/500 responses, so check response.ok explicitly.",
+      pitfalls: "Failing to return a promise from a chain, launching asynchronous work without handling it, assuming fetch throws on 404, parsing a body twice, and failing to time out or cancel a request.",
+      challenge: "Write an async JSON loader with an AbortController timeout, response.ok check, and separate handling for network errors, HTTP errors and invalid JSON. Test failure paths with mocked responses.",
+      interview: "Explain promise states, async/await, why fetch does not reject on ordinary HTTP error status, and how Promise.all runs independent requests concurrently."
+    },
+    "javascript-9": {
+      concept: "Events let browser code react to user actions and browser activity. Propagation normally includes capture, target and bubble phases. Form handling should preserve accessible browser behavior while validating and submitting data predictably.",
+      mechanics: "addEventListener attaches a listener; the event object describes the target and action. preventDefault cancels a browser default action; stopPropagation stops further propagation. Event delegation listens on a stable ancestor and inspects the target.",
+      pitfalls: "Registering duplicate listeners after rerenders, calling preventDefault without implementing the intended behavior, treating client validation as the only security control, and failing to associate labels and errors with form fields.",
+      challenge: "Build a form with accessible validation, clear error messages, duplicate-submit protection, and a button that is restored after both success and failure.",
+      interview: "Explain bubbling and delegation, distinguish preventDefault from stopPropagation, and explain why server-side validation remains mandatory."
+    },
+    "javascript-10": {
+      concept: "Modules split a program into explicit interfaces. ES modules export selected bindings and import dependencies, while the module system defines scope and loading behavior. Tooling creates repeatable builds and checks code before execution.",
+      mechanics: "ES modules have their own scope and live bindings; static imports are resolved before normal module execution. Package metadata affects how Node interprets .js files, and bundlers may transform modules and assets for browser delivery.",
+      pitfalls: "Circular dependencies, confusing default and named exports, mixing ESM and CommonJS accidentally, committing machine-specific build output, and assuming bundler configuration is the language specification.",
+      challenge: "Split a small application into a pure calculation module and a UI entry module, add a package test script, and build it from a clean checkout with documented runtime versions.",
+      interview: "Compare named and default exports, explain module scope, and describe the roles of a runtime, package manager, bundler, linter and test runner."
+    },
+    "javascript-11": {
+      concept: "Asynchronous APIs often begin as callbacks, gain composition through promises, and use async/await for sequential-looking control flow. The central issue is how success, failure, ordering and cancellation move through the operation.",
+      mechanics: "A promise chain forwards returned values to the next then and forwards thrown errors to rejection handling. await unwraps fulfillment and throws rejection into try/catch. Promise.all rejects if one input rejects; Promise.allSettled reports every outcome. Neither automatically cancels sibling work.",
+      pitfalls: "Mixing callback and promise error conventions, creating a floating promise, serializing independent requests accidentally, and using Promise.all when every result must be collected despite failures.",
+      challenge: "Refactor a nested callback workflow into a promise chain and then async/await. Test a failed first operation and two independent operations that should run concurrently.",
+      interview: "Describe promise-chain error propagation, compare Promise.all and Promise.allSettled, and explain why awaiting requests inside a loop can serialize work."
+    },
+    "javascript-12": {
+      concept: "A reliable DOM feature combines semantic HTML, event handling, state updates and safe rendering. Input is validated, state changes once, the UI reflects state, and errors remain visible and accessible.",
+      mechanics: "Register event listeners once, render user-controlled strings as text, and use stable identifiers for list updates. Browser storage persists strings and may contain stale or malformed data, so parse and validate it before trusting it. Separate state transformation from DOM manipulation to make behavior testable.",
+      pitfalls: "One giant event handler, injecting input as HTML, storing malformed JSON without recovery, losing keyboard accessibility, and testing only the initial happy path leave a feature brittle.",
+      challenge: "Build a task list with add, complete, filter and persistence features. Handle empty input, duplicate submissions, stale stored data and keyboard use; keep core state transformations independent of the DOM.",
+      interview: "Explain state flow in a small UI, identify XSS risks in rendering, and describe how to test behavior independently of browser DOM details."
+    },
+    "typescript-1": {
+      concept: "TypeScript adds a static type system to JavaScript and normally emits JavaScript for execution. Its types help developers catch mismatches before runtime, but the type system is erased during compilation and does not automatically validate JSON, network responses or user input.",
+      mechanics: "The TypeScript compiler parses files, checks types using tsconfig settings, and emits JavaScript when configured to do so. Strictness options alter the guarantees. The target and module options affect emitted syntax and module behavior; bundling and runtime execution are separate concerns.",
+      pitfalls: "Assuming a type annotation validates runtime data, compiling with strictness disabled without understanding the trade-off, mixing incompatible module systems, and using a cast to silence a problem rather than validating it.",
+      challenge: "Create a strict TypeScript project with separate source and build directories, compile it, and parse an unknown JSON value only after runtime validation. Document the target and module settings.",
+      interview: "Explain type erasure, compile-time checking versus runtime validation, and the distinct roles of tsc, tsconfig and a bundler."
+    },
+    "typescript-2": {
+      concept: "Primitive types describe values, arrays describe ordered collections, and tuples describe fixed-position structures with known element types. TypeScript's structural type system checks whether a value has the required shape rather than relying only on a declared class name.",
+      mechanics: "Type inference derives types from initializers and usage. Literal types can preserve exact string/number values, while widening may generalize them. readonly prevents certain mutations through a typed reference but does not freeze the underlying object at runtime.",
+      pitfalls: "Using any to bypass checking, confusing readonly with runtime immutability, assuming arrays have fixed length, and forgetting that an external value still requires validation even if a variable is annotated.",
+      challenge: "Model a CSV row as a tuple and a collection of rows as an array, then write a parser that validates incoming unknown values before producing the typed representation.",
+      interview: "Compare any, unknown and never; explain type inference and literal widening; and distinguish readonly type restrictions from Object.freeze."
+    },
+    "typescript-3": {
+      concept: "A union says a value may belong to one of several types. Narrowing uses runtime checks and control flow to reduce that set before accessing type-specific properties. A discriminated union encodes alternatives with a shared literal property.",
+      mechanics: "typeof, in, instanceof and equality checks can narrow types. A switch over a discriminant is often clearer than scattered boolean flags. An exhaustive check using never makes a newly added union variant visible to the compiler when a branch is missing.",
+      pitfalls: "Using assertions instead of narrowing, checking only one union branch, trusting a discriminant from unvalidated external JSON, and allowing a default branch to silently ignore a new variant.",
+      challenge: "Represent API results as a discriminated union of loading, success and failure states. Render each state and add an exhaustive check so adding a fourth state causes a compile-time reminder.",
+      interview: "Explain narrowing, discriminated unions, type guards, and how never helps detect missing cases."
+    },
+    "typescript-4": {
+      concept: "A function type defines the inputs and output callers may rely on. Optional parameters, overload signatures and generic parameters shape an API contract. A useful signature communicates constraints without requiring callers to inspect implementation details.",
+      mechanics: "Overloads expose several call signatures while one implementation handles them. Generic parameters preserve relationships between inputs and outputs, whereas broad unions may lose that relationship. A function returning Promise<T> describes asynchronous completion but not every possible runtime failure.",
+      pitfalls: "Overloading when a union is simpler, optional arguments that create ambiguous calls, broad any return types, and assuming a declared return type validates untrusted data.",
+      challenge: "Create a typed parse function with overloads for string and numeric input, then decide whether a single generic or union-based API would be clearer. Test invalid runtime input separately.",
+      interview: "Compare overloads and union parameters, explain generic type parameters, and describe how to type an asynchronous function that may reject."
+    },
+    "typescript-5": {
+      concept: "An interface describes an object's required shape; a type alias can name unions, intersections, primitives, tuples and other types. Because TypeScript is structural, compatible objects may satisfy an interface without explicitly declaring that they implement it.",
+      mechanics: "Interfaces can be extended and merged under specific declaration rules; type aliases compose with unions and intersections. Optional and readonly properties affect compile-time usage but do not enforce runtime data shape. Prefer small domain contracts over a single interface that models every possible state.",
+      pitfalls: "Assuming interfaces exist at runtime, confusing optional properties with properties whose value is undefined, creating overly broad interfaces, and relying on compile-time types to secure data from an API.",
+      challenge: "Define a public User contract, an internal UserWithSecrets type and an API response union. Ensure secrets are not included in the response object and validate external payloads at runtime.",
+      interview: "Compare interface and type alias, explain structural typing, and state why TypeScript interfaces cannot be used as runtime validators."
+    },
+    "typescript-6": {
+      concept: "Generics allow functions and types to preserve relationships between values without giving up type safety. A generic parameter is useful when the result type depends on the input type; it is less useful when every value is immediately widened to unknown or any.",
+      mechanics: "Type inference often chooses generic arguments from call-site inputs. Constraints such as T extends { id: string } express required operations. Generic defaults and variance affect more advanced APIs, while utility types transform existing type shapes.",
+      pitfalls: "Adding unnecessary generic parameters, constraining a type too narrowly, using assertions to bypass the generic relationship, and assuming generic constraints imply runtime validation.",
+      challenge: "Implement a generic groupBy or mapById helper that preserves the input element type, add a constraint for the key property, and test it with two distinct record types.",
+      interview: "Explain generic inference, constraints, type parameters versus concrete types, and why a generic type does not validate external data at runtime."
+    },
+    "typescript-7": {
+      concept: "Classes combine JavaScript runtime behavior with TypeScript's static descriptions of fields, methods and access modifiers. Interfaces and composition often express contracts more flexibly than class inheritance. TypeScript's private modifier is a type-checking restriction, distinct from JavaScript private fields.",
+      mechanics: "A class can implement an interface, extend a base class, and use abstract members to require subclass behavior. Access modifiers influence compile-time access; ECMAScript #private fields have runtime privacy semantics. Constructor parameter properties are syntax that declares and initializes members.",
+      pitfalls: "Using inheritance for unrelated capabilities, treating TypeScript private as a security boundary, failing to initialize strict properties, and exposing mutable state that lets callers violate invariants.",
+      challenge: "Model a payment method behind an interface and implement two variants. Keep validation inside each implementation and test code through the interface rather than depending on concrete classes.",
+      interview: "Compare interface implementation with inheritance, explain abstract classes, and distinguish TypeScript private from ECMAScript private fields."
+    },
+    "typescript-8": {
+      concept: "Utility types derive new types from existing ones, reducing repeated declarations and helping express partial updates, selected fields and dictionary shapes. They operate at compile time; they do not automatically remove properties or validate an object at runtime.",
+      mechanics: "Partial<T> makes properties optional, Pick<T, K> selects keys, Omit<T, K> removes keys from a type, and Record<K, V> maps keys to values. These types can compose, but deeply nested transformations often deserve a named domain type.",
+      pitfalls: "Using Partial for an unrestricted database update, assuming Omit strips a property from a runtime object, exposing private fields because a type was widened, and creating complex mapped types that obscure the actual data contract.",
+      challenge: "Define a full User model, a safe public response using Pick/Omit, and a restricted update DTO. Validate the DTO and explicitly whitelist mutable fields before persisting it.",
+      interview: "Explain Partial, Pick, Omit and Record, and why type-level omission does not delete a property from a JavaScript object."
+    },
+    "typescript-9": {
+      concept: "A Promise<T> represents eventual fulfillment with a value of type T, but rejected promises are not encoded as a typed error union by ordinary Promise types. A function's type should make the success shape clear while runtime handling addresses network, parsing and domain failures.",
+      mechanics: "async functions return Promise values, and await unwraps fulfillment. Catch variables should be treated as unknown under strict settings because JavaScript can throw arbitrary values. A discriminated Result type can represent expected failure outcomes when callers must handle them explicitly.",
+      pitfalls: "Assuming Promise<T> describes all errors, catching an unknown value as if it were Error without checking, forgetting to await a result, and confusing a network error with an API's valid failure response.",
+      challenge: "Write a typed API client that validates unknown JSON, returns a discriminated success/error result for expected failures, and still allows unexpected programming errors to surface.",
+      interview: "Explain why Promise<T> does not type its rejection, how unknown catch variables improve safety, and when a Result union is preferable to throwing."
+    },
+    "typescript-10": {
+      concept: "Conditional and mapped types let the type system transform relationships between types. They are powerful for libraries and reusable API contracts, but they can become difficult to read if they encode too many layers of conditional behavior.",
+      mechanics: "A conditional type uses T extends U ? X : Y. When the checked type is a naked generic parameter, the condition distributes across union members. Mapped types iterate over keys, and keyof produces a union of property keys. Indexed access types select a property type by key.",
+      pitfalls: "Unexpected distributive behavior, recursive type complexity, assuming a type-level conditional performs runtime branching, and using advanced types where a clear named interface would be easier to maintain.",
+      challenge: "Build a type that extracts the success payload from a discriminated API result and a mapped type that makes selected fields readonly. Add compile-time examples for each union variant.",
+      interview: "Explain conditional types, distributive conditional types, mapped types, keyof and indexed access types."
+    },
+    "typescript-11": {
+      concept: "Modules and compiler configuration define the boundary between source files, packages and emitted code. TypeScript can model different runtimes, but the project must configure module resolution, target, strictness and library types to match how the application is built and executed.",
+      mechanics: "tsconfig.json controls compiler options and file inclusion. ModuleResolution should match the runtime or bundler model. Declaration files describe types for JavaScript libraries, while project references support larger builds. A successful type check does not prove the bundler or runtime will resolve imports correctly.",
+      pitfalls: "Conflicting module settings, accidentally compiling test files into production output, relying on ambient types from unrelated packages, and ignoring strict compiler warnings because the code still emits JavaScript.",
+      challenge: "Create separate application and test configurations, enable strict checking, add one declaration file for an untyped dependency, and verify both type-checking and the actual production build.",
+      interview: "Explain target versus module, module resolution, declaration files, and why passing tsc does not guarantee runtime imports will work."
+    },
+    "typescript-12": {
+      concept: "A typed mini application combines domain types, validated input, UI state and API boundaries. The type system should make illegal states harder to represent, while runtime validation protects the application from values that arrive outside its control.",
+      mechanics: "Define domain types and discriminated states, keep transformation logic pure, and isolate browser/network code behind interfaces. Use strict compiler settings and tests at both the type and runtime levels. Types are erased, so parse external data from unknown rather than asserting it directly into a trusted shape.",
+      pitfalls: "Treating types as validation, scattering casts throughout the app, duplicating domain rules between UI and service layers, and allowing impossible state combinations such as loading and success simultaneously.",
+      challenge: "Build a typed task tracker with loading/success/error states, runtime-validated persistence, a small service interface, and tests for corrupted storage and invalid API responses.",
+      interview: "Explain how to model state with discriminated unions, where runtime validation belongs, and how strict compiler settings improve maintainability."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
