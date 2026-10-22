@@ -247,5 +247,28 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  assert.ok(html.includes('complete mind map')&&html.includes('Practice challenge')&&html.includes('Open related lesson'),'Roadmap must expose map, challenges and lesson links');
 });
 
+{
+ const root=path.join(process.cwd(),'CodeAtlas_Website');
+ const skillsFile=path.join(root,'career-skills-roadmaps.js');
+ assert.ok(fs.existsSync(skillsFile),'Missing career skills roadmaps module');
+ const source=fs.readFileSync(skillsFile,'utf8');
+ const context={window:{},console};
+ vm.runInNewContext(source,context);
+ const atlas=context.window.CodeAtlasCareerSkills;
+ assert.ok(atlas&&atlas.tracks.length===6,'Expected six additional career roadmaps');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),48,'Expected 48 advanced learning modules');
+ for(const track of atlas.tracks){
+  assert.equal(track.topics.length,8,track.title+' should contain eight modules');
+  assert.equal(track.branches.length,4,track.title+' needs four mind-map branches');
+  assert.ok(track.refs.length>=4,track.title+' needs official references');
+  for(const topic of track.topics){
+   assert.ok(topic[0]&&topic[1]&&topic[3]&&topic[4],track.title+' contains an incomplete module');
+   assert.ok(topic[2].split('; ').length>=12,topic[0]+' needs at least 12 sub-concepts');
+  }
+  assert.ok(atlas.renderTrack(track.id).includes('TOPIC MIND MAP'),track.title+' should render topic maps');
+ }
+ assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
+ console.log('✓ Career skills atlas contains 6 tracks, 48 advanced modules, topic maps and official references');
+}
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
