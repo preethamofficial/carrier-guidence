@@ -59,7 +59,7 @@ check('Additional language UI renders and navigation/progress interactions work'
  for(const id of ids)elements.set(id,new FakeElement(id));
  const document={querySelector(selector){const id=selector.startsWith('#')?selector.slice(1):selector;if(!elements.has(id))elements.set(id,new FakeElement(id));const el=elements.get(id);if(id==='lesson'&&el._html){for(const key of ['done','prev','next']){const re=new RegExp('<(input|button)[^>]*id="'+key+'"[^>]*>');const m=el._html.match(re);if(m){const item=new FakeElement(key);item.checked=/\\bchecked\\b/.test(m[0]);item.disabled=/\\bdisabled\\b/.test(m[0]);elements.set(key,item);}}}return elements.get(id);}};
  const localStorage={getItem:key=>storage.has(key)?storage.get(key):null,setItem:(key,value)=>storage.set(key,String(value))};
- vm.runInNewContext(source,{document,localStorage,console});
+ vm.runInNewContext(source,{document,localStorage,console,window:{CodeAtlasExtraDeepStudy:null}});
  assert.match(elements.get('lesson').innerHTML,/Core concept/);
  assert.match(elements.get('lesson').innerHTML,/Suggested solution approach/);
  assert.equal(elements.get('languageTitle').textContent,'C');
