@@ -15,6 +15,7 @@ const view=$('#view');
 async function init(){
   const response=await fetch('./data/curriculum.json');
   curriculum=await response.json();
+  if(window.CodeAtlasComprehensiveStudy) curriculum=window.CodeAtlasComprehensiveStudy.enrichCurriculum(curriculum);
   renderLanguageNav(); updateProgress(); showHome();
   $('#navMap').addEventListener('click',showHome);
   $('#navAll').addEventListener('click',showAllLanguages);
