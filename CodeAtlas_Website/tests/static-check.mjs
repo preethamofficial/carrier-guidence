@@ -162,19 +162,42 @@ check('Career Command Center includes core role and privacy safeguards',()=>{
  assert.ok(!/fetch\s*\(/.test(source),'Career Command Center should not call external APIs');
 });
 
-check('Comprehensive explanation layer is wired into all existing topic pages',()=>{
+check('Topic-specific lesson engine and curated catalogs are wired into both learning pages',()=>{
  const lessonFile=path.join(root,'comprehensive-lessons.js');
  assert.ok(fs.existsSync(lessonFile),'Missing comprehensive explanation layer');
  const lessonSource=fs.readFileSync(lessonFile,'utf8');
- for(const marker of ['In-depth explanation','Execution walkthrough','Common mistakes and debugging','Practice challenge','Production-readiness review'])assert.ok(lessonSource.includes(marker),'Missing explanation section '+marker);
+ for(const marker of ['Complete topic study guide','Concept-by-concept breakdown','Practice lab','Edge cases to test','officialReference'])assert.ok(lessonSource.includes(marker),'Missing explanation section '+marker);
  const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
  assert.ok(app.includes('CodeAtlasComprehensiveStudy.renderLesson'),'Main topic renderer must use comprehensive explanations');
  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
- assert.ok(home.includes('comprehensive-lessons.js'),'Main page must load comprehensive explanations');
+ assert.ok(home.includes('topic-additions-a.js')&&home.includes('topic-additions-b.js')&&home.includes('comprehensive-lessons.js'),'Main page must load curated topic data and explanation engine');
  const library=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
- assert.ok(library.includes('comprehensive-lessons.js'),'Additional language page must load explanations');
+ assert.ok(library.includes('topic-additions-a.js')&&library.includes('topic-additions-b.js')&&library.includes('comprehensive-lessons.js'),'Additional language page must load curated topic data and explanation engine');
  const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
- assert.ok(sw.includes('./comprehensive-lessons.js'),'Service worker must cache the new lesson file');
+ assert.ok(sw.includes('./topic-additions-a.js')&&sw.includes('./topic-additions-b.js')&&sw.includes('./comprehensive-lessons.js'),'Service worker must cache all lesson assets');
+});
+
+check('Runtime curriculum adds missing topics and deep guides to every language',()=>{
+ const context={window:{},console};
+ vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-a.js'),'utf8'),context);
+ vm.runInNewContext(fs.readFileSync(path.join(root,'topic-additions-b.js'),'utf8'),context);
+ vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
+ const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
+ context.window.CodeAtlasComprehensiveStudy.enrichCurriculum(data);
+ const all=data.languages.flatMap(l=>l.topics);
+ assert.equal(data.languages.length,14);
+ assert.equal(all.length,224);
+ assert.equal(new Set(all.map(t=>t.id)).size,224);
+ for(const lang of data.languages){
+  assert.equal(lang.topics.length,16,lang.name+' expanded topic count');
+  assert.ok(lang.coverageAudit&&lang.coverageAudit.newTopicsAdded===4,lang.name+' missing-topic audit');
+  for(const topic of lang.topics){
+   assert.ok(topic.deepDive&&topic.deepDive.learningObjectives.length>=5,lang.name+'/'+topic.id+' deep guide');
+   assert.ok(topic.deepDive.edgeCases.length>=4,lang.name+'/'+topic.id+' edge cases');
+   assert.ok(topic.practice.length>=6,lang.name+'/'+topic.id+' practice');
+   assert.ok(topic.interview.length>=5,lang.name+'/'+topic.id+' interview questions');
+  }
+ }
 });
 
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
