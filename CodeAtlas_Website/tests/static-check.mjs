@@ -318,5 +318,27 @@ check('All 492 career topics render deep lessons with topic-specific steps, exam
  console.log('✓ Deep lesson rendering checked across 41 roles and 492 topics');
 });
 
+check('Advanced technology roadmap cards open and every module has expanded explanations',()=>{
+ const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
+ for(const selector of ["$('[data-skill-track]')","$('[data-skills-back]')","$('[data-skills-start]')"])assert.ok(app.includes(selector),'All roadmap controls must receive click handlers: '+selector);
+ const source=fs.readFileSync(path.join(root,'career-skills-roadmaps.js'),'utf8');
+ for(const marker of ['function explainConcept','module-plain-explanation','module-concept-explanations','Worked example and line-by-line reasoning','function codePurpose'])assert.ok(source.includes(marker),'Missing module learning detail: '+marker);
+ const context={window:{},console};
+ vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
+ vm.runInNewContext(source,context);
+ const atlas=context.window.CodeAtlasCareerSkills;
+ assert.equal(atlas.tracks.length,7);
+ let modules=0;
+ for(const track of atlas.tracks){
+  const html=atlas.renderTrack(track.id);
+  assert.equal((html.match(/class="module-plain-explanation"/g)||[]).length,track.topics.length,track.title+' must explain every module');
+  assert.equal((html.match(/class="module-example-explanation"/g)||[]).length,track.topics.length,track.title+' must walk through every example');
+  assert.ok(html.includes('Mental model:')&&html.includes('Check your understanding:'),track.title+' missing beginner guidance');
+  modules+=track.topics.length;
+ }
+ assert.equal(modules,56,'Every advanced roadmap module should be checked');
+ console.log('✓ Advanced roadmap cards and all 56 module explanations validated');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
