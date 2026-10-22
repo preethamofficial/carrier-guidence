@@ -453,6 +453,176 @@
       interview: "Explain grain, conditional aggregation, running totals and cohort retention, and identify the assumptions required for a trustworthy analytics query."
     }
   });
+  add({
+    "go-1": {
+      concept: "A Go program is organized into packages, with modules defining dependency and version boundaries. The toolchain compiles Go source into an executable, while go run is convenient for development. Explicit package structure makes code easier to build, test and reuse.",
+      mechanics: "A package declares its name and imports; an exported identifier begins with an uppercase letter. go.mod records the module path and Go version directive. The go command handles compilation, dependency resolution, formatting and tests through consistent project commands.",
+      pitfalls: "Running commands outside the intended module, forgetting imports, confusing package names with module paths, committing generated binaries, and relying on unpinned or unexplained dependencies.",
+      challenge: "Create a module with a main package and a reusable internal package, run gofmt, add one unit test, and document the commands needed to build and test from a clean checkout.",
+      interview: "Explain packages versus modules, how exported identifiers are named, and why gofmt and the go toolchain are important to Go projects."
+    },
+    "go-2": {
+      concept: "Go is statically typed and uses explicit declarations plus inference with :=. Zero values make variables usable without constructors, but the zero value is only appropriate when it represents a valid initial state. Constants and typed conversions should communicate domain meaning.",
+      mechanics: "A short declaration creates new local variables; var can declare package or local variables with an explicit type. Numeric types do not implicitly convert between widths. A type assertion or conversion has different semantics, and integer overflow behavior should be considered for domain constraints.",
+      pitfalls: "Assuming numeric types convert implicitly, shadowing an outer variable with :=, using a zero value as if it meant 'not provided', and ignoring precision or overflow constraints.",
+      challenge: "Write a parser for a positive quantity that distinguishes missing, malformed and valid input. Add tests for zero, negative values, large values and conversion errors.",
+      interview: "Compare var and :=, explain zero values and shadowing, and describe why Go requires explicit conversions between different numeric types."
+    },
+    "go-3": {
+      concept: "Go uses if, for and switch to express control flow. There is only one loop keyword, for, which can act as a classic counter loop, condition loop or range iteration. Clear branch structure reduces hidden state and makes termination easier to reason about.",
+      mechanics: "A range loop produces values according to the ranged-over type. When ranging over maps, iteration order is unspecified. switch cases do not fall through by default. A short statement can scope a variable to an if or switch statement.",
+      pitfalls: "Assuming map iteration is ordered, capturing a loop variable incorrectly in concurrent closures on older language versions, mutating a collection while reasoning as if it were stable, and creating a loop with no termination path.",
+      challenge: "Summarize values from a slice, classify a parsed input with switch, and test empty data. Then sort map keys explicitly when deterministic output is required.",
+      interview: "Explain Go's range semantics, map iteration ordering, switch fallthrough behavior, and how loop-variable semantics differ across language versions."
+    },
+    "go-4": {
+      concept: "Arrays have a fixed length that is part of their type; slices are descriptors over an underlying array and are the usual sequence abstraction. Maps provide key/value lookup, while structs group related fields into a domain record.",
+      mechanics: "A slice contains a pointer to storage, length and capacity. Appending may reuse or allocate an underlying array; two slices can therefore share storage and observe mutations. A map lookup can return both value and presence. A nil map can be read but not assigned into.",
+      pitfalls: "Assuming append always preserves backing storage, retaining a slice of a huge buffer, writing to a nil map, confusing len with cap, and mutating a slice that aliases another part of the program.",
+      challenge: "Implement a word counter using a map and a slice transformation. Test nil and empty collections, and demonstrate how append can affect another slice sharing the same backing array.",
+      interview: "Compare array and slice, explain slice length/capacity and append, and describe the comma-ok map lookup and nil map behavior."
+    },
+    "go-5": {
+      concept: "Functions define behavior and return values; methods attach behavior to a receiver; errors are ordinary values that callers are expected to inspect. This explicit error model encourages local handling and makes failure paths visible in signatures.",
+      mechanics: "A method can use a value or pointer receiver. Multiple return values commonly return result and error. Wrapping with %w preserves error identity for errors.Is/errors.As. defer schedules cleanup at function return, and its arguments are evaluated when defer is registered.",
+      pitfalls: "Ignoring returned errors, comparing wrapped errors by string, using defer in a very long loop, choosing pointer receivers inconsistently, and returning an error that loses useful context.",
+      challenge: "Write a file-processing function that returns a wrapped error with operation context, closes the file reliably, and has tests that distinguish a missing file from malformed content.",
+      interview: "Explain Go's explicit error handling, error wrapping with %w, value versus pointer receivers, and when defer runs."
+    },
+    "go-6": {
+      concept: "Structs model records, pointers allow access to a value through its address, and interfaces describe behavior satisfied implicitly by types. Interfaces are most useful when they are small and owned by the code that needs the behavior.",
+      mechanics: "A pointer receiver can mutate the original value and may be required to satisfy an interface. A nil pointer stored inside a non-nil interface can make the interface itself non-nil. Interfaces are satisfied by method sets rather than explicit declarations.",
+      pitfalls: "Returning typed nil through an interface, using pointers without clear ownership, defining large interfaces too early, and confusing copying a struct with copying resources referenced by its fields.",
+      challenge: "Define a small Store interface and provide an in-memory implementation for tests. Include a typed-nil case and explain why interface comparison does not always reveal a nil underlying pointer.",
+      interview: "Explain implicit interface satisfaction, method sets and pointer receivers, and the typed-nil interface pitfall."
+    },
+    "go-7": {
+      concept: "Goroutines are lightweight concurrent executions managed by the Go runtime; channels communicate values between goroutines. Concurrency describes overlapping progress, while parallelism describes simultaneous execution on multiple processing resources.",
+      mechanics: "An unbuffered channel send and receive synchronize; buffered channels allow a bounded number of values without an immediate receiver. Closing a channel signals that no more values will be sent, not that all receivers should close it. A goroutine exits when its function returns, but a blocked goroutine can leak.",
+      pitfalls: "Sending to a closed channel, leaking goroutines blocked on sends, sharing mutable state without synchronization, closing a channel from the wrong owner, and assuming a goroutine automatically terminates when the caller stops caring.",
+      challenge: "Build a worker pool with a fixed number of workers and a jobs channel. Ensure all workers terminate, errors are collected, and the test does not hang when the input is empty.",
+      interview: "Compare concurrency and parallelism, explain channel buffering and closure, and describe common goroutine leak patterns."
+    },
+    "go-8": {
+      concept: "Embedding promotes fields and methods from an embedded type, while composition lets one type delegate work to another. Interfaces decouple callers from implementation details and make substitution possible in tests.",
+      mechanics: "An embedded field is not classical inheritance; method promotion follows Go's selector rules and can introduce ambiguity. A type may implement several small interfaces, and a compile-time interface assertion can verify that it satisfies a contract.",
+      pitfalls: "Treating embedding as a full subtype relationship, accidentally exposing methods through embedding, building large interfaces for every implementation, and coupling business logic to concrete infrastructure.",
+      challenge: "Create a service that depends on a small repository interface, use an in-memory fake in unit tests, and compare composition with embedding for the same design.",
+      interview: "Explain embedding versus inheritance, implicit interface implementation, and why small consumer-owned interfaces improve testability."
+    },
+    "go-9": {
+      concept: "WaitGroup coordinates completion, select chooses among ready channel operations, and context carries cancellation/deadline signals across API boundaries. These primitives help structure concurrent work, but cancellation is cooperative and every goroutine must decide how to respond.",
+      mechanics: "A WaitGroup counter must be incremented before the goroutine can finish and each completed task must call Done. select can include a default case, which makes it non-blocking. Context cancellation propagates to children when passed correctly; it does not forcibly stop arbitrary code.",
+      pitfalls: "Calling Add after Wait begins, forgetting Done, using time.Sleep as synchronization, ignoring context cancellation, and creating background work without a clear owner or shutdown path.",
+      challenge: "Implement a concurrent request fan-out with a deadline, bounded workers and cancellation. Verify that blocked work exits and that errors do not cause the test to wait forever.",
+      interview: "Explain WaitGroup lifecycle, select behavior, context cancellation, and why cancellation must be checked by the code doing the work."
+    },
+    "go-10": {
+      concept: "An HTTP service maps requests to handlers, validates inputs, performs domain work and serializes responses. JSON is a data format, not a validation policy. Database access should use context-aware calls and parameterized SQL.",
+      mechanics: "http.Handler and ServeMux route requests; handlers should set status and content type deliberately. json.Decoder can decode request bodies, but the application still needs size limits, schema checks and unknown-field policy. database/sql manages a connection pool and uses context for cancellable operations.",
+      pitfalls: "Trusting decoded JSON without validation, reading unbounded request bodies, forgetting timeouts, concatenating SQL input, leaking database rows, and returning internal error details to clients.",
+      challenge: "Build a small CRUD API with request-size limits, input validation, context deadlines, parameterized persistence and tests for malformed JSON, missing records and database errors.",
+      interview: "Explain handler responsibilities, JSON decoding versus validation, context propagation, and how database/sql manages connections."
+    },
+    "go-11": {
+      concept: "Go tests are regular Go files that verify behavior; benchmarks measure repeated operations, while fuzz tests explore many generated inputs. Formatting, vetting and module hygiene help keep projects consistent and maintainable.",
+      mechanics: "Test functions begin with Test and receive *testing.T. Benchmarks use the testing.B harness; fuzz targets define seed cases and then explore inputs. Race detection can reveal data races in executed paths but does not prove every possible schedule is safe.",
+      pitfalls: "Tests depending on order, benchmarks that include setup unintentionally, nondeterministic timing assertions, failing to reset shared state, and assuming race detection or coverage proves correctness.",
+      challenge: "Add unit tests for a parser, a fuzz target for malformed input, a benchmark for the hot path, and a CI command that runs tests, vet and the race detector where supported.",
+      interview: "Compare tests, benchmarks and fuzz tests; explain what the race detector can and cannot prove; and describe how modules support repeatable dependencies."
+    },
+    "go-12": {
+      concept: "A production Go service needs bounded resources, explicit timeouts, observable failure behavior and a clear shutdown lifecycle. Cloud-native readiness is not just a successful process start: the service must be able to handle its intended workload and stop without abandoning critical work.",
+      mechanics: "Use contexts and server timeouts, structured logs, health/readiness endpoints and graceful shutdown. Configure connection pools and worker counts deliberately. Profile CPU, memory and blocking behavior before optimizing, and track dependencies for known vulnerabilities.",
+      pitfalls: "Unbounded goroutines or queues, missing HTTP timeouts, logging secrets, treating liveness as readiness, and shutting down without draining in-flight requests.",
+      challenge: "Harden the HTTP service with timeouts, health endpoints, graceful shutdown, bounded concurrency and a load-test baseline. Document which signals indicate a process failure versus an unavailable dependency.",
+      interview: "Explain graceful shutdown, liveness versus readiness, bounded concurrency and how profiling informs Go performance work."
+    },
+    "rust-1": {
+      concept: "Cargo manages Rust projects, dependencies, builds and tests. A crate is a compilation unit, while a package may contain one or more crates and metadata in Cargo.toml. Toolchain versions and feature flags affect the code that compiles.",
+      mechanics: "cargo new creates a project, cargo build compiles it, cargo run builds and executes, and cargo test runs tests. Cargo.lock records resolved versions for applications. Rust's compiler checks ownership and type rules before producing executable code.",
+      pitfalls: "Editing Cargo.toml without understanding features, confusing package and crate, ignoring compiler diagnostics, and relying on undeclared local dependencies or toolchain versions.",
+      challenge: "Create a library crate plus a binary that calls it, add a unit test and an integration test, and reproduce the build with cargo test from a clean checkout.",
+      interview: "Explain crate versus package, the role of Cargo.toml and Cargo.lock, and why Rust compiler errors are central to the development workflow."
+    },
+    "rust-2": {
+      concept: "Rust variables are immutable by default, and types express the shape and allowed operations of values. Control flow is expression-oriented in many contexts, so if and match can produce values. Explicit mutability helps reveal where program state changes.",
+      mechanics: "let binds a name, mut permits mutation, and shadowing creates a new binding with the same name. Integer types have explicit widths; casts can truncate or reinterpret values, so conversions should be chosen deliberately. Match must cover all possible cases unless a wildcard is used.",
+      pitfalls: "Assuming variables are mutable by default, using unchecked casts for potentially out-of-range data, forgetting match exhaustiveness, and mixing expression return values with semicolon-terminated statements.",
+      challenge: "Write a parser that converts text into a bounded integer, handles invalid and out-of-range input, and uses match to classify the parsed result.",
+      interview: "Explain immutability by default, shadowing versus mutability, expression-oriented control flow, and why casts may lose information."
+    },
+    "rust-3": {
+      concept: "Ownership gives each value a clear owner responsible for its lifetime. Borrowing lets code access a value without taking ownership, while borrowing rules prevent unsafe aliasing and mutation combinations at compile time. These rules replace many runtime memory errors with compile-time constraints.",
+      mechanics: "Moving a non-Copy value transfers ownership; borrowing with & creates a shared reference and &mut creates an exclusive mutable reference. A mutable borrow cannot overlap with incompatible borrows. Lifetimes describe how references relate to valid scopes; they do not extend the life of a value.",
+      pitfalls: "Cloning to silence every borrow-checker error, returning references to local values, keeping a mutable borrow while trying to read the same value elsewhere, and assuming a lifetime annotation changes runtime lifetime.",
+      challenge: "Write a function that reads a string slice and another that mutates a vector through a mutable reference. Explain each borrow and refactor one ownership error without unnecessary cloning.",
+      interview: "Explain move semantics, shared versus mutable borrowing, and why lifetime annotations describe relationships rather than keeping data alive."
+    },
+    "rust-4": {
+      concept: "Structs group fields into a record, enums define a closed set of variants, and match makes variant handling explicit. Modeling a domain with an enum can prevent invalid combinations that would otherwise be represented by several loosely related booleans.",
+      mechanics: "Struct update syntax can reuse fields from another value, and enum variants may carry data. Match patterns destructure values and must be exhaustive. Methods live in impl blocks; associated functions do not receive self automatically.",
+      pitfalls: "Using many booleans to represent mutually exclusive states, matching only the variants currently expected, exposing fields that violate invariants, and confusing associated functions with instance methods.",
+      challenge: "Represent a network request as Pending, Success(data) or Failure(error). Implement a function that handles every state and test how adding a new variant exposes missing match arms.",
+      interview: "Compare structs and enums, explain exhaustive matching and destructuring, and describe why algebraic data types help model state safely."
+    },
+    "rust-5": {
+      concept: "Vec stores a growable sequence, String owns UTF-8 text, and HashMap associates keys with values. Their APIs expose ownership and borrowing explicitly, so a method may take ownership, borrow immutably or borrow mutably depending on its contract.",
+      mechanics: "Vec indexing panics when out of bounds, while get returns an Option reference. Rust String is UTF-8 and cannot be indexed by an arbitrary integer because a byte offset may split a character. HashMap get borrows a value and insert may replace an existing value.",
+      pitfalls: "Indexing without bounds checks, assuming String indexes are character positions, cloning large collections unnecessarily, and holding a map borrow while mutating the same map.",
+      challenge: "Count words in a UTF-8 text file with HashMap, handle empty input, and compare safe get-based access with indexing. Include a multi-byte character in the test data.",
+      interview: "Explain Vec versus arrays, why String cannot be indexed like a byte array, and how borrowing affects collection mutation."
+    },
+    "rust-6": {
+      concept: "Option represents a value that may be absent; Result represents success or failure with an error value. These enums force the caller to confront uncertainty rather than relying on null or silently ignoring an error.",
+      mechanics: "match, if let and combinators such as map, and_then and unwrap_or transform optional or fallible values. The question-mark operator propagates an error when the surrounding function's return type supports it. unwrap panics when the value is absent or erroneous.",
+      pitfalls: "Using unwrap on untrusted input, discarding error context, confusing absence with failure, and converting every error to a generic string too early can hide useful recovery decisions.",
+      challenge: "Parse configuration into a Result, distinguish missing optional settings from malformed required settings, and propagate errors with context rather than panicking.",
+      interview: "Compare Option and Result, explain the question-mark operator, and state when unwrap is acceptable versus dangerous."
+    },
+    "rust-7": {
+      concept: "Traits define shared behavior and generics parameterize code over types. Together they allow reusable abstractions while preserving compile-time guarantees. Trait bounds state which behavior a generic function needs, rather than requiring a concrete class hierarchy.",
+      mechanics: "A type implements a trait with an impl block. Generic parameters can have bounds such as Display or Clone, and where clauses improve readability for complex bounds. Trait objects use dynamic dispatch through dyn Trait, while many generic calls use monomorphization and static dispatch.",
+      pitfalls: "Adding Clone bounds merely to satisfy ownership issues, making traits too broad, confusing trait objects with generic parameters, and assuming dynamic dispatch is always slower enough to matter without measuring.",
+      challenge: "Write a generic formatter over a small trait, then implement it for two unrelated types. Compare generic static dispatch with a trait object and explain the trade-off.",
+      interview: "Explain traits, generic bounds, monomorphization and dyn Trait, and why a trait is not the same as a class inheritance hierarchy."
+    },
+    "rust-8": {
+      concept: "Iterators produce values on demand, and closures are anonymous functions that may capture variables from their environment. Iterator pipelines can express transformations without intermediate collections, but lazy execution means nothing happens until a consumer requests values.",
+      mechanics: "map transforms items, filter retains matching items, and collect builds a target collection. Closures can borrow, mutably borrow or move captured values depending on use and the move keyword. Iterator adapters generally consume self and return a new iterator.",
+      pitfalls: "Assuming lazy adapters run before collect, capturing a value with the wrong ownership mode, collecting into a large unnecessary vector, and writing a dense chain that is harder to debug than a loop.",
+      challenge: "Process a stream of records with filter and map, collect only the final report, and compare allocation behavior with a version that creates several intermediate vectors.",
+      interview: "Explain lazy iterator adapters, closure capture modes, map versus filter, and why collect requires a target collection type."
+    },
+    "rust-9": {
+      concept: "Generics abstract over types; trait bounds state the capabilities required by an implementation. Lifetimes express relationships among references, and associated types let a trait specify a related type without making every use site supply another generic parameter.",
+      mechanics: "A where clause can express multiple bounds clearly. Lifetime elision follows language rules, but explicit annotations may be needed when relationships are ambiguous. Higher-ranked bounds and associated types support advanced APIs; they should be introduced only when they clarify a real contract.",
+      pitfalls: "Adding lifetime annotations without understanding the relationship, returning a reference to data that does not outlive it, over-generalizing a simple function, and choosing associated types or generic parameters without considering API ergonomics.",
+      challenge: "Implement a generic function that returns a reference into its input and explain the lifetime relationship. Then define a trait with an associated output type and implement it for two types.",
+      interview: "Explain trait bounds, associated types versus generic parameters, and what a lifetime annotation does and does not guarantee."
+    },
+    "rust-10": {
+      concept: "Threads, channels and async tasks model different forms of concurrent work. Rust's type and ownership system helps prevent many data races, but it does not automatically prevent deadlocks, starvation, unbounded work or incorrect cancellation behavior.",
+      mechanics: "Send and Sync express cross-thread safety properties. Threads can communicate through channels or shared synchronization primitives. Async functions produce futures that must be polled by an executor; awaiting I/O can suspend a task without blocking the operating-system thread.",
+      pitfalls: "Blocking an async executor with synchronous work, spawning unbounded tasks, using shared mutable state unnecessarily, assuming cancellation instantly stops all work, and confusing thread concurrency with async task scheduling.",
+      challenge: "Implement a bounded worker pipeline, then compare a thread-based version with an async I/O version. Ensure errors propagate and shutdown does not leave blocked workers.",
+      interview: "Explain Send and Sync, threads versus async tasks, futures and executors, and why Rust safety does not eliminate deadlocks."
+    },
+    "rust-11": {
+      concept: "Smart pointers encode ownership patterns beyond a simple stack value. Box provides heap allocation with single ownership, Rc/Arc provide reference counting, RefCell/Mutex provide interior mutability under different checking models, and lifetimes still constrain borrowed references.",
+      mechanics: "Box<T> owns a heap allocation; Rc<T> is single-threaded shared ownership; Arc<T> supports atomic reference counting across threads. RefCell checks borrowing rules at runtime, while Mutex guards synchronized access. Reference cycles involving shared pointers can leak unless weak references break the cycle.",
+      pitfalls: "Choosing shared ownership by default, creating Rc/Arc cycles, holding a Mutex lock too long, causing runtime RefCell borrow panics, and using interior mutability to hide an unclear ownership design.",
+      challenge: "Model a shared graph or cache, choose the minimum ownership primitive needed, and explain how a cycle is avoided and what thread-safety guarantees the design provides.",
+      interview: "Compare Box, Rc and Arc; explain interior mutability, Mutex and RefCell; and describe why reference cycles can leak."
+    },
+    "rust-12": {
+      concept: "A production Rust design combines explicit error contracts, ownership boundaries, tests and measured performance. The borrow checker prevents classes of memory errors, but domain validation, resource limits, concurrency design and operational diagnostics remain application responsibilities.",
+      mechanics: "Use Result at fallible boundaries, keep domain types responsible for invariants, and separate I/O adapters from pure logic. Cargo features and dependency versions influence compiled behavior. Benchmarks should use representative workloads, and unsafe blocks need a documented safety invariant.",
+      pitfalls: "Using unsafe without a written invariant, hiding failures with unwrap, adding clones without measuring, exposing internal mutable state, and assuming compiler safety implies business correctness.",
+      challenge: "Build a CLI or small service with validated input, structured errors, unit tests, dependency hygiene and a benchmark for one measured hot path. Explain any unsafe code or remove it.",
+      interview: "Explain why memory safety is not the same as application correctness, how to structure Result-based errors, and how you would review unsafe code and benchmark claims."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
