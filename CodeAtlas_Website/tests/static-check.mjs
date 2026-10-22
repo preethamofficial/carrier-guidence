@@ -287,5 +287,32 @@ check('Career roadmaps cover all 41 roles and connect from the homepage',()=>{
  for(const feature of ['data-complete','Export my progress','Common mistakes to avoid','Final portfolio project','Official documentation'])assert.ok(source.includes(feature)||page.includes(feature),'Missing roadmap feature: '+feature);
 });
 
+
+check('All 492 career topics render deep lessons with topic-specific steps, examples and solutions',()=>{
+ const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
+ assert.ok(source.includes('function deepContentFor(topic,role)'),'Missing deep lesson resolver');
+ assert.ok(source.includes('const deepProfiles='),'Missing topic-specific lesson profiles');
+ for(const marker of ['Prerequisites and mental model','Worked example: ','Guided practice with solution','Show a model solution and reasoning','Advanced checklist','deep.steps.map'])assert.ok(source.includes(marker),'Missing deep lesson feature: '+marker);
+ const elements=new Map();
+ const getElement=id=>{if(!elements.has(id))elements.set(id,{id,innerHTML:'',textContent:'',value:'',style:{},listeners:{},addEventListener(type,fn){this.listeners[type]=fn}});return elements.get(id)};
+ const context={document:{getElementById:getElement},localStorage:{getItem(){return '{}'},setItem(){}},console,Blob:function(){},URL:{createObjectURL(){return ''},revokeObjectURL(){}},Math,JSON,Date};
+ vm.runInNewContext(source,context);
+ const list=getElement('roleList'),stage=getElement('stageNav'),panel=getElement('lessonPanel');
+ const roleIds=[...list.innerHTML.matchAll(/data-role="([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(roleIds.length,41,'Expected all 41 career roles in the directory');
+ let rendered=0;
+ for(const role of roleIds){
+  list.listeners.click({target:{closest:()=>({dataset:{role}})}});
+  for(let i=0;i<12;i++){
+   stage.listeners.click({target:{closest:()=>({dataset:{topic:String(i)}})}});
+   for(const marker of ['Prerequisites and mental model','Worked example: ','Guided practice with solution','Advanced checklist','data-complete='])assert.ok(panel.innerHTML.includes(marker),role+' topic '+i+' missing '+marker);
+   assert.ok(panel.innerHTML.includes('<pre><code>'),'Topic '+role+'/'+i+' has no worked example');
+   rendered++;
+  }
+ }
+ assert.equal(rendered,492,'Expected all 492 career topics to render');
+ console.log('✓ Deep lesson rendering checked across 41 roles and 492 topics');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
