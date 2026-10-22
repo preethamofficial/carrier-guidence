@@ -292,6 +292,8 @@ check('All 492 career topics render deep lessons with topic-specific steps, exam
  const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
  assert.ok(source.includes('function deepContentFor(topic,role)'),'Missing deep lesson resolver');
  assert.ok(source.includes('const deepProfiles='),'Missing topic-specific lesson profiles');
+ for(const concept of ['A variable is a named reference','Conditional logic selects a path','A loop repeats work','Collections group values','Object-oriented programming groups','Version control records','A test is an executable claim','Debugging reduces uncertainty','JSON is a text format','A data structure organizes data','A development environment combines','DNS maps names to addresses','Machine learning estimates patterns','A requirement states a user'])assert.ok(source.includes(concept),'Missing beginner-first concept profile: '+concept);
+ assert.ok(source.includes('data-copy-example')&&source.includes('Copy example code'),'Worked examples need a copy-code control');
  for(const marker of ['Prerequisites and mental model','Worked example: ','Guided practice with solution','Show a model solution and reasoning','Advanced checklist','deep.steps.map'])assert.ok(source.includes(marker),'Missing deep lesson feature: '+marker);
  const elements=new Map();
  const getElement=id=>{if(!elements.has(id))elements.set(id,{id,innerHTML:'',textContent:'',value:'',style:{},listeners:{},addEventListener(type,fn){this.listeners[type]=fn}});return elements.get(id)};
