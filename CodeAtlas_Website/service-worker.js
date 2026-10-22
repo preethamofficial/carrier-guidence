@@ -1,9 +1,9 @@
 'use strict';
-const CACHE_NAME='codeatlas-shell-v13';
+const CACHE_NAME='codeatlas-shell-v14';
 const CORE=[
  './','./index.html','./dashboard.html','./styles.css','./enhance.css','./app.js','./enhance.js',
  './data/curriculum.json','./year-course.html','./year-course.css','./year-course.js','./data/year-curriculum.json',
- './language-library.html','./language-library.css','./language-library.js','./extra-deep-lessons.js','./deep-lessons.js','./topic-additions-a.js','./topic-additions-b.js','./topic-additions-c.js','./topic-additions-d.js','./comprehensive-lessons.js','./web-development-roadmap.js',
+ './language-library.html','./language-library.css','./language-library.js','./extra-deep-lessons.js','./deep-lessons.js','./topic-additions-a.js','./topic-additions-b.js','./topic-additions-c.js','./topic-additions-d.js','./comprehensive-lessons.js','./web-development-topic-maps.js','./web-development-roadmap.js',
  './specializations.html','./specializations.css','./specializations.js',
  './career.html','./career.css','./career.js',
  './career-studio.html','./career-studio.css','./career-studio.js','./career-command-center.html','./career-command-center.css','./career-command-center.js',
