@@ -254,8 +254,8 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  const context={window:{},console};
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.ok(atlas&&atlas.tracks.length===6,'Expected six additional career roadmaps');
- assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),48,'Expected 48 advanced learning modules');
+ assert.ok(atlas&&atlas.tracks.length===7,'Expected seven additional career roadmaps');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),56,'Expected 56 advanced learning modules');
  for(const track of atlas.tracks){
   assert.equal(track.topics.length,8,track.title+' should contain eight modules');
   assert.equal(track.branches.length,4,track.title+' needs four mind-map branches');
@@ -267,7 +267,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   assert.ok(atlas.renderTrack(track.id).includes('TOPIC MIND MAP'),track.title+' should render topic maps');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
- console.log('✓ Career skills atlas contains 6 tracks, 48 advanced modules, topic maps and official references');
+ console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
 }
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
