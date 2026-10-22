@@ -86,7 +86,7 @@ check('Career Studio required sections',()=>{const source=fs.readFileSync(studio
 check('Career Studio has interactive tools',()=>{const source=fs.readFileSync(studioJs,'utf8');for(const marker of ['quizQuestions','interviewBank','careerPaths','letterForm','downloadPlan','codeatlas.studio.plan'])assert.ok(source.includes(marker),'Missing tool marker '+marker);});
 const sw=path.join(root,'service-worker.js');
 if(fs.existsSync(sw)){const source=fs.readFileSync(sw,'utf8'),block=source.match(/const CORE=\[([\s\S]*?)\];/);check('Service worker core list',()=>assert.ok(block));if(block)for(const m of block[1].matchAll(/'([^']+)'/g)){const target=path.resolve(root,m[1]);check('Cached asset: '+m[1],()=>assert.ok(fs.existsSync(target),'Not found'))}}
-check('Unified curriculum has all 14 languages and 168 unique topics',()=>{
+check('Base curriculum has 14 languages and 168 unique topics',()=>{
  const data=JSON.parse(fs.readFileSync(path.join(root,'data/curriculum.json'),'utf8'));
  assert.equal(data.languages.length,14);
  const all=data.languages.flatMap(l=>l.topics);
