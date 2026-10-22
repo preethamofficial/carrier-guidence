@@ -216,11 +216,26 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  assert.ok(app.includes('web\\s*development'),'Search must recognize web development requests');
  assert.ok(app.includes('data-roadmap-open'),'Roadmap nodes must link to related lessons');
  assert.ok(sw.includes('./web-development-roadmap.js'),'Offline cache must include roadmap data');
+ assert.ok(sw.includes('./web-development-topic-maps.js'),'Offline cache must include advanced topic mind maps');
+ assert.ok(home.includes('web-development-topic-maps.js')&&home.indexOf('web-development-topic-maps.js')<home.indexOf('web-development-roadmap.js'),'Topic maps must load before roadmap renderer');
+ const topicMapFile=path.join(root,'web-development-topic-maps.js');
+ assert.ok(fs.existsSync(topicMapFile),'Missing topic-specific advanced mind maps');
+ const mapSource=fs.readFileSync(topicMapFile,'utf8');
  const context={window:{},console};
+ vm.runInNewContext(mapSource,context);
  vm.runInNewContext(source,context);
  const html=context.window.CodeAtlasWebRoadmap.render();
  assert.equal(context.window.CodeAtlasWebRoadmap.phases.length,4);
  assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),26);
+ const allTopics=context.window.CodeAtlasWebRoadmap.phases.flatMap(p=>p.topics);
+ assert.equal(Object.keys(context.window.CodeAtlasWebTopicMaps.maps).length,26,'Every roadmap topic needs its own mind map');
+ for(const topic of allTopics){
+  const branches=context.window.CodeAtlasWebTopicMaps.maps[topic.title];
+  assert.ok(branches&&branches.length===4,topic.title+' needs four specific mind-map branches');
+  for(const branch of branches)assert.ok(branch[0]&&branch[1].split('; ').length>=3,topic.title+' has an incomplete branch');
+  assert.ok(context.window.CodeAtlasWebTopicMaps.references[topic.title]?.length>=2,topic.title+' needs official research links');
+ }
+ assert.ok(html.includes('Deep mind map:')&&html.includes('Research and reference material')&&html.includes('Mastery checklist'),'Expanded nodes must expose mind map, references and mastery checks');
  for(const phase of context.window.CodeAtlasWebRoadmap.phases){
   assert.ok(phase.goal&&phase.topics.length,'Each roadmap phase needs a goal and topics');
   for(const topic of phase.topics){
