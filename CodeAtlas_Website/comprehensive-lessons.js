@@ -150,7 +150,7 @@ function makeTopic(lang,meta,number) {
 function enrichCurriculum(data) {
  if(!data||!Array.isArray(data.languages)||data.__codeAtlasEnriched)return data;
  const addedTrackIds=[];
- (window.CodeAtlasAdditionalTracks||[]).forEach(track=>{if(data.languages.some(lang=>lang.id===track.id))return;const lang={id:track.id,name:track.name,color:track.color,purpose:track.purpose,docs:track.docs,topics:[]};track.topics.forEach((meta,index)=>lang.topics.push(makeTopic(lang,meta,index+1)));lang.isNewTrack=true;data.languages.push(lang);addedTrackIds.push(track.id);});
+ [...(window.CodeAtlasAdditionalTracks||[]),...(window.CodeAtlasAdditionalTracksB||[])].forEach(track=>{if(data.languages.some(lang=>lang.id===track.id))return;const lang={id:track.id,name:track.name,color:track.color,purpose:track.purpose,docs:track.docs,topics:[]};track.topics.forEach((meta,index)=>lang.topics.push(makeTopic(lang,meta,index+1)));lang.isNewTrack=true;data.languages.push(lang);addedTrackIds.push(track.id);});
  data.languages.forEach(lang=>{
   const existing=lang.topics.length;
   const isNewTrack=!!lang.isNewTrack;
