@@ -10,7 +10,8 @@
     const lesson = lessons[topic.id];
     if (!lesson) return '';
     const example = (topic.basicExamples || [])[0];
-    const code = example && example.code ? example.code : '';
+    const code = lesson.example || (example && example.code) || topic.code || '';
+    const secondCode = lesson.example2 || ((topic.guidedExamples || [])[0] && topic.guidedExamples[0].code) || '';
     const notes = example && example.lineByLine ? example.lineByLine : [];
     const steps = notes.length
       ? '<ol class="depth-walkthrough">' + notes.map(item =>
@@ -21,6 +22,7 @@
       '<h3>1. Mental model and purpose</h3><p class="prose">' + esc(lesson.concept) + '</p>' +
       '<h3>2. How it works in ' + esc(language.name) + '</h3><p class="prose">' + esc(lesson.mechanics) + '</p>' +
       '<h3>3. Worked example</h3>' + (code ? '<p class="prose">Start with <strong>' + esc(example.title || 'the first example') + '</strong>. Use it as the concrete starting point for the explanation below.</p><pre><code>' + esc(code) + '</code></pre>' : '') + steps +
+      (secondCode && secondCode !== code ? '<h3>3b. Second example and comparison</h3><pre><code>' + esc(secondCode) + '</code></pre><p class="prose">Compare the two versions: identify their inputs, state changes, output, error behavior and trade-offs. Run both with the same test cases.</p>' : '') +
       '<h3>4. Failure modes and debugging</h3><p class="prose">' + esc(lesson.pitfalls) + '</p>' +
       '<h3>5. Practice task</h3><p class="prose">' + esc(lesson.challenge) + '</p>' +
       '<h3>6. Interview check</h3><p class="prose">' + esc(lesson.interview) + '</p>' +
@@ -1223,6 +1225,7 @@
     render,
     count: () => Object.keys(lessons).length,
     has: id => Object.prototype.hasOwnProperty.call(lessons, id),
+    get: id => lessons[id],
     add
   };
 })();
