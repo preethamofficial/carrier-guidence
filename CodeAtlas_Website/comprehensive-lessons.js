@@ -1,431 +1,101 @@
-/* Comprehensive study layer for CodeAtlas language lessons.
- * Adds concept explanations, correct execution reasoning, guided examples,
- * real-world applications, pitfalls, exercises and verification checklists.
- * Keep rendered text escaped because lesson names/code are data-driven.
- */
+/* Topic-specific CodeAtlas lesson engine. Loads curated missing-topic catalogs first. */
 (function () {
-  'use strict';
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[ch]));
-  const catalogs = {
-    c: {
-      intro: 'C is a compiled, procedural language that gives developers precise control over representation, memory and execution. That control is useful in embedded systems and performance-sensitive components, but it also means bounds, ownership and return codes must be handled explicitly.',
-      topics: [
-        ['A C build has distinct stages: preprocessing expands headers/macros, compilation translates each source file, and linking combines object files and libraries. main is the program entry point on hosted implementations; the returned status communicates success/failure to the environment.',
-         'Keep headers for declarations and source files for definitions. Build with warnings enabled and reproduce builds from a clean checkout.',
-         '#include <stdio.h>\n\nint main(void) {\n    puts("Hello, CodeAtlas!");\n    return 0;\n}',
-         'Compile with cc -std=c11 -Wall -Wextra -Wpedantic main.c -o app. Run ./app. puts writes a line; return 0 conventionally signals success.',
-         'Compiler warnings, missing headers, unresolved symbols and mismatched declarations. A successful compile alone does not prove runtime correctness.',
-         'Create a tiny command-line program that accepts no arguments, prints a clear result and returns a meaningful status.'],
-        ['A declaration gives an object a type, which determines its representation, valid operations and conversion behavior. int is commonly used for whole-number counts, double for floating point, and char for character-sized values; exact ranges should be checked when portability matters.',
-         'Distinguish assignment from initialization and integer division from floating-point division. Avoid assuming that narrowing conversions preserve information.',
-         'int attempts = 3;\ndouble price = 19.50;\nchar grade = \'A\';\nprintf("%d %.2f %c\\n", attempts, price, grade);',
-         'Each printf conversion specifier must match the argument type. Use limits from <limits.h> and <float.h> when bounds matter.',
-         'Mismatched format specifiers, signed/unsigned surprises, overflow and losing a fractional part during integer division.',
-         'Write a receipt calculator and test zero, large values and rounding expectations.'],
-        ['An if statement chooses a path based on a scalar condition; loops repeat a body while a stopping rule allows it. Correctness depends on both the rule and the values at the boundaries.',
-         'Trace the initial value, condition, body and update in order. Prove that a loop progresses toward termination.',
-         'for (int i = 0; i < 5; ++i) {\n    printf("%d\\n", i);\n}',
-         'The loop prints 0 through 4. The test i < 5 is checked before each iteration; when i becomes 5, the body does not run again.',
-         'Off-by-one bounds, loop variables not being updated and accidental infinite loops.',
-         'Print only even numbers in a range and test the first and last permitted values.'],
-        ['A function declares a contract: parameter types, return type, side effects and preconditions. Local variables limit the area of code that can alter state and make reasoning/testing easier.',
-         'Keep a function focused, give it a meaningful name and specify what happens for invalid inputs. Use prototypes in headers when multiple source files call a function.',
-         'int add(int a, int b) {\n    return a + b;\n}',
-         'add receives two int values and returns their sum. If the expected range can exceed int, choose and validate a suitable representation.',
-         'Returning the address of a local object, hidden global mutation and integer overflow not covered by the contract.',
-         'Write min/max functions and test equality and negative numbers.'],
-        ['An array stores a fixed number of elements of the same type in contiguous storage. A C string is a char sequence terminated by a null character; storage must include the terminator and every index must remain in bounds.',
-         'Track the array capacity separately from the number of meaningful elements. Prefer bounded input routines and explicit length checks.',
-         'int marks[] = {72, 84, 91};\nprintf("%d\\n", marks[1]);\nchar name[16] = "CodeAtlas";',
-         'Array indices start at zero, so marks[1] is 84. name reserves 16 bytes and the string includes a terminating \\0.',
-         'Writing past the end, missing the terminator, or confusing array capacity with current contents.',
-         'Compute the average of a fixed array and test the smallest supported array length.'],
-        ['A pointer stores an address. & obtains an object’s address and * accesses the pointed-to object. A pointer is only safe to dereference when it points to a live object of the correct type and is not null.',
-         'Document whether a pointer is borrowed or transfers ownership. Validate nullability and lifetime before dereferencing.',
-         'int value = 7;\nint *ptr = &value;\nprintf("%d\\n", *ptr);\n*ptr = 9;',
-         'ptr points to value, so reading *ptr returns 7 and assigning through it changes value to 9. The pointer does not own the object.',
-         'Uninitialized pointers, dangling references, invalid pointer arithmetic and dereferencing NULL.',
-         'Write a function that updates a value through a pointer and define its behavior for a null argument.'],
-        ['Dynamic allocation reserves storage at runtime. malloc returns uninitialized storage; calloc also zero-initializes the allocated bytes. Allocation can fail, and each owned allocation must be released exactly once when no longer used.',
-         'Calculate allocation sizes without overflow, check the returned pointer, establish ownership and free it on every exit path.',
-         '#include <stdlib.h>\nsize_t n = 5;\nint *values = calloc(n, sizeof *values);\nif (values != NULL) {\n    values[0] = 42;\n    free(values);\n}',
-         'sizeof *values follows the pointed-to element type. A real program should keep values alive while it is needed and avoid using it after free.',
-         'Memory leaks, double frees, use-after-free, unchecked allocation and multiplication overflow in allocation sizes.',
-         'Allocate n integers from validated input, compute their sum and make cleanup reliable on error paths.'],
-        ['A struct groups related fields into one record. An enum names a set of integer-like choices. Together they make domain data clearer than unrelated variables or unexplained numeric codes.',
-         'Initialize fields intentionally, choose descriptive enum labels and validate transitions between states.',
-         'enum Status { PENDING, DONE };\nstruct Task { int id; enum Status status; };\nstruct Task task = {1, PENDING};',
-         'Task has an identifier and a state. The application should decide which status changes are allowed rather than assigning any value arbitrarily.',
-         'Uninitialized fields, unclear enum meanings and state changes that violate business rules.',
-         'Represent inventory items with an ID, quantity and status, then validate updates.'],
-        ['File streams wrap operating-system I/O. Opening, reading, writing and closing can fail, so each operation has a result that must be checked. Always close a successfully opened stream on all control paths.',
-         'Define whether the file must already exist, check each result and never assume a relative path points to the intended directory.',
-         'FILE *f = fopen("notes.txt", "w");\nif (f != NULL) {\n    if (fputs("Hello\\n", f) == EOF) { /* report write failure */ }\n    if (fclose(f) == EOF) { /* report close failure */ }\n}',
-         'fopen can return NULL. fputs can report EOF, and fclose can report a delayed write failure, so production code should preserve these checks.',
-         'Ignoring I/O failures, leaking file handles and trusting a user-controlled file path.',
-         'Build a line-count tool that handles a missing file and reports read errors.'],
-        ['A data structure arranges data to support operations. A singly linked list consists of nodes with a value and a pointer to the next node. Insertion, deletion and traversal must preserve the links, including the empty-list case.',
-         'Specify ownership of each node and test head/tail changes separately. Use a dynamic array when contiguous storage and indexing are more suitable.',
-         'struct Node { int value; struct Node *next; };\nstruct Node *head = NULL;',
-         'head is initially empty. A new node inserted at the beginning points to the old head; only then should head be updated to the new node.',
-         'Losing the remainder of a list, leaking removed nodes, dereferencing NULL and incorrect empty-list handling.',
-         'Implement push-front, find and free-all operations and test a list with zero, one and several nodes.'],
-        ['Warnings, debuggers, tests and sanitizers provide different evidence. Warnings catch suspicious constructs; a debugger inspects execution state; sanitizers detect classes of memory errors during instrumented runs.',
-         'Start with a minimal reproduction, read the first relevant diagnostic and add a regression test after fixing the root cause.',
-         'cc -std=c11 -Wall -Wextra -Wpedantic -g main.c -o app',
-         'Debug symbols help debuggers map machine instructions to source. Supported compilers can add AddressSanitizer/UndefinedBehaviorSanitizer flags for instrumented test builds.',
-         'Suppressing warnings, testing only one input and assuming the absence of a sanitizer report proves the program safe.',
-         'Introduce a controlled defect in a disposable test, reproduce it, fix it and record the regression test.'],
-        ['A systems project becomes maintainable when modules expose small interfaces, dependencies are explicit and resource/error behavior is documented. A capstone should combine functionality with reproducible builds and meaningful tests.',
-         'Separate parsing, domain rules, persistence and command-line handling. Check invariants at module boundaries.',
-         '/* inventory.h: public declarations */\n/* inventory.c: implementation */\n/* test_inventory.c: behavior tests */',
-         'This is a project-structure sketch, not a complete program. A build command should compile required sources, include headers and run the tests from a clean checkout.',
-         'A single large file, undocumented ownership, missing failure cases and builds that depend on one developer’s machine.',
-         'Build a small inventory CLI with add/list/remove commands, persistent storage, validation and automated tests.']
-      ]
-    },
-    cpp: {
-      intro: 'Modern C++ combines abstraction with control over performance and resource lifetime. Prefer standard containers, RAII and explicit ownership over manual resource management when possible.',
-      topics: [
-        ['A C++ program is compiled and linked, and its build configuration selects the language standard, source files and dependencies. The standard library provides core facilities such as strings, containers, algorithms and streams.',
-         'Use a consistent standard and compiler options locally and in CI. Include the headers for the facilities directly used.',
-         '#include <iostream>\nint main() {\n    std::cout << "Hello, CodeAtlas!\\n";\n}',
-         'Build with a chosen standard such as c++ -std=c++20 -Wall -Wextra main.cpp -o app. The exact standard should match the project requirements.',
-         'Missing headers, relying on transitive includes and toolchain differences.',
-         'Create a minimal executable and reproduce its build using the project’s documented command.'],
-        ['Types define allowed operations; const communicates that an object is not modified through a given binding/reference. Value semantics mean objects behave as values, while references allow access without copying but introduce lifetime constraints.',
-         'Use const by default when mutation is unnecessary and pass larger read-only objects by const reference when appropriate.',
-         'const int limit = 10;\nconst std::string city = "Bengaluru";',
-         'limit cannot be reassigned. std::string is a library type, so include <string>. const on a reference does not make every object it references globally immutable.',
-         'Unexpected copies, dangling references and assuming const implies deep immutability.',
-         'Write a function that summarizes a vector by const reference and compare it with pass-by-value.'],
-        ['Control flow chooses paths and repeats operations; functions encapsulate a predictable operation. Modern C++ supports range-based loops and library algorithms that often express intent more clearly than hand-managed indices.',
-         'Validate assumptions and test boundary values. Prefer algorithms such as count_if when they make the purpose clearer.',
-         'int square(int n) { return n * n; }',
-         'The function accepts an int and returns the product. If the domain can overflow int, define constraints or use a suitable checked representation.',
-         'Off-by-one errors and unclear behavior for invalid or extreme values.',
-         'Count passing marks from a vector and test empty input and threshold values.'],
-        ['A class bundles data and operations. An invariant is a rule that must remain true for every valid object state. Encapsulation prevents callers from bypassing the operations that preserve that rule.',
-         'Keep fields private when callers should not modify them freely. Expose small operations that validate and preserve the domain rules.',
-         'class Counter {\npublic:\n    int value() const { return value_; }\n    void increment() { ++value_; }\nprivate:\n    int value_ = 0;\n};',
-         'Callers can read the count and increment it but cannot assign to value_ directly. Production invariants should be enforced by the public API.',
-         'Public mutable state, large classes with many responsibilities and inheritance used only for code reuse.',
-         'Model a bank account whose public operations prevent invalid withdrawals.'],
-        ['RAII (Resource Acquisition Is Initialization) binds a resource’s lifetime to an object’s lifetime. When the object leaves scope, its destructor releases the resource. Standard strings, containers, smart pointers and lock guards use this pattern.',
-         'Prefer standard RAII wrappers for files, memory and locks. Avoid manually pairing acquisition and release across every branch.',
-         'std::vector<int> values{1, 2, 3};\n// The vector releases its owned storage when it leaves scope.',
-         'The vector owns its elements’ storage. This is safer than manually allocating and freeing an equivalent array in ordinary application code.',
-         'Raw owning pointers, forgotten release paths and returning references to short-lived objects.',
-         'Use an RAII file wrapper and demonstrate cleanup after an early return.'],
-        ['STL containers encode different trade-offs: vector provides contiguous storage and fast indexing, map supports ordered key lookup, unordered_map offers hash-based lookup on average, and set models unique values. Algorithms operate on iterator ranges.',
-         'Choose based on measured access patterns and required ordering. Check iterator invalidation rules when changing a container.',
-         '#include <algorithm>\n#include <vector>\nstd::vector<int> v{3, 1, 2};\nstd::sort(v.begin(), v.end());',
-         'sort rearranges elements into ascending order. Include <vector> and <algorithm>; do not assume ordering of an unordered container.',
-         'Iterator invalidation, wrong duplicate semantics and choosing complexity based on guesswork.',
-         'Compare vector, map and unordered_map for a lookup task and justify the structure selected.'],
-        ['Ownership answers who is responsible for an object’s lifetime. unique_ptr expresses exclusive ownership; shared_ptr shares ownership through reference counting; raw pointers/references are usually non-owning access. Smart pointers do not eliminate every lifetime problem.',
-         'Use make_unique for owned objects, prefer values when possible and avoid shared ownership unless there is a real shared-lifetime requirement.',
-         '#include <memory>\nauto item = std::make_unique<int>(42);\n// item owns the int until item is destroyed.',
-         'unique_ptr cannot be copied, only moved. The owned object is destroyed automatically when the unique_ptr is destroyed.',
-         'Dangling references, shared_ptr cycles and unclear ownership transfer.',
-         'Build a tree or task model and document which object owns each child.'],
-        ['Templates parameterize code over types or compile-time values. Generic algorithms are checked against the operations the chosen type supports; constraints and clear requirements improve diagnostics and maintainability.',
-         'Keep templates focused, state the needed operations and use concepts where suitable to express requirements.',
-         'template<class T>\nT larger(T a, T b) { return a > b ? a : b; }',
-         'The type T must support comparison with > and returning a compatible value. This example assumes that requirement rather than supporting every type.',
-         'Overly broad templates, cryptic errors and accidentally copying expensive objects.',
-         'Write a generic clamp/min helper and test integers and strings only where ordering semantics are defined.'],
-        ['Errors can be represented by exceptions, optional values, expected/result types or explicit status codes. The choice depends on whether a condition is ordinary domain flow or an exceptional failure that should propagate.',
-         'Document what the caller should handle. Do not catch errors merely to discard them; add context at boundaries where recovery or reporting is possible.',
-         'std::optional<int> find_age(const std::string& name);\n// nullopt can represent an ordinary "not found" result.',
-         'A missing record may be an ordinary result; I/O corruption or an unavailable required dependency may need a different error channel. Use a result type available in the chosen C++ standard/library.',
-         'Using exceptions for every expected branch, swallowing exceptions and losing the original cause.',
-         'Design a lookup API that distinguishes not-found from a database failure.'],
-        ['Concurrency enables overlapping or parallel execution but introduces ordering, shared-state and visibility issues. A data race on ordinary shared memory is undefined behavior; locking or stronger isolation is needed where state is shared.',
-         'Minimize shared mutable data, keep critical sections short and define cancellation/shutdown behavior.',
-         '#include <mutex>\nstd::mutex m;\n{ std::lock_guard<std::mutex> guard(m);\n  update_shared_state();\n}',
-         'lock_guard acquires the mutex and releases it when the scope ends, including when an exception unwinds the scope.',
-         'Data races, deadlocks, lock-order cycles and assuming multiple threads automatically improve throughput.',
-         'Protect a shared counter and test concurrent increments against a single-threaded expected result.'],
-        ['Unit tests protect behavior; CMake defines repeatable build/test targets; profilers show where time and memory are actually spent. Optimization should preserve correctness and follow measurements on representative workloads.',
-         'Build in a clean directory, run tests automatically and record benchmark inputs and environment.',
-         'enable_testing()\nadd_executable(unit_tests tests.cpp)\nadd_test(NAME unit_tests COMMAND unit_tests)',
-         'This CMake snippet is illustrative and requires compatible CMake project setup and a real tests.cpp. Registering a test does not make it meaningful unless the test asserts behavior.',
-         'Tests that never run in CI, non-deterministic benchmarks and micro-optimizing an unmeasured path.',
-         'Add unit tests for a domain type, wire them into CMake and capture a baseline benchmark.'],
-        ['A capstone demonstrates integrated engineering rather than a disconnected collection of syntax examples. Define the domain, interfaces, error cases, tests and delivery instructions before expanding features.',
-         'Keep ownership explicit, use standard abstractions, isolate persistence and provide a reproducible build/test path.',
-         '// Example direction: a task tracker with typed records, persistence and tests.',
-         'Treat the line as a project prompt, not compilable behavior. Plan components and implement each behind a clear contract.',
-         'Scope creep, unclear data ownership and no tests for failure or persistence errors.',
-         'Build a task tracker with CRUD operations, file/database persistence, unit tests and profiling for larger datasets.']
-      ]
-    },
-    python: {
-      intro: 'Python emphasizes readable code and a rich standard library. Dynamic typing reduces annotation overhead but makes tests, input validation and explicit interfaces especially valuable at application boundaries.',
-      topics: [
-        ['The Python interpreter executes source code, while virtual environments isolate project dependencies. A clean, repeatable environment avoids accidental dependence on packages installed globally.',
-         'Pin or constrain dependencies deliberately and document the supported Python version and startup command.',
-         'def main() -> None:\n    print("Hello, CodeAtlas!")\n\nif __name__ == "__main__":\n    main()',
-         'The main guard runs the function when the file is executed directly but not when it is imported as a module.',
-         'Global package conflicts, hidden working-directory assumptions and code that runs unexpectedly during import.',
-         'Create a package with one importable function, a main guard and a test runnable from a clean environment.'],
-        ['Variables refer to objects; types determine supported operations at runtime. Type hints document expected values and enable static analysis, but they do not automatically validate untrusted runtime data.',
-         'Use names that express meaning, choose immutable values where helpful and validate data from users, files and network APIs.',
-         'attempts: int = 3\nprice: float = 19.50\nname: str = "Asha"',
-         'Annotations communicate intent to readers and tools. A value received from JSON still needs validation before the application relies on its shape or range.',
-         'Assuming annotations enforce validation, mutable shared defaults and silently mixing numbers with strings.',
-         'Write a typed function that calculates a subtotal and rejects invalid quantities.'],
-        ['Conditions select a branch; for loops iterate over an iterable; while loops repeat until a condition changes. Python’s range stop is exclusive, which is a frequent boundary trap.',
-         'Iterate over values directly when indices are not needed. Ensure state changes make while loops terminate.',
-         'for number in range(1, 6):\n    print(number)',
-         'range(1, 6) yields 1, 2, 3, 4, 5. The upper stop is excluded.',
-         'Mutating a collection while iterating, off-by-one ranges and loops with no stopping condition.',
-         'Filter a list of marks and test an empty list and exact threshold values.'],
-        ['Functions give behavior a name and accept inputs. A good function has a clear contract and limited side effects. Return values are preferable to hidden changes when callers need to reason about results.',
-         'Use default arguments carefully: mutable defaults are created once at function definition. Prefer small single-purpose functions.',
-         'def add(a: int, b: int) -> int:\n    return a + b',
-         'The function returns a value but does not print it. The caller decides whether to display, store or transform the result.',
-         'Mutable default arguments, broad exception swallowing and functions that mix I/O with business rules.',
-         'Build reusable validation and calculation functions and unit-test them without needing a terminal prompt.'],
-        ['Lists preserve order and allow duplicates; tuples are immutable sequences; sets contain unique hashable elements; dictionaries map hashable keys to values. Choosing well can simplify code and improve performance.',
-         'Ask whether ordering, uniqueness and key lookup matter. Remember that mutating a list changes the same object seen by other references.',
-         'marks = [72, 84, 91]\npassed = [mark for mark in marks if mark >= 80]\nprint(passed)',
-         'The list comprehension builds a new list containing values that pass the predicate; the source list is unchanged.',
-         'Unexpected aliasing, confusing a shallow copy with a deep copy and modifying a list while iterating over it.',
-         'Count word frequencies with a dictionary and explain why a set is or is not suitable.'],
-        ['A string is immutable Unicode text; bytes represent raw byte values. Encoding converts between text and bytes, while parsing interprets a format. These are separate steps and should not be conflated.',
-         'Use explicit encodings for files/network protocols, normalize input where the domain requires it, and avoid building shell/SQL/HTML code with raw concatenation.',
-         'name = "Asha"\ndata = name.encode("utf-8")\nprint(data.decode("utf-8"))',
-         'Encoding transforms str into bytes; decoding transforms bytes into str. Decoding can fail if the byte sequence is invalid for the selected encoding.',
-         'Assuming ASCII, stripping meaningful whitespace and treating string escaping as input validation.',
-         'Read a UTF-8 file and handle malformed input according to an explicit policy.'],
-        ['Exceptions represent failed operations; context managers manage cleanup. Catch an exception only when the current layer can recover, translate it or provide useful context. Logging and the exception itself should not leak secrets.',
-         'Keep try blocks narrow and preserve the original exception with chaining when wrapping it.',
-         'from pathlib import Path\ntry:\n    text = Path("notes.txt").read_text(encoding="utf-8")\nexcept FileNotFoundError:\n    text = ""',
-         'This example treats a missing optional file as empty content. That policy is appropriate only if absence is expected; required configuration should usually fail clearly.',
-         'Bare except, swallowing every failure and logging tokens/passwords.',
-         'Write a CSV import that distinguishes a missing file, malformed row and valid empty file.'],
-        ['Classes group state and behavior; dataclasses can remove repetitive record boilerplate. Composition allows a class to collaborate with other objects without inheriting their entire implementation.',
-         'Keep object invariants in one place and inject external dependencies to make code easier to test.',
-         'from dataclasses import dataclass\n@dataclass(frozen=True)\nclass User:\n    id: int\n    name: str',
-         'The dataclass generates useful methods such as initialization and representation. frozen prevents ordinary field reassignment, but does not deeply freeze objects stored inside fields.',
-         'God objects, exposing mutable internals and inheritance solely for reuse.',
-         'Model a task with valid status transitions and tests for disallowed updates.'],
-        ['Modules split code into importable units and packages group related modules. A dependency should be explicit so developers and test runners can reproduce the same behavior.',
-         'Avoid circular imports, keep side effects out of import-time code and use environment/secret management for configuration.',
-         'from pathlib import Path\nROOT = Path(__file__).resolve().parent',
-         'Path(__file__) anchors the path to the module file rather than the process working directory, but packaged/resource data may need a different strategy.',
-         'Assuming current working directory, import side effects and secrets committed in source.',
-         'Create a package with config, domain and service modules that can be imported and tested separately.'],
-        ['A database transaction groups operations so they either commit together or can be rolled back. Parameterized queries separate SQL instructions from input values. Constraints protect rules even if application code has a bug.',
-         'Use parameter binding and transaction context management. Measure query plans and avoid fetching more data than needed.',
-         'cursor.execute("SELECT id FROM users WHERE email = ?", (email,))',
-         'The placeholder syntax depends on the DB-API driver; use the correct parameter style for your library. Never interpolate raw user input into SQL.',
-         'SQL injection, partial updates and N+1 queries.',
-         'Implement a repository method using parameterized queries and transaction-safe updates.'],
-        ['Tests verify behavior through repeatable assertions. Unit tests isolate logic, integration tests verify boundaries and property-based tests explore many generated inputs. A test should fail when behavior is wrong.',
-         'Test happy paths, boundaries and failures; isolate network/database dependencies when testing domain rules.',
-         'def test_add() -> None:\n    assert add(2, 3) == 5',
-         'This is a pytest-style test: the framework discovers it by convention when configured. Assertions should specify the public behavior rather than private implementation details.',
-         'Only testing happy paths, depending on a live network in unit tests and tests that merely execute without asserting.',
-         'Add tests for ordinary, boundary and invalid inputs, then run them automatically before merging.'],
-        ['A production project needs explicit configuration, structured logs, health checks, dependency management, security controls and deployment instructions. Performance decisions should follow measurements, not assumptions.',
-         'Separate application logic from transport, use timeouts and resource limits, store secrets outside the repo and provide a reproducible build.',
-         'import logging\nlogger = logging.getLogger(__name__)\n\ndef process_item(item_id: str) -> None:\n    logger.info("Processing item", extra={"item_id": item_id})',
-         'The example demonstrates a structured logging context. Production configuration must set handlers/formatters and avoid logging personal data or credentials.',
-         'Debug settings enabled in production, secrets in source control, unbounded requests and missing failure telemetry.',
-         'Package a small API with input validation, automated tests, health endpoint, configuration validation and deployment documentation.']
-      ]
-    },
-    java: {
-      intro: 'Java is a statically typed, object-oriented language commonly run on the JVM. Strong contracts, managed memory and a mature ecosystem support maintainable services, but threads, I/O and API failures still need deliberate design.',
-      topics: [
-        ['Java source is compiled to bytecode and run by a compatible JVM. A reliable project defines its JDK, build tool, dependency versions and test command so local and CI behavior match.',
-         'Use the project build wrapper where available. Separate program entry points from reusable domain logic.',
-         'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, CodeAtlas!");\n    }\n}',
-         'The main method is the entry point for a standard launched class. The exact compile/run process depends on the JDK and project layout.',
-         'JDK mismatch, package/path mismatches and code that only works in an IDE.',
-         'Create a small Maven/Gradle project that builds and tests from a clean checkout.'],
-        ['Static types establish what operations are allowed at compile time. Primitive values and references behave differently; reference variables can refer to objects or null. Generics add type safety to collections.',
-         'Choose meaningful types, represent optional values explicitly where appropriate and validate untrusted input before converting it.',
-         'int attempts = 3;\ndouble price = 19.50;\nString name = "Asha";',
-         'String is a reference type. Numeric conversions may lose precision or overflow; select types and bounds according to the domain.',
-         'Integer division, unexpected nulls and unsafe casts from untyped input.',
-         'Build a typed calculator and write tests for invalid and boundary inputs.'],
-        ['Conditions and loops determine execution flow. For loops are useful for bounded iteration; enhanced for loops simplify traversal when you do not need to update indices.',
-         'Use braces even for short branches, make conditions readable and test values immediately around thresholds.',
-         'for (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}',
-         'It prints 0–4 because the condition is tested before each iteration and the upper bound 5 is excluded.',
-         'Off-by-one errors, modifying a collection during enhanced iteration and logic hidden in compound conditions.',
-         'Summarize a set of marks and test empty input and threshold values.'],
-        ['A method names an operation and declares parameter and return types. A class groups state and behavior; interfaces describe contracts that multiple implementations can satisfy.',
-         'Keep methods focused and distinguish static utility behavior from stateful instance behavior.',
-         'static int add(int a, int b) {\n    return a + b;\n}',
-         'The method returns its value to the caller. Define overflow or input constraints when the domain requires them.',
-         'Large methods, hidden shared state and public APIs that allow invalid domain states.',
-         'Model a task service through an interface and unit-test each operation.'],
-        ['Collections represent different access patterns: ArrayList is a resizable indexed list, HashSet stores unique elements, and HashMap associates keys with values. Interfaces allow code to depend on behavior rather than a concrete implementation.',
-         'Choose structures around ordering, uniqueness and lookup requirements. Be careful when mutable objects are used as hash keys.',
-         'List<Integer> marks = List.of(72, 84, 91);\nList<Integer> passed = marks.stream()\n    .filter(mark -> mark >= 80).toList();',
-         'The stream filters elements into a result list. List.of creates an unmodifiable list; toList returns an unmodifiable list in modern Java versions.',
-         'Wrong collection semantics, mutable hash keys and unnecessary streams that obscure simple logic.',
-         'Count word occurrences with a map and explain how missing keys are handled.'],
-        ['Exceptions signal failure conditions. Checked exceptions must be declared/caught, while unchecked exceptions often indicate invalid state or programming errors. Try-with-resources closes AutoCloseable resources deterministically.',
-         'Catch only when recovery or translation is possible; preserve causes and provide actionable context.',
-         'try (var reader = Files.newBufferedReader(Path.of("notes.txt"))) {\n    System.out.println(reader.readLine());\n}',
-         'The reader is closed automatically when the try block exits. File-not-found and read failures should be handled at an appropriate boundary.',
-         'Catching Exception broadly, losing stack traces and not closing resources.',
-         'Read a file and test missing-file, empty-file and malformed-content cases.'],
-        ['Classes encapsulate rules and state. Inheritance expresses an is-a relationship; composition models collaboration. Interfaces help decouple high-level rules from concrete persistence or transport implementations.',
-         'Prefer immutable value objects where possible and maintain invariants inside constructors/methods.',
-         'record User(long id, String name) {}',
-         'A record concisely models a data carrier and generates accessors and value-oriented methods. Validate constraints explicitly when needed.',
-         'God objects, inheritance misuse and mutable state escaping its owner.',
-         'Model an order with explicit allowed status transitions and focused methods.'],
-        ['Generics parameterize types so the compiler can check collection and API usage. Bounded type parameters communicate which operations a generic algorithm requires.',
-         'Prefer generic collection APIs over raw types and avoid unchecked casts unless the invariant is proven and documented.',
-         'static <T> T first(List<T> values) {\n    return values.isEmpty() ? null : values.get(0);\n}',
-         'This example returns null for an empty list; an Optional<T> return type can make absence more explicit.',
-         'Raw types, unchecked casts and APIs that conflate missing values with ordinary values.',
-         'Create a generic utility and test empty and non-empty collections.'],
-        ['The JVM supports concurrency through threads, executors and higher-level abstractions. Shared mutable state requires safe publication and synchronization. CompletableFuture can compose asynchronous stages but failure and cancellation still need handling.',
-         'Prefer bounded executors, immutable messages and high-level concurrent collections. Define shutdown behavior and timeouts.',
-         'var executor = Executors.newFixedThreadPool(4);\ntry {\n    // Submit bounded units of work.\n} finally {\n    executor.shutdown();\n}',
-         'The snippet shows the lifecycle shape; production code should await termination and manage task failures and interruption according to its needs.',
-         'Thread leaks, unbounded queues, races, swallowed InterruptedException and deadlocks.',
-         'Process several independent tasks with bounded concurrency and test error propagation.'],
-        ['A database layer should use parameterized queries, explicit transaction boundaries and constraints that enforce invariants. Repository interfaces let business logic remain testable without a live database.',
-         'Keep transactions short, close resources and design retries only for operations that can be safely repeated.',
-         'PreparedStatement ps = connection.prepareStatement(\n    "SELECT id FROM users WHERE email = ?");\nps.setString(1, email);',
-         'setString binds data as a value rather than SQL syntax. Actual execution should close the statement and handle result/error states.',
-         'SQL injection, partial commits, leaked connections and N+1 queries.',
-         'Implement a repository query and an atomic multi-step update with rollback tests.'],
-        ['Tests should verify contracts through assertions. Unit tests target domain logic; integration tests validate the behavior of databases, HTTP clients and serialization boundaries.',
-         'Use deterministic fixtures, isolate external dependencies when practical and make test names describe behavior.',
-         '@Test void addsTwoNumbers() {\n    assertEquals(5, Calculator.add(2, 3));\n}',
-         'This is a JUnit-style example and requires the relevant JUnit dependency and Calculator implementation.',
-         'Tests with no meaningful assertions, flakiness and tests that depend on order or live services.',
-         'Add unit tests and one integration test around a real boundary, then run them in CI.'],
-        ['A production service needs validated configuration, structured observability, health/readiness semantics, safe dependency management and deployment repeatability. Availability and resource limits belong in the design.',
-         'Keep secrets out of source control, set request timeouts, expose health signals and avoid logging credentials or private data.',
-         '// Use configuration objects and a health endpoint; keep credentials external to source.',
-         'This is an architectural prompt rather than a complete Java statement. Implement using the framework and deployment model chosen by the project.',
-         'Hard-coded credentials, no timeout, misleading health checks and unbounded resource use.',
-         'Deploy a small service with configuration validation, health checks, integration tests and an incident-ready log format.']
-      ]
-    }
-  }
-  const generic = {
-    intro: 'A reliable learning path connects syntax to a mental model, testable behavior and production trade-offs. For each concept, understand the problem it solves, observe the code in execution, and test ordinary, boundary and failure cases.',
-    topics: [
-      ['Understand the runtime, tooling and entry point of a program. A reproducible toolchain prevents local-only successes and makes collaboration and deployment easier.',
-       'Document supported versions, dependencies and build/run/test commands. Keep environment-specific configuration outside source code.',
-       '/* Start with a minimal executable example and a repeatable build command. */',
-       'Run the smallest valid program first, then add one dependency or feature at a time.',
-       'Version mismatches, hidden setup assumptions and tool-specific behavior not documented in the project.',
-       'Create a clean project skeleton and write setup steps another developer can follow.'],
-      ['A type describes what values and operations are valid. Mutability, nullability and conversion rules affect correctness and make state transitions either explicit or surprising.',
-       'Make important interfaces clear and validate external input; static annotations do not always imply runtime validation.',
-       '/* Declare a value with the language’s idiomatic type and initialization syntax. */',
-       'Identify the type, initial value, mutation points and boundary cases before running the code.',
-       'Implicit conversions, missing values and assumptions that a declaration alone validates runtime data.',
-       'Create a typed input parser that rejects malformed and out-of-range values.'],
-      ['Control flow determines which operations execute and how many times. Boundary choices define whether the first/last values are included and whether repetition terminates.',
-       'Write the condition in plain language, then trace the smallest, normal and maximum input.',
-       '/* Evaluate a condition and handle each meaningful outcome explicitly. */',
-       'For each branch, give an example input that takes that path; for each loop, verify the stopping rule.',
-       'Off-by-one mistakes, unreachable branches and non-terminating loops.',
-       'Build a filter that handles normal, empty and threshold inputs.'],
-      ['Functions and methods provide named contracts for reusable behavior. A good abstraction has a clear purpose, explicit inputs/outputs and limited side effects.',
-       'Keep business rules separate from I/O, use meaningful names and handle invalid input deliberately.',
-       '/* Define a small function with explicit parameters and result. */',
-       'Read the signature, predict the result and verify it with one normal and two boundary cases.',
-       'Functions that change hidden global state, ambiguous return values and duplicated domain logic.',
-       'Extract repeated behavior into a function and test it independently.'],
-      ['Collections represent groups of data with different rules for ordering, uniqueness, access and mutation. The best structure reflects the operations the application actually needs.',
-       'Determine whether order and duplicates matter, then compare lookup/update costs and mutation semantics.',
-       '/* Select, transform or aggregate a small collection using the language’s standard library. */',
-       'Trace one item through the transformation and verify whether the original collection changes.',
-       'Mutating shared data accidentally, overlooking empty input and assuming a structure has the wrong complexity or ordering guarantees.',
-       'Build a summary using the best-fitting collection and explain the choice.'],
-      ['Domain types, interfaces and abstractions make code communicate intent and protect invariants. Composition, immutability and narrow public APIs often reduce coupling.',
-       'Give each type a clear responsibility; keep state changes behind operations that enforce rules.',
-       '/* Model one real entity and expose only the operations callers need. */',
-       'Identify what makes an instance valid and where invalid states are rejected.',
-       'God objects, unnecessary inheritance and internal state exposed to arbitrary mutation.',
-       'Model a small workflow with valid and invalid state transitions.'],
-      ['Failures should be treated as explicit outcomes. Errors can arise from invalid input, absent records, unavailable dependencies, resource exhaustion or programmer defects; each needs an appropriate response.',
-       'Handle failures at the layer that can recover, translate or report them. Preserve useful diagnostic context while redacting secrets.',
-       '/* Use the language’s standard error-handling mechanism around a fallible operation. */',
-       'Run the example with valid data and deliberately induce one failure to confirm that behavior is safe and understandable.',
-       'Swallowing errors, catching too broadly and reporting success after partial failure.',
-       'Write a function that returns a clear error outcome for invalid input.'],
-      ['Files, databases, APIs and processes are system boundaries. External input may be invalid, operations can time out and resources need cleanup; boundary code must make those cases explicit.',
-       'Validate shape and size, use established APIs, set timeouts and parameterize database values. Make retries safe for non-idempotent operations.',
-       '/* Validate incoming data before acting and check the operation’s result. */',
-       'Test malformed input, missing resource and dependency failure in addition to the happy path.',
-       'Trusting external data, leaving resources open and concatenating untrusted values into commands or queries.',
-       'Implement a small adapter and test error handling without relying on a live external service.'],
-      ['Concurrency allows work to overlap, but correctness depends on shared state, ordering, cancellation and error propagation. Async code is not automatically faster, and parallel code is not automatically safe.',
-       'Choose the model based on I/O vs CPU work, minimize shared mutable state and set bounded resource limits.',
-       '/* Use the language’s recommended concurrency primitive with explicit cancellation/error handling. */',
-       'Describe what is shared, who owns the result and what happens when one task fails.',
-       'Races, deadlocks, unbounded work and ignored cancellation.',
-       'Run independent tasks with a limit and verify failure handling.'],
-      ['Testing and debugging turn assumptions into evidence. Unit, integration and end-to-end tests validate different boundaries; profilers and benchmarks should guide optimization.',
-       'Test happy paths, boundaries and errors. Keep test data deterministic and run the same suite in CI.',
-       '/* Express expected behavior as an automated assertion. */',
-       'Make a test fail intentionally, fix the behavior and keep the test as a regression guard.',
-       'Only happy-path tests, tests without assertions and optimizing without measurements.',
-       'Create tests for one domain rule and one system boundary.'],
-      ['Security and privacy are core correctness properties. Trust boundaries, least privilege, safe query/output APIs, dependency updates and secret handling should be designed into the application.',
-       'Separate authentication from authorization, store passwords with established password hashing, parameterize SQL and escape output for its destination context.',
-       '/* Prefer a standard security library and explicit validation over custom cryptographic code. */',
-       'Attempt both an authorized operation and an unauthorized one; verify what gets logged and what information is exposed.',
-       'Hard-coded secrets, trusting client-only validation and logging private data.',
-       'Create a security checklist for the project and test permission failures.'],
-      ['A capstone should integrate domain logic, storage, interfaces, tests and deployment into a coherent deliverable. The engineering quality comes from reliable behavior and reproducibility, not merely the number of features.',
-       'Plan the smallest useful scope, define acceptance tests, document setup and measure before optimizing.',
-       '/* Separate domain behavior, external adapters and presentation/transport. */',
-       'Work from requirements to tests, then implementation, review and deployment; keep decisions documented.',
-       'Scope creep, missing error behavior and a project that only works on the author’s machine.',
-       'Deliver one end-to-end feature with tests, documentation, security considerations and repeatable deployment.']
-    ]
-  };
-  function renderLesson(lang, topic, index) {
-    const data = (catalogs[lang.id] || generic).topics[index] || generic.topics[index] || generic.topics[0];
-    const name = lang.name || 'this language';
-    const title = topic.title || 'Topic';
-    const code = topic.code || data[2];
-    const alternative = (topic.alternativeCode || topic.advancedCode || '').trim();
-    const allCode = code || data[2];
-    const lineItems = String(allCode).split('\n').filter(line => line.trim()).map((line, i) =>
-      '<li><code>' + esc(line) + '</code><p>' + esc(i === 0
-        ? 'Start by identifying the statement’s role: declaration, operation, control flow, resource access or output.'
-        : 'Trace how this line uses values created earlier and what state it changes or produces. Check the applicable language rules and error path.') + '</p></li>').join('');
-    const guide = data[3];
-    const pitfalls = data[4];
-    const challenge = data[5];
-    return '<section class="lesson-section comprehensive-lesson" id="comprehensive-explanation">' +
-      '<h3>In-depth explanation</h3><p>' + esc(data[0]) + '</p>' +
-      '<h4>How to think about this topic</h4><p>' + esc(data[1]) + '</p>' +
-      '<h4>Example: what the code demonstrates</h4><p>The original example for <strong>' + esc(title) + '</strong> is shown below. First predict the result; then run it using the supported toolchain for ' + esc(name) + '. Check the official language documentation before relying on version-specific behavior.</p>' +
-      '<pre><code>' + esc(allCode) + '</code></pre>' +
-      '<h4>Execution walkthrough</h4><ol>' + lineItems + '</ol><p><strong>Verify rather than guess:</strong> record the output, inspect any error messages, and change one input or line at a time. The snippet may be a fragment that needs imports, surrounding declarations or a configured project.</p>' +
-      (alternative ? '<h4>Alternative or advanced example</h4><pre><code>' + esc(alternative) + '</code></pre><p>Compare this version with the first one: identify differences in clarity, resource use, safety and maintainability.</p>' : '') +
-      '<h4>Where this is used in real applications</h4><p>' + esc(data[1]) + ' This concept may appear in API handlers, business rules, data pipelines, command-line tools or platform-specific components. Choose an implementation that matches the actual requirements instead of copying a pattern without its context.</p>' +
-      '<h4>Common mistakes and debugging</h4><p>' + esc(pitfalls) + '</p><ul><li>Test one typical input, one boundary input and one failure/invalid input.</li><li>Inspect the earliest meaningful error instead of fixing downstream symptoms.</li><li>Check whether resource ownership, security, performance or concurrency affects the topic.</li></ul>' +
-      '<h4>Practice challenge</h4><p>' + esc(challenge) + '</p><ol><li>Implement the smallest correct version.</li><li>Write tests for expected and unexpected inputs.</li><li>Refactor names and structure for clarity.</li><li>Explain an alternative approach and its trade-offs.</li></ol>' +
-      '<h4>Production-readiness review</h4><ul><li>Inputs are validated at the system boundary.</li><li>Failure behavior is explicit and diagnostics do not leak secrets.</li><li>Automated tests cover normal, boundary and failure behavior.</li><li>Setup instructions and dependencies make the result reproducible.</li></ul></section>';
-  }
-  window.CodeAtlasComprehensiveStudy = { renderLesson };
-  window.CodeAtlasDeepStudy = function(topic, language) {
-    const index = Math.max(0, Number(String(topic.id || '').split('-').pop()) - 1);
-    const lang = language && catalogs[language.id] ? language : (language || {id:'',name:'this language'});
-    if (!lang.id) return renderLesson(lang, topic, Math.min(index, 11));
-    return renderLesson(lang, topic, Math.min(index, 11));
-  };
+'use strict';
+const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DOCS = {
+python:'https://docs.python.org/3/tutorial/',javascript:'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide',
+typescript:'https://www.typescriptlang.org/docs/handbook/intro.html',java:'https://dev.java/learn/',
+sql:'https://www.postgresql.org/docs/current/tutorial.html',go:'https://go.dev/doc/',rust:'https://doc.rust-lang.org/book/',
+csharp:'https://learn.microsoft.com/en-us/dotnet/csharp/',c:'https://en.cppreference.com/w/c',cpp:'https://en.cppreference.com/w/cpp',
+php:'https://www.php.net/manual/en/',kotlin:'https://kotlinlang.org/docs/home.html',swift:'https://docs.swift.org/swift-book/documentation/the-swift-programming-language/',bash:'https://www.gnu.org/software/bash/manual/'
+};
+function family(title) {
+ const t=title.toLowerCase(), rules=[
+ ['setup',/setup|toolchain|first program|runtime|program structure|compiler|build/],
+ ['types',/type|variable|operator|null|optional|value semantics|constant/],
+ ['text',/string|text|encoding|json|serialization/],
+ ['control',/condition|loop|control flow|switch|match/],
+ ['functions',/function|method|closure|lambda|decorator|macro|generic|trait/],
+ ['collections',/collection|array|list|tuple|set|dict|map|slice|vector|range/],
+ ['memory',/pointer|ownership|borrow|lifetime|memory|arc|smart pointer|resource|raii|move semantics/],
+ ['oop',/class|object|struct|enum|interface|protocol|inheritance|polymorphism|composition/],
+ ['async',/async|await|concurr|goroutine|channel|coroutine|thread|future|flow|actor|process/],
+ ['database',/database|sql|schema|transaction|query|index|migration|repository|orm|persistence|jdbc|room/],
+ ['http',/http|api|rest|network|fetch|socket|web service|routing|request|response/],
+ ['security',/security|auth|secret|permission|privacy|xss|csrf|keychain|credential/],
+ ['testing',/test|debug|profile|benchmark|fuzz|sanitizer|ci|performance|observability/],
+ ['files',/file|stream|pipe|redirection|module|package|composer|cargo|gradle|spm|deployment|configuration/],
+ ['analytics',/analytics|window function|aggregation|group by|join|cohort|running total|pivot|data quality|date.time/]
+ ];
+ return (rules.find(r=>r[1].test(t))||['general',/.*/])[0];
+}
+function profile(lang, topic) {
+ const c=family(topic.title), rules={
+ setup:['A reproducible toolchain and project layout are prerequisites for trustworthy behavior.','Start with the smallest runnable program, then add dependencies one at a time.','Version mismatches, hidden working-directory assumptions and missing dependencies.','Verify the supported runtime/compiler version and reproduce the build from a clean checkout.'],
+ types:['Types and value semantics determine which states can be represented and which operations are valid.','Trace each value’s type, initial value, conversions and mutation points.','Implicit conversions, invalid/null values and assuming static types validate external data.','Test normal, boundary and invalid values; inspect diagnostics before adding casts.'],
+ text:['Text processing crosses representation boundaries: characters, bytes, encodings and formats are not interchangeable.','Follow data from input through parsing/normalization to output.','Malformed encoding, whitespace surprises, escaping mistakes and treating input as trusted markup.','Test empty text, Unicode, malformed input and strings containing delimiters.'],
+ control:['Control flow determines which branches execute and how often repeated work occurs.','Write the condition in plain language and trace the smallest, typical and boundary inputs.','Off-by-one bounds, unreachable branches, missing default handling and non-terminating loops.','Test immediately below, at and above each threshold.'],
+ functions:['A function defines a contract for inputs, outputs, side effects and failure behavior.','Trace arguments into local state, follow each branch and identify what the caller receives.','Hidden state changes, unclear return semantics and unhandled failures.','Test each return path and invalid input independently.'],
+ collections:['Collection choice encodes ordering, uniqueness, lookup and mutation semantics.','Choose the data structure from the operations and invariants the program must preserve.','Unexpected aliasing, duplicate handling, mutation during iteration and repeated scans.','Test empty, singleton, duplicate and large inputs.'],
+ memory:['Memory/resource safety depends on lifetime, ownership, bounds and cleanup on every exit path.','Identify who owns each resource, when it is valid and which operation releases or transfers it.','Use-after-free, leaks, invalid references, double cleanup and unchecked sizes.','Test failure paths and use language diagnostics or sanitizers where available.'],
+ oop:['A good type protects domain invariants and exposes behavior through a narrow contract.','Identify state, allowed transitions, public operations and collaborators.','God objects, mutable internals and invalid states that callers can construct.','Test valid and forbidden state transitions.'],
+ async:['Asynchronous execution introduces ordering, cancellation, backpressure and shared-state concerns.','Track task ownership, awaited operations, timeout behavior and error propagation.','Unbounded work, data races, detached tasks, swallowed cancellation and deadlocks.','Test timeout, cancellation, concurrent access and shutdown.'],
+ database:['Database correctness depends on query semantics, constraints, transaction boundaries and measured query plans.','Define row grain and trace filtering/joining/grouping or the write transaction.','NULL/duplicate semantics, partial updates, injection and dialect assumptions.','Test empty/duplicate data, failed transactions and concurrent changes.'],
+ http:['Network boundaries are fallible and must define validation, timeouts, status/error behavior and data contracts.','Trace request construction, transport result, status, parsing and validation.','No timeout, malformed payload, missing status checks and unsafe retries.','Test timeout, non-success status, invalid body and unauthorized access.'],
+ security:['Security depends on explicit trust boundaries, least privilege and server-side enforcement.','Mark untrusted values, the acting principal, required permission and exposed data.','Client-only checks, secrets in logs, injection and missing object-level checks.','Test allowed/denied paths, malformed input and secret redaction.'],
+ testing:['Tests and diagnostics provide evidence; optimization needs repeatable workloads.','State the invariant, create a minimal test and retain a regression case.','Happy-path-only tests, flaky fixtures and treating one clean run as proof.','Automate deterministic tests and record workload/tool versions for performance claims.'],
+ files:['External resources and modules need explicit ownership, paths, configuration and failure handling.','Follow the resource lifecycle from acquisition through operation to cleanup.','Leaked handles, path assumptions, partial writes and hidden setup requirements.','Test missing/empty/large input, permission failures and clean setup.'],
+ analytics:['Analytical correctness depends on grain, grouping keys, NULL semantics and the question the metric must answer.','Define one output row’s grain and reconcile a small hand-calculated dataset.','Double counting from joins, incorrect grouping and confusing row-level with window results.','Test duplicates, missing values, boundary dates and totals manually.'],
+ general:['Reliable engineering connects a precise concept model to observable behavior and explicit failure handling.','Predict the result, run the smallest example and change one input at a time.','Untested assumptions, unclear edge behavior and hidden dependencies.','Verify ordinary, boundary and failure inputs.']
+ }[c];
+ const points=Array.isArray(topic.keyPoints)?topic.keyPoints:[];
+ return {concept:lang.name+' — '+topic.title+': '+(topic.definition||'')+' Treat this topic as a contract: identify inputs, rules, output/state changes and possible failure outcomes.',why:rules[0],model:rules[1],mistakes:rules[2],verification:rules[3],concepts:points.map(point=>({point,detail:'Apply this rule specifically to '+topic.title.toLowerCase()+'. Verify it with the supplied example and record what changes when input or state changes.'})),edges:['Empty or missing input: decide whether the outcome is an empty value, documented default or validation error.','Boundary input: test the smallest and largest permitted values and values immediately around thresholds.','Failure path: simulate malformed input or an unavailable dependency and verify the program does not report false success.','Repeatability: run the operation twice and check whether state, ordering or side effects change.'],source:DOCS[lang.id]||lang.docs};
+}
+function lineWalk(code,title,name) {
+ return String(code||'').split('\n').filter(x=>x.trim()).map((line,i)=>({line,explanation:i===0?'Identify how this statement participates in '+title.toLowerCase()+': declaration, input, transformation, control flow, resource access or output.':'Trace this line using values created earlier. Check '+name+' type, scope, mutation and failure rules; predict the result before running it.'}));
+}
+function buildDive(lang,topic,index) {
+ const p=profile(lang,topic), first=(topic.basicExamples||[])[0]||(topic.guidedExamples||[])[0]||null, code=first?first.code:((topic.advancedExamples||[])[0]||{}).code||'';
+ const lines=first&&first.lineByLine&&first.lineByLine.length?first.lineByLine:lineWalk(code,topic.title,lang.name);
+ return {learningObjectives:['Explain '+topic.title.toLowerCase()+' and identify the problem it solves.','Trace the supplied '+lang.name+' example and predict its output or state change.','Choose behavior for empty, boundary and invalid inputs.','Identify trade-offs, failure modes and a suitable testing strategy.','Apply the concept in a small, testable feature.'],prerequisites:[index>0?lang.topics[index-1].title:'the language runtime, project setup and basic program structure'],coreConcept:p.concept,whyItMatters:p.why,mentalModel:p.model,conceptBreakdown:p.concepts,workedExample:first?{title:first.title,code:first.code,explanation:first.note||first.explanation||'This example demonstrates '+topic.title.toLowerCase()+' in '+lang.name+'.',lineByLine:lines}:null,stepByStep:[{heading:'Define the contract',text:'State what '+topic.title.toLowerCase()+' receives, what it must do, what it returns or changes, and which assumptions are valid.'},{heading:'Trace the example',text:'Read from top to bottom. Record important values before and after each operation and identify the statement that determines the result. Add only required imports or declarations if the snippet is a fragment.'},{heading:'Test boundaries',text:p.edges[0]+' '+p.edges[1]},{heading:'Handle failure',text:p.mistakes+' '+p.verification},{heading:'Refactor and verify',text:'Run the example using the supported '+lang.name+' toolchain, add assertions for intended behavior and refactor only after tests describe the contract.'}],commonMistakes:[p.mistakes].concat((topic.keyPoints||[]).filter(x=>/avoid|never|careful|must|do not|don't|not assume|check/i.test(x)).slice(0,3)),edgeCases:p.edges,debuggingChecklist:['Reproduce the issue with the smallest failing input.','Read the first meaningful diagnostic; later errors may be consequences.','Inspect input shape, types, nullability, bounds and assumptions.','Add a regression test for the exact failure before refactoring.','Run topic tests and project checks again after the fix.'],realWorldScenario:'In a real '+lang.name+' codebase, '+topic.title.toLowerCase()+' sits between inputs, domain rules and observable output. Keep behavior explicit, make failures testable and document assumptions callers must satisfy.',performanceSecurity:'Before shipping '+topic.title.toLowerCase()+', verify input validation, explicit failure behavior, bounded resource use, safe logging, regression tests and the supported runtime/toolchain.',practiceLab:{task:(topic.practice||[])[0]?.question||'Build a small feature demonstrating '+topic.title.toLowerCase()+'.',steps:['Write the smallest correct implementation.','Test a normal case, boundary case and failure case.','Compare the implementation with one alternative.','Document what should be monitored or validated before production.'],reviewQuestions:(topic.practice||[]).slice(0,4).map(q=>q.question)},interviewGuide:{questions:(topic.interview||[]).slice(0,5).map(q=>q.question),answerFramework:['Define the concept precisely.','Explain the mechanism and relevant language rule.','Walk through a small example.','Discuss one trade-off and one failure case.']},verification:p.verification,officialReference:{label:'Official '+lang.name+' documentation',url:p.source}};
+}
+function makeQuestion(title,lang,kind,n,p) {
+ const cases=['an empty input','a boundary condition','a failed operation','a duplicate operation'];
+ return {question:(kind==='practice'?'For ':'Explain ')+title.toLowerCase()+(kind==='practice'?' how you would handle '+cases[n%cases.length]:' and discuss '+['the contract and use case','the most important edge case','how to test it','the production trade-off'][n%4]),hint:p.verification,answer:p.why+' '+p.mistakes+' Implement the smallest correct behavior, validate at the boundary and test normal, boundary and failure cases using the '+lang.name+' toolchain.'};
+}
+function makeTopic(lang,meta,number) {
+ const topic={id:lang.id+'-'+number,title:meta[0],level:number<=14?'Intermediate':'Advanced',definition:meta[1]+' The engineering contract should specify inputs, output/state changes, failure outcomes and caller assumptions.',analogy:'Think of '+meta[0].toLowerCase()+' as a documented workflow: each step has a purpose, inputs have rules and failure must be visible.',keyPoints:[meta[1],'Why it matters: this concept makes application behavior easier to reason about and test.','Correctness: validate values at the boundary before changing state.','Failure handling: '+meta[3],'Testing: cover ordinary, boundary and failure cases.','Practice: '+meta[4]],intro:['Learning objective: understand '+meta[0].toLowerCase()+' in '+lang.name+' and apply it in a testable feature.',meta[1],'Test what happens when inputs are missing, malformed, duplicated, oversized or unavailable.','Run the example in the supported toolchain and verify behavior against the official reference.'],body:[{heading:'Concept and contract',text:meta[1]},{heading:'How the example works',text:'Trace declarations, inputs, state changes and outputs. Identify where failure can occur and what the caller observes.'},{heading:'Failure modes and edge cases',text:meta[3]},{heading:'Production considerations',text:'Choose the simplest implementation that satisfies the contract. Consider readability, correctness, resource limits, security and observability.'},{heading:'Testing strategy',text:meta[4]+' Add regression tests for normal, boundary and failure behavior.'}],basicExamples:[{title:'Core example',code:meta[2],lineByLine:lineWalk(meta[2],meta[0],lang.name)}],guidedExamples:[{title:'Apply the concept',code:meta[2],lineByLine:lineWalk(meta[2],meta[0],lang.name)}],advancedExamples:[{title:'Production review',code:meta[2],note:'Before production use, address: '+meta[3]+' Add validation, tests and a documented failure policy.'}],practice:[],interview:[]};
+ const p=profile(lang,topic);for(let i=0;i<6;i++)topic.practice.push(makeQuestion(topic.title,lang,'practice',i,p));for(let i=0;i<5;i++)topic.interview.push(makeQuestion(topic.title,lang,'interview',i,p));topic.deepDive=buildDive(lang,topic,lang.topics.length);return topic;
+}
+function enrichCurriculum(data) {
+ if(!data||!Array.isArray(data.languages)||data.__codeAtlasEnriched)return data;
+ data.languages.forEach(lang=>{
+  const existing=lang.topics.length;
+  lang.topics.forEach((topic,index)=>{
+   const p=profile(lang,topic);topic.deepDive=buildDive(lang,topic,index);
+   topic.definition=(topic.definition||'')+'\n\nDeeper explanation: '+p.why+' '+p.model+' '+p.mistakes+' Apply the concept to the provided example and test relevant edge cases.';
+   const intro=Array.isArray(topic.intro)?topic.intro:[];
+   topic.intro=intro.concat(['Learning objective: explain '+topic.title.toLowerCase()+' in '+lang.name+' and apply it in a testable feature.','Why it matters: '+p.why,'Mental model: '+p.model,'Verification: '+p.verification]);
+   const body=Array.isArray(topic.body)?topic.body:[];
+   const extra=[{heading:'Concept model and design intent',text:p.why+' '+p.model},{heading:'Execution walkthrough',text:'Trace the example for '+topic.title.toLowerCase()+', identify inputs and state changes, and predict the output. '+p.verification},{heading:'Common failures and edge cases',text:p.mistakes+' '+p.edges.slice(0,2).join(' ')},{heading:'Production considerations',text:'Validate inputs, define failure behavior, bound resource use and add useful non-sensitive diagnostics.'},{heading:'Testing and practice',text:(topic.practice||[])[0]?.question||'Build a small example, then test normal, boundary and failure behavior.'}];
+   const have=new Set(body.map(x=>x.heading));topic.body=body.concat(extra.filter(x=>!have.has(x.heading)));
+   topic.keyPoints=Array.isArray(topic.keyPoints)?topic.keyPoints:[];topic.keyPoints.push('Edge-case discipline: '+p.edges[0]+' '+p.edges[1],'Production verification: '+p.verification);
+   topic.practice=Array.isArray(topic.practice)?topic.practice:[];while(topic.practice.length<6)topic.practice.push(makeQuestion(topic.title,lang,'practice',topic.practice.length,p));
+   topic.interview=Array.isArray(topic.interview)?topic.interview:[];while(topic.interview.length<5)topic.interview.push(makeQuestion(topic.title,lang,'interview',topic.interview.length,p));
+  });
+  ((window.CodeAtlasMissingTopics||{})[lang.id]||[]).forEach(meta=>lang.topics.push(makeTopic(lang,meta,lang.topics.length+1)));
+  lang.coverageAudit={existingTopicsReviewed:existing,newTopicsAdded:lang.topics.length-existing,topicSpecificDeepDive:true,reviewAreas:['prerequisites','concept model','worked example','common mistakes','edge cases','debugging','real-world use','testing','security/performance','practice','interview preparation','official documentation'],officialReference:DOCS[lang.id]||lang.docs};
+ });
+ data.__codeAtlasEnriched=true;return data;
+}
+function renderLesson(lang,topic,index) {
+ if(!topic)return '';const d=topic.deepDive||buildDive(lang,topic,index||0);
+ const ul=items=>'<ul>'+items.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+ const sections=d.stepByStep.map(x=>'<section class="lesson-section"><h4>'+esc(x.heading)+'</h4><p>'+esc(x.text)+'</p></section>').join('');
+ const concepts=(d.conceptBreakdown||[]).map(x=>'<li><strong>'+esc(x.point)+'</strong><p>'+esc(x.detail)+'</p></li>').join('');
+ const ex=d.workedExample?'<h4>Worked example: '+esc(d.workedExample.title)+'</h4><p>'+esc(d.workedExample.explanation)+'</p><pre><code>'+esc(d.workedExample.code)+'</code></pre><ol>'+d.workedExample.lineByLine.map(x=>'<li><code>'+esc(x.line)+'</code><p>'+esc(x.explanation)+'</p></li>').join('')+'</ol>':'';
+ const lab=d.practiceLab||{},guide=d.interviewGuide||{};
+ return '<section class="lesson-section comprehensive-lesson" id="deep-study"><h3>Complete topic study guide</h3><p><strong>Core concept:</strong> '+esc(d.coreConcept)+'</p><p><strong>Why it matters:</strong> '+esc(d.whyItMatters)+'</p><p><strong>Mental model:</strong> '+esc(d.mentalModel)+'</p><h4>Learning objectives</h4>'+ul(d.learningObjectives)+'<h4>Prerequisites</h4>'+ul(d.prerequisites)+'<h4>Concept-by-concept breakdown</h4><ul>'+concepts+'</ul>'+ex+'<h4>Step-by-step reasoning</h4>'+sections+'<h4>Common mistakes</h4>'+ul(d.commonMistakes)+'<h4>Edge cases to test</h4>'+ul(d.edgeCases)+'<h4>Debugging checklist</h4>'+ul(d.debuggingChecklist)+'<h4>Real-world application</h4><p>'+esc(d.realWorldScenario)+'</p><h4>Production, performance and security</h4><p>'+esc(d.performanceSecurity)+'</p><h4>Practice lab</h4><p><strong>Task:</strong> '+esc(lab.task||'')+'</p>'+ul(lab.steps||[])+'<h4>Review questions</h4>'+ul(lab.reviewQuestions||[])+'<h4>Interview preparation</h4>'+ul(guide.questions||[])+'<p><strong>Answer framework</strong></p>'+ul(guide.answerFramework||[])+'<h4>Verification checklist</h4><p>'+esc(d.verification)+'</p><p><a class="resource-link" href="'+esc(d.officialReference.url)+'" target="_blank" rel="noreferrer">'+esc(d.officialReference.label)+' ↗</a></p></section>';
+}
+window.CodeAtlasComprehensiveStudy={enrichCurriculum,renderLesson};
 })();
