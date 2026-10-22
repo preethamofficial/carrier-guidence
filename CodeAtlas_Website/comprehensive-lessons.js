@@ -135,22 +135,22 @@ function explainRoadmapLine(line,title,language) {
  const x=String(line||'').trim();
  if(!x)return 'Blank line: separates related statements for readability.';
  if(/^#|^\/\//.test(x))return 'Comment: this is a note for the developer. The interpreter/compiler does not execute it.';
- if(/^import\\b|^from .+ import\\b|^using\\b|^package\\b/.test(x))return 'Import/declaration: makes a library, namespace or package available to the code that follows.';
- if(/^<(!doctype|html|head|body|main|nav|section|article|form|label|input|button|h[1-6])\\b/i.test(x))return 'HTML element: defines a piece of document structure or an interactive control. Check its semantic meaning, attributes and accessible name.';
- if(/^[.#]?[a-zA-Z][\\w-]*\\s*\\{?$/.test(x)||/^[a-z-]+\\s*:\\s*[^;]+;?$/.test(x))return 'CSS rule/declaration: selects an element or assigns a visual property. Check which selector applies, the cascade and responsive behavior.';
- if(/^SELECT\\b|^FROM\\b|^WHERE\\b|^JOIN\\b|^LEFT JOIN\\b|^GROUP BY\\b|^HAVING\\b|^ORDER BY\\b|^INSERT\\b|^UPDATE\\b|^DELETE\\b/i.test(x))return 'SQL clause: shapes the query result. Verify row grain, join cardinality, NULL behavior and whether values are parameterized.';
- if(/^(if|elif|else if|else|switch|case|match|when)\\b/.test(x))return 'Decision: checks a condition or chooses a branch. Test the value just below, at and above the boundary.';
- if(/^(for|while)\\b|^for\\s*\\(/.test(x))return 'Loop: repeats work. Identify the collection/condition, what changes on each pass and why it eventually stops.';
- if(/^return\\b/.test(x))return 'Return: sends a value back to the caller and exits this function. Check whether other branches return the expected type too.';
- if(/^(raise|throw)\\b/.test(x))return 'Error path: deliberately stops normal execution with a failure signal. Confirm the caller or framework handles it safely.';
- if(/^(try|catch|except|finally)\\b/.test(x))return 'Error-handling boundary: defines behavior when an operation fails. Do not swallow unexpected failures without recording useful context.';
- if(/^(def |function |async function |class |interface |type |enum )/.test(x)||/^const\\s+\\w+\\s*=\\s*\\([^)]*\\)\\s*=>/.test(x))return 'Declaration: introduces a reusable function, class or type. Read the name and parameters to identify its purpose and inputs.';
- if(/^(print\\(|console\\.log\\(|logger\\.|logging\\.)/.test(x))return 'Output/logging: shows a value or event. Compare it with the expected result and avoid writing secrets or private data to logs.';
- if(/\\b(await|fetch|request|connect|query|open)\\b/i.test(x))return 'External operation: it can fail, time out or return malformed data. Check error handling, input validation and resource cleanup.';
- if(/\\b(assert|expect)\\b|^assert\\b/.test(x))return 'Assertion: states the result that should be true. A failing assertion tells you where actual behavior differs from the contract.';
- if(/^[-\\w]+:\\s*/.test(x))return 'Configuration field: sets a named option. Confirm the field name, value type and environment-specific behavior.';
- if(/^\\w+\\s*(?:\\+|-|\\*|\\/)?=/.test(x))return 'Assignment/update: calculates or stores a value. Trace the right-hand side, then note how the new value affects later statements.';
- if(/^[-*]\\s+/.test(x)||/^\\d+\\.\\s+/.test(x))return 'List item: states one requirement or action. Check whether it is specific enough to verify independently.';
+ if(/^import\b|^from .+ import\b|^using\b|^package\b/.test(x))return 'Import/declaration: makes a library, namespace or package available to the code that follows.';
+ if(/^<(!doctype|html|head|body|main|nav|section|article|form|label|input|button|h[1-6])\b/i.test(x))return 'HTML element: defines a piece of document structure or an interactive control. Check its semantic meaning, attributes and accessible name.';
+ if(/^[.#]?[a-zA-Z][\w-]*\s*\{?$/.test(x)||/^[a-z-]+\s*:\s*[^;]+;?$/.test(x))return 'CSS rule/declaration: selects an element or assigns a visual property. Check which selector applies, the cascade and responsive behavior.';
+ if(/^SELECT\b|^FROM\b|^WHERE\b|^JOIN\b|^LEFT JOIN\b|^GROUP BY\b|^HAVING\b|^ORDER BY\b|^INSERT\b|^UPDATE\b|^DELETE\b/i.test(x))return 'SQL clause: shapes the query result. Verify row grain, join cardinality, NULL behavior and whether values are parameterized.';
+ if(/^(if|elif|else if|else|switch|case|match|when)\b/.test(x))return 'Decision: checks a condition or chooses a branch. Test the value just below, at and above the boundary.';
+ if(/^(for|while)\b|^for\s*\(/.test(x))return 'Loop: repeats work. Identify the collection/condition, what changes on each pass and why it eventually stops.';
+ if(/^return\b/.test(x))return 'Return: sends a value back to the caller and exits this function. Check whether other branches return the expected type too.';
+ if(/^(raise|throw)\b/.test(x))return 'Error path: deliberately stops normal execution with a failure signal. Confirm the caller or framework handles it safely.';
+ if(/^(try|catch|except|finally)\b/.test(x))return 'Error-handling boundary: defines behavior when an operation fails. Do not swallow unexpected failures without recording useful context.';
+ if(/^(def |function |async function |class |interface |type |enum )/.test(x)||/^const\s+\w+\s*=\s*\([^)]*\)\s*=>/.test(x))return 'Declaration: introduces a reusable function, class or type. Read the name and parameters to identify its purpose and inputs.';
+ if(/^(print\(|console\.log\(|logger\.|logging\.)/.test(x))return 'Output/logging: shows a value or event. Compare it with the expected result and avoid writing secrets or private data to logs.';
+ if(/\b(await|fetch|request|connect|query|open)\b/i.test(x))return 'External operation: it can fail, time out or return malformed data. Check error handling, input validation and resource cleanup.';
+ if(/\b(assert|expect)\b|^assert\b/.test(x))return 'Assertion: states the result that should be true. A failing assertion tells you where actual behavior differs from the contract.';
+ if(/^[-\w]+:\s*/.test(x))return 'Configuration field: sets a named option. Confirm the field name, value type and environment-specific behavior.';
+ if(/^\w+\s*(?:\+|-|\*|\/)?=/.test(x))return 'Assignment/update: calculates or stores a value. Trace the right-hand side, then note how the new value affects later statements.';
+ if(/^[-*]\s+/.test(x)||/^\d+\.\s+/.test(x))return 'List item: states one requirement or action. Check whether it is specific enough to verify independently.';
  return 'Statement in '+language+': identify its input, the value/state it changes and how the next statement uses the result. Predict the effect before running the example.';
 }
 function lineWalk(code,title,name) {
