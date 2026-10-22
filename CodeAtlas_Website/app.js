@@ -20,7 +20,7 @@ async function init(){
   $('#navMap').addEventListener('click',showHome);
   $('#navAll').addEventListener('click',showAllLanguages);
   $('#homeBrand').addEventListener('click',e=>{e.preventDefault();showHome()});
-  $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
+  $('#searchInput').addEventListener('input',e=>{searchQuery=e.target.value.trim().toLowerCase(); if(/\bweb\s*development\b|\bweb\s*dev\b|\bfull\s*stack\s*(roadmap|development)?\b|\bfrontend\s*roadmap\b|\bwebsite\s*roadmap\b/.test(searchQuery)) showWebDevelopmentRoadmap(); else if(searchQuery) showSearch(); else if(currentTopic) showLesson(currentLanguage.id,currentTopic.id); else if(currentLanguage) showLanguage(currentLanguage.id); else showHome();});
   $('#searchInput').addEventListener('keydown',e=>{if(e.key==='Escape'){e.target.value='';searchQuery='';showHome()}});
   document.addEventListener('keydown',e=>{if(e.key==='/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}});
   $('#themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');try{localStorage.setItem('codeatlas-theme',document.body.classList.contains('dark')?'dark':'light')}catch{toast('Theme changed, but could not be saved.')}});
@@ -43,7 +43,7 @@ function showHome(){
   currentLanguage=null;currentTopic=null;renderLanguageNav();setCrumbs([{label:'CodeAtlas'},{label:'Learning map'}]);
   const topics=allTopics().length, codeBlocks=allTopics().reduce((s,t)=>s+t.basicExamples.length+t.guidedExamples.length+t.advancedExamples.length,0);
   view.innerHTML=`
-  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Programming languages, web foundations and engineering skills in one unified curriculum, with deeper explanations, code examples, challenges, and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-stats"><div class="hero-stat"><strong>${String(curriculum.languages.length).padStart(2,'0')}</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
+  <section class="hero"><div class="eyebrow">YOUR PERSONAL PROGRAMMING ATLAS</div><h1>Understand the code.<br>Connect the concepts.</h1><p>Programming languages, web foundations and engineering skills in one unified curriculum, with deeper explanations, code examples, challenges, and interview practice — organized as a map you can explore at your own pace.</p><div class="hero-quick-actions"><button class="primary-button" id="webRoadmapBtn">Open Web Development Roadmap ↗</button></div><div class="hero-stats"><div class="hero-stat"><strong>${String(curriculum.languages.length).padStart(2,'0')}</strong><span>Languages</span></div><div class="hero-stat"><strong>${String(topics).padStart(2,'0')}</strong><span>Topic paths</span></div><div class="hero-stat"><strong>${codeBlocks}+</strong><span>Code patterns</span></div><div class="hero-stat"><strong>Always</strong><span>Learn at your pace</span></div></div></section>
   <div class="section-head"><div><h2>Explore the learning map</h2><p>Select a language node to enter its topic map.</p></div><button class="subtle-button" id="allLangBtn">View all languages ↗</button></div>
   <section class="map-canvas"><div class="map-root"><strong>⌘ CodeAtlas</strong><small>Programming language knowledge map</small></div><div class="map-grid">${curriculum.languages.map(l=>`<button class="language-card" style="--lang:${l.color}" data-open-lang="${l.id}"><div class="lang-card-top"><span class="lang-logo">${l.name.slice(0,2).toUpperCase()}</span><strong>${l.name}</strong></div><p>${l.purpose}</p><div class="card-bottom"><span>${l.topics.filter(t=>isDone(t.id)).length}/${l.topics.length} topics complete</span><b>Open map ↗</b></div></button>`).join('')}</div></section>
   <div class="section-head"><div><h2>A learning path that sticks</h2><p>Move from understanding to implementation, then prove what you know.</p></div></div>
@@ -51,6 +51,7 @@ function showHome(){
   <div class="section-head"><div><h2>Continue learning</h2><p>Your next incomplete topic across all languages.</p></div></div>
   <div class="topic-grid">${curriculum.languages.map(l=>{const t=l.topics.find(x=>!isDone(x.id))||l.topics[0];return `<button class="topic-card" style="--lang:${l.color}" data-open-topic="${l.id}|${t.id}"><span class="topic-index">${l.name.toUpperCase()} · ${String(l.topics.indexOf(t)+1).padStart(2,'0')}</span><h3>${t.title}</h3><p>${t.definition}</p><div class="topic-card-foot"><span>Continue path</span><span>↗</span></div></button>`}).join('')}</div>`;
   $('#allLangBtn').onclick=showAllLanguages;
+  $('#webRoadmapBtn').onclick=showWebDevelopmentRoadmap;
   $$('[data-open-lang]').forEach(b=>b.onclick=()=>showLanguage(b.dataset.openLang));
   $$('[data-open-topic]').forEach(b=>b.onclick=()=>{const [l,t]=b.dataset.openTopic.split('|');showLesson(l,t)});
 }
@@ -148,6 +149,22 @@ function exampleCard(ex,i,showLines){
 }
 function revealCard(q,i,kind){
  return `<div class="reveal-card"><div class="reveal-question"><span><span style="color:var(--accent);font:10px 'DM Mono',monospace">${kind} ${String(i+1).padStart(2,'0')}</span><br>${q.question}</span><button>Reveal answer</button></div><div class="reveal-answer" hidden><strong>Suggested approach</strong><p>${q.answer}</p><p class="hint">Hint: ${q.hint||'Explain your assumptions and test an edge case.'}</p></div></div>`;
+}
+function showWebDevelopmentRoadmap(){
+ currentLanguage=null;currentTopic=null;renderLanguageNav();setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Web Development Roadmap'}]);
+ if(!window.CodeAtlasWebRoadmap){view.innerHTML='<div class="empty-state">The Web Development Roadmap could not load. Refresh the page and try again.</div>';return;}
+ view.innerHTML=window.CodeAtlasWebRoadmap.render();
+ $('[data-roadmap-scroll]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.roadmapScroll)?.scrollIntoView({behavior:'smooth',block:'start'}));
+ $('[data-roadmap-start]').forEach(b=>b.onclick=()=>{const first=document.querySelector('.roadmap-node');if(first){first.open=true;first.scrollIntoView({behavior:'smooth',block:'center'});}});
+ $('[data-roadmap-open]').forEach(b=>b.onclick=()=>{
+  const [langId,needle]=b.dataset.roadmapOpen.split('|');
+  const lang=curriculum.languages.find(l=>l.id===langId);
+  if(!lang){toast('Related learning path is not available yet.');return;}
+  const term=(needle||'').toLowerCase();
+  const topic=lang.topics.find(t=>t.title.toLowerCase().includes(term))||
+    lang.topics.find(t=>(t.definition+' '+t.analogy).toLowerCase().includes(term));
+  if(topic)showLesson(lang.id,topic.id);else showLanguage(lang.id);
+ });
 }
 function showSearch(){
  currentLanguage=null;currentTopic=null;setCrumbs([{label:'CodeAtlas',action:'home'},{label:'Search'}]);
