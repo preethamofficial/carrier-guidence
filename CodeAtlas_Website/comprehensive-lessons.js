@@ -3,7 +3,7 @@
 'use strict';
 const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const DOCS = {
-python:'https://docs.python.org/3/tutorial/',javascript:'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide',html:'https://developer.mozilla.org/en-US/docs/Web/HTML',css:'https://developer.mozilla.org/en-US/docs/Web/CSS',react:'https://react.dev/learn',nodejs:'https://nodejs.org/en/learn',dart:'https://dart.dev/learn',git:'https://git-scm.com/doc',linux:'https://linuxjourney.com/',dsa:'https://opendsa-server.cs.vt.edu/',
+python:'https://docs.python.org/3/tutorial/',javascript:'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide',html:'https://developer.mozilla.org/en-US/docs/Web/HTML',css:'https://developer.mozilla.org/en-US/docs/Web/CSS',react:'https://react.dev/learn',nodejs:'https://nodejs.org/en/learn',dart:'https://dart.dev/learn','rest-api':'https://www.rfc-editor.org/rfc/rfc9110',docker:'https://docs.docker.com/get-started/',git:'https://git-scm.com/doc',linux:'https://linuxjourney.com/',dsa:'https://opendsa-server.cs.vt.edu/',
 typescript:'https://www.typescriptlang.org/docs/handbook/intro.html',java:'https://dev.java/learn/',
 sql:'https://www.postgresql.org/docs/current/tutorial.html',go:'https://go.dev/doc/',rust:'https://doc.rust-lang.org/book/',
 csharp:'https://learn.microsoft.com/en-us/dotnet/csharp/',c:'https://en.cppreference.com/w/c',cpp:'https://en.cppreference.com/w/cpp',
