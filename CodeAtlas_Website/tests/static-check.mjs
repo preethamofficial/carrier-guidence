@@ -213,14 +213,14 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  assert.ok(home.includes('web-development-roadmap.js'),'Main page must load roadmap before app.js');
  assert.ok(home.indexOf('web-development-roadmap.js')<home.indexOf('app.js'),'Roadmap data must load before app logic');
  assert.ok(app.includes('showWebDevelopmentRoadmap'),'App must expose the roadmap view');
- assert.ok(app.includes('web\\\\s*development'),'Search must recognize web development requests');
+ assert.ok(app.includes('web\\s*development'),'Search must recognize web development requests');
  assert.ok(app.includes('data-roadmap-open'),'Roadmap nodes must link to related lessons');
  assert.ok(sw.includes('./web-development-roadmap.js'),'Offline cache must include roadmap data');
  const context={window:{},console};
  vm.runInNewContext(source,context);
  const html=context.window.CodeAtlasWebRoadmap.render();
  assert.equal(context.window.CodeAtlasWebRoadmap.phases.length,4);
- assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),23);
+ assert.equal(context.window.CodeAtlasWebRoadmap.phases.reduce((n,p)=>n+p.topics.length,0),25);
  for(const phase of context.window.CodeAtlasWebRoadmap.phases){
   assert.ok(phase.goal&&phase.topics.length,'Each roadmap phase needs a goal and topics');
   for(const topic of phase.topics){
