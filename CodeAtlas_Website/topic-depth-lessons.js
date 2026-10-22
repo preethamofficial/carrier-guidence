@@ -623,6 +623,176 @@
       interview: "Explain why memory safety is not the same as application correctness, how to structure Result-based errors, and how you would review unsafe code and benchmark claims."
     }
   });
+  add({
+    "csharp-1": {
+      concept: "C# source is compiled into an intermediate language and executed by the .NET runtime, commonly with just-in-time compilation. The SDK provides build and development commands; the target framework selects available APIs and runtime compatibility.",
+      mechanics: "A project file declares target framework and dependencies. dotnet build compiles, dotnet run launches and dotnet test runs tests. Top-level statements simplify entry points but do not remove the underlying program model.",
+      pitfalls: "Using a mismatched SDK, confusing a class library with an executable, relying on machine-specific paths, and assuming that successful compilation proves runtime configuration is correct.",
+      challenge: "Create a console app plus a class library, target an explicit .NET version, add a unit test and document the commands for restore, build, run and test.",
+      interview: "Explain the roles of the .NET SDK, runtime and target framework, and how a C# application is built and executed."
+    },
+    "csharp-2": {
+      concept: "C# has value types and reference types, nullable annotations and explicit conversion rules. Value-type assignment copies the value; reference-type assignment copies a reference, so both variables can observe the same object's mutation.",
+      mechanics: "The compiler performs static type checking. Nullable reference types provide warnings about possible null usage but do not create runtime validation. Numeric conversions can be checked or unchecked; decimal is often suitable for base-10 financial calculations.",
+      pitfalls: "Assuming nullable annotations prevent null at runtime, using == without understanding operator behavior, unchecked overflow, unboxing invalid values, and using binary floating point for exact currency arithmetic.",
+      challenge: "Implement a validated invoice calculator, enable nullable reference analysis, and test missing values, overflow-sensitive inputs and currency rounding.",
+      interview: "Compare value and reference types, explain nullable reference types, and describe checked versus unchecked numeric conversions."
+    },
+    "csharp-3": {
+      concept: "Conditions, loops and arrays control execution and store fixed-length sequences. Arrays are zero-indexed, and the last valid index is Length - 1. Collections and LINQ provide higher-level operations but do not remove the need to understand iteration boundaries.",
+      mechanics: "foreach traverses an enumerable without exposing index updates; for is useful when index control matters. LINQ queries may be deferred until enumerated, depending on the operator. Array bounds are checked and an invalid index throws an exception.",
+      pitfalls: "Off-by-one bounds, modifying a collection during enumeration, enumerating a deferred query repeatedly, and assuming a LINQ query has already executed when it was declared.",
+      challenge: "Summarize marks in an array, filter passing values with LINQ, and test empty input and repeated enumeration. Explain whether the source collection changes.",
+      interview: "Compare for and foreach, explain deferred LINQ execution, and describe how array bounds and empty sequences should be handled."
+    },
+    "csharp-4": {
+      concept: "Methods define callable contracts. Optional parameters, named arguments, overloads and ref/out/in modifiers change how a caller supplies or receives data. An API should make mutation and return behavior clear rather than relying on hidden side effects.",
+      mechanics: "Overload resolution occurs at compile time. C# passes arguments by value by default, including references to objects; ref and out alter parameter passing semantics. Async methods commonly return Task or Task<T> rather than blocking for a result.",
+      pitfalls: "Ambiguous overloads, too many optional parameters, confusing ref/out with ordinary reference-type parameters, and returning mutable internal collections without defining ownership or mutability.",
+      challenge: "Design a parser with clear overloads or TryParse-style results, then test invalid input and demonstrate how passing a reference by value differs from using ref.",
+      interview: "Explain overload resolution, value passing for object references, and the intended distinction between ref, out and in."
+    },
+    "csharp-5": {
+      concept: "Collections encode data structure semantics; generics preserve element types, and LINQ composes filtering, projection, grouping and aggregation. A collection should be chosen according to ordering, uniqueness, lookup and mutation requirements.",
+      mechanics: "List<T> is a resizable ordered collection, HashSet<T> enforces uniqueness, and Dictionary<TKey,TValue> provides key lookup. IEnumerable<T> supports enumeration; many LINQ operators are deferred while materialization methods such as ToList execute the query.",
+      pitfalls: "Assuming deferred queries are cached, modifying a collection while enumerating it, using a mutable object as a dictionary key, and choosing a collection without considering duplicate and ordering rules.",
+      challenge: "Group order records by customer, compute totals, and compare a deferred query with a materialized list. Test duplicate IDs and empty input.",
+      interview: "Compare List, HashSet and Dictionary, explain deferred execution and materialization, and describe how equality affects hash-based collections."
+    },
+    "csharp-6": {
+      concept: "Classes model reference-type objects; properties expose controlled access to state, and constructors establish invariants. Encapsulation means callers use a stable public contract rather than directly changing internal representation.",
+      mechanics: "Auto-properties generate backing storage; init-only setters allow initialization without ordinary later mutation. Records are useful for value-oriented data models, but a record containing mutable references is not deeply immutable. Dependency injection can supply collaborators.",
+      pitfalls: "Public setters that permit invalid state, large classes with unrelated responsibilities, assuming records deep-copy their members, and creating hidden service dependencies inside constructors.",
+      challenge: "Model an order with validated quantity and status transitions. Use private state and public operations, then test that invalid transitions are rejected.",
+      interview: "Explain fields versus properties, class versus record, object invariants, and how dependency injection reduces coupling."
+    },
+    "csharp-7": {
+      concept: "Inheritance models an is-a relationship, and virtual dispatch lets derived implementations specialize behavior through a base contract. Polymorphism is useful when callers can rely on the same behavioral expectations for every implementation.",
+      mechanics: "virtual members may be overridden; abstract members require implementation; sealed can restrict further inheritance. Overload resolution is compile-time, while overridden virtual methods dispatch at runtime. Composition is often preferable when a type merely needs another capability.",
+      pitfalls: "Deep inheritance trees, violating base-class assumptions, hiding rather than overriding a method, and using inheritance as a shortcut for sharing unrelated code.",
+      challenge: "Implement two notification providers behind a common abstraction and test them through the shared contract. Show where composition is a better fit than a subclass.",
+      interview: "Compare overriding and method hiding, explain virtual dispatch, and apply the Liskov substitution principle to a concrete design."
+    },
+    "csharp-8": {
+      concept: "Interfaces define capabilities; exceptions report failures; files and streams are resources that must be disposed. These concerns meet at application boundaries, where code should isolate infrastructure from business rules and make failure handling explicit.",
+      mechanics: "IDisposable and using ensure deterministic cleanup for resources. Exceptions propagate until handled; catch only where recovery or translation is possible. Interfaces can be injected so unit tests substitute a fake implementation for filesystem or network access.",
+      pitfalls: "Swallowing exceptions, failing to dispose streams, catching exceptions too broadly, using platform-default text encoding, and coupling domain logic directly to filesystem APIs.",
+      challenge: "Build a file-backed repository behind an interface, dispose resources with using, and test missing file, malformed input and write failure without coupling domain tests to the real filesystem.",
+      interview: "Explain IDisposable and using, interface-based testing, and how to preserve error context without leaking internal details."
+    },
+    "csharp-9": {
+      concept: "async and await let a method suspend while awaiting asynchronous work. Task represents an operation that may complete later; it is not synonymous with a dedicated thread. Asynchronous I/O improves scalability by avoiding blocked threads while waiting for external systems.",
+      mechanics: "Awaiting a Task resumes the async method when completion is signaled. Task.WhenAll combines independent tasks; cancellation is cooperative through CancellationToken. Async exceptions are observed through the returned task, so callers should await or otherwise observe it.",
+      pitfalls: "Using .Result or .Wait in async call paths, fire-and-forget tasks whose failures are lost, omitting cancellation, assuming async automatically parallelizes CPU work, and holding locks across awaits.",
+      challenge: "Implement an API client with cancellation and timeout behavior, await two independent calls concurrently, and test success, failure and cancellation.",
+      interview: "Compare Task and Thread, explain async I/O, Task.WhenAll and cancellation tokens, and describe why unobserved fire-and-forget failures are dangerous."
+    },
+    "csharp-10": {
+      concept: "Delegates represent callable behavior, events provide a publish/subscribe contract, and LINQ offers composable data transformations. These abstractions are useful when they make the producer-consumer relationship clearer and keep side effects at visible boundaries.",
+      mechanics: "A delegate type defines a method signature. Events restrict ordinary callers to subscribe or unsubscribe rather than invoke the event directly. LINQ operators may be deferred, and expression trees are distinct from compiled delegates because they represent code as data for inspection.",
+      pitfalls: "Event subscribers that are never detached, event handlers that throw and disrupt publishers, side effects inside deferred LINQ queries, and using complex LINQ expressions where a named method is clearer.",
+      challenge: "Build a small order-processing pipeline with a delegate-based predicate and an event for status changes. Test subscriber lifecycle and verify when the LINQ query actually executes.",
+      interview: "Compare delegates and events, explain event subscription leaks, and distinguish deferred LINQ queries from materialized results."
+    },
+    "csharp-11": {
+      concept: "File I/O and LINQ often meet in data-import tasks. Correct code must validate file content, dispose resources, preserve useful error context and avoid repeatedly enumerating a deferred query when its source can change or be expensive.",
+      mechanics: "StreamReader and File APIs expose different loading and streaming choices. Explicit encodings make text interpretation stable. LINQ Select transforms records, Where filters them and GroupBy groups by a key; ToList materializes the results and incurs memory cost.",
+      pitfalls: "Reading huge files fully into memory, assuming malformed data is impossible, catching and ignoring IOException, enumerating a query multiple times, and failing to document culture-sensitive parsing rules.",
+      challenge: "Stream a large CSV file, validate rows, aggregate by category and report malformed line numbers. Compare streaming memory use with loading the full file into a list.",
+      interview: "Explain streaming versus buffering, explicit encoding, deferred execution, and how to design error reporting for a data import."
+    },
+    "csharp-12": {
+      concept: "A production application integrates domain logic, API or UI boundaries, persistence, configuration, tests and observability. Good architecture keeps domain rules independent from frameworks while still using framework-supported dependency injection and hosting conventions.",
+      mechanics: "Separate controllers or endpoints from services and repositories. Validate request DTOs, use structured logging and health checks, configure timeouts, and keep secrets in deployment configuration. Integration tests should verify real serialization and persistence boundaries.",
+      pitfalls: "Business logic in controllers, unvalidated DTOs, hard-coded secrets, missing request timeouts, flaky integration tests and logging sensitive data are common production defects.",
+      challenge: "Build a small API with a service layer, repository interface, validation, structured logs, health endpoint and tests for authorization and persistence failures. Document startup and deployment.",
+      interview: "Explain separation of concerns, dependency injection, unit versus integration testing, and what production readiness requires beyond a successful local build."
+    },
+    "c-1": {
+      concept: "A C toolchain transforms source into an executable through preprocessing, compilation, assembly and linking. The language standard and compiler flags determine which constructs are accepted and which diagnostics are available. Program structure separates declarations, definitions and the entry point.",
+      mechanics: "The preprocessor expands includes and macros; the compiler translates each translation unit; the linker resolves external symbols. main is the hosted program entry point. Header files publish declarations, while source files normally hold definitions. A successful link does not prove runtime memory safety.",
+      pitfalls: "Missing function prototypes, incompatible declarations across files, relying on non-standard extensions, ignoring compiler warnings, and confusing compile-time success with runtime correctness.",
+      challenge: "Split a small program into a header, implementation file and main file. Compile with C11 and strict warnings, then explain the role of each build stage.",
+      interview: "Explain preprocessing, compilation and linking; distinguish declarations and definitions; and state why warnings and a language-standard flag matter."
+    },
+    "c-2": {
+      concept: "C types define object representation, alignment, range and permitted operations. Initialization differs from later assignment, and implicit conversions can change signedness or lose precision. Portable code checks the actual type limits rather than assuming every platform has identical widths.",
+      mechanics: "Integer promotions and the usual arithmetic conversions determine operand types before many operations. Unsigned arithmetic wraps modulo its range; signed overflow is undefined behavior. Format specifiers must match the argument types passed to variadic functions such as printf.",
+      pitfalls: "Signed overflow, mismatched printf specifiers, signed/unsigned comparison surprises, uninitialized automatic variables and narrowing conversions that silently lose information.",
+      challenge: "Write a numeric summary program that validates input range, prints each value with the correct format specifier, and tests negative, zero and maximum permitted values.",
+      interview: "Explain integer promotions, signed overflow, unsigned wraparound, and why printf format mismatches can cause undefined behavior."
+    },
+    "c-3": {
+      concept: "Conditions choose branches and loops repeat a block while a condition permits it. C's expression rules make it possible to write compact control flow, but explicit comparisons and clear loop invariants are easier to review.",
+      mechanics: "A for loop performs initialization once, checks the condition before each iteration, then executes the update. break exits the nearest loop or switch; continue advances to the next loop iteration. A switch dispatches on an integer-like expression and normally needs explicit break statements to avoid fallthrough.",
+      pitfalls: "Off-by-one conditions, accidental assignment inside a condition, missing switch breaks, empty-loop bodies caused by stray semicolons, and loop variables that never change.",
+      challenge: "Implement a range-based summary with min/max and count. Test an empty input policy, a single element and boundary values; use compiler warnings to catch suspicious expressions.",
+      interview: "Explain for-loop execution order, break versus continue, switch fallthrough and how to reason about loop termination."
+    },
+    "c-4": {
+      concept: "A function has a declaration, a definition and a calling contract. Scope controls where names are visible, storage duration controls how long objects exist, and linkage controls whether declarations across translation units refer to the same entity.",
+      mechanics: "Parameters are passed by value; pointers allow a function to modify a caller-owned object indirectly. A prototype informs the compiler of parameter and return types. static at file scope gives internal linkage, while automatic local objects normally cease to exist when their block ends.",
+      pitfalls: "Returning the address of a local variable, missing prototypes, accidental global state, mismatched declarations across files and assuming a pointer parameter means ownership transfer.",
+      challenge: "Write a function that computes a summary through output parameters, document pointer preconditions, and split its declaration and definition into a header and source file.",
+      interview: "Explain scope, storage duration and linkage; describe pass-by-value with pointers; and explain why returning a pointer to a local object is invalid."
+    },
+    "c-5": {
+      concept: "An array is a contiguous sequence of elements, and array expressions often convert to pointers to the first element. A C string is a character array terminated by a null byte, so its capacity and terminator are part of the correctness contract.",
+      mechanics: "The sizeof operator applied to an actual array yields its storage size, but a function parameter declared as an array is adjusted to a pointer. Indexing is pointer arithmetic, and the program must ensure the index remains within the array object. strlen counts bytes before the terminator, not allocated capacity.",
+      pitfalls: "Out-of-bounds reads/writes, forgetting space for the null terminator, using sizeof on a pointer as if it were the original array size, and calling string functions on unterminated character storage.",
+      challenge: "Write a bounded string-copy routine or use a well-defined library approach, pass capacity explicitly, and test empty input, maximum-length input and truncation.",
+      interview: "Explain array-to-pointer conversion, sizeof array versus sizeof pointer, and why a C string requires a null terminator."
+    },
+    "c-6": {
+      concept: "A pointer stores an address and carries assumptions about the object type and lifetime at that address. Dereferencing is valid only when the pointer refers to an appropriately aligned, live object. Pointer arithmetic is constrained to an array object and its one-past position.",
+      mechanics: "& obtains an object's address and * accesses the pointed-to object. A null pointer represents no valid object; an uninitialized pointer has an indeterminate value. const can restrict mutation through a particular pointer path but does not automatically make every alias immutable.",
+      pitfalls: "Uninitialized or dangling pointers, dereferencing NULL, pointer arithmetic outside an array, confusing pointer-to-const with const-pointer, and assuming a pointer automatically owns the referenced object.",
+      challenge: "Implement a function that updates a caller-provided integer through a pointer, checks nullable input, and documents lifetime and ownership requirements. Compile with warnings and a sanitizer.",
+      interview: "Explain address-of and dereference, pointer-to-const versus const-pointer, and the difference between a null, dangling and uninitialized pointer."
+    },
+    "c-7": {
+      concept: "Dynamic allocation requests storage whose lifetime is controlled explicitly by the program. Ownership means one clearly defined part of the program is responsible for releasing that storage; borrowing means another part may use it without releasing it.",
+      mechanics: "malloc returns uninitialized storage, calloc zero-initializes bytes, realloc may move the allocation, and free releases it. Allocation can fail. Allocation-size multiplication should be checked for overflow, and a temporary pointer is safer when storing realloc's result.",
+      pitfalls: "Memory leaks, double free, use-after-free, dereferencing a failed allocation, losing the original pointer when realloc fails, and computing an allocation size that overflowed.",
+      challenge: "Allocate an array from a validated count, grow it safely with realloc, handle allocation failure and free all owned resources on every exit path. Run a memory sanitizer where available.",
+      interview: "Compare malloc, calloc and realloc, explain ownership and lifetime, and describe the safe pattern for handling realloc failure."
+    },
+    "c-8": {
+      concept: "A struct groups fields into one record, while an enum gives names to a set of integer-like states. These types communicate domain meaning and reduce the need for unrelated variables or unexplained numeric constants.",
+      mechanics: "Struct layout may include padding for alignment, so raw memory layout is not automatically a portable file or network format. Enum constants are integer-like values. Initializing a struct with designated initializers can make field intent clear when supported by the chosen C standard.",
+      pitfalls: "Assuming a struct has no padding, serializing raw structs across platforms, leaving fields uninitialized, and allowing invalid state transitions because a struct's fields are public to all code that sees the definition.",
+      challenge: "Model an inventory record with an enum status and validated update function. Serialize fields explicitly rather than writing raw struct bytes, and test invalid status transitions.",
+      interview: "Explain struct padding and alignment, enum purpose, and why raw struct memory should not be treated as a portable serialization format."
+    },
+    "c-9": {
+      concept: "File I/O uses streams whose operations can fail due to permissions, missing files, disk errors or encoding assumptions. Correct code checks open, read, write and close results and ensures every opened stream is closed.",
+      mechanics: "fopen returns NULL on failure. fgets reads bounded text, fread/fwrite operate on byte counts, and EOF is distinct from an I/O error which can be checked with ferror. A relative path is resolved against the process working directory, not automatically the source file directory.",
+      pitfalls: "Ignoring fopen failure, confusing EOF with a read error, assuming a write succeeded before fclose, using unbounded input functions, and trusting paths derived from untrusted input.",
+      challenge: "Build a line-count utility that handles a missing file, empty file and read error. Use bounded reads and report errors to stderr with a nonzero exit status.",
+      interview: "Explain fopen failure, EOF versus ferror, why input should be bounded, and why fclose can still report a write failure."
+    },
+    "c-10": {
+      concept: "A data structure defines how elements are organized and which operations are efficient. Linked lists trade indexed access for node-based insertion; stacks and queues constrain how items are added and removed. The structure's ownership model is as important as its algorithm.",
+      mechanics: "A singly linked list node points to the next node, with NULL marking the end. Inserting at the head is constant time when the head pointer is available; searching remains linear. Every allocated node needs a defined owner and cleanup path.",
+      pitfalls: "Losing the rest of a list by overwriting a link, failing to update the head, leaking removed nodes, dereferencing NULL, and assuming linked lists outperform arrays for every workload.",
+      challenge: "Implement push-front, find, remove and free-all for a singly linked list. Test empty, one-node and multi-node cases and run a memory checker.",
+      interview: "Compare arrays and linked lists, explain insertion and lookup complexity, and describe ownership when deleting a linked-list node."
+    },
+    "c-11": {
+      concept: "Debuggers inspect execution state; compiler warnings flag suspicious constructs; sanitizers detect classes of memory and undefined-behavior defects during instrumented runs. Each tool provides evidence, but none replaces tests and code review.",
+      mechanics: "Build with debug symbols for source-level stepping. AddressSanitizer can detect many out-of-bounds and use-after-free errors; UndefinedBehaviorSanitizer catches selected undefined behavior. Valgrind and static analyzers provide other views depending on platform and toolchain.",
+      pitfalls: "Ignoring warnings, assuming a clean sanitizer run proves correctness, testing only one input, and fixing the last visible crash instead of the earliest invalid state can leave the root cause in place.",
+      challenge: "Create a small test with a deliberate out-of-bounds access in a disposable branch, reproduce it under a sanitizer, fix the defect, and retain a regression test.",
+      interview: "Compare compiler warnings, debugger, AddressSanitizer and UndefinedBehaviorSanitizer, and explain why dynamic tools cannot prove all executions are safe."
+    },
+    "c-12": {
+      concept: "A systems project should make module boundaries, ownership, input validation, failure handling and reproducible builds explicit. Performance-sensitive C is maintainable only when correctness invariants are documented and tested alongside speed.",
+      mechanics: "Separate parsing, domain logic and I/O; expose declarations through headers; use explicit resource cleanup paths; and define how errors reach callers. Build targets should use a declared C standard and strict warnings. Profiling should guide optimization on representative workloads.",
+      pitfalls: "One giant source file, hidden ownership, unbounded input, missing cleanup on error paths, nonportable assumptions and optimization without a repeatable benchmark undermine a systems project.",
+      challenge: "Build an inventory CLI with add/list/remove operations, persistent storage, validated input, a documented ownership model, unit tests and a reproducible build command.",
+      interview: "Describe how you would structure a maintainable C project, audit its memory ownership, test failure paths and measure performance without sacrificing correctness."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
