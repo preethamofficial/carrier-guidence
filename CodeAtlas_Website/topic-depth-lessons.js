@@ -1133,6 +1133,92 @@
       interview: "Explain the capstone's state ownership, async cancellation strategy, persistence boundary and privacy decisions."
     }
   });
+  add({
+    "bash-1": {
+      concept: "Bash is both a command interpreter and a scripting language. A shell command has words, quoting, expansions, redirections and exit status; the shell parses these before launching external programs. Understanding the parse order explains many automation bugs.",
+      mechanics: "Bash performs expansions such as parameter expansion, command substitution and pathname expansion before executing a command. Builtins run inside the shell; external commands run as processes. The current directory, PATH and shell options influence behavior and should be treated as explicit environment dependencies.",
+      pitfalls: "Assuming Bash syntax is POSIX sh syntax, ignoring command exit status, using a script with the wrong interpreter, and failing to quote paths with spaces or wildcard characters.",
+      challenge: "Write a script with a shebang, strict but deliberate error handling, a usage message and one external command. Run it from a different working directory and explain which paths remain stable.",
+      interview: "Explain the difference between Bash and POSIX sh, how a command is parsed and executed, and why the shebang and exit status matter."
+    },
+    "bash-2": {
+      concept: "Shell variables hold strings, and expansion determines how those values become command arguments. Quoting is a correctness and security boundary: double quotes preserve most expansions as one word, single quotes suppress expansion, and unquoted expansions can split words and expand wildcards.",
+      mechanics: "Parameter expansion substitutes variable values; command substitution captures command output and removes trailing newlines. Arithmetic expansion evaluates integer arithmetic. Bash arrays preserve argument boundaries when expanded as quoted arrays, while a plain scalar string is not a safe substitute for an argument list.",
+      pitfalls: "Unquoted variables, using eval to reconstruct a command, confusing single and double quotes, relying on word splitting, and storing multiple arguments in one string can cause accidental file matches or command injection.",
+      challenge: "Write a script that accepts file paths containing spaces, stores arguments in an array, prints them safely and invokes a command without eval. Test spaces, wildcard characters and empty values.",
+      interview: "Explain shell quoting, word splitting, pathname expansion, command substitution, and why arrays are safer than command strings."
+    },
+    "bash-3": {
+      concept: "Pipelines connect one command's standard output to another command's standard input. Redirection changes where input and output flow; file descriptors distinguish standard input, output and error. These mechanisms compose small tools but require explicit failure handling.",
+      mechanics: "The pipe operator connects processes; > truncates a destination file and >> appends. Redirections are processed in order, so redirecting stdout and stderr in a different order can change the result. By default, pipeline status often reflects the last command; pipefail changes how failures are reported.",
+      pitfalls: "Overwriting a file with > unintentionally, discarding stderr, assuming an earlier pipeline command succeeded, and reading a file line-by-line with unsafe word splitting can corrupt data.",
+      challenge: "Create a pipeline that filters a log, counts matching lines and saves diagnostics separately. Enable and explain pipefail, then test what happens when the first command fails.",
+      interview: "Explain file descriptors, the difference between > and >>, redirection order, and why pipefail matters in automation."
+    },
+    "bash-4": {
+      concept: "Conditions and loops let shell scripts make decisions and process lists of arguments or files. Shell syntax is not identical to general-purpose languages: test expressions, exit statuses and quoting rules determine how a condition behaves.",
+      mechanics: "A command returns an exit status; zero conventionally means success and nonzero indicates failure. [[ ... ]] is a Bash conditional compound command with safer pattern and string behavior than legacy test syntax. Use for over quoted arrays when processing explicit arguments.",
+      pitfalls: "Testing strings with the wrong operator, comparing numeric values as strings, using unquoted command substitution in a loop, and assuming a condition tests a printed word rather than the command's exit status.",
+      challenge: "Write a script that validates a numeric argument, loops over supplied paths safely, and reports missing files without stopping the entire batch. Test no arguments and a path containing spaces.",
+      interview: "Explain shell exit status, the difference between [[ ]] and [ ], and why for file in $(find ...) is fragile."
+    },
+    "bash-5": {
+      concept: "A shell function groups commands and returns an exit status; positional parameters carry arguments. Shell functions do not return arbitrary structured values through return, which is intended for numeric status, so output and status should be designed separately.",
+      mechanics: "Inside a function, $1 and the other positional parameters refer to arguments; local limits variable scope. printf emits formatted output predictably. A function can write a result to stdout and use its exit status to indicate success or failure.",
+      pitfalls: "Using global variables accidentally, assuming return can return a string, failing to quote function arguments, and mixing human-readable logs with machine-readable stdout make scripts hard to compose.",
+      challenge: "Create a validate_path function that prints a normalized result on stdout and uses its exit code for success/failure. Send diagnostics to stderr and test callers with paths containing spaces.",
+      interview: "Explain function scope, positional parameters, stdout versus stderr, and why shell return values are normally exit statuses rather than arbitrary data."
+    },
+    "bash-6": {
+      concept: "File automation should treat filenames as data, not as shell syntax. Safe transformations must preserve spaces, newlines and leading dashes where possible, avoid destructive defaults, and make overwrite behavior explicit.",
+      mechanics: "Use quoted path expansions and -- when a command supports it to mark the end of options. find can emit NUL-delimited paths with -print0 and xargs can consume them with -0. Temporary files should be created safely and cleaned up on both success and failure.",
+      pitfalls: "Parsing ls output, using whitespace-delimited command substitution for filenames, deleting recursively without validating the target, and writing to a temporary path that another process could pre-create.",
+      challenge: "Build a file-renaming or cleanup script that handles spaces and newlines in names, previews changes before applying them, and safely cleans temporary files with a trap.",
+      interview: "Explain why parsing ls output is unsafe, how NUL-delimited filenames work, and how to design a safe destructive file operation."
+    },
+    "bash-7": {
+      concept: "Processes have lifetimes, exit statuses and signals. Background jobs allow work to overlap, but scripts must decide how to wait, collect failures and stop child processes. Signal handling is part of the program's cleanup contract.",
+      mechanics: "& starts a background job; wait collects its status. Traps run a handler for selected signals or shell events. A process may spawn descendants, so killing only the immediate PID may not stop the full workload. Job control behavior also differs between interactive and non-interactive shells.",
+      pitfalls: "Starting background tasks without waiting, losing child exit statuses, using broad process-name kills, ignoring SIGTERM cleanup, and assuming a shell trap can interrupt every command instantly.",
+      challenge: "Run several independent tasks with a concurrency limit, collect each status and clean up child processes on termination. Test one child failure and a simulated interrupt.",
+      interview: "Explain foreground versus background jobs, wait, traps and exit statuses, and why process cleanup must account for child processes."
+    },
+    "bash-8": {
+      concept: "Operational scripts often inspect network services and system resources. Diagnostics should distinguish DNS failure, connection refusal, timeout, TLS problems and application-level HTTP errors rather than treating every unsuccessful request as the same failure.",
+      mechanics: "Commands such as curl, getent and ss expose different layers of evidence. curl's failure behavior depends on options; HTTP error statuses are not always command failures unless requested. Timeouts bound how long automation waits, and retries should be limited and appropriate to the operation.",
+      pitfalls: "Using ping as proof that an HTTP service works, omitting request timeouts, treating any HTTP response as success, retrying non-idempotent requests blindly, and printing credentials embedded in command arguments.",
+      challenge: "Write a health-check script with a connection timeout, total timeout, explicit HTTP-status check and distinct exit codes for DNS, transport and application failures. Avoid logging authorization headers.",
+      interview: "Explain DNS versus TCP/TLS versus HTTP failure, curl status handling, and why timeouts and bounded retries are essential in operations scripts."
+    },
+    "bash-9": {
+      concept: "Scheduling repeats work, and idempotency means running an operation more than once has the same intended final effect as running it once. Scheduled jobs must handle overlap, partial failure, stale locks and environment differences.",
+      mechanics: "cron runs commands with a limited environment, so PATH and working directory should be explicit. A lock can prevent overlapping executions, while atomic file replacement can prevent readers from seeing partial output. Logs and exit codes should let operators distinguish success from failure.",
+      pitfalls: "Assuming cron inherits an interactive environment, allowing overlapping jobs to corrupt outputs, using fragile timestamp locks, and writing output directly to a live file before the run succeeds.",
+      challenge: "Create a scheduled report script that uses an explicit environment, prevents overlap, writes to a temporary file and atomically publishes only a successful result. Document recovery after interruption.",
+      interview: "Explain idempotency, scheduled-job environment differences, overlap prevention and atomic publication of generated files."
+    },
+    "bash-10": {
+      concept: "A shell script can expose secrets through arguments, environment dumps, logs, process listings or overly permissive files. Security means minimizing secret lifetime and access while validating every external value before using it in a command or path.",
+      mechanics: "Quote expansions to preserve argument boundaries; avoid eval; use restrictive file permissions and secret stores appropriate to the environment. Environment variables can be inherited by child processes, so they are not automatically private. Least privilege limits the damage from a compromised script.",
+      pitfalls: "Hard-coded tokens, set -x around secrets, logging environment variables, interpolating untrusted data into eval or shell command strings, and running privileged scripts with uncontrolled PATH.",
+      challenge: "Audit a deployment script for secret leakage, remove tracing around sensitive commands, validate inputs, set safe permissions and demonstrate that a malicious-looking argument is passed as data rather than executed.",
+      interview: "Explain shell injection, secret exposure through tracing and environment variables, and how least privilege and safe quoting reduce risk."
+    },
+    "bash-11": {
+      concept: "Shell tests and linting protect operational behavior, where a small quoting or exit-code error can affect many machines. Static analysis catches suspicious patterns; tests verify behavior under controlled conditions; CI makes these checks repeatable.",
+      mechanics: "ShellCheck identifies common shell pitfalls. Bats or another test harness can execute scripts with controlled input and inspect exit codes/output. Tests should isolate filesystem effects using temporary directories and should verify failure cases as well as success.",
+      pitfalls: "Testing only on one machine, asserting output without checking exit status, tests that modify real user data, ignoring ShellCheck warnings, and relying on network services for every unit test.",
+      challenge: "Add ShellCheck and automated tests for a script that processes files. Cover missing arguments, spaces in filenames, a failing child command and cleanup after interruption.",
+      interview: "Explain the roles of ShellCheck, automated shell tests and CI, and how to test scripts without damaging real data."
+    },
+    "bash-12": {
+      concept: "Reliable operations automation is a small software system: it needs inputs, invariants, observability, bounded retries, cleanup and a clear failure contract. The best script is not the shortest one; it is the one an operator can safely rerun and diagnose.",
+      mechanics: "Use explicit options and usage output, validated configuration, structured log prefixes, timeouts, exit codes and cleanup traps. Make destructive steps previewable, write generated artifacts atomically and define what should happen if the process is interrupted midway.",
+      pitfalls: "Unbounded loops, silent failures, hard-coded paths, unsafe deletion, non-idempotent retries, no lock or timeout, and scripts that depend on interactive shell configuration.",
+      challenge: "Deliver a backup or deployment automation script with dry-run mode, locking, validation, checksums or verification, bounded retries, cleanup and a testable rollback plan.",
+      interview: "Describe how to make an operations script idempotent, observable and safe to rerun, and how you would design rollback and recovery."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
