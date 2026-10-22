@@ -283,6 +283,176 @@
       interview: "Explain how to model state with discriminated unions, where runtime validation belongs, and how strict compiler settings improve maintainability."
     }
   });
+  add({
+    "java-1": {
+      concept: "Java source files are compiled to bytecode and executed by a Java Virtual Machine. The JDK contains developer tools such as the compiler; the runtime provides the environment needed to execute compiled classes. Build configuration is part of the program because it fixes the JDK, dependencies and entry point.",
+      mechanics: "javac compiles source into class files, and the java launcher starts the configured main class. Packages map names to namespaces and normally correspond to directory layout. Maven or Gradle make dependency resolution and repeatable builds explicit.",
+      pitfalls: "Confusing a JRE/runtime with a JDK, mismatching package names and directories, compiling with one JDK and running with another, and relying on IDE-only settings.",
+      challenge: "Create a minimal project with a main class and a helper package, build it from the terminal, and document the JDK version and exact command needed for a clean build.",
+      interview: "Explain source-to-bytecode execution, the difference between JDK and JVM, and how a build tool makes dependencies reproducible."
+    },
+    "java-2": {
+      concept: "Java is statically typed: each variable and expression has a compile-time type. Primitive variables store primitive values, while reference variables refer to objects and can be null. Numeric conversions, integer division and wrapper types affect program behavior.",
+      mechanics: "The compiler checks method signatures and conversions before execution. Integer division truncates toward zero; floating-point values use binary representation and may not represent decimal fractions exactly. Wrapper classes such as Integer are objects and participate in autoboxing/unboxing.",
+      pitfalls: "Unboxing null, using == to compare String content, overflowing integer arithmetic, assuming decimal floating point is exact, and mixing primitive and wrapper semantics without considering nullability.",
+      challenge: "Write a typed invoice calculation that validates quantities, compares strings correctly, and uses BigDecimal with an explicit rounding policy for currency.",
+      interview: "Compare primitive and reference types, == and equals, integer and floating-point division, and explain why BigDecimal is often used for monetary values."
+    },
+    "java-3": {
+      concept: "Control flow chooses which statements execute; arrays store a fixed number of elements of one declared component type. Array indices start at zero and the final valid index is length minus one. Collection iteration has different behavior from indexed array loops.",
+      mechanics: "A for loop evaluates initialization once, checks its condition before each iteration and runs its update after the body. Enhanced for loops iterate values. Arrays have a fixed length, and accessing an invalid index throws ArrayIndexOutOfBoundsException.",
+      pitfalls: "Off-by-one loop bounds, modifying an array while assuming its size changes, confusing == with value equality for objects, and failing to handle empty arrays.",
+      challenge: "Calculate min, max and average from an array without using a collection library. Test an empty array, a single element, negative numbers and repeated values.",
+      interview: "Explain array bounds, classic versus enhanced for loops, and how to avoid division by zero when averaging an empty collection."
+    },
+    "java-4": {
+      concept: "A method defines a callable operation with a return type and parameter list. Overloading allows multiple methods with the same name but different parameter signatures. Return type alone cannot distinguish overloads, and compile-time overload selection is distinct from runtime overriding.",
+      mechanics: "Arguments are matched to a method signature using overload-resolution rules, including conversions and varargs. Java passes values by value; for an object reference, the copied value still refers to the same object. A method that returns void communicates through side effects rather than a return value.",
+      pitfalls: "Overloads that are ambiguous for null or primitive conversions, confusing pass-by-value with pass-by-reference, methods with hidden side effects, and returning mutable internal collections can make APIs surprising.",
+      challenge: "Design overloaded methods for parsing integer and decimal inputs, then write tests for ambiguous-looking inputs, invalid values and side effects.",
+      interview: "Explain overloading versus overriding, Java's pass-by-value semantics for references, and why return type alone cannot overload a method."
+    },
+    "java-5": {
+      concept: "A class is a blueprint for instances; constructors establish initial state and methods define behavior. Encapsulation protects invariants by controlling how fields can change. A reference variable is not the object itself, so assignment may create another reference to the same instance.",
+      mechanics: "The new expression allocates and initializes an object. Constructors can validate inputs; final fields support stable state after initialization. Access modifiers define visibility, and equals/hashCode should agree when objects are used as keys or set members.",
+      pitfalls: "Public mutable fields, constructors that permit invalid states, forgetting equals/hashCode contracts, leaking this during construction, and assuming final makes an object deeply immutable.",
+      challenge: "Create an immutable Money or InventoryItem class with constructor validation, value equality and tests showing that callers cannot mutate its state unexpectedly.",
+      interview: "Explain object identity versus equality, constructor responsibilities, access modifiers, and the equals/hashCode contract."
+    },
+    "java-6": {
+      concept: "String is immutable, so repeated concatenation in a loop can create many intermediate objects. StringBuilder is mutable and is useful for repeated assembly. ArrayList provides a resizable indexed sequence and is appropriate when ordered duplicates and fast indexed access are needed.",
+      mechanics: "String operations return new values; StringBuilder appends to an internal buffer. ArrayList grows its backing storage as needed and usually provides constant-time indexed access, while insertion near the front shifts elements. The diamond operator lets the compiler infer generic type arguments.",
+      pitfalls: "Using == for string content, concatenating repeatedly in a large loop, exposing a mutable list when a defensive copy is required, and choosing ArrayList for workloads dominated by frequent middle insertions without measuring.",
+      challenge: "Build a report from thousands of records using StringBuilder and ArrayList. Compare the resulting output against a small reference case and document the expected collection operations.",
+      interview: "Explain String immutability, StringBuilder use cases, and ArrayList trade-offs for indexed reads versus insertions."
+    },
+    "java-7": {
+      concept: "Inheritance creates a subtype relationship; polymorphism allows code to invoke an overridden method through a base-type reference. The design is strongest when a subtype can honor the behavioral contract expected by callers, not merely reuse implementation.",
+      mechanics: "Overridden instance methods are selected dynamically at runtime, while overloaded methods are selected at compile time. super can call base behavior, and final can prevent overriding or subclassing. Prefer composition when a type needs a capability but is not conceptually a subtype.",
+      pitfalls: "Deep inheritance trees, overriding methods while changing their expected contract, confusing overload resolution with dynamic dispatch, and using inheritance solely to share utility code.",
+      challenge: "Model a payment or notification hierarchy and test each implementation through the common base contract. Add a case where composition is a clearer choice than inheritance.",
+      interview: "Compare overloading and overriding, explain runtime dispatch, and describe the Liskov substitution principle in practical terms."
+    },
+    "java-8": {
+      concept: "An interface defines a contract, exceptions represent failure paths, and packages organize names. Interfaces allow business logic to depend on capabilities rather than a concrete class, which improves testing and reduces coupling.",
+      mechanics: "A class implements interface methods; checked exceptions must be caught or declared, while unchecked exceptions do not have that compiler requirement. Package-private access supports internal collaboration. Dependency injection supplies an implementation from outside the consumer.",
+      pitfalls: "Catching exceptions and ignoring them, exposing implementation classes unnecessarily, making interfaces mirror every method of a concrete class, and coupling business logic directly to a database or HTTP client.",
+      challenge: "Define a repository interface, implement an in-memory version for unit tests, and show how the service can use a database implementation without changing its business rules.",
+      interview: "Explain interface-based design, checked versus unchecked exceptions, and how dependency inversion makes code easier to test."
+    },
+    "java-9": {
+      concept: "Collections model groups of values, while generics preserve type relationships at compile time. List, Set and Map have different semantics; selecting the right abstraction avoids manual duplicate checks and unsafe casts.",
+      mechanics: "ArrayList preserves order and duplicates, HashSet enforces uniqueness, and HashMap maps keys to values. Hash-based collections depend on stable equals/hashCode behavior. Generic type parameters are erased in many runtime contexts, which affects reflection and overloads.",
+      pitfalls: "Mutable hash keys, raw collection types, assuming HashMap iteration order, modifying a collection during iteration, and using a list where uniqueness is a domain invariant.",
+      challenge: "Build a word-frequency map and a unique user-ID set. Add tests for duplicate values and explain how equals/hashCode influence custom object keys.",
+      interview: "Compare List, Set and Map; explain hash collisions and equals/hashCode; and describe type erasure at a high level."
+    },
+    "java-10": {
+      concept: "File and network operations can fail and should be treated as resource-owning boundaries. Try-with-resources closes AutoCloseable resources even when an exception occurs, reducing leaks. Exceptions should carry useful context without exposing secrets.",
+      mechanics: "A resource declared in try-with-resources is closed at scope exit. Files APIs can throw checked I/O exceptions; callers should decide whether to recover, translate the error or propagate it. Buffered I/O is usually preferable for repeated reads and writes.",
+      pitfalls: "Leaking streams, swallowing IOException, using platform-default encodings, assuming a path exists, and logging full file contents or credentials during failure handling.",
+      challenge: "Read a UTF-8 CSV file with try-with-resources, validate each row, distinguish I/O failure from malformed data, and write a test for missing and empty files.",
+      interview: "Explain try-with-resources, checked I/O exceptions, explicit text encodings, and why cleanup should not depend on reaching the last line of a method."
+    },
+    "java-11": {
+      concept: "Lambdas represent behavior as values, streams express a pipeline over data, and Optional models a value that may be absent. These tools can improve clarity when the operation is a transformation, but should not hide side effects or make simple code harder to follow.",
+      mechanics: "A stream pipeline has a source, intermediate operations and a terminal operation; many intermediate operations are lazy. Streams should not generally be reused after a terminal operation. Optional.map transforms a present value and flatMap avoids nested Optional structures.",
+      pitfalls: "Putting side effects in stream predicates, calling get without checking presence, using parallel streams without measuring, and creating a long stream pipeline that is harder to debug than a loop.",
+      challenge: "Filter and group orders by status, calculate totals, and represent a missing customer with Optional. Compare the stream version with a loop and justify readability and performance.",
+      interview: "Explain stream laziness, intermediate versus terminal operations, map versus flatMap, and why Optional.get without a presence check is risky."
+    },
+    "java-12": {
+      concept: "Records model data-oriented classes concisely, sealed types restrict which classes may extend or implement a type, and pattern matching can reduce repetitive type checks and casts. These features are version-sensitive, so the project JDK and language level must be explicit.",
+      mechanics: "A record generates a canonical constructor, accessors and value-oriented methods, but nested mutable objects are not automatically deeply immutable. Sealed hierarchies list permitted subtypes. Pattern matching refines the type of a value after a successful test.",
+      pitfalls: "Assuming records validate all invariants automatically, treating records as deeply immutable, using newer syntax with an older JDK, and making a sealed hierarchy too closed for the domain's extension needs.",
+      challenge: "Represent a payment result as a sealed success/failure hierarchy with records for data. Add constructor validation and tests for each variant using the project's chosen JDK.",
+      interview: "Compare records with ordinary classes, explain sealed type benefits, and identify why a project's Java language level affects available syntax."
+    },
+    "sql-1": {
+      concept: "A relational database stores data in tables with rows and columns, while a query asks the database to return a set of rows. SQL is declarative: you specify the result you want, and the database chooses an execution plan. Schema design defines the data types and integrity rules the engine can enforce.",
+      mechanics: "CREATE TABLE defines columns and constraints; INSERT adds rows; SELECT projects columns and FROM identifies the source. A query without ORDER BY has no guaranteed row order. SQL NULL represents missing or unknown information and is not equal to ordinary values.",
+      pitfalls: "Assuming physical row order, using SELECT * in stable application contracts, confusing NULL with zero or empty text, and skipping primary/foreign-key design lead to unreliable data access.",
+      challenge: "Create customers and orders tables with primary and foreign keys, insert sample rows, and write a query that returns a defined set of columns in deterministic order.",
+      interview: "Explain relational tables, declarative querying, primary keys, foreign keys, and why ORDER BY is required when result ordering matters."
+    },
+    "sql-2": {
+      concept: "SELECT projects columns, WHERE filters individual rows, and ORDER BY sorts the final result. The logical query-processing model helps explain why aliases, aggregates and filtering clauses have different rules even though the SQL text begins with SELECT.",
+      mechanics: "WHERE is evaluated before grouping; ORDER BY is applied to the resulting query rows. NULL comparisons use IS NULL or IS NOT NULL, not equality. LIKE patterns use percent for any-length text and underscore for one character in standard SQL-style matching.",
+      pitfalls: "Using SELECT * for production interfaces, forgetting deterministic tie-breakers in ORDER BY, comparing NULL with equals, and applying functions to indexed columns without checking the plan can hurt correctness or performance.",
+      challenge: "Write a report that filters a date range, handles NULL values explicitly, sorts by total descending and uses a stable secondary key for ties.",
+      interview: "Explain WHERE versus HAVING, how NULL affects predicates, and why ORDER BY on only one non-unique column may still leave ties unordered."
+    },
+    "sql-3": {
+      concept: "Aggregate functions summarize groups of rows. GROUP BY creates one result group per distinct grouping key; HAVING filters those groups after aggregation. The distinction between row-level and group-level predicates is fundamental to analytical SQL.",
+      mechanics: "COUNT(*) counts rows, COUNT(column) ignores NULL in that column, and SUM/AVG operate on non-NULL values. Every selected non-aggregated expression generally must be grouped or otherwise valid under the database's grouping rules. A WHERE clause reduces rows before aggregate calculations.",
+      pitfalls: "Filtering aggregate results in WHERE, counting nullable columns when row counts are intended, accidentally grouping at the wrong grain, and joining one-to-many tables before aggregation so totals are multiplied.",
+      challenge: "Calculate monthly sales by customer, show only customers above a threshold, and prove the totals remain correct when a customer has multiple order lines.",
+      interview: "Compare WHERE and HAVING, COUNT(*) and COUNT(column), and explain how join cardinality can inflate aggregate results."
+    },
+    "sql-4": {
+      concept: "A join combines rows from relations according to a matching predicate. Join type controls what happens to unmatched rows; join cardinality determines whether each input row can match zero, one or many rows. Correct joins depend on understanding keys and relationship grain.",
+      mechanics: "INNER JOIN keeps matches, LEFT JOIN keeps every left-side row and fills missing right-side columns with NULL. A predicate placed in WHERE can remove those NULL-extended rows and effectively change a left join's behavior. Many-to-many joins can multiply rows unless the relationship is modeled explicitly.",
+      pitfalls: "Joining on a non-unique name instead of a key, forgetting part of a composite key, filtering the right table in WHERE after a left join, and aggregating after a row-multiplying join without accounting for grain.",
+      challenge: "Return every customer, including those with no orders, plus each customer's order count. Test a customer with zero orders and verify that it remains in the output.",
+      interview: "Compare inner, left and full joins; explain ON versus WHERE for outer joins; and diagnose why a join unexpectedly duplicates rows."
+    },
+    "sql-5": {
+      concept: "A subquery nests one query inside another; a common table expression names a query result for use within a larger statement. Both help break complex logic into readable steps, but the optimizer may inline or transform them depending on the database.",
+      mechanics: "A scalar subquery returns one value, while a correlated subquery references the current outer row. EXISTS tests whether matching rows exist and can express a semi-join intention. A recursive CTE can traverse hierarchical relationships when supported.",
+      pitfalls: "A scalar subquery returning multiple rows, accidental correlation that repeats expensive work, using NOT IN when the subquery may contain NULL, and assuming a CTE is always materialized.",
+      challenge: "Find customers who have placed at least one order and those who have never ordered. Compare EXISTS with a join and explain the expected output when duplicate orders exist.",
+      interview: "Compare subqueries and CTEs, correlated subqueries and EXISTS, and explain the NULL hazard with NOT IN."
+    },
+    "sql-6": {
+      concept: "Window functions calculate values across related rows without collapsing them into one row per group. They are useful for ranking, running totals, period comparisons and top-N-per-group queries while retaining each detail row.",
+      mechanics: "OVER defines a window, PARTITION BY separates groups, and ORDER BY defines sequence inside each partition. ROW_NUMBER assigns unique sequence numbers, RANK leaves gaps after ties, and DENSE_RANK does not. The window frame affects running calculations and should be specified when the default is not the intended behavior.",
+      pitfalls: "Using a non-deterministic order for row_number, confusing rank variants, omitting the correct partition key, and relying on a default frame that does not match the desired running-total semantics.",
+      challenge: "Rank employees by salary within each department, keep the top three per department, and test ties in salary with both RANK and DENSE_RANK.",
+      interview: "Compare window functions with GROUP BY, ROW_NUMBER with RANK/DENSE_RANK, and explain PARTITION BY versus a window frame."
+    },
+    "sql-7": {
+      concept: "A schema defines tables, types, keys and constraints. Normalization reduces update anomalies by separating facts that belong to different entities; denormalization may later improve a measured workload but must preserve consistency.",
+      mechanics: "Primary keys uniquely identify rows; foreign keys enforce references; UNIQUE, CHECK and NOT NULL constraints enforce additional invariants. First, second and third normal forms address repeating groups, partial dependency and transitive dependency under their formal assumptions.",
+      pitfalls: "Using natural labels as unstable keys, duplicating a fact in many rows, assuming application validation is enough without database constraints, and normalizing or denormalizing without understanding access patterns.",
+      challenge: "Design a customer-order-order-line schema, state each entity's key and functional dependencies, and explain which update anomalies a normalized design avoids.",
+      interview: "Explain primary and foreign keys, normalization through third normal form, and when denormalization may be justified."
+    },
+    "sql-8": {
+      concept: "INSERT, UPDATE and DELETE change persisted rows. Correct data mutation needs a precise predicate, integrity constraints and a transaction boundary where several statements must succeed together. The number of affected rows is part of the operation's outcome.",
+      mechanics: "UPDATE changes rows matching WHERE; omitting WHERE can update every row. DELETE removes matching rows but may be restricted by foreign keys. RETURNING is supported by some databases and can report changed rows. Parameter binding keeps data separate from SQL syntax.",
+      pitfalls: "Running UPDATE or DELETE without verifying the predicate, building SQL by concatenating input, ignoring affected-row counts, and applying multi-step changes without a transaction can corrupt data.",
+      challenge: "Implement a stock decrement that refuses negative inventory, checks the affected-row count and rolls back when a later step fails. Test insufficient stock and concurrent updates.",
+      interview: "Explain why UPDATE without WHERE is dangerous, how parameterized queries prevent injection, and how transactions protect multi-step changes."
+    },
+    "sql-9": {
+      concept: "A transaction groups database work into an atomic unit. Isolation defines which concurrent effects a transaction may observe; locking and MVCC are implementation techniques that help preserve consistency under concurrent access.",
+      mechanics: "ACID describes atomicity, consistency, isolation and durability. Depending on the database, isolation levels permit different phenomena such as non-repeatable reads or phantom rows. Deadlocks can occur when transactions acquire locks in conflicting orders; the database may abort one transaction.",
+      pitfalls: "Assuming every database implements isolation levels identically, holding transactions open while waiting on a user, retrying a non-idempotent operation blindly, and ignoring deadlock or serialization errors.",
+      challenge: "Transfer money between two accounts in one transaction, validate the balance, force a failure between updates, and prove that rollback restores the original balances.",
+      interview: "Explain ACID, compare common isolation levels, and describe how deadlocks arise and how an application should handle a retryable transaction failure."
+    },
+    "sql-10": {
+      concept: "Indexes trade extra storage and write work for faster access paths. EXPLAIN shows how a database plans to retrieve and combine rows; performance tuning should begin with a representative query and measured plan rather than adding indexes by intuition.",
+      mechanics: "B-tree indexes commonly support equality and range searches; composite index usefulness depends on column order and query predicates. Statistics influence cardinality estimates. EXPLAIN ANALYZE executes a query in systems that support it, so use care with statements that modify data.",
+      pitfalls: "Indexing every column, ignoring index maintenance cost, applying non-sargable expressions to filtered columns, tuning against tiny sample data, and treating estimated cost as a direct millisecond measurement.",
+      challenge: "Compare the plan for a filtered date-range query before and after an appropriate composite index. Record row estimates, actual rows and execution time using representative data.",
+      interview: "Explain how indexes work at a high level, what a query plan reveals, and why an index can fail to improve a query."
+    },
+    "sql-11": {
+      concept: "Views provide named query interfaces; stored procedures and user-defined functions package logic inside the database with database-specific semantics. These features can centralize rules, but they also introduce deployment, permission and portability considerations.",
+      mechanics: "A normal view stores a query definition, not necessarily its result; a materialized view stores results and needs refresh behavior. Procedures and functions differ across database engines in return semantics, transaction control and invocation. Grant only the permissions required for each role.",
+      pitfalls: "Assuming every view is materialized, creating procedures that hide critical business logic from source control, granting excessive execution privileges, and relying on vendor-specific syntax without documenting it.",
+      challenge: "Create a view for a safe public customer report, restrict access to underlying sensitive columns, and document how the view changes when the base schema evolves.",
+      interview: "Compare views and materialized views, discuss procedures versus functions in a chosen database, and explain how database permissions support least privilege."
+    },
+    "sql-12": {
+      concept: "Analytical SQL transforms event-level records into measures and cohorts while preserving the correct grain. A running total, pivot or cohort-retention table is only meaningful when the time zone, date bucket, denominator and missing-data policy are explicit.",
+      mechanics: "Conditional aggregation uses CASE inside aggregate functions; date truncation and interval arithmetic are database-specific; window functions can compute cumulative sums. Cohort queries assign entities to a start period and compare later activity against a clearly defined cohort denominator.",
+      pitfalls: "Double-counting after joins, mixing event and user grain, treating missing activity as zero without defining the metric, inconsistent time zones, and comparing cohorts with different observation windows.",
+      challenge: "Build a monthly active-user and retention report from event records. State the cohort definition, timezone, deduplication rule and denominator, then test users with no later activity.",
+      interview: "Explain grain, conditional aggregation, running totals and cohort retention, and identify the assumptions required for a trustworthy analytics query."
+    }
+  });
   window.CodeAtlasTopicDepth = {
     render,
     count: () => Object.keys(lessons).length,
