@@ -84,3 +84,17 @@ The main page and Career Studio include descriptions and Open Graph metadata. A 
 ## Web Development Roadmap
 
 The main learning map includes an interactive end-to-end Web Development Roadmap. Search for **web development**, **web dev**, **full stack roadmap**, or **frontend roadmap**, or use the home-page button. The roadmap has four phases and 26 expandable topics across web foundations, frontend programming, backend/data, and production readiness. Every topic now opens its own advanced mind map with four topic-specific branches, at least 12 concepts, a mastery checklist, and official documentation links. Each topic also includes learning objectives, a representative code pattern, a practical challenge, and a link into the relevant lesson. The topic map catalogue is `web-development-topic-maps.js`; the roadmap renderer is `web-development-roadmap.js`; both are styled in `styles.css` and cached for offline use. Runtime tests verify all 26 maps, branch depth, reference links, search routing and related lesson links.
+
+
+## Advanced Career Skills Atlas
+
+The home page includes **Explore AI, DevOps, Cybersecurity & More** in addition to the Web Development Roadmap. The new `career-skills-roadmaps.js` module contains six additional paths with 48 topic modules:
+
+- **AI & Generative AI Engineering:** Python for AI, ML, transformers, LLM APIs, RAG, agents, evaluation/LLMOps, AI safety and serving.
+- **DevOps, Cloud & Platform Engineering:** Linux, Git, Docker, CI/CD, cloud architecture, IaC/GitOps, Kubernetes/platform engineering, SRE and FinOps.
+- **Cybersecurity & Defensive Security:** threat modelling, networking, OWASP, IAM, cloud/container security, SOC/SIEM, incident response, secure SDLC and AI security.
+- **Linux, Networking & Systems:** shell/filesystem, processes/permissions, DNS/TCP/IP, storage/backups, scripting, service troubleshooting, SSH hardening, containers and VMs.
+- **AI Tools, Automation & Productivity:** prompt design, source-based research, AI coding assistants, documents/spreadsheets, workflow automation, knowledge systems, multimodal workflows, privacy and governance.
+- **Data Engineering, Analytics & MLOps:** SQL/data modelling, Python analytics, pipelines, warehouses/lakehouses, quality/governance, analytics engineering, experiment tracking, model serving and monitoring.
+
+Each module includes a topic-specific 12-concept mind map, explanations, learning objectives, a code/starter pattern, a practical lab, a completion check and official documentation links. Search for a track name or click the new home-page button to open it. The service-worker cache is versioned to v15 for the new module. Trend choices were informed by primary-source materials including GitHub Octoverse, the CNCF cloud-native report, the Linux Foundation tech talent report, and the DSCI India cybersecurity skilling landscape; this is a curated learning curriculum, not a guarantee of hiring outcomes.
