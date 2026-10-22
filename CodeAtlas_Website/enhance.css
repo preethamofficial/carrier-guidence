@@ -20,3 +20,18 @@
 .topic-card[data-adv]:after{content:"NEW · ADVANCED";position:absolute;top:10px;right:10px;font-size:8px;font-weight:800;letter-spacing:1px;color:#fff;background:linear-gradient(90deg,#635bff,#e0457b);border-radius:20px;padding:3px 7px}
 @media(max-width:760px){.hero-code{position:relative;width:100%;right:auto;top:auto;margin-top:16px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Advanced roadmap module explanations */
+.module-plain-explanation,.module-example-explanation{margin:20px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,#f5faff,#fff)}
+.module-plain-explanation h3,.module-example-explanation h3{margin:4px 0 12px;color:var(--ink)}
+.module-plain-explanation h4,.module-example-explanation h4{margin:18px 0 8px;color:var(--accent,#136f9a)}
+.module-plain-explanation p,.module-example-explanation p,.module-plain-explanation li,.module-example-explanation li{line-height:1.75}
+.module-concept-explanations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.module-concept-explanations article{border:1px solid var(--line);background:var(--surface,#fff);border-radius:11px;padding:13px;min-width:0}
+.module-concept-explanations h5{margin:0 0 7px;font-size:14px;color:var(--ink)}
+.module-concept-explanations p{font-size:13px;margin:7px 0;color:var(--muted)}
+.module-example-explanation pre{overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#122331;color:#e4f2f8;border-radius:10px;padding:14px}
+.module-example-explanation ol{padding-left:24px}
+.module-example-explanation li{margin:8px 0}
+.module-example-explanation li code{display:inline-block;max-width:100%;overflow-wrap:anywhere;background:var(--surface,#eef4f8);padding:3px 5px;border-radius:5px}
+@media(max-width:700px){.module-concept-explanations{grid-template-columns:1fr}.module-plain-explanation,.module-example-explanation{padding:13px}}
