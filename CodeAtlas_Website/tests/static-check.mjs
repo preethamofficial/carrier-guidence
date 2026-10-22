@@ -248,7 +248,6 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
 });
 
 {
- const root=path.join(process.cwd(),'CodeAtlas_Website');
  const skillsFile=path.join(root,'career-skills-roadmaps.js');
  assert.ok(fs.existsSync(skillsFile),'Missing career skills roadmaps module');
  const source=fs.readFileSync(skillsFile,'utf8');
