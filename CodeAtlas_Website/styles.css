@@ -182,3 +182,18 @@ body.dark .topic-map-center{background:linear-gradient(120deg,#252d52,#1c4850)}
 .skills-search-result strong,.skills-search-result small{display:block}.skills-search-result strong{font-size:12px}.skills-search-result small{font-size:9px;color:var(--accent);margin-top:4px}
 .skills-search-result p{font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 0}.skills-search-result:hover{border-color:var(--accent)}
 @media(max-width:700px){.skills-directory-grid,.skills-branches{grid-template-columns:1fr}.skills-directory-hero,.skills-roadmap-hero{padding:16px}.skills-roadmap-map{padding:9px}.skills-topic-body{padding:10px}.hero-quick-actions>*{width:100%}}
+
+
+/* Detailed JavaScript lessons: readable explanations, code, and self-check exercises */
+.javascript-deep-lesson{margin:1.25rem 0;padding:clamp(1rem,2.5vw,1.5rem);border:1px solid var(--border-color, #d9e2ef);border-radius:1rem;background:var(--card-bg,rgba(127,145,170,.045))}
+.javascript-deep-lesson>h3{margin:.35rem 0 .75rem;font-size:1.25rem}
+.javascript-lesson-intro{font-size:1.02rem;line-height:1.8;max-width:78ch}
+.javascript-lesson-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:1rem 0 1.25rem}
+.javascript-lesson-section{padding:1rem;border:1px solid var(--border-color,#d9e2ef);border-radius:.8rem;background:var(--surface,rgba(127,145,170,.035))}
+.javascript-lesson-section h4{margin:0 0 .5rem;font-size:1rem}
+.javascript-lesson-section p,.javascript-deep-lesson>p{line-height:1.75;margin:.4rem 0}
+.javascript-deep-lesson pre{overflow:auto;padding:1rem;border-radius:.75rem;line-height:1.65;background:var(--code-bg,#101827);color:var(--code-color,#edf3ff)}
+.javascript-practice-list{padding-left:1.4rem;display:grid;gap:.65rem;line-height:1.65}
+.javascript-practice-list label{display:flex;align-items:flex-start;gap:.6rem}
+.javascript-practice-list input{margin-top:.35rem;flex:0 0 auto}
+@media(max-width:700px){.javascript-lesson-sections{grid-template-columns:1fr}.javascript-deep-lesson{padding:1rem}}
