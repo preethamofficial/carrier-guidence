@@ -129,3 +129,56 @@ body.dark .roadmap-node-content pre{background:#090e17}
 .topic-map-resources a:hover{border-color:var(--accent);text-decoration:underline}
 body.dark .topic-map-center{background:linear-gradient(120deg,#252d52,#1c4850)}
 @media(max-width:760px){.topic-map-deep{padding:10px}.topic-map-heading{display:block}.topic-map-badge{display:inline-block;margin-top:9px}.topic-map-canvas{padding:10px}.topic-map-branches{grid-template-columns:1fr;gap:11px}.topic-map-branch:before{left:15px}.topic-map-checks{grid-template-columns:1fr}.topic-map-center strong{font-size:12px}}
+
+
+/* CAREER SKILLS ATLAS */
+.hero-quick-actions{display:flex;flex-wrap:wrap;gap:10px}
+.skills-directory-hero,.skills-roadmap-hero{margin-bottom:22px;padding:24px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--panel),color-mix(in srgb,var(--accent-soft) 35%,var(--panel)))}
+.skills-directory-hero h1,.skills-roadmap-hero h1{font-size:clamp(25px,4vw,38px);letter-spacing:-1.1px;line-height:1.12;margin:10px 0}
+.skills-directory-hero>p,.skills-roadmap-hero>p{max-width:780px;color:var(--muted);font-size:12px;line-height:1.8}
+.skills-roadmap-hero{border-left:4px solid var(--skill-color)}
+.skills-roadmap-hero .eyebrow,.skills-directory-hero .eyebrow{font-size:10px;letter-spacing:1.3px;font-weight:900;color:var(--accent)}
+.skills-roadmap-stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.skills-roadmap-stats span{font-size:10px;padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--muted)}
+.skills-roadmap-stats b{color:var(--ink)}
+.skills-directory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+.skills-track-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;padding:17px;border:1px solid var(--line);border-radius:13px;background:var(--panel);color:var(--ink);cursor:pointer;transition:transform .15s,border-color .15s;min-width:0}
+.skills-track-card:hover{transform:translateY(-2px);border-color:var(--skill-color)}
+.skills-track-tag{font-size:9px;letter-spacing:.9px;font-weight:900;color:var(--skill-color)}
+.skills-track-card>strong{font-size:14px;line-height:1.4}
+.skills-track-card p{font-size:11px;line-height:1.7;color:var(--muted);margin:0;flex:1}
+.skills-track-foot{font-size:10px;color:var(--skill-color);font-weight:800;margin-top:4px}
+.skills-roadmap-actions{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+.skills-roadmap-map{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--panel)}
+.skills-roadmap-root{display:flex;gap:12px;align-items:center;justify-content:center;max-width:460px;margin:0 auto 18px;padding:16px;border-radius:12px;background:var(--skill-color,#5367b4);color:#fff;text-align:center}
+.skills-roadmap-root>span{font-size:24px}.skills-roadmap-root b,.skills-roadmap-root small{display:block}
+.skills-roadmap-root b{font-size:12px;line-height:1.5}.skills-roadmap-root small{font-size:9px;opacity:.85;margin-top:5px}
+.skills-topic{border:1px solid var(--line);border-radius:11px;margin:10px 0;overflow:hidden;background:var(--bg);scroll-margin-top:16px}
+.skills-topic>summary{display:flex;gap:11px;align-items:center;list-style:none;cursor:pointer;padding:13px}
+.skills-topic>summary::-webkit-details-marker{display:none}.skills-topic-number{display:grid;place-items:center;flex:0 0 34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font:11px 'DM Mono',monospace}
+.skills-topic>summary>span:nth-child(2){flex:1;min-width:0}.skills-topic>summary b{font-size:12px;line-height:1.5;display:block}
+.skills-topic>summary small{font-size:9px;line-height:1.5;color:var(--muted);display:block;margin-top:3px}
+.skills-topic[open]>summary{background:var(--accent-soft);border-bottom:1px solid var(--line)}.skills-topic-body{padding:15px}
+.skills-topic-why{font-size:11px;line-height:1.8;color:var(--muted);margin:0 0 14px}.skills-topic-body h3{font-size:12px;margin:17px 0 9px}
+.skills-topic-body>ul{padding-left:19px;display:grid;gap:7px}.skills-topic-body li{font-size:10px;line-height:1.7;color:var(--muted)}
+.skills-topic-body pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:13px;border-radius:9px;border:1px solid var(--line);background:var(--panel);font-size:10px;line-height:1.7;overflow-x:auto}
+.skills-topic-map{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
+.skills-topic-center{max-width:350px;margin:0 auto 15px;border-radius:10px;padding:13px;background:var(--skill-color);color:white;text-align:center;font-size:12px;font-weight:900}
+.skills-topic-center small{display:block;font-size:8px;letter-spacing:1px;margin-top:5px;opacity:.8}
+.skills-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.skills-branch{border:1px solid var(--line);border-radius:9px;overflow:hidden;min-width:0}
+.skills-branch header{display:flex;align-items:center;gap:8px;padding:10px;background:var(--accent-soft);font-size:10px}
+.skills-branch header span{font:10px 'DM Mono',monospace;color:var(--accent)}.skills-branch header strong{line-height:1.5}
+.skills-branch ul{list-style:none;padding:9px;margin:0;display:grid;gap:6px}
+.skills-branch li{padding:7px 8px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:10px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
+.skills-resources{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:15px}.skills-resources h3{width:100%}
+.skills-resources a{font-size:10px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;color:var(--accent);text-decoration:none;background:var(--panel)}
+.skills-resources a:hover{border-color:var(--accent);text-decoration:underline}
+.skills-finish{margin-top:15px;padding:11px;border-radius:8px;border:1px solid var(--line);font-size:10px;line-height:1.6;color:var(--muted)}
+.skills-finish label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.skills-finish input{accent-color:var(--accent);margin-top:2px}
+.skills-capstone{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--accent-soft)}
+.skills-capstone h2{font-size:15px;margin:0 0 8px}.skills-capstone p{font-size:11px;line-height:1.8;color:var(--muted);margin:0}
+.skills-search-results{display:grid;gap:8px;margin-top:20px}.skills-search-result{display:block;text-align:left;border:1px solid var(--line);border-radius:10px;padding:13px;background:var(--panel);color:var(--ink);cursor:pointer}
+.skills-search-result strong,.skills-search-result small{display:block}.skills-search-result strong{font-size:12px}.skills-search-result small{font-size:9px;color:var(--accent);margin-top:4px}
+.skills-search-result p{font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 0}.skills-search-result:hover{border-color:var(--accent)}
+@media(max-width:700px){.skills-directory-grid,.skills-branches{grid-template-columns:1fr}.skills-directory-hero,.skills-roadmap-hero{padding:16px}.skills-roadmap-map{padding:9px}.skills-topic-body{padding:10px}.hero-quick-actions>*{width:100%}}
