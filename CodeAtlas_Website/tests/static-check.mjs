@@ -161,5 +161,21 @@ check('Career Command Center includes core role and privacy safeguards',()=>{
  for(const marker of ['roleSkills','genai:','python:','data:','frontend:','qa:','devops:','security:','codeatlas.command-center.v1','application/json','localStorage'])assert.ok(source.includes(marker),'Missing command center behavior '+marker);
  assert.ok(!/fetch\s*\(/.test(source),'Career Command Center should not call external APIs');
 });
+
+check('Comprehensive explanation layer is wired into all existing topic pages',()=>{
+ const lessonFile=path.join(root,'comprehensive-lessons.js');
+ assert.ok(fs.existsSync(lessonFile),'Missing comprehensive explanation layer');
+ const lessonSource=fs.readFileSync(lessonFile,'utf8');
+ for(const marker of ['In-depth explanation','Execution walkthrough','Common mistakes and debugging','Practice challenge','Production-readiness review'])assert.ok(lessonSource.includes(marker),'Missing explanation section '+marker);
+ const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
+ assert.ok(app.includes('CodeAtlasComprehensiveStudy.renderLesson'),'Main topic renderer must use comprehensive explanations');
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.ok(home.includes('comprehensive-lessons.js'),'Main page must load comprehensive explanations');
+ const library=fs.readFileSync(path.join(root,'language-library.html'),'utf8');
+ assert.ok(library.includes('comprehensive-lessons.js'),'Additional language page must load explanations');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ assert.ok(sw.includes('./comprehensive-lessons.js'),'Service worker must cache the new lesson file');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
