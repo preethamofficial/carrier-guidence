@@ -3,7 +3,7 @@
 'use strict';
 const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const DOCS = {
-python:'https://docs.python.org/3/tutorial/',javascript:'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide',
+python:'https://docs.python.org/3/tutorial/',javascript:'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide',html:'https://developer.mozilla.org/en-US/docs/Web/HTML',css:'https://developer.mozilla.org/en-US/docs/Web/CSS',react:'https://react.dev/learn',nodejs:'https://nodejs.org/en/learn',dart:'https://dart.dev/learn',git:'https://git-scm.com/doc',linux:'https://linuxjourney.com/',dsa:'https://opendsa-server.cs.vt.edu/',
 typescript:'https://www.typescriptlang.org/docs/handbook/intro.html',java:'https://dev.java/learn/',
 sql:'https://www.postgresql.org/docs/current/tutorial.html',go:'https://go.dev/doc/',rust:'https://doc.rust-lang.org/book/',
 csharp:'https://learn.microsoft.com/en-us/dotnet/csharp/',c:'https://en.cppreference.com/w/c',cpp:'https://en.cppreference.com/w/cpp',
@@ -12,6 +12,9 @@ php:'https://www.php.net/manual/en/',kotlin:'https://kotlinlang.org/docs/home.ht
 function family(title) {
  const t=title.toLowerCase(), rules=[
  ['setup',/setup|toolchain|first program|runtime|program structure|compiler|build/],
+ ['html',/document structure|elements and attributes|semantic landmarks|headings|images and alt|forms and validation|tables|audio and video|metadata and seo|accessibility and aria|html security|validation and portfolio/],
+ ['css',/selectors and cascade|box model|typography and units|flexbox|grid|responsive design|positioning|custom properties|transitions|focus and accessible forms|css architecture/],
+ ['testing',/accessibility|testing|debugging|validation|capstone|ci|performance/],
  ['types',/type|variable|operator|null|optional|value semantics|constant/],
  ['text',/string|text|encoding|json|serialization/],
  ['control',/condition|loop|control flow|switch|match/],
@@ -22,6 +25,7 @@ function family(title) {
  ['async',/async|await|concurr|goroutine|channel|coroutine|thread|future|flow|actor|process/],
  ['database',/database|sql|schema|transaction|query|index|migration|repository|orm|persistence|jdbc|room/],
  ['http',/http|api|rest|network|fetch|socket|web service|routing|request|response/],
+ ['security',/security|auth|secret|permission|privacy|xss|csrf|keychain|credential/],
  ['security',/security|auth|secret|permission|privacy|xss|csrf|keychain|credential/],
  ['testing',/test|debug|profile|benchmark|fuzz|sanitizer|ci|performance|observability/],
  ['files',/file|stream|pipe|redirection|module|package|composer|cargo|gradle|spm|deployment|configuration/],
@@ -132,13 +136,16 @@ function makeQuestion(title,lang,kind,n,p) {
  return {question:(kind==='practice'?'For ':'Explain ')+title.toLowerCase()+(kind==='practice'?' how you would handle '+cases[n%cases.length]:' and discuss '+['the contract and use case','the most important edge case','how to test it','the production trade-off'][n%4]),hint:p.verification,answer:p.why+' '+p.mistakes+' Implement the smallest correct behavior, validate at the boundary and test normal, boundary and failure cases using the '+lang.name+' toolchain.'};
 }
 function makeTopic(lang,meta,number) {
- const topic={id:lang.id+'-'+number,title:meta[0],level:number<=14?'Intermediate':'Advanced',definition:meta[1]+' The engineering contract should specify inputs, output/state changes, failure outcomes and caller assumptions.',analogy:'Think of '+meta[0].toLowerCase()+' as a documented workflow: each step has a purpose, inputs have rules and failure must be visible.',keyPoints:[meta[1],'Why it matters: this concept makes application behavior easier to reason about and test.','Correctness: validate values at the boundary before changing state.','Failure handling: '+meta[3],'Testing: cover ordinary, boundary and failure cases.','Practice: '+meta[4]],intro:['Learning objective: understand '+meta[0].toLowerCase()+' in '+lang.name+' and apply it in a testable feature.',meta[1],'Test what happens when inputs are missing, malformed, duplicated, oversized or unavailable.','Run the example in the supported toolchain and verify behavior against the official reference.'],body:[{heading:'Concept and contract',text:meta[1]},{heading:'How the example works',text:'Trace declarations, inputs, state changes and outputs. Identify where failure can occur and what the caller observes.'},{heading:'Failure modes and edge cases',text:meta[3]},{heading:'Production considerations',text:'Choose the simplest implementation that satisfies the contract. Consider readability, correctness, resource limits, security and observability.'},{heading:'Testing strategy',text:meta[4]+' Add regression tests for normal, boundary and failure behavior.'}],basicExamples:[{title:'Core example',code:meta[2],lineByLine:lineWalk(meta[2],meta[0],lang.name)}],guidedExamples:[],advancedExamples:[],practice:[],interview:[]};
+ const topic={id:lang.id+'-'+number,title:meta[0],level:number<=4?'Beginner':number<=8?'Intermediate':'Advanced',definition:meta[1]+' The engineering contract should specify inputs, output/state changes, failure outcomes and caller assumptions.',analogy:'Think of '+meta[0].toLowerCase()+' as a documented workflow: each step has a purpose, inputs have rules and failure must be visible.',keyPoints:[meta[1],'Why it matters: this concept makes application behavior easier to reason about and test.','Correctness: validate values at the boundary before changing state.','Failure handling: '+meta[3],'Testing: cover ordinary, boundary and failure cases.','Practice: '+meta[4]],intro:['Learning objective: understand '+meta[0].toLowerCase()+' in '+lang.name+' and apply it in a testable feature.',meta[1],'Test what happens when inputs are missing, malformed, duplicated, oversized or unavailable.','Run the example in the supported toolchain and verify behavior against the official reference.'],body:[{heading:'Concept and contract',text:meta[1]},{heading:'How the example works',text:'Trace declarations, inputs, state changes and outputs. Identify where failure can occur and what the caller observes.'},{heading:'Failure modes and edge cases',text:meta[3]},{heading:'Production considerations',text:'Choose the simplest implementation that satisfies the contract. Consider readability, correctness, resource limits, security and observability.'},{heading:'Testing strategy',text:meta[4]+' Add regression tests for normal, boundary and failure behavior.'}],basicExamples:[{title:'Core example',code:meta[2],lineByLine:lineWalk(meta[2],meta[0],lang.name)}],guidedExamples:[],advancedExamples:[],practice:[],interview:[]};
  const p=profile(lang,topic);for(let i=0;i<6;i++)topic.practice.push(makeQuestion(topic.title,lang,'practice',i,p));for(let i=0;i<5;i++)topic.interview.push(makeQuestion(topic.title,lang,'interview',i,p));topic.deepDive=buildDive(lang,topic,lang.topics.length);return topic;
 }
 function enrichCurriculum(data) {
  if(!data||!Array.isArray(data.languages)||data.__codeAtlasEnriched)return data;
+ const addedTrackIds=[];
+ (window.CodeAtlasAdditionalTracks||[]).forEach(track=>{if(data.languages.some(lang=>lang.id===track.id))return;const lang={id:track.id,name:track.name,color:track.color,purpose:track.purpose,docs:track.docs,topics:[]};track.topics.forEach((meta,index)=>lang.topics.push(makeTopic(lang,meta,index+1)));lang.isNewTrack=true;data.languages.push(lang);addedTrackIds.push(track.id);});
  data.languages.forEach(lang=>{
   const existing=lang.topics.length;
+  const isNewTrack=!!lang.isNewTrack;
   lang.topics.forEach((topic,index)=>{
    const p=profile(lang,topic);topic.deepDive=buildDive(lang,topic,index);
    topic.definition=(topic.definition||'')+'\n\nDeeper explanation: '+p.why+' '+p.model+' '+p.mistakes+' Apply the concept to the provided example and test relevant edge cases.';
@@ -152,7 +159,7 @@ function enrichCurriculum(data) {
    topic.interview=Array.isArray(topic.interview)?topic.interview:[];while(topic.interview.length<5)topic.interview.push(makeQuestion(topic.title,lang,'interview',topic.interview.length,p));
   });
   ((window.CodeAtlasMissingTopics||{})[lang.id]||[]).forEach(meta=>lang.topics.push(makeTopic(lang,meta,lang.topics.length+1)));
-  lang.coverageAudit={existingTopicsReviewed:existing,newTopicsAdded:lang.topics.length-existing,topicSpecificDeepDive:true,reviewAreas:['prerequisites','concept model','worked example','common mistakes','edge cases','debugging','real-world use','testing','security/performance','practice','interview preparation','official documentation'],officialReference:DOCS[lang.id]||lang.docs};
+  lang.coverageAudit={existingTopicsReviewed:isNewTrack?0:existing,newTopicsAdded:isNewTrack?existing:lang.topics.length-existing,isNewTrack,topicSpecificDeepDive:true,reviewAreas:['prerequisites','concept model','worked example','common mistakes','edge cases','debugging','real-world use','testing','security/performance','practice','interview preparation','official documentation'],officialReference:DOCS[lang.id]||lang.docs};
  });
  data.__codeAtlasEnriched=true;return data;
 }
