@@ -104,3 +104,14 @@ The content guidance was checked against public, maintained documentation rather
 - [The Scrum Guide](https://scrumguides.org/) and [Nielsen Norman Group articles](https://www.nngroup.com/articles/) for delivery and UX research.
 
 The site’s automated checks validate JavaScript syntax, static assets and the declared topic/profile inventory. They do not prove every code fragment executes in its target language or that all 489 distinct labels have an individually authored chapter. Examples are teaching fragments; check runtime versions, permissions and local setup before running them. Continued content QA should focus on topics still served by a broad fallback, version-sensitive snippets, and role-specific acceptance criteria.
+
+
+## Textbook-style topic deep dives (October 2026)
+
+Added a new authored **Textbook-style deep dive** at the beginning of every topic in the 19-track Career Skills Atlas. Instead of only listing headings and short key terms, the visible lesson now includes the problem the topic solves, a plain-language conceptual model, four explained subtopics with examples, a focused worked snippet with line-by-line reasoning and expected behavior, common failure modes and trade-offs, a structured hands-on lab, expandable knowledge checks, and official reference links.
+
+The new renderer provides dedicated explanation and example rules for common ML concepts (train/validation/test split, leakage, classification/regression, evaluation metrics, cross-validation, scaling/encoding, overfitting), LLM/RAG and retrieval, API contracts/retries/idempotency, security and authorization, SQL/data processing, containers/delivery pipelines, observability, networks and testing. Other concepts retain a general input-operation-output explanation and should be refined with topic-specific examples where the fallback remains too broad.
+
+### Validation note
+
+The update is isolated on branch `feat/textbook-style-topic-guides`; it has not been merged or deployed. The change was reviewed at the source-string level through GitHub, but no browser runtime or automated test execution was available in this editing pass. Before merging, run `npm test` in `CodeAtlas_Website`, check `node --check career-skills-roadmaps.js`, then open each of the seven tracks on desktop and mobile to verify rendering, nested details, code blocks and links. Treat worked examples as educational fragments; run them in the target environment and review any version-specific assumptions.
