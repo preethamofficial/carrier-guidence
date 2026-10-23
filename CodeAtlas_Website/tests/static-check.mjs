@@ -372,9 +372,9 @@ check('Career roadmap has researched topic-specific deep dives and code labs',()
  const topicSection=source.slice(0,source.indexOf('const stages'));
  const rows=[...topicSection.matchAll(/\['([^']+)','([^']*)','([^']*)','([^']*)'\]/g)];
  const topics=rows.flatMap(row=>row[4].split(';').map(topic=>topic.trim()).filter(Boolean));
- assert.equal(rows.length,41,'Expected all 41 role definitions');
- assert.equal(topics.length,492,'Every roadmap topic placement must remain defined');
- assert.ok(new Set(topics).size>=480,'Roadmap topic catalogue should retain its breadth');
+ assert.equal(rows.length,55,'Expected all 55 role definitions');
+ assert.equal(topics.length,660,'Every roadmap topic placement must remain defined');
+ assert.ok(new Set(topics).size>=640,'Roadmap topic catalogue should retain its breadth');
  for(const name of [
   'Semantic HTML and accessible document structure','CSS layout, responsive design and visual systems',
   'JavaScript, browser events and component state','Programming fundamentals and data structures',
