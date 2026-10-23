@@ -7,6 +7,7 @@
   const normalize = value => String(value || "").toLocaleLowerCase().trim();
   const dateOf = value => { if (!value) return null; const d = new Date(value); return Number.isNaN(d.getTime()) ? null : d; };
   const formatDate = value => { const d = dateOf(value); return d ? d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}) : "Date not provided"; };
+  const formatRefresh = value => { const d = dateOf(value); return d ? d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:true,timeZone:"Asia/Kolkata"}) + " IST" : "Not yet run"; };
   function render() {
     const q = normalize(search.value), loc = normalize(locationInput.value), source = ats.value;
     const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -40,7 +41,17 @@
         const full = document.createElement("div"); full.className = "description-full"; full.textContent = descriptionText;
         details.append(summary,full); card.append(details);
       }
-      card.append(date,link); jobsEl.append(card);
+      card.append(date,link);
+      if (job.company_careers_url && /^https:\/\//i.test(job.company_careers_url)) {
+        const careerLink = document.createElement("a");
+        careerLink.className = "career-page-link";
+        careerLink.href = job.company_careers_url;
+        careerLink.target = "_blank";
+        careerLink.rel = "noopener noreferrer";
+        careerLink.textContent = "Company careers page ↗";
+        card.append(careerLink);
+      }
+      jobsEl.append(card);
     }
     $("#filterSummary").textContent = `Showing ${filtered.length} of ${allJobs.length} listings`;
     emptyEl.hidden = filtered.length !== 0;
@@ -54,8 +65,9 @@
       allJobs = Array.isArray(feed.jobs) ? feed.jobs : [];
       $("#jobCount").textContent = String(allJobs.length);
       $("#boardCount").textContent = String(feed.companies_checked ?? "—");
-      $("#updatedAt").textContent = feed.last_updated ? formatDate(feed.last_updated) : "Not yet run";
-      statusEl.textContent = feed.last_updated ? "Feed loaded. Verify each opening on the employer's site." : "The feed has not been populated by a successful scheduled run yet. Try again after running the scraper.";
+      $("#updatedAt").textContent = formatRefresh(feed.last_updated);
+      statusEl.textContent = feed.last_updated ? "Feed refreshed. Verify each opening on the employer's site." : "The feed has not been populated by a successful scheduled run yet.";
+      if (feed.companies_failed) statusEl.textContent += " " + feed.companies_failed + " of " + (feed.companies_configured ?? feed.companies_checked) + " company boards could not be refreshed this run.";
       if (feed.notice) statusEl.textContent += " " + feed.notice;
       render();
     } catch (error) {
