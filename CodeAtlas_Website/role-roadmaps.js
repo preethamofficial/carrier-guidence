@@ -653,6 +653,69 @@ ORDER BY total_spend DESC;`,
  gotcha:'A successful pipeline exit does not prove correctness; late events, duplicated joins and timezone boundaries distort metrics.',
  advanced:'Study CDC, event-time watermarks, SCD Type 2, query plans, partitioning, schema evolution and lineage.'}
 
+
+ ,
+ {re:/llm behavior|tokenization|instruction design|prompt|context windows|embeddings|semantic search|rag chunking|retrieval|reranking|citation grounding|tool calling|agent loops|structured output|model api|model apis/,name:'LLM applications, RAG and agent workflows',definition:'An LLM application combines a generative model with instructions, context, tools and evaluation. Retrieval-augmented generation supplies external evidence; the application must still verify grounding, control permissions and measure behavior.',parts:[
+ ['Prompt and output contract','Instructions define the task; structured schemas and validation make outputs easier to consume safely.','Reject generated JSON when required fields are missing or values violate constraints.'],
+ ['Chunking and retrieval','Chunk size, overlap, metadata and query formulation influence which evidence reaches the model.','Retrieve top-k passages and inspect whether they answer the question.'],
+ ['Grounding and evaluation','A fluent answer is not evidence; citations must support claims and a fixed test set should catch regressions.','Ask a question absent from the corpus and verify the system admits it lacks evidence.'],
+ ['Tool safety and operations','Tool calls should be allowlisted, permission-checked and bounded; latency, token use and failures should be observable.','Enforce server-side authorization before retrieving private documents.']],
+ scenario:'Create a document assistant that answers from retrieved passages, cites sources, validates outputs and refuses unsupported claims.',
+ code:`def grounded_context(question, retriever, limit=4):
+    passages = retriever.search(question, k=limit)
+    if not passages:
+        return None
+    return "\\n\\n".join(p.text for p in passages)
+
+context = grounded_context("How does the policy handle refunds?", retriever)
+if context is None:
+    print("No supporting evidence found; do not invent an answer.")`,
+ lab:'Build a labelled question set; measure retrieval relevance, citation support, correctness, refusal behavior, latency and cost.',
+ gotcha:'Retrieved content is untrusted and can contain prompt injection. Prompts alone are not an authorization boundary.',
+ advanced:'Study hybrid search, reranking, query rewriting, context compression, offline evaluation and prompt-injection defenses.'},
+ {re:/authentication|authorization|oauth|mfa|least privilege|access control|session|cookies|secrets|cryptography|key management|input validation|injection|csrf|xss|ssrf|owasp|threat model|secure sdlc|vulnerability|sast|dast|fuzzing|network segmentation|cloud security/,name:'Application security and identity boundaries',definition:'Application security reduces unauthorized access and misuse by identifying trust boundaries, validating inputs, enforcing least privilege and verifying every protected action. Authentication establishes identity; authorization decides what that identity may do.',parts:[
+ ['Authentication and session','Authentication verifies a credential or identity; session controls govern how that identity is represented over time.','Reject expired or incorrectly signed credentials and rotate sessions after privilege changes.'],
+ ['Object-level authorization','Every sensitive read or write must check permission for the specific resource, not only the route or user role.','Verify user A cannot read user B’s document by changing its ID.'],
+ ['Input and query safety','Validate input against expected shape; use parameterized queries and context-appropriate output encoding.','Bind a search term as a SQL parameter rather than concatenating query text.'],
+ ['Secrets, logging and response','Store secrets outside source control; log security-relevant outcomes without exposing tokens or passwords.','Log a request ID and access denial, but never the bearer token.']],
+ scenario:'Threat-model an API endpoint, implement server-side object-level checks and test denied access.',
+ code:`def read_document(user, document_id, repository):
+    document = repository.find(document_id)
+    if document is None:
+        raise LookupError("document not found")
+    if not repository.can_read(user.id, document.id):
+        raise PermissionError("access denied")
+    return document`,
+ lab:'Test unauthenticated, wrong-owner, expired-session and malformed-input requests in a local system.',
+ gotcha:'Hiding UI controls is not authorization. A signed-in user is not automatically allowed to access every object.',
+ advanced:'Study threat modeling, OAuth scopes, CSRF/XSS/SSRF, secure headers, dependency provenance and incident exercises.'},
+ {re:/tcp ip|osi|ipv4|ipv6|subnet|ethernet|mac|switching|vlan|routing|dhcp|dns|nat|vpn|packet capture|tls|ports|networking and common protocols|network boundaries/,name:'Networking, protocols and systematic diagnosis',definition:'Networking moves data between endpoints through layered protocols. Troubleshooting works best when name resolution, routing, transport, TLS and application behavior are tested separately.',parts:[
+ ['Addressing and subnetting','IP addresses and prefixes identify networks and hosts; routes decide where packets are forwarded.','Check whether the destination belongs to the expected subnet before diagnosing the app.'],
+ ['DNS and transport','DNS maps names to records; TCP provides a reliable byte stream while UDP has different delivery semantics.','Resolve the hostname, then test whether the destination port is reachable.'],
+ ['TLS and application protocol','TLS protects data in transit and verifies peer identity when configured correctly; HTTP defines request and response semantics.','A reachable port does not prove the certificate is valid or the route exists.'],
+ ['Packet capture and evidence','Packet captures show protocol exchanges but need context about timestamps, scope and encryption.','Compare DNS, TCP and TLS handshake timestamps to isolate a failure.']],
+ scenario:'Diagnose an unreachable API by checking DNS, routing, port access, TLS certificate and application logs in sequence.',
+ code:`# Use only on systems you own or are authorized to test
+nslookup api.example.test
+curl -v --connect-timeout 3 https://api.example.test/health
+ss -ltn`,
+ lab:'In a local lab, misconfigure a hostname, port and certificate one at a time; record the distinct evidence for each failure.',
+ gotcha:'Ping success does not prove a TCP service is reachable, and a TCP connection does not prove the application is healthy.',
+ advanced:'Study routing tables, MTU/path issues, TLS handshakes, packet analysis, VLANs, NAT and segmentation.'},
+ {re:/linux and shell|linux filesystem|users groups|permissions acl|processes signals|systemd|ssh dns|package and patch|disks mounts|shell automation|monitoring capacity|operating system hardening/,name:'Linux administration and service troubleshooting',definition:'Linux administration manages processes, identities, filesystems, services and resources. Reliable troubleshooting gathers evidence from service state, logs, permissions, networking and capacity before changing the system.',parts:[
+ ['Processes and service managers','A process executes a program; systemd can supervise services and record lifecycle status.','Inspect service status and logs before repeatedly restarting it.'],
+ ['Permissions and identities','Ownership, groups, mode bits and ACLs determine who can access files and commands.','Grant an app access to its data directory without making it world-writable.'],
+ ['Storage and resource pressure','Disk space, inodes, memory and file descriptors can cause failures even when a process exists.','Check filesystem capacity when a process reports write errors.'],
+ ['Automation and recovery','Scripts need clear exit codes, safe defaults, logs and tested restore steps.','Test a backup restore into a temporary directory before relying on it.']],
+ scenario:'Diagnose a service that fails to start and write a runbook with evidence, root cause, repair and verification.',
+ code:`systemctl status my-service
+journalctl -u my-service --since "15 minutes ago"
+df -h
+ss -ltn`,
+ lab:'Use a disposable VM or container; break a noncritical setting, diagnose it using logs and service state, then restore the known-good configuration.',
+ gotcha:'Blind restarts can erase diagnostic context; “running” does not prove a service is ready or reachable.',
+ advanced:'Study systemd dependencies, resource limits, log rotation, patching, configuration management and recovery drills.'}
+
  ];
  const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
