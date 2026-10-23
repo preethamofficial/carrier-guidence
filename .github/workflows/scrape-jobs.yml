@@ -56,7 +56,7 @@ jobs:
           assert all(c.get("careers_url", "").startswith("https://") for c in companies), "Every source needs an HTTPS careers page"
           print(f"Validated {len(feed['jobs'])} listings from {feed.get('companies_checked', 0)} boards")
           PY
-      - name: Commit refreshed feed to main
+      - name: Commit and publish refreshed feed (retry concurrent pushes)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -66,4 +66,29 @@ jobs:
             exit 0
           fi
           git commit -m "chore: refresh public job listings [skip ci]"
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push attempt $attempt lost a race; refreshing from latest main and retrying."
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/scrape_jobs.py
+            python - <<'PY'
+            import json
+            from pathlib import Path
+            feed = json.loads(Path("CodeAtlas_Website/data/jobs.json").read_text(encoding="utf-8"))
+            companies = json.loads(Path("CodeAtlas_Website/data/companies.json").read_text(encoding="utf-8"))
+            assert isinstance(feed.get("jobs"), list), "jobs must be an array"
+            assert all(job.get("title") and job.get("company") and str(job.get("apply_url", "")).startswith("https://") for job in feed["jobs"]), "Invalid job entry"
+            assert all(str(company.get("careers_url", "")).startswith("https://") for company in companies), "Invalid company careers URL"
+            PY
+            git add CodeAtlas_Website/data/jobs.json CodeAtlas_Website/data/scrape-log.json
+            if git diff --cached --quiet; then
+              echo "Latest main already has the current feed."
+              exit 0
+            fi
+            git commit -m "chore: refresh public job listings [skip ci]"
+          done
+          echo "Unable to publish feed after three attempts."
+          exit 1
