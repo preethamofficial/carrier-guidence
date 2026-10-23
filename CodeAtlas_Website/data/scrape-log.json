@@ -1,9 +1,21 @@
 {
-  "last_run": "2026-10-22T08:49:02.571759+00:00",
-  "companies_configured": 15,
-  "companies_checked": 15,
-  "newly_discovered": 1221,
-  "request_or_parse_errors": 0,
-  "jobs_retained": 3555,
-  "jobs_with_description": 3555
+  "last_run": "2026-10-23T05:40:49.904140+00:00",
+  "companies_configured": 49,
+  "companies_checked": 49,
+  "newly_discovered": 4485,
+  "request_or_parse_errors": 10,
+  "failed_companies": [
+    "HubSpot",
+    "Plaid",
+    "Rippling",
+    "HashiCorp",
+    "Miro",
+    "Grammarly",
+    "Retool",
+    "Glean",
+    "Together AI",
+    "Sentry"
+  ],
+  "jobs_retained": 5404,
+  "jobs_with_description": 5404
 }
