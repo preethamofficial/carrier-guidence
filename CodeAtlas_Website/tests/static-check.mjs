@@ -259,8 +259,8 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.ok(atlas&&atlas.tracks.length===19,'Expected 19 advanced career roadmaps');
- assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),152,'Expected 152 advanced learning modules');
+ assert.ok(atlas&&atlas.tracks.length===20,'Expected 20 advanced career roadmaps');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),160,'Expected 160 advanced learning modules');
  assert.ok(atlas.tracks.some(t=>t.id==='agentic')&&atlas.tracks.some(t=>t.id==='rag-engineering'),'Agentic AI and RAG must have separate roadmaps');
  for(const id of ['ethical-hacking','soc-threat-hunting','appsec','forensics','incident-response','cloud-security','iam','network-security','malware-defence','vulnerability-management']) assert.ok(atlas.tracks.some(t=>t.id===id),'Missing dedicated security specialization '+id);
 
