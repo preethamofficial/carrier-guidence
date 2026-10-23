@@ -886,7 +886,47 @@ k6 run --vus 20 --duration 2m load-test.js
  advanced:'Study open versus closed workload models, coordinated omission, saturation signals, queueing theory and capacity headroom.'}
 
  ];
- const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
+ const specialistNames = new Set([
+  'Semantic HTML and accessible document structure',
+  'CSS layout, responsive design and visual systems',
+  'JavaScript, browser events and component state',
+  'Programming fundamentals and data structures',
+  'Statistics, model evaluation and decision metrics',
+  'SQL, data modeling and dependable data pipelines',
+  'LLM applications, RAG and agent workflows',
+  'Application security and identity boundaries',
+  'Networking, protocols and systematic diagnosis',
+  'Linux administration and service troubleshooting',
+  'Cloud-native delivery, containers and infrastructure',
+  'Reliability engineering and observability',
+  'Product discovery, requirements and business analysis',
+  'UX research, interaction design and design systems',
+  'Agile delivery, flow and team improvement',
+  'SOC operations and incident response',
+  'Digital forensics and evidence integrity',
+  'Blockchain and smart-contract engineering',
+  'Database administration and recovery',
+  'QA engineering and test architecture',
+  'Performance engineering and load testing',
+  'Computer vision and language processing',
+  'MLOps and model lifecycle engineering',
+  'Machine learning lifecycle',
+  'AI systems, LLMs and retrieval',
+  'Data modeling and reliable pipelines',
+  'Security engineering and threat modeling',
+  'Production delivery and reliability',
+  'Protocols, APIs and distributed systems',
+  'Testing, debugging and quality engineering',
+  'User interfaces, browser behavior and accessibility',
+  'Mobile lifecycle, state and offline behavior',
+  'Real-time interactive systems',
+  'Embedded systems and hardware-aware software',
+  'Requirements, delivery and decision quality',
+  'Algorithms, data structures and complexity'
+ ]);
+ const item=bank.find(x=>specialistNames.has(x.name)&&x.re.test(topicText))
+   || bank.find(x=>x.re.test(topicText))
+   || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
  ['Purpose and vocabulary','Define the problem the concept solves and the key terms used to describe it.','Explain the concept to a beginner without using the concept’s name in the definition.'],
  ['Inputs, rules and outputs','Identify required inputs, transformations, constraints and expected outputs.','Trace one normal example by hand before running code.'],
