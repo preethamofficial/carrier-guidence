@@ -115,3 +115,21 @@ The new renderer provides dedicated explanation and example rules for common ML 
 ### Validation note
 
 The update is isolated on branch `feat/textbook-style-topic-guides`; it has not been merged or deployed. The change was reviewed at the source-string level through GitHub, but no browser runtime or automated test execution was available in this editing pass. Before merging, run `npm test` in `CodeAtlas_Website`, check `node --check career-skills-roadmaps.js`, then open each of the seven tracks on desktop and mobile to verify rendering, nested details, code blocks and links. Treat worked examples as educational fragments; run them in the target environment and review any version-specific assumptions.
+
+
+### Machine-learning textbook sequence
+
+Added a dedicated **Practical Machine Learning with Python** roadmap aligned to the attached book's instructional sequence, expressed in original wording and fresh examples rather than copied passages:
+
+1. Problem framing, dataset inspection, baseline and generalization.
+2. Supervised learning: classification and regression.
+3. Unsupervised learning and preprocessing.
+4. Data representation: numeric/categorical features and feature engineering.
+5. Model evaluation, cross-validation, metrics and parameter selection.
+6. Pipelines that keep preprocessing inside the evaluation workflow.
+7. Text representation and text classification.
+8. End-to-end problem solving, limitations and next steps.
+
+This follows the book's progression from introduction and supervised learning through unsupervised learning, data representation, model evaluation, pipelines and text data. Implementation references point to the current official scikit-learn User Guide and topic documentation, so learners should use those docs for current API details. The book is the pedagogical reference, not a source to copy verbatim.
+
+The new Skills Atlas scope is now 20 tracks and 160 modules. The separate role-roadmaps catalog continues to cover 55 roles and 660 topic placements with its existing deeper lesson structure.
