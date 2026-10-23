@@ -2,7 +2,7 @@
 
 ## 2026-10-23 — Daily employer job feed expansion
 
-- Expanded the configured public job-board source list from 15 to 49 employers, adding official career-page URLs for direct verification.
+- Expanded the company career directory to 49 employers, with 39 supported public ATS feeds checked daily and 10 additional employers linked directly where a reliable feed integration was unavailable.
 - Scheduled the collector for 10:00 AM India Standard Time (04:30 UTC), with actual refresh time shown in IST.
 - Added direct employer careers links to each matching job card and loaded the directory from the shared company source data.
 - Changed successful board refreshes to remove postings no longer advertised by that source; temporarily unavailable boards retain last-known records with a visible warning.
