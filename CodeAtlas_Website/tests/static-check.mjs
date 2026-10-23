@@ -371,8 +371,8 @@ check('Textbook-style deep dives render for every advanced roadmap topic',()=>{
  const atlas=context.window.CodeAtlasCareerSkills;
  assert.ok(atlas&&typeof atlas.runTextbookGuideChecks==='function','Topic guide checks must be exported');
  const result=atlas.runTextbookGuideChecks();
- assert.equal(result.tracks,7,'All authored advanced roadmap tracks must be checked');
- assert.ok(result.topics>=50,'Expected textbook guides across all roadmap topics');
+ assert.equal(result.tracks,19,'All authored advanced roadmap tracks must be checked');
+ assert.equal(result.topics,152,'Every advanced roadmap module must have a textbook-style guide');
  const guide=atlas.renderTrack('ai');
  for(const marker of ['The problem this topic solves','Worked example with reasoning','Line-by-line walkthrough','Practical lab','Knowledge check','Further reading and verification']) assert.ok(guide.includes(marker),'Guide is missing '+marker);
  assert.ok(guide.includes('train')&&guide.includes('validation'),'ML explanations must cover model evaluation concepts');
