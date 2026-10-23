@@ -174,6 +174,7 @@ def main() -> None:
     }
     seen_at = iso_now()
     checked = errors = discovered = 0
+    failed_companies: list[str] = []
     cutoff_recent = now_utc() - timedelta(days=RECENT_DAYS)
 
     for company in companies[:BATCH_SIZE]:
@@ -194,14 +195,39 @@ def main() -> None:
             postings = None
         if postings is None:
             errors += 1
+            failed_companies.append(name)
+            # Keep the last known listings for a temporarily unavailable board,
+            # but report the failed source so the page can warn visitors.
             continue
+
+        # A successful response is the source of truth for this board. Remove
+        # its previous snapshot before inserting the currently published roles,
+        # so closed/deleted jobs do not linger in the feed for the retention window.
+        board_key = (ats, token)
+        previous_board_jobs = {
+            job_key(job): job for job in old_by_key.values()
+            if (str(job.get("ats", "")).lower(), str(job.get("board_token", "")).strip()) == board_key
+        }
+        old_by_key = {
+            key: job for key, job in old_by_key.items()
+            if (str(job.get("ats", "")).lower(), str(job.get("board_token", "")).strip()) != board_key
+        }
 
         for posting in postings:
             if not valid_job(posting):
                 continue
-            job = {**posting, "company": name, "ats": ats, "board_token": token}
+            careers_url = str(company.get("careers_url") or "").strip()
+            if not careers_url.startswith("https://"):
+                careers_url = None
+            job = {
+                **posting,
+                "company": name,
+                "ats": ats,
+                "board_token": token,
+                "company_careers_url": careers_url,
+            }
             key = job_key(job)
-            previous = old_by_key.get(key)
+            previous = previous_board_jobs.get(key)
             posted_dt = parse_date(job.get("posted_date"))
             if previous:
                 job["first_seen_at"] = previous.get("first_seen_at") or seen_at
@@ -227,8 +253,11 @@ def main() -> None:
         "last_updated": seen_at,
         "total": len(retained),
         "companies_checked": checked,
+        "companies_configured": len(companies),
+        "companies_failed": errors,
+        "failed_companies": failed_companies,
         "jobs": retained,
-        "notice": "A source posting date may be missing or reflect an update date. Unknown dates are not verified as recent."
+        "notice": "A source posting date may be missing or reflect an update date. Unknown dates are not verified as recent. Listings are refreshed from configured public employer boards once daily; apply links are the source of truth."
     })
     save_json(LOG_FILE, {
         "last_run": seen_at,
@@ -236,6 +265,7 @@ def main() -> None:
         "companies_checked": checked,
         "newly_discovered": discovered,
         "request_or_parse_errors": errors,
+        "failed_companies": failed_companies,
         "jobs_retained": len(retained),
         "jobs_with_description": sum(bool(job.get("description")) for job in retained),
     })
