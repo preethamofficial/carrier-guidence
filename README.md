@@ -24,6 +24,7 @@ Open http://localhost:8000. Keep the terminal running. Do not use a `file://` UR
 - **Graduate onboarding** for degree stream, graduation year, coding experience, goal, study time and timeline.
 - **My Path** step tracker from career choice through learning, projects, resume, interviews and applications.
 - **Resume builder** with three print-friendly layouts, local saving, live preview and browser Print → Save as PDF.
+- Optional **Supabase account/cloud-sync scaffold** with RLS SQL, progress/notes merge, local JSON export and an account-deletion Edge Function; it stays disabled until configured.
 - Resume-to-job-description comparison, Career Studio, interview practice, cover-letter drafts and local study notes.
 - PWA shell with best-effort offline caching and a static validation suite.
 
@@ -35,6 +36,7 @@ Open http://localhost:8000. Keep the terminal running. Do not use a `file://` UR
 - [Career assessment](https://codeatlas-career-guidance.onrender.com/assessment.html)
 - [Career Studio](https://codeatlas-career-guidance.onrender.com/career-studio.html)
 - [Resume builder](https://codeatlas-career-guidance.onrender.com/resume-builder.html)
+- [Account & cloud sync](https://codeatlas-career-guidance.onrender.com/auth.html) (disabled until Supabase is configured)
 - [Resume-to-job match](https://codeatlas-career-guidance.onrender.com/resume-review.html)
 - [Role roadmaps](https://codeatlas-career-guidance.onrender.com/role-roadmaps.html)
 - [52-week course](https://codeatlas-career-guidance.onrender.com/year-course.html)
@@ -62,6 +64,6 @@ This is a **static, local-first website**. Profiles, assessment results, progres
 
 Career-fit percentages are explainable relative scores for selected answers, not validated psychometrics or a probability of employment. Role preparation timelines are broad planning estimates, not guarantees. Resume matching is heuristic, not a real employer ATS. The resume builder asks the browser to print; choose Save as PDF in the print dialog. All resume claims must be reviewed for accuracy.
 
-Optional cloud authentication, cross-device sync, live AI counselling, server-side code execution, a legal live job feed, and a mentor/community backend still require external configuration and further implementation. No private API key belongs in browser code. Any AI service must keep secrets server-side and enforce rate limits, input limits, CORS, privacy safeguards and clear AI disclosure.
+Optional cloud authentication and cross-device sync have a configuration scaffold but are not active until Supabase credentials, RLS schema, OAuth settings and the deletion Edge Function are deployed. Live AI counselling, server-side code execution, a legal live job feed, and a mentor/community backend still require further implementation. No private API key belongs in browser code. Any AI service must keep secrets server-side and enforce rate limits, input limits, CORS, privacy safeguards and clear AI disclosure.
 
 The public Render URL is configured in `render.yaml`; this documentation does not itself confirm the live deployment health. After changes, test on desktop and mobile, run the test suite, inspect browser console/network errors, verify the Render deployment, and check accessibility and Lighthouse performance.
