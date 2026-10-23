@@ -361,7 +361,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
 });
 
 
-// Coverage assertion matches the current 19-track / 152-module atlas.
+// Coverage assertion matches the current 20-track / 160-module atlas.
 check('Textbook-style deep dives render for every advanced roadmap topic',()=>{
  const source=fs.readFileSync(path.join(root,'career-skills-roadmaps.js'),'utf8');
  assert.ok(source.includes('function learningDeepDive(topic, track, concepts)'),'Deep dive engine must exist');
