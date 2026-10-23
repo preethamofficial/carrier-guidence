@@ -333,7 +333,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
  const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
  for(const selector of ["$('[data-skill-track]')","$('[data-skills-back]')","$('[data-skills-start]')"])assert.ok(app.includes(selector),'All roadmap controls must receive click handlers: '+selector);
  const source=fs.readFileSync(path.join(root,'career-skills-roadmaps.js'),'utf8');
- for(const marker of ['function explainConcept','module-plain-explanation','module-concept-explanations','Worked example and line-by-line reasoning','function codePurpose'])assert.ok(source.includes(marker),'Missing module learning detail: '+marker);
+ for(const marker of ['function explainConcept','function conceptExample','Mini-example:</strong>','module-plain-explanation','module-concept-explanations','Worked example and line-by-line reasoning','function codePurpose'])assert.ok(source.includes(marker),'Missing module learning detail: '+marker);
  const context={window:{},console};
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
