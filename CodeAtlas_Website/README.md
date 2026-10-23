@@ -66,7 +66,7 @@ CI runs static checks on pushes and pull requests. Passing automated checks is n
 
 ## Automated job feed
 
-- The configured collector checks 49 employer boards through public Greenhouse, Lever and Ashby job-posting endpoints, plus links to each employer's official careers page.
+- The configured collector checks 39 employer boards and lists 49 company career pages through public Greenhouse, Lever and Ashby job-posting endpoints, plus links to each employer's official careers page.
 - GitHub Actions is scheduled daily at **10:00 AM India Standard Time (04:30 UTC)**. Scheduled workflows can be delayed by GitHub; the page displays the actual last refresh timestamp in IST.
 - New listings are published to the static feed after validation and the resulting commit triggers the configured static-site deployment. The feed is not real-time; changes normally appear after the daily run and deployment.
 - Listings are sourced from public employer job boards and link back to the original posting. When a board responds successfully, roles no longer returned by that board are removed. If a board fails to respond, its last-known listings are temporarily retained and the page reports the failed-source count.
