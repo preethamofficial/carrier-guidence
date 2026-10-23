@@ -235,3 +235,40 @@ body.dark .topic-map-center{background:linear-gradient(120deg,#252d52,#1c4850)}
 .checkpoint-feedback.retry{border:1px solid var(--accent2)}
 .checkpoint-feedback ul{padding-left:20px}
 .complete-button:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
+
+
+/* Textbook-style topic deep dives */
+.textbook-deep-dive{margin:24px 0 30px;padding:clamp(18px,3vw,30px);border:1px solid var(--line,#26344b);border-radius:22px;background:linear-gradient(145deg,rgba(124,107,232,.08),rgba(74,168,161,.045));color:var(--text,#e8edf7)}
+.textbook-header{padding-bottom:20px;border-bottom:1px solid var(--line,#26344b)}
+.textbook-header .eyebrow{display:inline-block;margin-bottom:10px;color:var(--skill-color,#7c6be8);font-size:.72rem;font-weight:800;letter-spacing:.1em}
+.textbook-header h3{font-size:clamp(1.3rem,2.4vw,1.8rem);line-height:1.25;margin:0 0 12px}
+.textbook-header>p{max-width:78ch;line-height:1.8;color:var(--muted,#9aa8bf)}
+.textbook-outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.textbook-outcomes span{border:1px solid var(--line,#26344b);background:rgba(127,145,175,.08);border-radius:999px;padding:6px 10px;font-size:.76rem;color:var(--muted,#9aa8bf)}
+.textbook-section{padding:22px 0;border-bottom:1px solid var(--line,#26344b)}
+.textbook-section:last-child{border-bottom:0;padding-bottom:0}
+.textbook-section h4{font-size:1.08rem;line-height:1.4;margin:0 0 12px}
+.textbook-section h5{font-size:.96rem;margin:0 0 8px}
+.textbook-section p,.textbook-section li{line-height:1.8;color:var(--muted,#a9b6ca)}
+.textbook-section p strong,.textbook-section li strong{color:var(--text,#e8edf7)}
+.textbook-concept-list{display:grid;gap:10px;margin-top:15px}
+.textbook-subtopic{display:grid;grid-template-columns:36px minmax(0,1fr);gap:14px;padding:16px;border:1px solid var(--line,#26344b);background:rgba(7,13,25,.22);border-radius:14px}
+.textbook-subtopic-index{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:rgba(124,107,232,.16);color:var(--skill-color,#9a8af5);font-weight:800;font-size:.78rem}
+.textbook-subtopic h5{overflow-wrap:anywhere}
+.textbook-subtopic p{margin:7px 0 0}
+.textbook-deep-dive pre{overflow:auto;border:1px solid var(--line,#26344b);border-radius:13px;padding:17px;background:#080d19;color:#e5edf9;line-height:1.7;font-size:.88rem}
+.textbook-deep-dive code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.textbook-section ol{padding-left:24px}
+.textbook-section ol li{padding-left:4px;margin:9px 0}
+.textbook-section ol li code{display:inline-block;max-width:100%;overflow-wrap:anywhere;color:var(--text,#e8edf7);background:rgba(124,107,232,.1);padding:3px 6px;border-radius:6px}
+.textbook-section details{border:1px solid var(--line,#26344b);border-radius:12px;padding:13px 15px;margin:9px 0;background:rgba(127,145,175,.04)}
+.textbook-section details summary{cursor:pointer;font-weight:700;line-height:1.6}
+.textbook-section details p{margin-bottom:0}
+.textbook-reflection{display:grid;gap:8px;margin-top:20px}
+.textbook-reflection span{font-weight:700;font-size:.9rem}
+.textbook-reflection textarea{width:100%;resize:vertical;border:1px solid var(--line,#26344b);background:var(--panel,#101827);color:var(--text,#e8edf7);border-radius:10px;padding:12px;font:inherit;line-height:1.6}
+.textbook-references>div{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+.textbook-references a{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line,#26344b);border-radius:999px;color:var(--text,#e8edf7);text-decoration:none;font-size:.82rem}
+.textbook-references a:hover,.textbook-references a:focus-visible{border-color:var(--skill-color,#7c6be8);outline-offset:3px}
+@media(max-width:640px){.textbook-deep-dive{padding:16px;border-radius:16px}.textbook-subtopic{grid-template-columns:28px minmax(0,1fr);gap:10px;padding:12px}.textbook-subtopic-index{width:28px;height:28px}.textbook-outcomes span{font-size:.71rem}}
+@media(prefers-reduced-motion:reduce){.textbook-deep-dive *{scroll-behavior:auto!important;transition:none!important}}

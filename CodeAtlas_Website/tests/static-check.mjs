@@ -259,8 +259,8 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.ok(atlas&&atlas.tracks.length===19,'Expected 19 advanced career roadmaps');
- assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),152,'Expected 152 advanced learning modules');
+ assert.ok(atlas&&atlas.tracks.length===20,'Expected 20 advanced career roadmaps');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),160,'Expected 160 advanced learning modules');
  assert.ok(atlas.tracks.some(t=>t.id==='agentic')&&atlas.tracks.some(t=>t.id==='rag-engineering'),'Agentic AI and RAG must have separate roadmaps');
  for(const id of ['ethical-hacking','soc-threat-hunting','appsec','forensics','incident-response','cloud-security','iam','network-security','malware-defence','vulnerability-management']) assert.ok(atlas.tracks.some(t=>t.id===id),'Missing dedicated security specialization '+id);
 
@@ -277,7 +277,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   assert.ok(rendered.includes('DEEP STUDY GUIDE')&&rendered.includes('Core concepts explained')&&rendered.includes('Practical lab'),track.title+' modules must render complete study guides');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
- console.log('✓ Career skills atlas contains 19 tracks, 152 advanced modules, topic maps and official references');
+ console.log('✓ Career skills atlas contains 20 tracks, 160 advanced modules, topic maps and official references');
 }
 
 
@@ -347,7 +347,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.equal(atlas.tracks.length,19);
+ assert.equal(atlas.tracks.length,20);
  let modules=0;
  for(const track of atlas.tracks){
   const html=atlas.renderTrack(track.id);
@@ -356,8 +356,31 @@ check('Advanced technology roadmap cards open and every module has expanded expl
   assert.ok(html.includes('Mental model:')&&html.includes('Check your understanding:'),track.title+' missing beginner guidance');
   modules+=track.topics.length;
  }
- assert.equal(modules,152,'Every advanced roadmap module should be checked');
- console.log('✓ Advanced roadmap cards and all 152 module explanations validated');
+ assert.equal(modules,160,'Every advanced roadmap module should be checked');
+ console.log('✓ Advanced roadmap cards and all 160 module explanations validated');
+});
+
+
+// Coverage assertion matches the current 20-track / 160-module atlas.
+check('Textbook-style deep dives render for every advanced roadmap topic',()=>{
+ const source=fs.readFileSync(path.join(root,'career-skills-roadmaps.js'),'utf8');
+ assert.ok(source.includes('function learningDeepDive(topic, track, concepts)'),'Deep dive engine must exist');
+ assert.ok(source.includes('function conceptSpecificExplanation'),'Concept-specific explanation helper must exist');
+ assert.ok(source.includes('function conceptSpecificExample'),'Concrete example helper must exist');
+ const context={window:{},console};
+ vm.runInNewContext(source,context);
+ const atlas=context.window.CodeAtlasCareerSkills;
+ assert.ok(atlas&&typeof atlas.runTextbookGuideChecks==='function','Topic guide checks must be exported');
+ const result=atlas.runTextbookGuideChecks();
+ assert.equal(result.tracks,20,'All authored advanced roadmap tracks must be checked');
+ assert.equal(result.topics,160,'Every advanced roadmap module must have a textbook-style guide');
+ const guide=atlas.renderTrack('ai');
+ for(const marker of ['The problem this topic solves','Worked example with reasoning','Line-by-line walkthrough','Practical lab','Knowledge check','Further reading and verification']) assert.ok(guide.includes(marker),'Guide is missing '+marker);
+ assert.ok(guide.includes('train')&&guide.includes('validation'),'AI roadmap must cover model evaluation concepts');
+ const ml=atlas.renderTrack('machine-learning-practice');
+ assert.equal((ml.match(/class="textbook-deep-dive"/g)||[]).length,8,'Book-structured ML path must render all eight learning modules');
+ for(const chapter of ['Supervised learning: classification and regression','Unsupervised learning and preprocessing','Representing data: categorical, numeric and engineered features','Model evaluation and improvement','Algorithm chains and pipelines','Working with text data']) assert.ok(ml.includes(chapter),'Machine learning reference path missing '+chapter);
+ console.log('✓ Textbook deep dives validated across '+result.topics+' advanced roadmap topics');
 });
 
 check('Core lessons require a passing checkpoint before marking new completion',()=>{
@@ -416,6 +439,25 @@ check('Career roadmap has researched topic-specific deep dives and code labs',()
  assert.ok(source.includes('PermissionError')&&source.includes('sha256')&&source.includes('Exact-match pass rate')&&source.includes('event=login_failed'), 'Expected runnable AI and safe defensive-security examples');
  console.log('✓ 55 career paths, 660 topic placements and specialist deep-dive profiles validated');
 });
+
+check('Role roadmap lessons include actionable domain-aware practical labs',()=>{
+ const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
+ assert.ok(source.includes('function practicalLabBlueprint')&&source.includes('function renderPracticalLab'),'Practical lab blueprint renderer must exist');
+ for(const phrase of [
+  'Build and evaluate a small data experiment',
+  'Create a grounded AI workflow with an evaluation set',
+  'Run a scoped defensive security investigation',
+  'Build a trustworthy data query or pipeline',
+  'Implement a small feature with a reliable contract',
+  'Deploy and observe a reproducible service',
+  'Design a risk-based test suite',
+  'Validate a user or stakeholder problem',
+  'Definition of done','Debugging clue','Evidence to submit'
+ ]) assert.ok(source.includes(phrase),'Missing lab blueprint or completion criteria: '+phrase);
+ assert.ok(source.includes('renderPracticalLab(practicalLabBlueprint(topic,role,stage))'),'Every rendered topic lesson must receive a practical lab');
+ console.log('✓ Domain-aware lab plans and acceptance criteria validated across the career roadmap renderer');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
 
