@@ -340,7 +340,7 @@ function conceptSpecificExample(concept,topicTitle,trackName){
 function assertGuide(condition,message){if(!condition)throw new Error(message);}
 function runTextbookGuideChecks(){
  const checkTracks=tracks.filter(t=>t.id!=='web');
- assertGuide(checkTracks.length===7,'Expected seven authored skills tracks; got '+checkTracks.length);
+ assertGuide(checkTracks.length===20,'Expected twenty authored skills tracks; got '+checkTracks.length);
  let rendered=0;
  for(const tr of checkTracks){
   assertGuide(Array.isArray(tr.topics)&&tr.topics.length>0,'Track has no topics: '+tr.id);
