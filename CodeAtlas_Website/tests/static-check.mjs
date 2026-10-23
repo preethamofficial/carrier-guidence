@@ -260,12 +260,12 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
  assert.ok(atlas&&atlas.tracks.length===19,'Expected 19 advanced career roadmaps');
- assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),150,'Expected 150 advanced learning modules');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),152,'Expected 152 advanced learning modules');
  assert.ok(atlas.tracks.some(t=>t.id==='agentic')&&atlas.tracks.some(t=>t.id==='rag-engineering'),'Agentic AI and RAG must have separate roadmaps');
  for(const id of ['ethical-hacking','soc-threat-hunting','appsec','forensics','incident-response','cloud-security','iam','network-security','malware-defence','vulnerability-management']) assert.ok(atlas.tracks.some(t=>t.id===id),'Missing dedicated security specialization '+id);
 
  for(const track of atlas.tracks){
-  assert.ok(track.topics.length>=7&&track.topics.length<=8,track.title+' should contain a complete 7–8 module path');
+  assert.equal(track.topics.length,8,track.title+' should contain eight modules');
   assert.equal(track.branches.length,4,track.title+' needs four mind-map branches');
   assert.ok(track.refs.length>=4,track.title+' needs official references');
   for(const topic of track.topics){
@@ -277,7 +277,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   assert.ok(rendered.includes('DEEP STUDY GUIDE')&&rendered.includes('Core concepts explained')&&rendered.includes('Practical lab'),track.title+' modules must render complete study guides');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
- console.log('✓ Career skills atlas contains 19 tracks, 150 advanced modules, topic maps and official references');
+ console.log('✓ Career skills atlas contains 19 tracks, 152 advanced modules, topic maps and official references');
 }
 
 
@@ -347,8 +347,8 @@ check('Advanced technology roadmap cards open and every module has expanded expl
   assert.ok(html.includes('Mental model:')&&html.includes('Check your understanding:'),track.title+' missing beginner guidance');
   modules+=track.topics.length;
  }
- assert.equal(modules,150,'Every advanced roadmap module should be checked');
- console.log('✓ Advanced roadmap cards and all 150 module explanations validated');
+ assert.equal(modules,152,'Every advanced roadmap module should be checked');
+ console.log('✓ Advanced roadmap cards and all 152 module explanations validated');
 });
 
 check('Core lessons require a passing checkpoint before marking new completion',()=>{
