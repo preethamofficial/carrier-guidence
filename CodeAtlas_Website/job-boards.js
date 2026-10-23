@@ -60,7 +60,9 @@
           type: "company",
           ats: label,
           tags: ["daily public-feed check", "employer-posted roles"],
-          description: "Official employer careers page. Public " + label + " postings are included in the daily job-feed check when the source board responds successfully.",
+          description: label === "Other"
+            ? "Official employer careers page. This employer is listed as a direct source, but its job feed is not currently integrated; check the official page for current openings."
+            : "Official employer careers page. Public " + label + " postings are checked daily when the source board responds successfully.",
           url: company.careers_url
         };
       });
