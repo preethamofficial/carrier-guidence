@@ -320,13 +320,19 @@ check('All 660 career topics render deep lessons with topic-specific steps, exam
   list.listeners.click({target:{closest:()=>({dataset:{role}})}});
   for(let i=0;i<12;i++){
    stage.listeners.click({target:{closest:()=>({dataset:{topic:String(i)}})}});
-   for(const marker of ['Prerequisites and mental model','Think of it like this:','Key words:','Worked example: ','Line-by-line walkthrough','Guided practice with solution','Advanced checklist','data-complete='])assert.ok(panel.innerHTML.includes(marker),role+' topic '+i+' missing '+marker);
+   for(const marker of ['Prerequisites and mental model','Think of it like this:','Key words:','Worked example: ','Line-by-line walkthrough','Guided practice with solution','Advanced checklist','data-complete=','Core concept → subtopic → sub-subtopic','lesson-sub-subtopic','Line-by-line code walkthrough','Practice ladder','Check your understanding'])assert.ok(panel.innerHTML.includes(marker),role+' topic '+i+' missing '+marker);
    assert.ok(panel.innerHTML.includes('<pre><code>'),'Topic '+role+'/'+i+' has no worked example');
    rendered++;
   }
  }
  assert.equal(rendered,660,'Expected all 660 career topics to render');
- console.log('✓ Deep lesson rendering checked across 55 roles and 660 topics');
+ const mlEntry=[...list.innerHTML.matchAll(/<button[^>]*data-role="([^"]+)"[^>]*>([\\s\\S]*?)<\\/button>/g)].find(m=>m[2].includes('Machine Learning Engineer'));
+ assert.ok(mlEntry,'Machine Learning Engineer must be selectable');
+ list.listeners.click({target:{closest:()=>({dataset:{role:mlEntry[1]}})}});
+ stage.listeners.click({target:{closest:()=>({dataset:{topic:'2'}})}});
+ assert.ok(panel.innerHTML.includes('Define the prediction moment')&&panel.innerHTML.includes('Fit transformations without peeking'),'ML data-preparation lesson must explain leakage and safe preprocessing');
+ assert.ok((panel.innerHTML.match(/class="lesson-sub-subtopic"/g)||[]).length>=12,'ML topic needs at least twelve nested concept explanations');
+ console.log('✓ Deep lesson rendering checked across 55 roles and 660 topics, including nested ML concept breakdowns');
 });
 
 check('Advanced technology roadmap cards open and every module has expanded explanations',()=>{
