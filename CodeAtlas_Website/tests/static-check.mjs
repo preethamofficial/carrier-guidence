@@ -393,7 +393,7 @@ check('Career roadmap has researched topic-specific deep dives and code labs',()
  assert.ok(source.includes('data-copy-example')&&source.includes('specialistNames'),'Examples must remain copyable and specialist profiles must take priority');
  assert.ok(source.includes('function specialistDossier')&&source.includes('const specialist=specialistDossier'), 'AI and cybersecurity lessons must use tailored specialist dossiers');
  for(const name of ['Agentic AI Engineer','Retrieval-Augmented Generation (RAG) Engineer','LLM Evaluation Engineer','AI Safety & Security Engineer','Red Team Operator (Authorized)','Blue Team Analyst / Threat Hunter','Defensive Malware Analyst','Identity & Access Management (IAM) Engineer','Bug Bounty Researcher (Authorized)','Security Governance, Risk & Compliance (GRC) Analyst']) assert.ok(source.includes(name), 'Missing dedicated path: '+name);
- assert.ok(source.includes('PermissionError')&&source.includes('sha256')&&source.includes('Exact-match pass rate')&&source.includes('192.0.2.0/24'), 'Expected runnable AI and safe defensive-security examples');
+ assert.ok(source.includes('PermissionError')&&source.includes('sha256')&&source.includes('Exact-match pass rate')&&source.includes('event=login_failed'), 'Expected runnable AI and safe defensive-security examples');
  console.log('✓ 55 career paths, 660 topic placements and specialist deep-dive profiles validated');
 });
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
