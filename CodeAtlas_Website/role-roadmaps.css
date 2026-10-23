@@ -30,3 +30,13 @@
 .lesson-code-walkthrough code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;color:#c8f5dd}
 .lesson-code-walkthrough p{margin:7px 0 0;line-height:1.6;color:#c4cfdf}
 @media(max-width:760px){.lesson-sub-subtopics{grid-template-columns:1fr}.lesson-subtopic{padding:12px}.lesson-sub-subtopic{padding:10px}}
+
+/* Domain-aware practical labs in career roadmap lessons */
+.practical-lab-blueprint{margin:18px 0;padding:18px;border:1px solid #354666;border-radius:14px;background:linear-gradient(145deg,rgba(25,38,61,.72),rgba(12,21,36,.9));}
+.practical-lab-blueprint h5{margin-top:0;color:#dcd7ff;font-size:1.02rem}
+.practical-lab-blueprint h6{margin:15px 0 8px;color:#c7d8ff;font-size:.9rem}
+.practical-lab-blueprint p,.practical-lab-blueprint li{line-height:1.7;color:#d0d9e8}
+.practical-lab-blueprint ol,.practical-lab-blueprint ul{padding-left:1.35rem}
+.practical-lab-blueprint li{margin:7px 0}
+.practical-lab-blueprint strong{color:#f0f4ff}
+@media(max-width:640px){.practical-lab-blueprint{padding:13px;margin:13px 0;border-radius:11px}.practical-lab-blueprint ol,.practical-lab-blueprint ul{padding-left:1.15rem}}
