@@ -277,7 +277,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
 }
 
-check('Career roadmaps cover all 41 roles and connect from the homepage',()=>{
+check('Career roadmaps cover all 55 roles and connect from the homepage',()=>{
  const page=fs.readFileSync(path.join(root,'role-roadmaps.html'),'utf8');
  const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
  assert.ok(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('href="role-roadmaps.html"'),'Homepage navigation must link to career roadmaps');
@@ -288,7 +288,7 @@ check('Career roadmaps cover all 41 roles and connect from the homepage',()=>{
 });
 
 
-check('All 492 career topics render deep lessons with topic-specific steps, examples and solutions',()=>{
+check('All 660 career topics render deep lessons with topic-specific steps, examples and solutions',()=>{
  const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
  assert.ok(source.includes('function deepContentFor(topic,role)'),'Missing deep lesson resolver');
  assert.ok(source.includes('const deepProfiles='),'Missing topic-specific lesson profiles');
@@ -303,7 +303,7 @@ check('All 492 career topics render deep lessons with topic-specific steps, exam
  vm.runInNewContext(source,context);
  const list=getElement('roleList'),stage=getElement('stageNav'),panel=getElement('lessonPanel');
  const roleIds=[...list.innerHTML.matchAll(/data-role="([^"]+)"/g)].map(m=>m[1]);
- assert.equal(roleIds.length,41,'Expected all 41 career roles in the directory');
+ assert.equal(roleIds.length,55,'Expected all 55 career roles in the directory');
  let rendered=0;
  for(const role of roleIds){
   list.listeners.click({target:{closest:()=>({dataset:{role}})}});
@@ -314,8 +314,8 @@ check('All 492 career topics render deep lessons with topic-specific steps, exam
    rendered++;
   }
  }
- assert.equal(rendered,492,'Expected all 492 career topics to render');
- console.log('✓ Deep lesson rendering checked across 41 roles and 492 topics');
+ assert.equal(rendered,660,'Expected all 660 career topics to render');
+ console.log('✓ Deep lesson rendering checked across 55 roles and 660 topics');
 });
 
 check('Advanced technology roadmap cards open and every module has expanded explanations',()=>{
