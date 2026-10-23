@@ -1,4 +1,5 @@
-# Update this file after choosing the production domain and deployment base path.
-# Do not add a Sitemap directive until the real public sitemap URL exists.
 User-agent: *
 Allow: /
+Disallow: /offline.html
+
+Sitemap: https://codeatlas-career-guidance.onrender.com/sitemap.xml
