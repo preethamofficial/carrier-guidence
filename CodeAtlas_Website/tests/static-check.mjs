@@ -439,6 +439,25 @@ check('Career roadmap has researched topic-specific deep dives and code labs',()
  assert.ok(source.includes('PermissionError')&&source.includes('sha256')&&source.includes('Exact-match pass rate')&&source.includes('event=login_failed'), 'Expected runnable AI and safe defensive-security examples');
  console.log('✓ 55 career paths, 660 topic placements and specialist deep-dive profiles validated');
 });
+
+check('Role roadmap lessons include actionable domain-aware practical labs',()=>{
+ const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
+ assert.ok(source.includes('function practicalLabBlueprint')&&source.includes('function renderPracticalLab'),'Practical lab blueprint renderer must exist');
+ for(const phrase of [
+  'Build and evaluate a small data experiment',
+  'Create a grounded AI workflow with an evaluation set',
+  'Run a scoped defensive security investigation',
+  'Build a trustworthy data query or pipeline',
+  'Implement a small feature with a reliable contract',
+  'Deploy and observe a reproducible service',
+  'Design a risk-based test suite',
+  'Validate a user or stakeholder problem',
+  'Definition of done','Debugging clue','Evidence to submit'
+ ]) assert.ok(source.includes(phrase),'Missing lab blueprint or completion criteria: '+phrase);
+ assert.ok(source.includes('renderPracticalLab(practicalLabBlueprint(topic,role,stage))'),'Every rendered topic lesson must receive a practical lab');
+ console.log('✓ Domain-aware lab plans and acceptance criteria validated across the career roadmap renderer');
+});
+
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
 
