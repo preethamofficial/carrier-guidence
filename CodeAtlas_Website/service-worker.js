@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='codeatlas-shell-v34';;;;;;;
+const CACHE_NAME='codeatlas-shell-v35';;;;;;;
 const CORE=[
  './','./index.html','./dashboard.html','./styles.css','./enhance.css','./app.js','./enhance.js',
  './data/curriculum.json','./lesson-checkpoint.js','./data/assessment.json','./assessment.html','./assessment.css','./assessment-engine.js','./assessment.js','./onboarding.html','./onboarding.js','./my-path.html','./my-path.js','./resume-builder.html','./resume-builder.css','./resume-builder.js','./privacy.html','./offline.html','./404.html','./sitemap.xml','./auth.html','./supabase-config.js','./cloud-sync.js','./counsellor-config.js','./counsellor-widget.js','./career-methodology.html','./career-methodology.js','./community.js','./data/sources.json','./year-course.html','./year-course.css','./year-course.js','./data/year-curriculum.json',
