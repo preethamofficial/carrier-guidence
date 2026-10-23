@@ -53,3 +53,26 @@ drop policy if exists "Users manage own notes" on public.notes;
 create policy "Users manage own notes" on public.notes for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 drop policy if exists "Users manage own applications" on public.applications;
 create policy "Users manage own applications" on public.applications for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+create table if not exists public.feedback (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  category text not null default 'general',
+  message text not null,
+  created_at timestamptz not null default now()
+);
+create table if not exists public.mentor_requests (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  topic text not null,
+  goal text not null,
+  availability text not null default '',
+  status text not null default 'submitted',
+  created_at timestamptz not null default now()
+);
+alter table public.feedback enable row level security;
+alter table public.mentor_requests enable row level security;
+drop policy if exists "Users manage own feedback" on public.feedback;
+create policy "Users manage own feedback" on public.feedback for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+drop policy if exists "Users manage own mentor requests" on public.mentor_requests;
+create policy "Users manage own mentor requests" on public.mentor_requests for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
