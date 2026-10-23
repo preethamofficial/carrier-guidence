@@ -1,0 +1,1597 @@
+{
+  "version": 1,
+  "dimensions": [
+    "technical",
+    "analytical",
+    "creative",
+    "people",
+    "writing",
+    "systems",
+    "business",
+    "security"
+  ],
+  "roles": [
+    {
+      "id": "software",
+      "title": "Software Developer",
+      "category": "Technical",
+      "summary": "Build applications, APIs and reliable software features.",
+      "time": "6–12 months of consistent practice",
+      "difficulty": "Moderate–high",
+      "daily": "Implement features, debug code, review changes and test software.",
+      "skills": [
+        "Programming fundamentals",
+        "Git",
+        "APIs",
+        "Testing",
+        "Problem solving"
+      ],
+      "start": "Start with one language, small projects and version control.",
+      "weights": {
+        "technical": 1,
+        "analytical": 0.8,
+        "creative": 0.35,
+        "people": 0.25,
+        "writing": 0.2,
+        "systems": 0.4,
+        "business": 0.2,
+        "security": 0.25
+      },
+      "links": [
+        [
+          "MDN Web Docs",
+          "https://developer.mozilla.org/"
+        ],
+        [
+          "Python tutorial",
+          "https://docs.python.org/3/tutorial/"
+        ]
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Data Analyst",
+      "category": "Data & Insights",
+      "summary": "Turn raw data into useful reports and decisions.",
+      "time": "3–8 months of focused practice",
+      "difficulty": "Moderate",
+      "daily": "Clean datasets, write SQL, build dashboards and explain findings.",
+      "skills": [
+        "Spreadsheets",
+        "SQL",
+        "Data cleaning",
+        "Visualization",
+        "Communication"
+      ],
+      "start": "Begin with spreadsheets and SQL; coding can be learned gradually.",
+      "weights": {
+        "technical": 0.45,
+        "analytical": 1,
+        "creative": 0.25,
+        "people": 0.45,
+        "writing": 0.4,
+        "systems": 0.2,
+        "business": 0.65,
+        "security": 0.15
+      },
+      "links": [
+        [
+          "SQLBolt",
+          "https://sqlbolt.com/"
+        ],
+        [
+          "Power BI learning",
+          "https://learn.microsoft.com/training/powerplatform/power-bi/"
+        ]
+      ]
+    },
+    {
+      "id": "genai",
+      "title": "Generative AI / RAG Engineer",
+      "category": "AI & Data",
+      "summary": "Build AI applications that retrieve context, use models and are evaluated for reliability.",
+      "time": "8–18 months after programming foundations",
+      "difficulty": "High",
+      "daily": "Develop Python services, retrieval pipelines, evaluations and model integrations.",
+      "skills": [
+        "Python",
+        "APIs",
+        "LLM fundamentals",
+        "RAG",
+        "Evaluation",
+        "Security"
+      ],
+      "start": "Learn Python and APIs first; then build a small retrieval project.",
+      "weights": {
+        "technical": 1,
+        "analytical": 0.85,
+        "creative": 0.5,
+        "people": 0.2,
+        "writing": 0.25,
+        "systems": 0.55,
+        "business": 0.2,
+        "security": 0.45
+      },
+      "links": [
+        [
+          "Hugging Face course",
+          "https://huggingface.co/learn"
+        ],
+        [
+          "Google ML Crash Course",
+          "https://developers.google.com/machine-learning/crash-course"
+        ]
+      ]
+    },
+    {
+      "id": "qa",
+      "title": "QA / Software Tester",
+      "category": "Quality Engineering",
+      "summary": "Find defects, verify requirements and improve product reliability.",
+      "time": "2–6 months for entry-level foundations",
+      "difficulty": "Moderate",
+      "daily": "Explore workflows, design test cases, report defects and automate repeatable checks.",
+      "skills": [
+        "Testing fundamentals",
+        "Attention to detail",
+        "Bug reports",
+        "API testing",
+        "Automation basics"
+      ],
+      "start": "Start with manual test cases and bug reports before automation.",
+      "weights": {
+        "technical": 0.55,
+        "analytical": 0.8,
+        "creative": 0.3,
+        "people": 0.4,
+        "writing": 0.55,
+        "systems": 0.35,
+        "business": 0.25,
+        "security": 0.3
+      },
+      "links": [
+        [
+          "ISTQB resources",
+          "https://www.istqb.org/"
+        ],
+        [
+          "Playwright docs",
+          "https://playwright.dev/docs/intro"
+        ]
+      ]
+    },
+    {
+      "id": "business",
+      "title": "Business Analyst",
+      "category": "Business & Product",
+      "summary": "Translate business needs into clear requirements and measurable workflows.",
+      "time": "3–8 months depending on domain experience",
+      "difficulty": "Moderate",
+      "daily": "Interview stakeholders, map processes, document requirements and validate outcomes.",
+      "skills": [
+        "Communication",
+        "Requirements",
+        "Process mapping",
+        "Data literacy",
+        "Documentation"
+      ],
+      "start": "Practise writing user stories and mapping a familiar process.",
+      "weights": {
+        "technical": 0.2,
+        "analytical": 0.7,
+        "creative": 0.35,
+        "people": 0.9,
+        "writing": 0.75,
+        "systems": 0.35,
+        "business": 1,
+        "security": 0.1
+      },
+      "links": [
+        [
+          "IIBA",
+          "https://www.iiba.org/"
+        ],
+        [
+          "Atlassian guides",
+          "https://www.atlassian.com/agile/product-management"
+        ]
+      ]
+    },
+    {
+      "id": "ux",
+      "title": "UI/UX Designer",
+      "category": "Design",
+      "summary": "Research user needs and design accessible, understandable product experiences.",
+      "time": "4–10 months to build a credible starter portfolio",
+      "difficulty": "Moderate",
+      "daily": "Study user flows, sketch interfaces, prototype, test usability and iterate.",
+      "skills": [
+        "User research",
+        "Wireframes",
+        "Prototyping",
+        "Accessibility",
+        "Portfolio storytelling"
+      ],
+      "start": "Redesign one small workflow and document the research and trade-offs.",
+      "weights": {
+        "technical": 0.15,
+        "analytical": 0.5,
+        "creative": 1,
+        "people": 0.7,
+        "writing": 0.45,
+        "systems": 0.25,
+        "business": 0.4,
+        "security": 0.1
+      },
+      "links": [
+        [
+          "Nielsen Norman Group",
+          "https://www.nngroup.com/articles/"
+        ],
+        [
+          "Figma Learn",
+          "https://help.figma.com/hc/en-us/categories/360002051613-Learn-design"
+        ]
+      ]
+    },
+    {
+      "id": "marketing",
+      "title": "Digital Marketing",
+      "category": "Marketing & Growth",
+      "summary": "Plan campaigns, create content and use analytics to improve reach and conversion.",
+      "time": "2–6 months for entry-level projects",
+      "difficulty": "Moderate",
+      "daily": "Create campaigns, research audiences, write content and review performance metrics.",
+      "skills": [
+        "Content",
+        "SEO",
+        "Analytics",
+        "Campaign planning",
+        "Communication"
+      ],
+      "start": "Build a small campaign plan with audience, message, channel and metrics.",
+      "weights": {
+        "technical": 0.15,
+        "analytical": 0.5,
+        "creative": 0.8,
+        "people": 0.65,
+        "writing": 0.8,
+        "systems": 0.2,
+        "business": 0.85,
+        "security": 0.1
+      },
+      "links": [
+        [
+          "Google Skillshop",
+          "https://skillshop.withgoogle.com/"
+        ],
+        [
+          "Google Search Central",
+          "https://developers.google.com/search/docs"
+        ]
+      ]
+    },
+    {
+      "id": "writer",
+      "title": "Technical Writer",
+      "category": "Content & Documentation",
+      "summary": "Explain complex products through accurate documentation, tutorials and examples.",
+      "time": "2–6 months with a strong writing sample",
+      "difficulty": "Moderate",
+      "daily": "Interview subject experts, test instructions, structure docs and maintain examples.",
+      "skills": [
+        "Clear writing",
+        "Research",
+        "Information architecture",
+        "Technical curiosity",
+        "Version control"
+      ],
+      "start": "Write a tested setup guide for a tool you already know.",
+      "weights": {
+        "technical": 0.35,
+        "analytical": 0.45,
+        "creative": 0.45,
+        "people": 0.45,
+        "writing": 1,
+        "systems": 0.2,
+        "business": 0.25,
+        "security": 0.15
+      },
+      "links": [
+        [
+          "Google developer documentation style",
+          "https://developers.google.com/style"
+        ],
+        [
+          "Write the Docs",
+          "https://www.writethedocs.org/"
+        ]
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Product / Technical Support",
+      "category": "Customer & Product",
+      "summary": "Help users solve technical problems and feed patterns back to product teams.",
+      "time": "1–4 months for entry-level preparation",
+      "difficulty": "Low–moderate",
+      "daily": "Reproduce issues, troubleshoot, communicate fixes and document recurring questions.",
+      "skills": [
+        "Troubleshooting",
+        "Communication",
+        "Product knowledge",
+        "Ticket writing",
+        "Empathy"
+      ],
+      "start": "Practise reproducing common app issues and writing clear support responses.",
+      "weights": {
+        "technical": 0.35,
+        "analytical": 0.55,
+        "creative": 0.25,
+        "people": 1,
+        "writing": 0.7,
+        "systems": 0.25,
+        "business": 0.35,
+        "security": 0.2
+      },
+      "links": [
+        [
+          "Atlassian service management",
+          "https://www.atlassian.com/itsm"
+        ],
+        [
+          "Microsoft Learn",
+          "https://learn.microsoft.com/training/"
+        ]
+      ]
+    },
+    {
+      "id": "coordinator",
+      "title": "Project Coordinator",
+      "category": "Operations & Delivery",
+      "summary": "Keep people, milestones, risks and project communication organised.",
+      "time": "2–5 months to build a credible project-work sample",
+      "difficulty": "Low–moderate",
+      "daily": "Track actions, update plans, surface risks and coordinate stakeholders.",
+      "skills": [
+        "Organisation",
+        "Communication",
+        "Planning",
+        "Documentation",
+        "Risk tracking"
+      ],
+      "start": "Create a realistic project tracker with owners, milestones and risks.",
+      "weights": {
+        "technical": 0.1,
+        "analytical": 0.45,
+        "creative": 0.25,
+        "people": 1,
+        "writing": 0.7,
+        "systems": 0.65,
+        "business": 0.7,
+        "security": 0.1
+      },
+      "links": [
+        [
+          "Atlassian project management",
+          "https://www.atlassian.com/work-management/project-management"
+        ],
+        [
+          "PMI resources",
+          "https://www.pmi.org/learning"
+        ]
+      ]
+    },
+    {
+      "id": "devops",
+      "title": "DevOps / Cloud Engineer",
+      "category": "Infrastructure",
+      "summary": "Automate builds and deployments and improve system observability and reliability.",
+      "time": "6–12 months after command-line and networking foundations",
+      "difficulty": "High",
+      "daily": "Maintain pipelines, infrastructure configuration, monitoring and incident response.",
+      "skills": [
+        "Linux",
+        "Networking",
+        "Git",
+        "CI/CD",
+        "Cloud",
+        "Observability"
+      ],
+      "start": "Learn shell, Git and networking before deploying a simple service.",
+      "weights": {
+        "technical": 0.75,
+        "analytical": 0.65,
+        "creative": 0.2,
+        "people": 0.25,
+        "writing": 0.25,
+        "systems": 1,
+        "business": 0.2,
+        "security": 0.55
+      },
+      "links": [
+        [
+          "The Linux Command Line",
+          "https://linuxcommand.org/tlcl.php"
+        ],
+        [
+          "AWS Skill Builder",
+          "https://skillbuilder.aws/"
+        ]
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Cybersecurity Analyst",
+      "category": "Security & Risk",
+      "summary": "Investigate threats and weaknesses within authorised, defensive security workflows.",
+      "time": "6–18 months depending on networking and systems foundations",
+      "difficulty": "High",
+      "daily": "Review alerts, investigate logs, document risks and validate defensive controls.",
+      "skills": [
+        "Networking",
+        "Operating systems",
+        "Security fundamentals",
+        "Scripting",
+        "Incident documentation"
+      ],
+      "start": "Build networking and Linux foundations; practise only in authorised labs.",
+      "weights": {
+        "technical": 0.6,
+        "analytical": 0.9,
+        "creative": 0.3,
+        "people": 0.25,
+        "writing": 0.45,
+        "systems": 0.65,
+        "business": 0.2,
+        "security": 1
+      },
+      "links": [
+        [
+          "CISA resources",
+          "https://www.cisa.gov/resources-tools"
+        ],
+        [
+          "OWASP Top 10",
+          "https://owasp.org/www-project-top-ten/"
+        ]
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q01",
+      "prompt": "What would you voluntarily explore for an hour?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Build a small app or automate a task",
+          "scores": {
+            "technical": 3,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Find a pattern in a spreadsheet",
+          "scores": {
+            "analytical": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Sketch a better screen or campaign",
+          "scores": {
+            "creative": 3,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Help someone solve a confusing issue",
+          "scores": {
+            "people": 3,
+            "writing": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q02",
+      "prompt": "Which result feels most satisfying?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "A feature works reliably",
+          "scores": {
+            "technical": 3,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A confusing dataset becomes clear",
+          "scores": {
+            "analytical": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "A user can complete a task easily",
+          "scores": {
+            "creative": 2,
+            "people": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "A team understands what to do next",
+          "scores": {
+            "people": 2,
+            "writing": 2,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q03",
+      "prompt": "How do you feel about learning to code?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I enjoy it or want to code frequently",
+          "scores": {
+            "technical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I can learn basic scripts if useful",
+          "scores": {
+            "technical": 1,
+            "analytical": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I prefer tools and problem-solving over writing much code",
+          "scores": {
+            "technical": 0,
+            "people": 1,
+            "business": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I am not sure yet and want to test it",
+          "scores": {
+            "technical": 1,
+            "creative": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q04",
+      "prompt": "How comfortable are you with maths and logic?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I enjoy logic, patterns or quantitative problems",
+          "scores": {
+            "analytical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I can work with practical numbers and formulas",
+          "scores": {
+            "analytical": 2,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I prefer language, visual or people-centred problems",
+          "scores": {
+            "writing": 1,
+            "creative": 1,
+            "people": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I want to improve with guided practice",
+          "scores": {
+            "analytical": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q05",
+      "prompt": "Which task sounds least tiring?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Debugging a program step by step",
+          "scores": {
+            "technical": 2,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Comparing numbers and explaining trends",
+          "scores": {
+            "analytical": 3,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Improving a visual layout or message",
+          "scores": {
+            "creative": 3,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Coordinating people and following up",
+          "scores": {
+            "people": 3,
+            "systems": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q06",
+      "prompt": "How do you prefer to work?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Long focused solo work",
+          "scores": {
+            "technical": 1,
+            "analytical": 1,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A mix of solo work and collaboration",
+          "scores": {
+            "technical": 1,
+            "people": 1,
+            "analytical": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Frequent discussion with users or stakeholders",
+          "scores": {
+            "people": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Creating and sharing content with an audience",
+          "scores": {
+            "writing": 2,
+            "creative": 2,
+            "people": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q07",
+      "prompt": "What kind of ambiguity can you tolerate?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I like investigating difficult technical problems",
+          "scores": {
+            "analytical": 2,
+            "technical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I prefer clear acceptance criteria and repeatable checks",
+          "scores": {
+            "systems": 2,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I enjoy open-ended creative exploration",
+          "scores": {
+            "creative": 3
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I like clarifying needs with people",
+          "scores": {
+            "people": 2,
+            "business": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q08",
+      "prompt": "Which type of detail do you notice first?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Logic, edge cases and system behaviour",
+          "scores": {
+            "technical": 2,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Inconsistent numbers or trends",
+          "scores": {
+            "analytical": 3
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Visual hierarchy, language and accessibility",
+          "scores": {
+            "creative": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Ownership, deadlines and communication gaps",
+          "scores": {
+            "people": 2,
+            "systems": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q09",
+      "prompt": "How would you like to show your skills?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "A working app, script or technical project",
+          "scores": {
+            "technical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A dashboard, analysis or experiment",
+          "scores": {
+            "analytical": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "A portfolio of designs or content",
+          "scores": {
+            "creative": 2,
+            "writing": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "A case study, plan or resolved customer issue",
+          "scores": {
+            "people": 2,
+            "writing": 2,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Which learning activity appeals most?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Build and debug small programs",
+          "scores": {
+            "technical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Explore data and test hypotheses",
+          "scores": {
+            "analytical": 3
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Study design and test prototypes",
+          "scores": {
+            "creative": 3,
+            "people": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Write clear instructions or requirements",
+          "scores": {
+            "writing": 3,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "How interested are you in infrastructure and systems?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Very; I want to understand how services run",
+          "scores": {
+            "systems": 3,
+            "technical": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Somewhat; I want to deploy my own app",
+          "scores": {
+            "systems": 2,
+            "technical": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Not much; I prefer user-facing or business work",
+          "scores": {
+            "creative": 1,
+            "people": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I care most about security and risk",
+          "scores": {
+            "security": 3,
+            "analytical": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "How interested are you in security and careful risk analysis?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Very; I like investigating risk and logs",
+          "scores": {
+            "security": 3,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I want to build secure software",
+          "scores": {
+            "security": 2,
+            "technical": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I focus more on usability and communication",
+          "scores": {
+            "creative": 1,
+            "people": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I prefer business processes and requirements",
+          "scores": {
+            "business": 2,
+            "writing": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "Which kind of writing would you enjoy?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Technical explanations and tutorials",
+          "scores": {
+            "writing": 3,
+            "technical": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Requirements, reports and recommendations",
+          "scores": {
+            "writing": 2,
+            "business": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Marketing copy and audience messaging",
+          "scores": {
+            "writing": 2,
+            "creative": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Short user support responses and troubleshooting notes",
+          "scores": {
+            "writing": 2,
+            "people": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "How do you feel about presenting findings to others?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I am comfortable explaining results",
+          "scores": {
+            "people": 2,
+            "writing": 1,
+            "business": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I can do it with preparation",
+          "scores": {
+            "people": 1,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I prefer deep individual work, with occasional updates",
+          "scores": {
+            "technical": 1,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I enjoy workshops and gathering requirements",
+          "scores": {
+            "people": 3,
+            "business": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "What is your response to a repeated manual process?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Automate it with code or scripts",
+          "scores": {
+            "technical": 2,
+            "systems": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Measure it and analyse why it repeats",
+          "scores": {
+            "analytical": 2,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Redesign the experience or instructions",
+          "scores": {
+            "creative": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Coordinate people to improve the workflow",
+          "scores": {
+            "people": 2,
+            "systems": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "What would you rather investigate?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "A bug in an application",
+          "scores": {
+            "technical": 2,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A sudden change in business metrics",
+          "scores": {
+            "analytical": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Why users struggle with a screen",
+          "scores": {
+            "creative": 2,
+            "people": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Why a customer cannot use a feature",
+          "scores": {
+            "people": 3,
+            "technical": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "How do you approach a new tool?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Read docs and build a small experiment",
+          "scores": {
+            "technical": 2,
+            "analytical": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Compare results against evidence",
+          "scores": {
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Explore the interface and possibilities",
+          "scores": {
+            "creative": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Learn from people and explain it to others",
+          "scores": {
+            "people": 2,
+            "writing": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "prompt": "Which constraint matters most to you in a solution?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Correctness, maintainability and performance",
+          "scores": {
+            "technical": 2,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Evidence and accurate interpretation",
+          "scores": {
+            "analytical": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Accessibility and ease of use",
+          "scores": {
+            "creative": 2,
+            "people": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Business impact and clear ownership",
+          "scores": {
+            "business": 2,
+            "people": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "prompt": "How do you feel about checking details repeatedly?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I enjoy systematic verification",
+          "scores": {
+            "systems": 2,
+            "analytical": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I prefer discovering a new insight",
+          "scores": {
+            "analytical": 2,
+            "creative": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I like refining the look and language",
+          "scores": {
+            "creative": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I prefer discussion and coordination",
+          "scores": {
+            "people": 2,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "What does creativity mean most to you?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Finding a novel technical solution",
+          "scores": {
+            "technical": 1,
+            "creative": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Finding a surprising pattern",
+          "scores": {
+            "analytical": 2,
+            "creative": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Designing an experience or message",
+          "scores": {
+            "creative": 3,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Finding a better process for people",
+          "scores": {
+            "creative": 1,
+            "people": 2,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Which responsibility sounds interesting?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Owning a feature from idea to release",
+          "scores": {
+            "technical": 2,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Explaining what the data suggests",
+          "scores": {
+            "analytical": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Understanding customer needs",
+          "scores": {
+            "people": 2,
+            "business": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Keeping tasks, risks and milestones visible",
+          "scores": {
+            "systems": 2,
+            "people": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "How comfortable are you with troubleshooting under time pressure?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I can stay calm and isolate the cause",
+          "scores": {
+            "analytical": 2,
+            "systems": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I can do it with a checklist and guidance",
+          "scores": {
+            "systems": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I prefer planned creative work",
+          "scores": {
+            "creative": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I prefer communicating and coordinating a response",
+          "scores": {
+            "people": 2,
+            "writing": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Which portfolio project would you most likely finish?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "A small web app or automation tool",
+          "scores": {
+            "technical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A SQL analysis with dashboard and recommendations",
+          "scores": {
+            "analytical": 3,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "A redesign, content campaign or usability case study",
+          "scores": {
+            "creative": 2,
+            "writing": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "A documented test suite, support guide or delivery plan",
+          "scores": {
+            "systems": 1,
+            "writing": 2,
+            "people": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "How important is direct interaction with people in your daily work?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Low; I prefer long focus blocks",
+          "scores": {
+            "technical": 1,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Some; a few reviews or meetings are fine",
+          "scores": {
+            "technical": 1,
+            "people": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "High; I like interviews, workshops or customer help",
+          "scores": {
+            "people": 3
+          }
+        },
+        {
+          "id": "o3",
+          "text": "High; I enjoy presenting and influencing decisions",
+          "scores": {
+            "people": 2,
+            "business": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Which output would you enjoy owning?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "A reliable service or automation",
+          "scores": {
+            "technical": 2,
+            "systems": 2
+          }
+        },
+        {
+          "id": "o1",
+          "text": "A decision-ready report",
+          "scores": {
+            "analytical": 2,
+            "writing": 1,
+            "business": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "A polished user experience or campaign",
+          "scores": {
+            "creative": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "A clear plan and coordinated delivery",
+          "scores": {
+            "people": 2,
+            "systems": 2,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "How do you prefer to handle a mistake?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Reproduce it and trace the code or logs",
+          "scores": {
+            "technical": 1,
+            "analytical": 2,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Check data quality and compare evidence",
+          "scores": {
+            "analytical": 3
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Ask users what happened and improve the flow",
+          "scores": {
+            "people": 2,
+            "creative": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "Document the issue, owner and prevention action",
+          "scores": {
+            "writing": 1,
+            "systems": 2,
+            "people": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q27",
+      "prompt": "What is your current coding comfort?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I have built multiple projects",
+          "scores": {
+            "technical": 3
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I know basics but need practice",
+          "scores": {
+            "technical": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I am a complete beginner",
+          "scores": {
+            "technical": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I want a role where coding is optional or limited",
+          "scores": {
+            "technical": 0,
+            "people": 1,
+            "writing": 1,
+            "business": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q28",
+      "prompt": "How much time can you realistically study on most days?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Under 30 minutes",
+          "scores": {
+            "systems": 0
+          }
+        },
+        {
+          "id": "o1",
+          "text": "30–60 minutes",
+          "scores": {
+            "systems": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "1–2 hours",
+          "scores": {
+            "systems": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "More than 2 hours",
+          "scores": {
+            "systems": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q29",
+      "prompt": "What is your target timeline for making a career move?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "Within 1–3 months",
+          "scores": {
+            "business": 1,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "Within 3–6 months",
+          "scores": {
+            "business": 1,
+            "systems": 2
+          }
+        },
+        {
+          "id": "o2",
+          "text": "Within 6–12 months",
+          "scores": {
+            "systems": 2
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I am exploring with no fixed deadline",
+          "scores": {
+            "creative": 1,
+            "analytical": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q30",
+      "prompt": "Which trade-off best describes your priorities?",
+      "options": [
+        {
+          "id": "o0",
+          "text": "I want a technical craft and am ready for a longer ramp-up",
+          "scores": {
+            "technical": 2,
+            "systems": 1
+          }
+        },
+        {
+          "id": "o1",
+          "text": "I want to use my existing domain knowledge quickly",
+          "scores": {
+            "business": 2,
+            "people": 1
+          }
+        },
+        {
+          "id": "o2",
+          "text": "I want a creative portfolio and user-facing work",
+          "scores": {
+            "creative": 2,
+            "writing": 1
+          }
+        },
+        {
+          "id": "o3",
+          "text": "I value a practical entry path and steady skill-building",
+          "scores": {
+            "systems": 2,
+            "people": 1
+          }
+        }
+      ]
+    }
+  ]
+}
