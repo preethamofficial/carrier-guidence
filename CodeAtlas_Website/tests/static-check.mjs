@@ -347,7 +347,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.equal(atlas.tracks.length,19);
+ assert.equal(atlas.tracks.length,20);
  let modules=0;
  for(const track of atlas.tracks){
   const html=atlas.renderTrack(track.id);
@@ -356,7 +356,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
   assert.ok(html.includes('Mental model:')&&html.includes('Check your understanding:'),track.title+' missing beginner guidance');
   modules+=track.topics.length;
  }
- assert.equal(modules,152,'Every advanced roadmap module should be checked');
+ assert.equal(modules,160,'Every advanced roadmap module should be checked');
  console.log('✓ Advanced roadmap cards and all 152 module explanations validated');
 });
 
@@ -372,11 +372,14 @@ check('Textbook-style deep dives render for every advanced roadmap topic',()=>{
  const atlas=context.window.CodeAtlasCareerSkills;
  assert.ok(atlas&&typeof atlas.runTextbookGuideChecks==='function','Topic guide checks must be exported');
  const result=atlas.runTextbookGuideChecks();
- assert.equal(result.tracks,19,'All authored advanced roadmap tracks must be checked');
- assert.equal(result.topics,152,'Every advanced roadmap module must have a textbook-style guide');
+ assert.equal(result.tracks,20,'All authored advanced roadmap tracks must be checked');
+ assert.equal(result.topics,160,'Every advanced roadmap module must have a textbook-style guide');
  const guide=atlas.renderTrack('ai');
  for(const marker of ['The problem this topic solves','Worked example with reasoning','Line-by-line walkthrough','Practical lab','Knowledge check','Further reading and verification']) assert.ok(guide.includes(marker),'Guide is missing '+marker);
- assert.ok(guide.includes('train')&&guide.includes('validation'),'ML explanations must cover model evaluation concepts');
+ assert.ok(guide.includes('train')&&guide.includes('validation'),'AI roadmap must cover model evaluation concepts');
+ const ml=atlas.renderTrack('machine-learning-practice');
+ assert.equal((ml.match(/class="textbook-deep-dive"/g)||[]).length,8,'Book-structured ML path must render all eight learning modules');
+ for(const chapter of ['Supervised learning: classification and regression','Unsupervised learning and preprocessing','Representing data: categorical, numeric and engineered features','Model evaluation and improvement','Algorithm chains and pipelines','Working with text data']) assert.ok(ml.includes(chapter),'Machine learning reference path missing '+chapter);
  console.log('✓ Textbook deep dives validated across '+result.topics+' advanced roadmap topics');
 });
 
