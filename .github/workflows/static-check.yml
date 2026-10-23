@@ -23,6 +23,11 @@ jobs:
           python-version: "3.11"
       - name: Compile scraper Python
         run: python -m py_compile scripts/scrape_jobs.py
+      - name: Check server JavaScript syntax
+        run: node --check server/index.js && node --check server/test.js
+      - name: Test counsellor validation and rate limits
+        run: npm test
+        working-directory: server
       - name: Validate local assets and JSON
         run: npm test
         working-directory: CodeAtlas_Website
