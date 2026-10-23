@@ -91,7 +91,7 @@
   },
   {
     "name": "HubSpot",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "hubspot",
     "careers_url": "https://www.hubspot.com/careers"
   },
@@ -109,7 +109,7 @@
   },
   {
     "name": "Plaid",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "plaid",
     "careers_url": "https://plaid.com/careers/"
   },
@@ -133,7 +133,7 @@
   },
   {
     "name": "Rippling",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "rippling",
     "careers_url": "https://www.rippling.com/careers"
   },
@@ -175,7 +175,7 @@
   },
   {
     "name": "HashiCorp",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "hashicorp",
     "careers_url": "https://www.hashicorp.com/careers"
   },
@@ -187,13 +187,13 @@
   },
   {
     "name": "Miro",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "miro",
     "careers_url": "https://miro.com/careers/"
   },
   {
     "name": "Grammarly",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "grammarly",
     "careers_url": "https://www.grammarly.com/jobs"
   },
@@ -241,7 +241,7 @@
   },
   {
     "name": "Retool",
-    "ats": "ashby",
+    "ats": "other",
     "token": "retool",
     "careers_url": "https://retool.com/careers"
   },
@@ -253,7 +253,7 @@
   },
   {
     "name": "Glean",
-    "ats": "ashby",
+    "ats": "other",
     "token": "glean",
     "careers_url": "https://www.glean.com/careers"
   },
@@ -277,7 +277,7 @@
   },
   {
     "name": "Together AI",
-    "ats": "ashby",
+    "ats": "other",
     "token": "togetherai",
     "careers_url": "https://www.together.ai/careers"
   },
@@ -289,7 +289,7 @@
   },
   {
     "name": "Sentry",
-    "ats": "greenhouse",
+    "ats": "other",
     "token": "sentry",
     "careers_url": "https://sentry.io/careers/"
   }
