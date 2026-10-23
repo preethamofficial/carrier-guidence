@@ -233,7 +233,9 @@ function deepContentFor(topic,role){
 
 
 function topicDossier(topic,role,deep){
- const t=(topic+' '+role.title+' '+role.domain).toLowerCase();
+ const topicText=String(topic||'').toLowerCase();
+ const roleText=(String(role.title||'')+' '+String(role.domain||'')).toLowerCase();
+ const genericTopic=/foundation|capstone|professional practice|workflow|overview|fundamentals|introduction|portfolio project/i.test(topicText);
  const bank=[
  {re:/computer vision|nlp engineer|natural language processing|speech recognition|ocr|image classification|object detection/,name:'Computer vision and language processing',definition:'Computer vision and NLP convert unstructured images, audio or text into representations and predictions. Quality depends on labelled data, consistent preprocessing, task-specific evaluation and handling of ambiguous inputs.',parts:[
  ['Task and labels','Define the prediction task and annotation policy before choosing a model. Labels need consistent rules and review for disagreement.','For object detection, decide how partially visible objects should be labelled.'],
@@ -554,7 +556,7 @@ And the saved state persists after refresh`,
  gotcha:'A clever algorithm is not useful if it violates edge cases or makes assumptions the input contract does not guarantee.',
  advanced:'Study amortized analysis, graph traversal, greedy proof techniques, dynamic programming states and benchmarking methodology.'}
  ];
- const item=bank.find(x=>x.re.test(t));
+ const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
  ['Purpose and vocabulary','Define the problem the concept solves and the key terms used to describe it.','Explain the concept to a beginner without using the concept’s name in the definition.'],
  ['Inputs, rules and outputs','Identify required inputs, transformations, constraints and expected outputs.','Trace one normal example by hand before running code.'],
