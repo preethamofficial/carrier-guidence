@@ -277,6 +277,14 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
 }
 
+
+check('Specialisations have deep definitions, subtopics, guided labs and language-specific examples',()=>{
+ const source=fs.readFileSync(path.join(root,'specializations.js'),'utf8');
+ for(const token of ['const EXTRA_TRACKS','Agentic AI Engineer','Ethical Hacker / Penetration Tester','SOC Analyst / Threat Hunter','Digital Forensics Analyst','Cloud Security Engineer','Identity & Access Management (IAM) Engineer','function expandModule','module.subtopics','module.steps','module.gotcha','module.sources','data-copy']) assert.ok(source.includes(token),'Missing deep curriculum feature: '+token);
+ assert.ok(source.includes('White-hat / ethical testing')&&source.includes('grey-hat')&&source.includes('Black-hat activity'),'Ethical hacking roles need explicit ethical and authorization boundaries');
+ assert.ok(source.includes('OWASP Web Security Testing Guide')&&source.includes('MITRE ATT&CK')&&source.includes('LangGraph overview'),'Specialist tracks need official references');
+});
+
 check('Career roadmaps cover all 55 roles and connect from the homepage',()=>{
  const page=fs.readFileSync(path.join(root,'role-roadmaps.html'),'utf8');
  const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
