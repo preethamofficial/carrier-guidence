@@ -555,6 +555,104 @@ And the saved state persists after refresh`,
  lab:'Write brute force first, compare outputs on random small inputs, then measure the optimized version on increasing input sizes.',
  gotcha:'A clever algorithm is not useful if it violates edge cases or makes assumptions the input contract does not guarantee.',
  advanced:'Study amortized analysis, graph traversal, greedy proof techniques, dynamic programming states and benchmarking methodology.'}
+
+ ,
+ {re:/html semantics|semantic html|document structure|headings|forms and validation|html elements|images and alt/,name:'Semantic HTML and accessible document structure',definition:'HTML provides meaning and structure. Semantic elements expose roles and relationships to browsers, search engines and assistive technology; accessibility begins with the right structure, not only visual styling.',parts:[
+ ['Landmarks and headings','Main, nav, header, footer and a logical heading hierarchy help people navigate a page.','Use one main content region and headings that describe the sections beneath them.'],
+ ['Forms and labels','A label gives a control a programmatic name; native input types provide predictable browser behavior.','Connect label for="email" to input id="email" and show useful validation feedback.'],
+ ['Images and alternatives','Alternative text depends on purpose; decorative images should not create redundant announcements.','Describe the information in a chart rather than writing “picture”.'],
+ ['Keyboard and semantics','Native buttons, links and controls support expected keyboard and assistive-technology behavior.','Use a button for an action and a link for navigation.']],
+ scenario:'Create an accessible sign-up form that supports keyboard navigation, clear labels and helpful errors.',
+ code:`<form>
+  <label for="email">Email address</label>
+  <input id="email" name="email" type="email" autocomplete="email" required>
+  <button type="submit">Create account</button>
+</form>`,
+ lab:'Test keyboard-only operation, zoom, label announcements and invalid input; inspect the browser accessibility tree.',
+ gotcha:'ARIA cannot reliably repair incorrect native semantics. Placeholder text is not a replacement for a persistent label.',
+ advanced:'Study accessible names, focus order, live regions, WCAG criteria and manual assistive-technology testing.'},
+ {re:/css cascade|box model|flexbox|grid|responsive|typography|visual hierarchy|color spacing|layout and responsive|positioning|custom properties/,name:'CSS layout, responsive design and visual systems',definition:'CSS controls presentation through the cascade, box model and layout algorithms. Responsive design adapts to content and viewport constraints rather than relying on one fixed screen size.',parts:[
+ ['Cascade and specificity','The cascade resolves competing declarations using importance, specificity and source order.','Prefer a reusable component class over escalating selector specificity.'],
+ ['Box model and sizing','Content, padding, border and margin affect element dimensions.','Use box-sizing:border-box so declared widths include padding and border.'],
+ ['Flexbox and Grid','Flexbox arranges items primarily along one axis; Grid manages rows and columns together.','Use Flexbox for a toolbar and Grid for a responsive card matrix.'],
+ ['Responsive and accessible states','Flexible units and media queries support different screens, zoom levels and focus states.','Test at narrow widths and with keyboard focus, not only desktop.']],
+ scenario:'Build a responsive card layout that adapts without horizontal scrolling and preserves visible keyboard focus.',
+ code:`.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}`,
+ lab:'Resize the viewport, increase text zoom and test long labels; document where the layout fails before fixing it.',
+ gotcha:'Fixed widths, excessive !important rules and removing focus outlines create brittle or inaccessible interfaces.',
+ advanced:'Study cascade layers, container queries, design tokens, intrinsic sizing and reduced motion.'},
+ {re:/javascript fundamentals|javascript values|dom and browser events|dom events and forms|closures|asynchronous fetch|state and props|component architecture|react components|routing and data loading|performance and rendering/,name:'JavaScript, browser events and component state',definition:'JavaScript runs application logic in the browser or server runtime. Event handlers respond to user and system events; component state describes data that determines rendered UI. Correctness depends on predictable state transitions and handling asynchronous failure.',parts:[
+ ['Values and scope','Bindings, object references and lexical scope determine which values a function can read or change.','A closure can retain a counter’s state between calls.'],
+ ['Events and DOM boundaries','Event handlers translate user actions into application operations; untrusted input must be validated.','Handle form submit, prevent default navigation and display validation feedback.'],
+ ['Async work and errors','Promises and async/await model operations that finish later; network failures and HTTP error statuses need explicit handling.','Check response.ok before treating a fetch response as success.'],
+ ['State and rendering','State should represent the minimum information needed to render UI; derived values should not be duplicated without reason.','Store first and last name, then derive full name.']],
+ scenario:'Build a form that loads data asynchronously and shows loading, success, empty and error states.',
+ code:`async function loadProfile(id) {
+  const response = await fetch("/api/profiles/" + encodeURIComponent(id));
+  if (!response.ok) throw new Error("HTTP request failed");
+  return response.json();
+}`,
+ lab:'Simulate HTTP 404, malformed payload and network failure; verify the UI stays understandable.',
+ gotcha:'A resolved fetch promise can still contain an HTTP error. Stale responses can overwrite newer selections.',
+ advanced:'Study event propagation, cancellation, race prevention, state machines and browser performance tooling.'},
+ {re:/programming and data structures|language fundamentals|types and control flow|methods and arrays|functions and modules|variables types and control flow|strings collections|classes encapsulation|collections and generics|exceptions and resource handling|streams lambdas|interpreter and virtual environments|typing packaging|c types arrays|pointers and memory|programming fundamentals/,name:'Programming fundamentals and data structures',definition:'Programming expresses a solution as data, control flow and reusable operations. A data structure organizes values for specific access patterns; correctness depends on the input contract, edge cases and complexity constraints.',parts:[
+ ['Types and invariants','Types describe allowed values and operations; invariants are conditions that must remain true.','An inventory quantity must not become negative.'],
+ ['Functions and modularity','Functions group a responsibility behind inputs, outputs and explicit failure behavior.','Separate validation from calculation so each can be tested independently.'],
+ ['Collections and complexity','Arrays, sets, maps and queues have different ordering, lookup and mutation tradeoffs.','Use a set for repeated membership tests instead of scanning a list each time.'],
+ ['Testing and debugging','Boundary tests and small reproductions identify where behavior diverges from expectation.','Test empty, single-item, duplicate and invalid inputs.']],
+ scenario:'Implement a data-processing function, define its contract, test boundaries and explain time and space complexity.',
+ code:`def unique_in_order(values):
+    seen = set()
+    result = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            result.append(value)
+    return result
+
+assert unique_in_order([3, 3, 1, 3, 2]) == [3, 1, 2]`,
+ lab:'Write a baseline, test empty input and duplicates, then compare an alternative implementation.',
+ gotcha:'Premature optimization, hidden mutation and assumptions about input ordering create bugs.',
+ advanced:'Study amortized analysis, recursion depth, graph traversal, property-based tests and profiling.'},
+ {re:/probability|linear algebra|statistics|sampling|confidence intervals|hypothesis tests|regression and classification|clustering|feature engineering|calibration|model evaluation|metrics iou|precision recall/,name:'Statistics, model evaluation and decision metrics',definition:'Statistical and model evaluation methods estimate how well a claim or predictive system generalizes beyond observed examples. The right metric depends on the decision, class balance, sampling process and cost of errors.',parts:[
+ ['Sampling and uncertainty','A sample is informative about a population only when the sampling process and limitations are understood.','A survey of active users may not represent people who stopped using the product.'],
+ ['Train/validation/test discipline','Training fits a model, validation supports model selection and the final test estimates performance after choices are frozen.','Split by customer or time when related records could leak across sets.'],
+ ['Metrics and thresholds','Precision, recall, F1 and calibration answer different questions; no metric is universally best.','For rare fraud, report precision and recall rather than accuracy alone.'],
+ ['Error analysis and fairness','Aggregate scores can hide failures in important or underrepresented groups.','Compare false-negative rates across relevant data slices.']],
+ scenario:'Evaluate a model against a baseline, select a decision threshold and report errors and limitations.',
+ code:`from sklearn.metrics import confusion_matrix, classification_report
+
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions, zero_division=0))`,
+ lab:'Use held-out data, report class counts and per-class metrics, inspect false positives and false negatives.',
+ gotcha:'Repeated tuning against the test set contaminates the final estimate; high accuracy can hide poor minority-class recall.',
+ advanced:'Study calibration curves, bootstrap intervals, power analysis, temporal validation and causal inference.'},
+ {re:/data cleaning|data quality|exploratory analysis|schemas formats|data contracts|etl|elt|dimensional modeling|warehouse design|batch ingestion|streaming|event-time|lineage|orchestration|spark|window functions|cte|sql filtering|joins and null|sql tables joins|relational modeling|indexes and query plans|transactions and indexes/,name:'SQL, data modeling and dependable data pipelines',definition:'Data engineering turns raw events into trusted datasets. SQL transforms relational data; modeling defines the meaning and grain of records, while pipeline controls make ingestion repeatable, validated and recoverable.',parts:[
+ ['Grain, keys and relationships','Grain states what one row represents; keys and constraints protect identity and relationships.','Decide whether a sales row means one order or one order line before joining tables.'],
+ ['Joins and aggregation','Joins can multiply rows when keys are not unique; aggregation should match the declared grain.','Compare row counts before and after a join.'],
+ ['Transactions and idempotency','Transactions group changes atomically; idempotent processing makes safe retries possible.','Upsert using a stable event ID rather than appending the same event repeatedly.'],
+ ['Data contracts and quality','Contracts specify schema and meaning; quality checks detect nulls, duplicates and invalid ranges.','Fail a load if a required field disappears or row counts fall outside an agreed range.']],
+ scenario:'Build an ETL job that validates source records, deduplicates them and can be safely rerun.',
+ code:`SELECT customer_id,
+       COUNT(*) AS order_count,
+       SUM(amount) AS total_spend
+FROM orders
+WHERE status = 'paid'
+GROUP BY customer_id
+HAVING SUM(amount) > 100
+ORDER BY total_spend DESC;`,
+ lab:'Write down the row grain, test a join with duplicate keys, add null/uniqueness checks and simulate a rerun.',
+ gotcha:'A successful pipeline exit does not prove correctness; late events, duplicated joins and timezone boundaries distort metrics.',
+ advanced:'Study CDC, event-time watermarks, SCD Type 2, query plans, partitioning, schema evolution and lineage.'}
+
  ];
  const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
