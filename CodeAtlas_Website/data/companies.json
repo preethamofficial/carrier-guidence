@@ -2,76 +2,295 @@
   {
     "name": "GitLab",
     "ats": "greenhouse",
-    "token": "gitlab"
+    "token": "gitlab",
+    "careers_url": "https://about.gitlab.com/jobs/"
   },
   {
     "name": "Stripe",
     "ats": "greenhouse",
-    "token": "stripe"
+    "token": "stripe",
+    "careers_url": "https://stripe.com/jobs"
   },
   {
     "name": "Airbnb",
     "ats": "greenhouse",
-    "token": "airbnb"
+    "token": "airbnb",
+    "careers_url": "https://careers.airbnb.com/"
   },
   {
     "name": "Figma",
     "ats": "greenhouse",
-    "token": "figma"
+    "token": "figma",
+    "careers_url": "https://www.figma.com/careers/"
   },
   {
     "name": "Databricks",
     "ats": "greenhouse",
-    "token": "databricks"
+    "token": "databricks",
+    "careers_url": "https://www.databricks.com/company/careers"
   },
   {
     "name": "Coinbase",
     "ats": "greenhouse",
-    "token": "coinbase"
+    "token": "coinbase",
+    "careers_url": "https://www.coinbase.com/careers"
   },
   {
     "name": "Reddit",
     "ats": "greenhouse",
-    "token": "reddit"
+    "token": "reddit",
+    "careers_url": "https://www.redditinc.com/careers"
   },
   {
     "name": "Discord",
     "ats": "greenhouse",
-    "token": "discord"
+    "token": "discord",
+    "careers_url": "https://discord.com/jobs"
   },
   {
     "name": "Dropbox",
     "ats": "greenhouse",
-    "token": "dropbox"
+    "token": "dropbox",
+    "careers_url": "https://jobs.dropbox.com/"
   },
   {
     "name": "Vercel",
     "ats": "ashby",
-    "token": "vercel"
+    "token": "vercel",
+    "careers_url": "https://vercel.com/careers"
   },
   {
     "name": "Linear",
     "ats": "ashby",
-    "token": "linear"
+    "token": "linear",
+    "careers_url": "https://linear.app/careers"
   },
   {
     "name": "Ramp",
     "ats": "ashby",
-    "token": "ramp"
+    "token": "ramp",
+    "careers_url": "https://ramp.com/careers"
   },
   {
     "name": "OpenAI",
     "ats": "ashby",
-    "token": "openai"
+    "token": "openai",
+    "careers_url": "https://openai.com/careers/"
   },
   {
     "name": "Anthropic",
     "ats": "greenhouse",
-    "token": "anthropic"
+    "token": "anthropic",
+    "careers_url": "https://www.anthropic.com/careers"
   },
   {
     "name": "Scale AI",
     "ats": "greenhouse",
-    "token": "scaleai"
+    "token": "scaleai",
+    "careers_url": "https://scale.com/careers"
+  },
+  {
+    "name": "HubSpot",
+    "ats": "greenhouse",
+    "token": "hubspot",
+    "careers_url": "https://www.hubspot.com/careers"
+  },
+  {
+    "name": "Duolingo",
+    "ats": "greenhouse",
+    "token": "duolingo",
+    "careers_url": "https://careers.duolingo.com/"
+  },
+  {
+    "name": "Brex",
+    "ats": "greenhouse",
+    "token": "brex",
+    "careers_url": "https://www.brex.com/careers"
+  },
+  {
+    "name": "Plaid",
+    "ats": "greenhouse",
+    "token": "plaid",
+    "careers_url": "https://plaid.com/careers/"
+  },
+  {
+    "name": "Asana",
+    "ats": "greenhouse",
+    "token": "asana",
+    "careers_url": "https://asana.com/jobs"
+  },
+  {
+    "name": "Twilio",
+    "ats": "greenhouse",
+    "token": "twilio",
+    "careers_url": "https://www.twilio.com/en-us/company/jobs"
+  },
+  {
+    "name": "Datadog",
+    "ats": "greenhouse",
+    "token": "datadog",
+    "careers_url": "https://www.datadoghq.com/careers/"
+  },
+  {
+    "name": "Rippling",
+    "ats": "greenhouse",
+    "token": "rippling",
+    "careers_url": "https://www.rippling.com/careers"
+  },
+  {
+    "name": "MongoDB",
+    "ats": "greenhouse",
+    "token": "mongodb",
+    "careers_url": "https://www.mongodb.com/company/careers"
+  },
+  {
+    "name": "Webflow",
+    "ats": "greenhouse",
+    "token": "webflow",
+    "careers_url": "https://webflow.com/careers"
+  },
+  {
+    "name": "Gusto",
+    "ats": "greenhouse",
+    "token": "gusto",
+    "careers_url": "https://gusto.com/about/careers"
+  },
+  {
+    "name": "Affirm",
+    "ats": "greenhouse",
+    "token": "affirm",
+    "careers_url": "https://www.affirm.com/careers"
+  },
+  {
+    "name": "Airtable",
+    "ats": "greenhouse",
+    "token": "airtable",
+    "careers_url": "https://airtable.com/careers"
+  },
+  {
+    "name": "Fivetran",
+    "ats": "greenhouse",
+    "token": "fivetran",
+    "careers_url": "https://www.fivetran.com/careers"
+  },
+  {
+    "name": "HashiCorp",
+    "ats": "greenhouse",
+    "token": "hashicorp",
+    "careers_url": "https://www.hashicorp.com/careers"
+  },
+  {
+    "name": "Okta",
+    "ats": "greenhouse",
+    "token": "okta",
+    "careers_url": "https://www.okta.com/company/careers/"
+  },
+  {
+    "name": "Miro",
+    "ats": "greenhouse",
+    "token": "miro",
+    "careers_url": "https://miro.com/careers/"
+  },
+  {
+    "name": "Grammarly",
+    "ats": "greenhouse",
+    "token": "grammarly",
+    "careers_url": "https://www.grammarly.com/jobs"
+  },
+  {
+    "name": "Notion",
+    "ats": "ashby",
+    "token": "notion",
+    "careers_url": "https://www.notion.com/careers"
+  },
+  {
+    "name": "Replit",
+    "ats": "ashby",
+    "token": "replit",
+    "careers_url": "https://replit.com/careers"
+  },
+  {
+    "name": "Supabase",
+    "ats": "ashby",
+    "token": "supabase",
+    "careers_url": "https://supabase.com/careers"
+  },
+  {
+    "name": "Perplexity",
+    "ats": "ashby",
+    "token": "perplexity",
+    "careers_url": "https://www.perplexity.ai/careers"
+  },
+  {
+    "name": "Cursor",
+    "ats": "ashby",
+    "token": "cursor",
+    "careers_url": "https://www.cursor.com/careers"
+  },
+  {
+    "name": "ElevenLabs",
+    "ats": "ashby",
+    "token": "elevenlabs",
+    "careers_url": "https://elevenlabs.io/careers"
+  },
+  {
+    "name": "Mercury",
+    "ats": "ashby",
+    "token": "mercury",
+    "careers_url": "https://mercury.com/jobs"
+  },
+  {
+    "name": "Retool",
+    "ats": "ashby",
+    "token": "retool",
+    "careers_url": "https://retool.com/careers"
+  },
+  {
+    "name": "Modal",
+    "ats": "ashby",
+    "token": "modal",
+    "careers_url": "https://modal.com/careers"
+  },
+  {
+    "name": "Glean",
+    "ats": "ashby",
+    "token": "glean",
+    "careers_url": "https://www.glean.com/careers"
+  },
+  {
+    "name": "Clerk",
+    "ats": "ashby",
+    "token": "clerk",
+    "careers_url": "https://clerk.com/careers"
+  },
+  {
+    "name": "PostHog",
+    "ats": "ashby",
+    "token": "posthog",
+    "careers_url": "https://posthog.com/careers"
+  },
+  {
+    "name": "Lovable",
+    "ats": "ashby",
+    "token": "lovable",
+    "careers_url": "https://lovable.dev/careers"
+  },
+  {
+    "name": "Together AI",
+    "ats": "ashby",
+    "token": "togetherai",
+    "careers_url": "https://www.together.ai/careers"
+  },
+  {
+    "name": "Browserbase",
+    "ats": "ashby",
+    "token": "browserbase",
+    "careers_url": "https://www.browserbase.com/careers"
+  },
+  {
+    "name": "Sentry",
+    "ats": "greenhouse",
+    "token": "sentry",
+    "careers_url": "https://sentry.io/careers/"
   }
 ]
