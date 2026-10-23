@@ -366,6 +366,33 @@ check('Optional cloud sync is disabled until configured and protected by RLS',()
  assert.ok(cloud.includes('functions.invoke(\'delete-account\'')&&page.includes('Export local data'),'Cloud data controls must be available when configured');
  assert.ok(sw.includes('./auth.html')&&sw.includes('./cloud-sync.js'),'Optional account page must be cached');
 });
+
+check('Career roadmap has researched topic-specific deep dives and code labs',()=>{
+ const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
+ const topicSection=source.slice(0,source.indexOf('const stages'));
+ const rows=[...topicSection.matchAll(/\\['([^']+)','([^']*)','([^']*)','([^']*)'\\]/g)];
+ const topics=rows.flatMap(row=>row[4].split(';').map(topic=>topic.trim()).filter(Boolean));
+ assert.equal(rows.length,41,'Expected all 41 role definitions');
+ assert.equal(topics.length,492,'Every roadmap topic placement must remain defined');
+ assert.ok(new Set(topics).size>=480,'Roadmap topic catalogue should retain its breadth');
+ for(const name of [
+  'Semantic HTML and accessible document structure','CSS layout, responsive design and visual systems',
+  'JavaScript, browser events and component state','Programming fundamentals and data structures',
+  'Statistics, model evaluation and decision metrics','SQL, data modeling and dependable data pipelines',
+  'LLM applications, RAG and agent workflows','Application security and identity boundaries',
+  'Networking, protocols and systematic diagnosis','Linux administration and service troubleshooting',
+  'Cloud-native delivery, containers and infrastructure','Reliability engineering and observability',
+  'Product discovery, requirements and business analysis','UX research, interaction design and design systems',
+  'Agile delivery, flow and team improvement','SOC operations and incident response',
+  'Digital forensics and evidence integrity','Blockchain and smart-contract engineering',
+  'Database administration and recovery','QA engineering and test architecture',
+  'Performance engineering and load testing','Computer vision and language processing',
+  'MLOps and model lifecycle engineering'
+ ]) assert.ok(source.includes(name),'Missing specialist topic profile: '+name);
+ assert.ok(source.includes('Subtopics and definitions')&&source.includes('Practical lab')&&source.includes('Advanced exploration'),'Topic UI must explain subtopics, labs and advanced directions');
+ assert.ok(source.includes('data-copy-example')&&source.includes('specialistNames'),'Examples must remain copyable and specialist profiles must take priority');
+ console.log('✓ 41 career paths, 492 topic placements and specialist deep-dive profiles validated');
+});
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
 
