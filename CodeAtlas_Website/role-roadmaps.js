@@ -716,6 +716,84 @@ ss -ltn`,
  gotcha:'Blind restarts can erase diagnostic context; “running” does not prove a service is ready or reachable.',
  advanced:'Study systemd dependencies, resource limits, log rotation, patching, configuration management and recovery drills.'}
 
+
+ ,
+ {re:/docker images|docker and compose|container build|containers and managed orchestration|kubernetes primitives|workloads and services|infrastructure as code|terraform|ci pipeline|ci security gates|artifact versioning|deployment strategies|deployment patterns|rollback|golden paths/,name:'Cloud-native delivery, containers and infrastructure',definition:'Delivery automation packages software and dependencies, runs repeatable quality gates and deploys a versioned artifact into a configured environment. Infrastructure as code makes changes reviewable and repeatable.',parts:[
+ ['Build artifact and runtime','A container image packages an application filesystem and runtime dependencies; runtime configuration should be injected separately.','Build an image once and promote the same digest between environments.'],
+ ['Declarative infrastructure','Desired state describes what should exist; a plan or diff exposes changes before they are applied.','Review an infrastructure plan before changing a network or database.'],
+ ['CI gates and release safety','Tests, static analysis and artifact checks should block invalid releases before deployment.','Fail the pipeline when tests fail or a required artifact is missing.'],
+ ['Health, rollout and rollback','A rollout changes the running version; health checks and rollback criteria help limit impact.','Increase traffic only after error rate and latency remain within agreed thresholds.']],
+ scenario:'Package a service, run tests in CI, deploy to a disposable environment and demonstrate rollback.',
+ code:`FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+RUN useradd --create-home appuser
+USER appuser
+CMD ["python", "-m", "app"]`,
+ lab:'Build and run the image as a non-root user, pass configuration at runtime, inspect logs and simulate a failed health check.',
+ gotcha:'A green deployment status does not prove user-facing health; embedded secrets and mutable tags weaken release integrity.',
+ advanced:'Study SBOMs, image signing, supply-chain security, canary releases, policy-as-code and disaster recovery.'},
+ {re:/slis slo|error budgets|latency percentiles|throughput|capacity planning|graceful degradation|distributed systems|postmortem|incident command|runbooks|observability|metrics logs traces|tracing latency|monitoring actionable alerts/,name:'Reliability engineering and observability',definition:'Reliability engineering defines measurable service expectations and uses telemetry to understand user impact. Metrics quantify behavior, logs record events and traces connect work across components.',parts:[
+ ['SLI, SLO and error budget','An SLI measures a service property, an SLO sets its target and an error budget expresses tolerated unreliability over a period.','Define a successful-request ratio and a 30-day target before deciding when to slow feature releases.'],
+ ['Latency and saturation','Percentiles reveal tail latency; saturation shows when a constrained resource approaches capacity.','Track p95 latency and queue depth, not only average response time.'],
+ ['Actionable alerts and runbooks','Alerts should indicate user impact or meaningful risk and link to a response procedure.','Alert on sustained error-budget burn rather than every transient CPU spike.'],
+ ['Incident learning','A postmortem records impact, timeline, contributing factors and corrective actions with owners.','Turn a repeated manual mitigation into a tracked automation task.']],
+ scenario:'Define a service SLO, instrument health and latency, create an actionable alert and rehearse its runbook.',
+ code:`successful = 9980
+total = 10000
+availability = successful / total
+print("success ratio:", round(availability * 100, 2), "%")`,
+ lab:'Simulate elevated errors, confirm the alert has actionable context and test whether the runbook restores service safely.',
+ gotcha:'Alert volume is not observability. Dashboards without a decision or runbook rarely improve response.',
+ advanced:'Study burn-rate alerts, distributed tracing, capacity forecasting, fault injection and incident command.'},
+ {re:/product outcomes|product vision|customer discovery|stakeholder interviews|requirements and user stories|prioritization|success metrics|roadmap and dependency|market and competitor|technical feasibility|business context|root cause|functional and nonfunctional|acceptance criteria|traceability|change control|bpmn|uat/,name:'Product discovery, requirements and business analysis',definition:'Product and business analysis translate a stakeholder problem into an outcome, requirements, acceptance criteria and a way to validate whether a solution works. Requirements should be testable and traceable to the underlying need.',parts:[
+ ['Problem framing and evidence','Describe who experiences the problem, context and consequence; separate evidence from assumptions.','Interview users to learn why a requested feature matters before committing to a solution.'],
+ ['Requirements and acceptance','Functional requirements describe behavior; nonfunctional requirements describe qualities such as latency, privacy or availability.','Define acceptance for success, invalid input, permission denial and dependency failure.'],
+ ['Prioritization and dependencies','Prioritize value, risk, effort and dependency constraints rather than treating every request equally.','Split a high-risk feature into a small experiment that tests the riskiest assumption.'],
+ ['Metrics and sign-off','A metric needs a numerator, denominator and time window; traceability connects need, requirement, implementation and test.','Link each acceptance criterion to a test case and a decision owner.']],
+ scenario:'Turn a vague request into a problem statement, user story, measurable acceptance criteria, UAT plan and release recommendation.',
+ code:`Feature: Save a learning topic
+Given a signed-in learner opens a topic
+When the learner selects "Bookmark"
+Then the topic appears in the saved list
+And the saved state remains after refresh`,
+ lab:'Ask another person to test the criteria without extra explanation; record ambiguity and revise it into observable behavior.',
+ gotcha:'A team can deliver exactly what was requested and still fail to solve the underlying user problem.',
+ advanced:'Study discovery interviews, hypothesis-driven roadmaps, BPMN, traceability matrices, impact mapping and outcome metrics.'},
+ {re:/design principles|user research|personas|jobs to be done|information architecture|wireframes|interaction patterns|typography|design systems|high.fidelity|usability testing|developer handoff|design qa/,name:'UX research, interaction design and design systems',definition:'UX design connects user goals, information architecture, interaction patterns and visual presentation. Research tests assumptions; usability testing observes whether people can complete realistic tasks and where they struggle.',parts:[
+ ['Research and assumptions','Research methods should match the question; personas and journey maps are hypotheses informed by evidence.','Ask participants to describe a recent real task rather than only asking what features they want.'],
+ ['Information architecture and flow','Information architecture organizes content; user flows make decisions and transitions explicit.','Map the steps and error recovery needed to complete account creation.'],
+ ['Visual hierarchy and design systems','Typography, spacing, color and component rules create consistency and help users recognize states.','Use shared tokens so focus, error and success styles remain consistent.'],
+ ['Usability and handoff','Usability tests examine task success, time, errors and observed confusion; handoff should communicate states and responsive behavior.','Include empty, loading, disabled and error states in the design specification.']],
+ scenario:'Redesign a key user flow, test it with representative participants and provide implementation-ready states and design tokens.',
+ code:`:root {
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --color-focus: #5b4bdb;
+}
+.button:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}`,
+ lab:'Write a task script, observe users without coaching, record completion and errors, then make one evidence-based change and retest.',
+ gotcha:'Aesthetic preference is not the same as usability; inaccessible focus states and missing error paths can block real users.',
+ advanced:'Study moderated research, cognitive walkthroughs, WCAG, design-token governance, experimentation and research ethics.'},
+ {re:/agile values|sprint planning|backlog refinement|estimation and uncertainty|daily coordination|retrospectives|kanban|cycle time|conflict facilitation|release planning|simulated delivery/,name:'Agile delivery, flow and team improvement',definition:'Agile delivery organizes work into small increments and uses feedback to reduce uncertainty. Flow metrics reveal where work waits; ceremonies are useful when they improve coordination, learning or outcomes.',parts:[
+ ['Backlog and acceptance','A backlog item should communicate value, scope and acceptance conditions clearly enough for planning and testing.','Split a broad task into independently testable slices.'],
+ ['Planning and uncertainty','Estimates are forecasts, not guarantees; plans should account for dependencies, risk and capacity.','Identify the riskiest dependency before committing to a sprint goal.'],
+ ['Flow and WIP','Cycle time measures elapsed time from a defined start to finish; WIP limits reduce context switching and queues.','Track blocked work and limit how many items are active at once.'],
+ ['Review and improvement','Reviews validate outcomes; retrospectives produce specific improvement experiments with owners.','Choose one measurable process change and inspect its effect next iteration.']],
+ scenario:'Run a simulated iteration from backlog refinement through review and retrospective, recording outcomes and flow constraints.',
+ code:`cycle_times_days = [2, 3, 3, 5, 8]
+cycle_times_days.sort()
+median = cycle_times_days[len(cycle_times_days) // 2]
+print("median cycle time:", median, "days")`,
+ lab:'Use a small task board, record start/finish/blocker times and propose one WIP or handoff improvement based on evidence.',
+ gotcha:'Velocity is not a productivity score and should not be used to compare teams; activity counts do not prove customer value.',
+ advanced:'Study flow efficiency, dependency mapping, risk-based planning, facilitation and outcome-oriented metrics.'}
+
  ];
  const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
