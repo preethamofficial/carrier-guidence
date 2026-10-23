@@ -241,7 +241,12 @@ function topicDossier(topic,role,deep){
  ['Grounding and citations','Grounding requires claims to be supported by accessible evidence; citations should point to the exact source span, not merely a related document.','Ask for a fact absent from the documents and verify the system says it cannot find evidence.'],
  ['Evaluation and guardrails','Evaluation uses representative test cases, expected behaviors and metrics for correctness, retrieval, safety, latency and cost.','Create ten fixed questions and track answer correctness, citation validity and refusal behavior after each change.']],
  scenario:'Build a document Q&A feature that returns an answer with source citations and refuses to invent missing facts.',
- code:'def answer_question(question, retriever, model):\\n    passages = retriever.search(question, k=4)\\n    if not passages:\\n        return \"I could not find supporting evidence.\"\\n    context = \"\\\\n\\\\n\".join(p.text for p in passages)\\n    return model.generate(question=question, context=context, require_citations=True)',
+ code:`def answer_question(question, retriever, model):
+    passages = retriever.search(question, k=4)
+    if not passages:
+        return "I could not find supporting evidence."
+    context = "\\\\n\\\\n".join(p.text for p in passages)
+    return model.generate(question=question, context=context, require_citations=True)`,
  lab:'Measure retrieval recall on a labelled question set; then compare chunk sizes, overlap, metadata filters and reranking. Keep a regression set for prompt-injection and unsupported-answer cases.',
  gotcha:'A fluent response is not proof of correctness. Retrieved text is untrusted data, and permissions must be enforced before retrieval rather than only described in a prompt.',
  advanced:'Compare hybrid lexical/vector search, reranking, query rewriting, context compression, structured outputs, tool permission boundaries, offline evaluation and production traces.'},
@@ -251,7 +256,15 @@ function topicDossier(topic,role,deep){
  ['Baseline and metrics','A baseline is a simple reference model. Metrics should match the cost of errors and the class balance, not just look familiar.','Compare majority-class accuracy with precision, recall, F1 and a confusion matrix for rare fraud events.'],
  ['Deployment and drift','Production monitoring checks input quality, latency, errors and changes in data or outcomes. Retraining should follow evidence and controlled validation.','Alert when a feature’s missing rate doubles or prediction distribution changes materially.']],
  scenario:'Train a model with a reproducible pipeline, compare it to a baseline and document the limits of its evaluation.',
- code:'from sklearn.model_selection import train_test_split\\nfrom sklearn.metrics import classification_report\\n\\nX_train, X_test, y_train, y_test = train_test_split(\\n    X, y, test_size=0.2, random_state=42, stratify=y\\n)\\nmodel.fit(X_train, y_train)\\npredictions = model.predict(X_test)\\nprint(classification_report(y_test, predictions))',
+ code:`from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+print(classification_report(y_test, predictions))`,
  lab:'Build a baseline first, inspect class balance, test a leakage-safe split, and report per-class metrics with uncertainty and limitations.',
  gotcha:'Preprocessing fitted on all rows leaks information. Repeatedly tuning against the test set also makes it part of training in practice.',
  advanced:'Study calibration, threshold selection, temporal validation, data lineage, feature stores, reproducibility, drift detection and model cards.'},
@@ -261,7 +274,12 @@ function topicDossier(topic,role,deep){
  ['Association and causation','Correlation describes co-movement; causation asks whether changing one factor changes an outcome. Confounders can create misleading associations.','Users who see a feature may already be more engaged, so compare randomized groups when possible.'],
  ['Metric design','A useful metric has a clear numerator, denominator, time window, segmentation and decision it informs.','Define conversion as completed purchases divided by eligible sessions, with a stated attribution window.']],
  scenario:'Create a dashboard that makes a business decision traceable to a well-defined metric and a validated query.',
- code:'SELECT campaign,\\n       COUNT(*) AS eligible_sessions,\\n       SUM(CASE WHEN purchased THEN 1 ELSE 0 END) AS purchases,\\n       1.0 * SUM(CASE WHEN purchased THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS conversion_rate\\nFROM sessions\\nGROUP BY campaign;',
+ code:`SELECT campaign,
+       COUNT(*) AS eligible_sessions,
+       SUM(CASE WHEN purchased THEN 1 ELSE 0 END) AS purchases,
+       1.0 * SUM(CASE WHEN purchased THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS conversion_rate
+FROM sessions
+GROUP BY campaign;`,
  lab:'Write the metric definition before building a chart; reconcile totals against source records and check segments, missingness and time-zone boundaries.',
  gotcha:'A chart can be visually polished while using the wrong denominator, duplicated joins, survivorship bias or inconsistent date ranges.',
  advanced:'Investigate confidence intervals, power, multiple comparisons, Simpson’s paradox, causal diagrams, cohort retention and metric governance.'},
@@ -289,7 +307,13 @@ COMMIT;`,
  ['Secrets and least privilege','Secrets are credentials that should be stored and rotated safely. Least privilege grants only the permissions needed for the task.','Give a report job read-only access to its reporting schema, not administrator access.'],
  ['Detection and response','Logs and alerts provide evidence; an incident process contains impact, preserves evidence and verifies recovery.','Record request IDs and security-relevant outcomes while excluding passwords and access tokens.']],
  scenario:'Threat-model an API endpoint, implement object-level authorization and test denied access as carefully as allowed access.',
- code:'def get_document(user, document_id, repository):\\n    document = repository.find(document_id)\\n    if document is None:\\n        raise NotFound()\\n    if not repository.user_can_read(user.id, document.id):\\n        raise Forbidden()\\n    return document',
+ code:`def get_document(user, document_id, repository):
+    document = repository.find(document_id)
+    if document is None:
+        raise NotFound()
+    if not repository.user_can_read(user.id, document.id):
+        raise Forbidden()
+    return document`,
  lab:'List assets and trust boundaries, write abuse cases, test unauthenticated/unauthorized access and document the remediation evidence.',
  gotcha:'Hiding a button is not authorization. Never trust client-supplied ownership, roles, filenames or claims without server-side verification.',
  advanced:'Study secure design reviews, dependency threat models, SSRF, CSRF, XSS, supply-chain integrity, audit trails, incident exercises and defense in depth.'},
@@ -299,7 +323,14 @@ COMMIT;`,
  ['Health and observability','Logs explain events, metrics quantify behavior and traces connect work across services. Health checks distinguish process liveness from readiness.','Track error rate, latency percentiles and saturation rather than only whether the process is running.'],
  ['Rollback and recovery','A deployment plan defines how to restore a known-good version and how to recover stateful dependencies.','Deploy gradually and verify the new version’s error rate before increasing traffic.']],
  scenario:'Containerize a small service, run automated checks, expose a health endpoint and demonstrate rollback after a failed release.',
- code:'FROM python:3.12-slim\\nWORKDIR /app\\nCOPY requirements.txt .\\nRUN pip install --no-cache-dir -r requirements.txt\\nCOPY . .\\nRUN useradd --create-home appuser\\nUSER appuser\\nCMD ["python", "-m", "app"]',
+ code:`FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+RUN useradd --create-home appuser
+USER appuser
+CMD ["python", "-m", "app"]`,
  lab:'Build the image reproducibly, run it as a non-root user, pass configuration at runtime, inspect logs and test a failed health check.',
  gotcha:'A green deployment status does not prove user-facing health. Mutable tags, embedded secrets and missing rollback steps create avoidable risk.',
  advanced:'Study immutable artifacts, SBOMs, image signing, deployment strategies, SLO/error budgets, capacity planning and disaster recovery tests.'},
@@ -309,7 +340,14 @@ COMMIT;`,
  ['DNS and transport','DNS resolves names; TCP provides an ordered byte stream; TLS protects transport and authenticates the peer when configured correctly.','Check DNS resolution, route, port reachability, TLS certificate and application logs as separate layers.'],
  ['Observability and versioning','Request IDs connect logs; API versioning and compatibility rules help clients upgrade safely.','Add a correlation ID and test old clients before removing a response field.']],
  scenario:'Build an endpoint with validation, documented error responses, bounded outbound timeouts and a test for a transient failure.',
- code:'import requests\\n\\ndef fetch_profile(base_url, user_id):\\n    response = requests.get(\\n        f\"{base_url}/users/{user_id}\", timeout=(2, 5)\\n    )\\n    response.raise_for_status()\\n    return response.json()',
+ code:`import requests
+
+def fetch_profile(base_url, user_id):
+    response = requests.get(
+        f"{base_url}/users/{user_id}", timeout=(2, 5)
+    )
+    response.raise_for_status()
+    return response.json()`,
  lab:'Write a contract, test success and failure status codes, simulate a slow server and verify logs contain a correlation ID but no secret.',
  gotcha:'A timeout is not proof the server did nothing. Retrying non-idempotent actions without deduplication can create duplicate effects.',
  advanced:'Study backpressure, circuit breakers, queues, eventual consistency, service discovery, API compatibility and distributed tracing.'},
@@ -319,7 +357,13 @@ COMMIT;`,
  ['Reproducibility and isolation','A good test controls its inputs and dependencies and cleans up after itself. Flaky tests hide regressions.','Use a temporary database or isolated test schema instead of relying on shared mutable production-like data.'],
  ['Failure localization','A minimal reproduction, logs, stack trace and first failing assertion narrow the search space.','Reduce a 20-step failure to the smallest input that still reproduces the bug.']],
  scenario:'Write a small test suite that checks expected behavior, invalid input and one failure in an external dependency.',
- code:'def percentage(value):\\n    if not 0 <= value <= 100:\\n        raise ValueError(\"value must be between 0 and 100\")\\n    return value\\n\\nassert percentage(0) == 0\\nassert percentage(100) == 100',
+ code:`def percentage(value):
+    if not 0 <= value <= 100:
+        raise ValueError("value must be between 0 and 100")
+    return value
+
+assert percentage(0) == 0
+assert percentage(100) == 100`,
  lab:'Create a failing test before fixing a bug; then run the focused test, the full suite and a regression case.',
  gotcha:'Coverage measures which code ran, not whether assertions would catch a defect. Over-mocking can hide integration problems.',
  advanced:'Explore property-based tests, fuzzing, mutation testing, contract tests, race-condition tests and performance budgets.'},
@@ -329,7 +373,9 @@ COMMIT;`,
  ['Responsive layout and performance','Layout adapts to viewport and content; performance work measures actual bottlenecks and avoids unnecessary work.','Test at narrow width, zoom and keyboard-only navigation, not only on a large desktop.'],
  ['Accessibility and feedback','Controls need labels, keyboard operation, visible focus and understandable errors. Color alone should not convey status.','Associate an input with a label and announce validation errors in a usable way.']],
  scenario:'Build a form that works on mobile, supports keyboard-only use and communicates validation and server failures.',
- code:'<label for=\"email\">Email address</label>\\n<input id=\"email\" name=\"email\" type=\"email\" required>\\n<button type=\"submit\">Continue</button>',
+ code:`<label for="email">Email address</label>
+<input id="email" name="email" type="email" required>
+<button type="submit">Continue</button>`,
  lab:'Test keyboard order, visible focus, zoom, screen-reader labels, invalid data, loading states and a simulated network failure.',
  gotcha:'A visually attractive mockup is not proof of usability. Missing labels, focus traps and silent errors block real users.',
  advanced:'Study semantic HTML, WCAG criteria, focus management, design tokens, performance profiling and automated plus manual accessibility tests.'},
@@ -339,7 +385,11 @@ COMMIT;`,
  ['Storage and privacy','Local storage must match data sensitivity. Tokens and secrets belong in platform-supported secure storage where appropriate.','Keep authentication tokens out of logs and ordinary preference files.'],
  ['Offline and background work','Offline behavior defines what the user can read or change without a network; synchronization must resolve conflicts.','Queue a user action with a stable ID and safely reconcile it after reconnecting.']],
  scenario:'Create a screen that loads remote data, handles loading/empty/error states and remains predictable when the network disappears.',
- code:'sealed interface LoadState<out T> {\\n    data object Loading : LoadState<Nothing>\\n    data class Success<T>(val value: T) : LoadState<T>\\n    data class Failure(val message: String) : LoadState<Nothing>\\n}',
+ code:`sealed interface LoadState<out T> {
+    data object Loading : LoadState<Nothing>
+    data class Success<T>(val value: T) : LoadState<T>
+    data class Failure(val message: String) : LoadState<Nothing>
+}`,
  lab:'Test background/resume, permission denial, process recreation, expired authentication and duplicate sync attempts.',
  gotcha:'An app returning to the foreground does not guarantee its previous process or in-memory state still exists.',
  advanced:'Study lifecycle-aware components, offline-first architecture, conflict resolution, app signing, privacy manifests and crash/ANR monitoring.'},
@@ -349,7 +399,13 @@ COMMIT;`,
  ['Assets and resources','Textures, audio, meshes and objects consume memory and loading time. Resource lifetime affects stability.','Profile a scene before pooling objects or compressing assets.'],
  ['Profiling and feedback','Measure frame time, CPU/GPU cost and memory. Player feedback should communicate hits, transitions and failures.','Capture a frame-time profile before and after one targeted optimization.']],
  scenario:'Build a small interactive scene with predictable movement, collision handling and a measured performance target.',
- code:'// Unity C# movement example\\nvoid Update()\\n{\\n    float input = Input.GetAxis(\"Horizontal\");\\n    float distance = input * speed * Time.deltaTime;\\n    transform.Translate(distance, 0f, 0f);\\n}',
+ code:`// Unity C# movement example
+void Update()
+{
+    float input = Input.GetAxis("Horizontal");
+    float distance = input * speed * Time.deltaTime;
+    transform.Translate(distance, 0f, 0f);
+}`,
  lab:'Test different frame rates, collision boundaries and pause/resume behavior; capture a profiler sample before optimizing.',
  gotcha:'Optimizing by intuition can add complexity without improving frame time. Frame-dependent movement and unmanaged asset lifetimes cause subtle bugs.',
  advanced:'Study fixed-step simulation, interpolation, deterministic replays, object pooling, rendering budgets and profiling on target hardware.'},
@@ -359,7 +415,10 @@ COMMIT;`,
  ['Protocols and drivers','UART, SPI and I2C define different communication patterns, framing and addressing.','Check bus speed, device address, signal levels and error status when a sensor is not detected.'],
  ['Safety and diagnostics','Watchdogs, assertions, fault logs and safe states help systems recover from unexpected conditions.','Simulate a sensor timeout and verify the device enters a defined safe state.']],
  scenario:'Write a driver-facing state machine that validates sensor readings, handles timeouts and records fault conditions.',
- code:'uint32_t set_flag(uint32_t reg, uint32_t mask)\\n{\\n    return reg | mask;  // set selected bits; preserve the others\\n}',
+ code:`uint32_t set_flag(uint32_t reg, uint32_t mask)
+{
+    return reg | mask;  // set selected bits; preserve the others
+}`,
  lab:'Use a simulator or development board to test normal readings, missing devices, invalid ranges and timing overruns.',
  gotcha:'A successful compile does not prove timing correctness or safe electrical behavior. Volatile, atomicity and memory-mapped I/O rules are platform-specific.',
  advanced:'Study RTOS scheduling, worst-case execution time, watchdog design, power profiling, secure boot and firmware update recovery.'},
@@ -369,7 +428,11 @@ COMMIT;`,
  ['Prioritization and dependencies','Prioritization weighs value, risk, effort and dependencies; estimates are uncertain and should be revisited.','Separate a small testable first release from optional enhancements.'],
  ['Feedback and learning','Reviews, telemetry and user feedback test whether the delivered change achieved its intended outcome.','Define a success metric and a rollback signal before release.']],
  scenario:'Convert a vague request into a problem statement, measurable acceptance criteria, test cases and a release decision.',
- code:'Feature: Save a learning topic\\nGiven a signed-in learner opens a topic\\nWhen they select “Bookmark”\\nThen the topic appears in their saved list\\nAnd the saved state persists after refresh',
+ code:`Feature: Save a learning topic
+Given a signed-in learner opens a topic
+When they select “Bookmark”
+Then the topic appears in their saved list
+And the saved state persists after refresh`,
  lab:'Write acceptance criteria for success, empty, error and permission cases; ask another person to test them without extra explanation.',
  gotcha:'A task can meet its written scope while failing the user’s underlying need. “Done” should include quality and operational readiness.',
  advanced:'Study discovery interviews, hypothesis-driven roadmaps, dependency mapping, risk-based prioritization and outcome-based metrics.'},
@@ -379,7 +442,13 @@ COMMIT;`,
  ['Complexity','Big-O describes growth, not exact runtime. Constants, memory allocation and input distribution still matter in practice.','Compare a nested scan O(n²) with a hash-based approach expected near O(n).'],
  ['Correctness proof and tests','Invariants explain why a solution remains correct; examples and boundary tests try to expose defects.','Test empty, single-item, sorted, reverse-sorted and duplicate-heavy inputs.']],
  scenario:'Implement a simple baseline, analyze its time and space complexity, then optimize only after validating the result.',
- code:'def has_duplicate(values):\\n    seen = set()\\n    for value in values:\\n        if value in seen:\\n            return True\\n        seen.add(value)\\n    return False',
+ code:`def has_duplicate(values):
+    seen = set()
+    for value in values:
+        if value in seen:
+            return True
+        seen.add(value)
+    return False`,
  lab:'Write brute force first, compare outputs on random small inputs, then measure the optimized version on increasing input sizes.',
  gotcha:'A clever algorithm is not useful if it violates edge cases or makes assumptions the input contract does not guarantee.',
  advanced:'Study amortized analysis, graph traversal, greedy proof techniques, dynamic programming states and benchmarking methodology.'}
@@ -391,7 +460,10 @@ COMMIT;`,
  ['Failure and edge cases','Decide how the system behaves with missing, invalid, large or unexpected input.','Test empty input, a boundary value and one invalid value.'],
  ['Integration and tradeoffs','Understand how the concept interacts with neighboring components and what it costs in complexity, performance or maintainability.','Compare a simple solution with a production-ready alternative and explain when each is appropriate.']],
  scenario:'Create a minimal working example, explain its assumptions and demonstrate expected behavior plus a deliberate failure.',
- code:'def process(value):\\n    if value is None:\\n        raise ValueError(\"value is required\")\\n    return value',
+ code:`def process(value):
+    if value is None:
+        raise ValueError("value is required")
+    return value`,
  lab:'Define the topic in your own words, identify prerequisites, implement a minimal example and test both ordinary and boundary inputs.',
  gotcha:'Memorizing a definition without being able to predict behavior or explain limitations creates fragile understanding.',
  advanced:'Read the official reference, compare two implementation approaches, measure a relevant quality attribute and document the decision.'};
