@@ -794,6 +794,97 @@ print("median cycle time:", median, "days")`,
  gotcha:'Velocity is not a productivity score and should not be used to compare teams; activity counts do not prove customer value.',
  advanced:'Study flow efficiency, dependency mapping, risk-based planning, facilitation and outcome-oriented metrics.'}
 
+
+ ,
+ {re:/soc analyst|siem|alert triage|detection rules|attack lifecycle|threat hunting|incident lifecycle|incident response|containment tradeoffs|eradication and recovery|phishing and malware|incident escalation|tabletop exercises/,name:'SOC operations and incident response',definition:'Security operations converts telemetry into prioritized investigations and response actions. Incident response follows a prepared lifecycle: detect, analyze, contain, eradicate, recover and learn, while preserving evidence and documenting decisions.',parts:[
+ ['Telemetry and triage','Normalize identity, endpoint, network and cloud events; prioritize by impact, confidence and scope.','Correlate repeated failed logins with a successful login and a new device event.'],
+ ['Hypothesis and evidence','An alert is a signal, not a verdict; test competing explanations against timestamps and independent evidence.','Check identity logs, endpoint telemetry and network context before declaring compromise.'],
+ ['Containment and recovery','Containment limits ongoing impact; recovery verifies clean systems and restores service with appropriate controls.','Disable a compromised test account and confirm tokens or sessions are invalidated.'],
+ ['Communication and lessons','Record the timeline, impact, decisions, evidence sources and follow-up actions; protect sensitive incident data.','Assign each corrective action an owner and due date after a tabletop exercise.']],
+ scenario:'Investigate a synthetic suspicious-login alert, construct a timeline, decide on containment and produce a concise incident report.',
+ code:`events = [
+    {"time": "09:01", "event": "five failed logins", "source": "identity"},
+    {"time": "09:03", "event": "successful login", "source": "identity"},
+    {"time": "09:04", "event": "new device registered", "source": "identity"},
+]
+for event in events:
+    print(event["time"], event["source"], event["event"])`,
+ lab:'Use synthetic logs only; identify a plausible hypothesis, list missing evidence, document confidence and state what would change your conclusion.',
+ gotcha:'An alert alone rarely proves malicious activity. Uncoordinated containment can destroy evidence or interrupt critical services.',
+ advanced:'Study detection engineering, MITRE ATT&CK mapping, incident command, threat hunting, evidence preservation and post-incident metrics.'},
+ {re:/chain of custody|hashing and forensic copies|file systems and metadata|operating system artifacts|browser and application traces|event timeline reconstruction|memory and process artifacts|network evidence|deleted data limitations|forensic case report/,name:'Digital forensics and evidence integrity',definition:'Digital forensics acquires, preserves and analyzes digital artifacts so findings are reproducible and evidence integrity can be defended. A report must distinguish observed facts from interpretations and acknowledge collection limits.',parts:[
+ ['Authority and scope','Define permitted systems, time range, questions and handling restrictions before collection.','Record the case identifier, source device and authorized acquisition method.'],
+ ['Acquisition and integrity','Use documented acquisition methods and cryptographic hashes to detect unintended changes.','Hash an acquired image and verify the hash before analysis.'],
+ ['Timeline and artifacts','Correlate logs and metadata while considering clock skew, missing records and different time zones.','Normalize timestamps for comparison but preserve original values.'],
+ ['Reporting and limitations','Record tools, versions, methods, findings, alternative explanations and limits so another analyst can reproduce the work.','Separate “a log contains this entry” from “this proves a particular person did it.”']],
+ scenario:'Analyze a supplied training log bundle, preserve hashes and produce a timeline with source references.',
+ code:`sha256sum evidence-image.dd
+stat evidence-image.dd
+# Record tool versions, source, timestamps and hash in case notes`,
+ lab:'Use synthetic data, preserve originals, hash working copies and write findings with evidence, confidence and limitations.',
+ gotcha:'Analyzing a changing original or omitting chain-of-custody records can undermine conclusions.',
+ advanced:'Study memory acquisition, filesystem artifacts, anti-forensics, time synchronization and reproducible forensic tooling.'},
+ {re:/distributed ledgers|consensus basics|wallets keys|signing|transactions gas|solidity types|storage events|contract lifecycle|reentrancy|unit fuzz|local chains|frontend wallet|events indexing|audits upgrades|tested dapp/,name:'Blockchain and smart-contract engineering',definition:'A blockchain is a replicated state machine where participants agree on transaction ordering under a consensus protocol. Smart contracts encode state transitions that may be expensive or difficult to reverse after deployment.',parts:[
+ ['Transactions and signatures','A signed transaction requests a state change; execution can fail or cost fees, and submission is not proof of success.','Check the transaction receipt status and emitted events.'],
+ ['State invariants','An invariant is a condition that must remain true after every permitted transition.','A withdrawal must never exceed the caller’s recorded balance.'],
+ ['Access and external calls','Authorization, reentrancy and untrusted token behavior are important contract trust boundaries.','Test a malicious receiver against withdrawal logic on a local chain.'],
+ ['Testing and deployment','Unit, fuzz and invariant tests explore state transitions; deployment scripts must verify network and artifact.','Verify deployed bytecode and configuration before publishing an address.']],
+ scenario:'Implement a local contract with explicit invariants and test normal, rejected and adversarial call sequences.',
+ code:`// Solidity teaching fragment: checks-effects-interactions
+function withdraw(uint256 amount) external {
+    require(amount > 0, "amount must be positive");
+    require(balance[msg.sender] >= amount, "insufficient balance");
+    balance[msg.sender] -= amount;
+    (bool ok, ) = msg.sender.call{value: amount}("");
+    require(ok, "transfer failed");
+}`,
+ lab:'Test zero amount, insufficient balance, failed transfer and reentrancy; run static analysis in a local environment.',
+ gotcha:'A contract that compiles is not necessarily secure; privileged roles, external calls and economic assumptions need independent review.',
+ advanced:'Study consensus assumptions, oracle manipulation, MEV, formal verification, key management and reproducible builds.'},
+ {re:/relational model and sql|schemas constraints|indexes and query plans|transactions isolation|roles grants|backup restore|replication and failover|migrations and change safety|vacuum statistics|monitoring slow queries|dba operations/,name:'Database administration and recovery',definition:'Database administration maintains data integrity, availability, access control and performance. Operational readiness includes tested recovery procedures, not merely a successful backup command.',parts:[
+ ['Backup and restore','A backup is useful only if it can be restored within the required recovery objectives.','Restore to an isolated instance and verify row counts and application connectivity.'],
+ ['Query plans and indexes','Indexes can speed reads but add storage and write overhead; query plans reveal how the engine accesses data.','Compare plans before and after an index using representative parameters.'],
+ ['Availability and transactions','Replication, transaction isolation and failover affect consistency and recovery behavior.','Test what happens when a client disconnects during commit.'],
+ ['Access and monitoring','Roles, audit logs, capacity metrics and alerts reveal risky access and slow queries.','Use a read-only role for reporting and alert on connection exhaustion.']],
+ scenario:'Write a recovery runbook and demonstrate a verified restore, slow-query investigation and least-privilege account.',
+ code:`EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, created_at
+FROM orders
+WHERE customer_id = 42
+ORDER BY created_at DESC
+LIMIT 20;`,
+ lab:'Use a disposable database, capture a baseline query plan, add a justified index and record the read/write tradeoff.',
+ gotcha:'A backup never restored is an assumption; an index is not automatically beneficial for every query.',
+ advanced:'Study point-in-time recovery, replication lag, vacuuming, lock analysis, connection pooling and failover drills.'},
+ {re:/testing principles|requirements and acceptance|manual exploratory|test data and fixtures|api contract testing|browser automation locators|page objects|assertions screenshots|database and integration tests|ci parallelism|accessibility and cross.browser/,name:'QA engineering and test architecture',definition:'Testing gathers evidence that software behaves as specified under chosen conditions. A strong test strategy balances unit, integration, contract and end-to-end tests, with isolated data and diagnostics that make failures reproducible.',parts:[
+ ['Requirements and test design','Translate each requirement into observable expected behavior and identify high-risk failure modes.','Create success, invalid-input, permission-denied and dependency-failure cases.'],
+ ['Test levels and boundaries','Unit tests isolate logic; integration tests check component boundaries; end-to-end tests validate user journeys.','Test a price calculation separately from database-backed checkout.'],
+ ['Fixtures and deterministic setup','Fixtures create known state and clean up; unique test data prevents tests from depending on execution order.','Give each parallel test its own user or record.'],
+ ['Failure diagnostics','Assertions, logs, traces and screenshots should narrow the cause without leaking secrets.','Capture browser traces when a critical journey fails in CI.']],
+ scenario:'Automate a critical user journey with deterministic data, clear assertions and actionable failure diagnostics.',
+ code:`import { test, expect } from "@playwright/test";
+
+test("learner can bookmark a topic", async ({ page }) => {
+  await page.goto("/roadmaps.html");
+  await page.getByRole("button", { name: "Bookmark" }).click();
+  await expect(page.getByText("Saved to bookmarks")).toBeVisible();
+});`,
+ lab:'Run the test repeatedly and in CI, deliberately break the expected result and confirm that the report identifies the failure.',
+ gotcha:'Coverage measures executed code, not whether assertions catch defects; fixed sleeps and brittle selectors create flaky tests.',
+ advanced:'Study property-based testing, mutation testing, contract tests, accessibility automation and flaky-test telemetry.'},
+ {re:/performance goals|workload models|baseline and environment|virtual users|ramp profiles|realistic test data|load stress spike|http bottleneck|cpu memory database|saturation and capacity|caching and connection pools|slo thresholds|performance investigation/,name:'Performance engineering and load testing',definition:'Performance engineering measures responsiveness, throughput and resource use under a defined workload. Results need a documented workload model, controlled environment and explicit success criteria.',parts:[
+ ['Workload model','Describe concurrency, arrival rate, request mix, payload size and expected peak behavior.','Model ordinary traffic and a short peak instead of sending an arbitrary burst.'],
+ ['Latency and throughput','Percentiles describe tail behavior; throughput counts completed work. Averages can hide slow requests.','Track p50, p95 and p99 latency with error rate and requests per second.'],
+ ['Bottleneck evidence','CPU, memory, database locks, connection pools and downstream latency can each constrain throughput.','Correlate a latency spike with database wait time before changing code.'],
+ ['Capacity and regression','Capacity testing estimates safe load; regression testing compares results under controlled conditions.','Set a p95 latency and error-rate gate at a stated load.']],
+ scenario:'Establish a baseline for one API endpoint, increase load gradually and identify the first constrained resource.',
+ code:`# Example command; use only in an authorized test environment
+k6 run --vus 20 --duration 2m load-test.js
+# Compare p95 latency, request rate, errors and resource metrics`,
+ lab:'State the workload, record environment details and repeat the baseline to check consistency.',
+ gotcha:'One uncontrolled run is weak evidence; load tests can overload shared or production services.',
+ advanced:'Study open versus closed workload models, coordinated omission, saturation signals, queueing theory and capacity headroom.'}
+
  ];
  const item=bank.find(x=>x.re.test(topicText)) || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
