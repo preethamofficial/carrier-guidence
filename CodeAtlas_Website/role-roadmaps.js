@@ -82,6 +82,8 @@ const stages=[
 const refs={
 'Software Engineering & Development':['MDN Web Docs','https://developer.mozilla.org/','Git documentation','https://git-scm.com/doc/'],
 'AI, ML & Data Science':['scikit-learn User Guide','https://scikit-learn.org/stable/user_guide.html','Hugging Face Learn','https://huggingface.co/learn/'],
+'Generative AI & Agentic Systems':['OpenAI Evals guide','https://platform.openai.com/docs/guides/evals','LangGraph Documentation','https://docs.langchain.com/oss/python/langgraph/overview','OWASP GenAI Security Project','https://genai.owasp.org/'],
+'Cybersecurity Specializations':['OWASP Web Security Testing Guide','https://owasp.org/projects/web-security-testing-guide','MITRE ATT&CK','https://attack.mitre.org/','PortSwigger Web Security Academy','https://portswigger.net/web-security'],
 'Cybersecurity':['OWASP Web Security Testing Guide','https://owasp.org/www-project-web-security-testing-guide/','NIST Cybersecurity Framework','https://www.nist.gov/cyberframework'],
 'Cloud, Infrastructure & Operations':['Docker Docs','https://docs.docker.com/','Kubernetes Docs','https://kubernetes.io/docs/home/'],
 'QA, Testing & Blockchain':['Playwright Docs','https://playwright.dev/docs/intro','PostgreSQL Docs','https://www.postgresql.org/docs/'],
