@@ -10,3 +10,5 @@
 
 /* Clearer lesson hierarchy: plain-English explanations, analogies and code walkthroughs */
 .lesson-grid .deep-section{line-height:1.75}.lesson-grid .deep-section h5{margin:18px 0 8px;color:#e2e7ff;font-size:.96rem}.lesson-grid .deep-section ol{padding-left:1.5rem;display:grid;gap:12px}.lesson-grid .deep-section ol li{padding-left:3px;color:#d8e1f0}.lesson-grid .deep-section ol li>code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;background:#060b14;border:1px solid #2a3850;border-radius:7px;padding:8px 10px;color:#c8f5dd;font-size:.82rem}.lesson-grid .deep-section ol li p{margin:7px 0 0;color:#c3cee0}.lesson-grid .deep-section>p strong{color:#e3ddff}.lesson-grid .deep-section>p{max-width:90ch}
+
+.lesson-grid .dossier-sources{display:flex;flex-wrap:wrap;gap:8px;padding-left:0;list-style:none}.lesson-grid .dossier-sources li{margin:0}.lesson-grid .dossier-sources a{display:inline-block;padding:7px 10px;border:1px solid var(--rm-line);border-radius:8px;color:#c9c2ff;text-decoration:none;font-size:.82rem}.lesson-grid .dossier-sources a:hover{text-decoration:underline;border-color:#8b7cff}
