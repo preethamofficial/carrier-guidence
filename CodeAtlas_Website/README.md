@@ -65,7 +65,7 @@ The automated static test checks JSON, page viewport metadata, local references,
 
 ## SEO and hosting
 
-The main page and Career Studio include descriptions and Open Graph metadata. A final `sitemap.xml`, canonical URLs, and production robots directives should be generated only after the actual public deployment URL and hosting base path are chosen. Do not publish a sitemap with a guessed domain. See `DESIGN.md` and `SEO_DEPLOYMENT.md`.
+The public Render URL is `https://codeatlas-career-guidance.onrender.com/`. The main page and selected tools include descriptions and Open Graph metadata. Review canonical URLs and page-specific metadata across all routes before treating SEO hardening as complete. See `DESIGN.md` and `SEO_DEPLOYMENT.md`.
 
 ## Main files
 
@@ -105,3 +105,21 @@ Each module includes a topic-specific 12-concept mind map and the shared compreh
 ## Clearer beginner explanations (October 2026)
 
 The career roadmap lesson renderer now presents plain-English definitions, analogies, key terms, prerequisites, ordered steps, worked examples, output reasoning and a walkthrough aligned to each code line. Curated profiles cover common backend/API, SQL, frontend, authentication, LLM/RAG, machine-learning, statistics, data engineering, containers, CI/CD, Linux/networking, authorized security, incident response, analytics, UX/accessibility, product, Agile, mobile, game and embedded topics. The shared study-guide renderer uses syntax-aware explanations for code/configuration lines when a lesson does not have an authored walkthrough. Use the linked official documentation to confirm version-specific behavior; snippets marked illustrative or pseudocode are not complete production applications.
+
+
+## Graduate journey additions (October 2026)
+
+The following local-first pages are now part of the static website:
+
+- `assessment.html`, `assessment.js`, `assessment-engine.js`, `data/assessment.json`: 30-question weighted career assessment with 12 role profiles, explainable match reasons and side-by-side career comparison. The score is a relative reflection aid, not a validated psychometric instrument or employment prediction.
+- `onboarding.html`, `onboarding.js`: graduate profile for degree stream, graduation year, coding comfort, goal, study time and target timeline.
+- `my-path.html`, `my-path.js`: a guided step tracker from profile and assessment through learning, projects, resume, interview practice and job search.
+- `resume-builder.html`, `resume-builder.js`, `resume-builder.css`: three clean resume layouts, local editing/saving, live preview and browser print-to-PDF.
+
+Assessment answers, graduate profile, My Path progress and resume content stay in the current browser. The new assessment engine is covered by `tests/assessment-check.mjs`, which is included in `npm test`. The service worker cache was advanced to v23 and includes the new routes and assessment data.
+
+## Remaining external integrations and launch gates
+
+This is still a static, local-first site. Supabase login and RLS-backed cross-device sync, a server-side AI counsellor, live job-feed integration with source/date metadata, mentor/contact forms backed by a service, and end-to-end browser tests are not complete just because their goals appear in the product roadmap. They require deliberate implementation, service credentials/configuration where applicable, tests and deployment verification. Do not put provider secrets in frontend code or imply that an unconfigured service is active.
+
+The deployed URL is documented for navigation, but live uptime, mobile rendering, screen-reader behavior and Lighthouse scores must be verified against the actual deployment. Use `npm test`, inspect browser console/network errors, and complete the manual launch checklist in `SEO_DEPLOYMENT.md`.
