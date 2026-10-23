@@ -1,4 +1,4 @@
-name: Refresh public job feed (daily at 9 AM IST)
+name: Refresh public job feed (daily at 10 AM IST)
 on:
   push:
     branches: [main]
@@ -8,8 +8,8 @@ on:
       - "CodeAtlas_Website/data/companies.json"
       - ".github/workflows/scrape-jobs.yml"
   schedule:
-    # GitHub cron uses UTC. 03:30 UTC = 09:00 Asia/Kolkata (IST).
-    - cron: "30 3 * * *"
+    # GitHub cron uses UTC. 04:30 UTC = 10:00 Asia/Kolkata (IST).
+    - cron: "30 4 * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -46,7 +46,12 @@ jobs:
           for job in feed["jobs"]:
               assert job.get("title") and job.get("company"), "job is missing title/company"
               assert str(job.get("apply_url", "")).startswith("https://"), "job URL must use HTTPS"
+              if job.get("company_careers_url"):
+                  assert str(job["company_careers_url"]).startswith("https://"), "career URL must use HTTPS"
               assert len(str(job.get("description") or "")) <= 12000, "description too long"
+          companies = json.loads(Path("CodeAtlas_Website/data/companies.json").read_text(encoding="utf-8"))
+          assert len(companies) >= 30, "Expected broader employer coverage"
+          assert all(c.get("careers_url", "").startswith("https://") for c in companies), "Every source needs an HTTPS careers page"
           print(f"Validated {len(feed['jobs'])} listings from {feed.get('companies_checked', 0)} boards")
           PY
       - name: Commit refreshed feed to main
