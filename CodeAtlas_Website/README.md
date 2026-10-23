@@ -63,6 +63,15 @@ python -m json.tool data/year-curriculum.json
 
 CI runs static checks on pushes and pull requests. Passing automated checks is not a substitute for manual browser testing. Before release, test desktop and mobile layouts, keyboard navigation, form validation, storage/export behavior, links, browser console/network errors and offline fallback.
 
+
+## Automated job feed
+
+- The configured collector checks 49 employer boards through public Greenhouse, Lever and Ashby job-posting endpoints, plus links to each employer's official careers page.
+- GitHub Actions is scheduled daily at **10:00 AM India Standard Time (04:30 UTC)**. Scheduled workflows can be delayed by GitHub; the page displays the actual last refresh timestamp in IST.
+- New listings are published to the static feed after validation and the resulting commit triggers the configured static-site deployment. The feed is not real-time; changes normally appear after the daily run and deployment.
+- Listings are sourced from public employer job boards and link back to the original posting. When a board responds successfully, roles no longer returned by that board are removed. If a board fails to respond, its last-known listings are temporarily retained and the page reports the failed-source count.
+- Coverage is limited to the configured boards. A company may change its ATS/provider, some identifiers may fail, and no collector can guarantee that a vacancy remains open after the source was checked. Verify each role on the employer's official page before applying.
+
 ## Data, privacy and limitations
 
 - **Guest mode is local-first.** Profile information, assessment results, progress, notes and resume content remain in the current browser unless optional cloud sync is configured. They do not automatically sync across devices. Clearing browser data may erase them; export or save important work.
