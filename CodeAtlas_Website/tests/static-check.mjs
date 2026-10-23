@@ -331,7 +331,7 @@ check('All 660 career topics render deep lessons with topic-specific steps, exam
  const mlRoleEnd=list.innerHTML.indexOf('"',mlRoleStart+11);
  const mlRoleId=mlRoleStart>=0&&mlRoleEnd>mlRoleStart?list.innerHTML.slice(mlRoleStart+11,mlRoleEnd):'';
  assert.ok(mlRoleId,'Machine Learning Engineer must be selectable');
- list.listeners.click({target:{closest:()=>({dataset:{role:mlEntry[1]}})}});
+ list.listeners.click({target:{closest:()=>({dataset:{role:mlRoleId}})}});
  stage.listeners.click({target:{closest:()=>({dataset:{topic:'2'}})}});
  assert.ok(panel.innerHTML.includes('Define the prediction moment')&&panel.innerHTML.includes('Fit transformations without peeking'),'ML data-preparation lesson must explain leakage and safe preprocessing');
  assert.ok((panel.innerHTML.match(/class="lesson-sub-subtopic"/g)||[]).length>=12,'ML topic needs at least twelve nested concept explanations');
@@ -409,7 +409,7 @@ check('Career roadmap has researched topic-specific deep dives and code labs',()
   'Performance engineering and load testing','Computer vision and language processing',
   'MLOps and model lifecycle engineering'
  ]) assert.ok(source.includes(name),'Missing specialist topic profile: '+name);
- assert.ok(source.includes('Subtopics and definitions')&&source.includes('Practical lab')&&source.includes('Advanced exploration'),'Topic UI must explain subtopics, labs and advanced directions');
+ assert.ok(source.includes('Core concept → subtopic → sub-subtopic')&&source.includes('renderNestedBreakdown')&&source.includes('Practical lab')&&source.includes('Advanced exploration'),'Topic UI must explain subtopics, labs and advanced directions');
  assert.ok(source.includes('data-copy-example')&&source.includes('specialistNames'),'Examples must remain copyable and specialist profiles must take priority');
  assert.ok(source.includes('function specialistDossier')&&source.includes('const specialist=specialistDossier'), 'AI and cybersecurity lessons must use tailored specialist dossiers');
  for(const name of ['Agentic AI Engineer','Retrieval-Augmented Generation (RAG) Engineer','LLM Evaluation Engineer','AI Safety & Security Engineer','Red Team Operator (Authorized)','Blue Team Analyst / Threat Hunter','Defensive Malware Analyst','Identity & Access Management (IAM) Engineer','Bug Bounty Researcher (Authorized)','Security Governance, Risk & Compliance (GRC) Analyst']) assert.ok(source.includes(name), 'Missing dedicated path: '+name);
