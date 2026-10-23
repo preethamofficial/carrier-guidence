@@ -74,15 +74,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python scripts/scrape_jobs.py
-            python - <<'PY'
-            import json
-            from pathlib import Path
-            feed = json.loads(Path("CodeAtlas_Website/data/jobs.json").read_text(encoding="utf-8"))
-            companies = json.loads(Path("CodeAtlas_Website/data/companies.json").read_text(encoding="utf-8"))
-            assert isinstance(feed.get("jobs"), list), "jobs must be an array"
-            assert all(job.get("title") and job.get("company") and str(job.get("apply_url", "")).startswith("https://") for job in feed["jobs"]), "Invalid job entry"
-            assert all(str(company.get("careers_url", "")).startswith("https://") for company in companies), "Invalid company careers URL"
-            PY
+            python -c "import json; from pathlib import Path; feed=json.loads(Path('CodeAtlas_Website/data/jobs.json').read_text(encoding='utf-8')); companies=json.loads(Path('CodeAtlas_Website/data/companies.json').read_text(encoding='utf-8')); assert isinstance(feed.get('jobs'), list); assert all(job.get('title') and job.get('company') and str(job.get('apply_url', '')).startswith('https://') for job in feed['jobs']); assert all(str(company.get('careers_url', '')).startswith('https://') for company in companies)"
             git add CodeAtlas_Website/data/jobs.json CodeAtlas_Website/data/scrape-log.json
             if git diff --cached --quiet; then
               echo "Latest main already has the current feed."
