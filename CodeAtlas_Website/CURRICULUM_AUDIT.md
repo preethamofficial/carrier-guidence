@@ -79,3 +79,28 @@ The 41 career paths still share a 12-step sequence, but each selected step now i
 The new material is rendered from `CodeAtlas_Website/role-roadmaps.js` for each of the **492 role-topic placements**. Existing official reference links remain available for the selected career path. The new code examples are teaching fragments, not claims of production readiness; some require a specific runtime, framework, schema, or platform. The static CI workflow checks JavaScript syntax and site integrity, but it does not execute every example in every language or replace expert review. Continue refining specialist topics with domain-specific examples and validating runnable snippets in their target toolchains.
 
 Research references used to shape topic coverage include the [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide), [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/), [Python typing documentation](https://typing.python.org/en/latest/), and official language and platform references linked from each lesson.
+
+
+## October 2026 follow-up: fill the remaining shallow roadmap lessons
+
+The career-roadmap lesson engine was expanded again after a topic-by-topic inventory of the 41 role definitions. The catalogue contains **492 role-topic placements across 489 distinct topic labels**. The new specialist profiles now cover semantic HTML/accessibility, CSS layout, browser JavaScript and component state, programming fundamentals/data structures, statistics/model evaluation, SQL/data modeling/pipelines, LLM/RAG/agent workflows, application security/identity, networking, Linux administration, cloud-native delivery, SRE/observability, product requirements/business analysis, UX research/design systems, Agile delivery, SOC incident response, digital forensics, blockchain/smart contracts, DBA operations, QA architecture, performance engineering, computer vision/NLP and MLOps.
+
+Each specialist profile contains a definition, four subtopic definitions with concrete examples, a real-world scenario, a focused code/configuration example, a practical lab, a common failure mode and advanced follow-up directions. Specialist matches are explicitly prioritized over broad profiles so that, for example, a SQL/data-pipeline lesson does not get replaced by a generic backend or security explanation. Broad role-specific fallbacks remain for topics whose label is a general milestone or whose specialization does not match a dedicated profile. The page now includes links to official documentation selected by lesson family.
+
+### Research references
+
+The content guidance was checked against public, maintained documentation rather than relying only on generalized explanations:
+
+- [MDN Learn web development](https://developer.mozilla.org/en-US/docs/Learn) and [W3C Web Accessibility Initiative](https://www.w3.org/WAI/fundamentals/) for browser fundamentals, semantic HTML and accessibility.
+- [React Learn](https://react.dev/learn) for component state and UI behavior.
+- [Python Tutorial](https://docs.python.org/3/tutorial/) and [Python typing specification](https://typing.python.org/en/latest/spec/type-system.html) for language and type-system concepts.
+- [Google Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course/) and [Production ML Systems](https://developers.google.com/machine-learning/crash-course/production-ml-systems) for evaluation, leakage, production monitoring and operational concerns.
+- [scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html) for practical model selection and evaluation.
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/current/tutorial.html) and [EXPLAIN documentation](https://www.postgresql.org/docs/current/using-explain.html) for SQL and query planning.
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) and its [Authorization guidance](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for secure application patterns.
+- [Kubernetes Concepts](https://kubernetes.io/docs/concepts/), [Docker Get Started](https://docs.docker.com/get-started/) and the [Google SRE Book](https://sre.google/sre-book/table-of-contents/) for cloud-native operations and reliability.
+- [Playwright documentation](https://playwright.dev/docs/intro) and [ISTQB Glossary](https://glossary.istqb.org/) for test automation vocabulary.
+- [Solidity documentation](https://docs.soliditylang.org/) and [Ethereum developer documentation](https://ethereum.org/en/developers/docs/) for smart-contract fundamentals.
+- [The Scrum Guide](https://scrumguides.org/) and [Nielsen Norman Group articles](https://www.nngroup.com/articles/) for delivery and UX research.
+
+The site’s automated checks validate JavaScript syntax, static assets and the declared topic/profile inventory. They do not prove every code fragment executes in its target language or that all 489 distinct labels have an individually authored chapter. Examples are teaching fragments; check runtime versions, permissions and local setup before running them. Continued content QA should focus on topics still served by a broad fallback, version-sensitive snippets, and role-specific acceptance criteria.
