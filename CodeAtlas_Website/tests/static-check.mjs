@@ -356,7 +356,7 @@ check('Optional cloud sync is disabled until configured and protected by RLS',()
  const page=fs.readFileSync(path.join(root,'auth.html'),'utf8');
  const config=fs.readFileSync(path.join(root,'supabase-config.js'),'utf8');
  const cloud=fs.readFileSync(path.join(root,'cloud-sync.js'),'utf8');
- const schema=fs.readFileSync(path.join(root,'..','..','supabase','schema.sql'),'utf8');
+ const schema=fs.readFileSync(path.join(root,'..','supabase','schema.sql'),'utf8');
  const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
  assert.ok(page.includes('cloud-sync.js')&&page.includes('Guest mode'),'Account page must preserve guest mode');
  assert.ok(config.includes('url: ""')&&config.includes('anonKey: ""'),'Cloud sync must remain disabled without explicit public config');
