@@ -250,7 +250,90 @@ function deepContentFor(topic,role){
 }
 
 
+
+function specialistDossier(topic,role,deep){
+ const t=String(topic||''), title=String(role.title||'');
+ const ai=/Agentic AI Engineer|RAG Engineer|LLM Evaluation Engineer|AI Safety & Security Engineer|LLM Application Engineer|AI Workflow Automation Engineer/.test(title);
+ const cyber=/Red Team Operator|Blue Team Analyst|Defensive Malware Analyst|Cloud Security Specialist|Identity & Access Management|Bug Bounty Researcher|Network Security Engineer|GRC Analyst/.test(title);
+ if(!ai&&!cyber)return null;
+ const rules=[
+  [/tool|planning|workflow|state|memory|multi-agent|approval|retry|idempotency|automation/i,'workflow'],
+  [/retriev|chunk|embedding|vector|hybrid|rerank|citation|ground|document|query/i,'retrieval'],
+  [/evaluat|metric|dataset|regression|quality|judge|benchmark|test|robust/i,'evaluation'],
+  [/security|safety|threat|injection|privacy|permission|secret|access|authorization|identity|authentication|iam|oauth|policy|least privilege/i,'trust'],
+  [/red team|scope|reconnaissance|attack surface|vulnerabilit|penetration|bug bounty|web security|http|session|injection lab/i,'authorized-test'],
+  [/blue team|threat hunt|siem|detection|alert|log|incident|att.ck|triage/i,'detection'],
+  [/malware|forensic|hash|sample|static|yara|evidence|indicator|ioc/i,'forensics'],
+  [/cloud|network|firewall|segmentation|subnet|vpn|tls|storage|workload/i,'infrastructure'],
+  [/risk|compliance|control|audit|evidence|governance|third-party|continuity/i,'governance']
+ ];
+ const category=(rules.find(x=>x[0].test(t))||[null,ai?'ai-foundations':'security-foundations'])[1];
+ const definitions={
+ workflow:['Bounded workflow execution','A workflow represents each step, its inputs, output, permitted tools and recovery path explicitly.','Model a multi-step task as validated states rather than an unbounded loop.'],
+ retrieval:['Evidence retrieval and grounding','Retrieval selects relevant source passages; generation should use authorized evidence and preserve source references.','Compare retrieved passages with a hand-labelled relevant set before changing a prompt.'],
+ evaluation:['Evaluation design','Evaluation turns an unclear quality claim into repeatable examples, expected outcomes, metrics and release criteria.','Keep a versioned dataset of representative and adversarial cases and rerun it after each model or prompt change.'],
+ trust:['Trust boundaries and control validation','Security controls define which identities may perform which actions on which resources and under what conditions.','Test allowed, denied and unauthenticated cases; verify that failures do not expose protected data.'],
+ 'authorized-test':['Authorized security testing','A security test is valid only when the target, methods, time window and permitted impact are explicitly authorized.','Use a local lab or written program scope, preserve minimal evidence, and pair findings with remediation and retest steps.'],
+ detection:['Detection and investigation','Detection combines telemetry, a testable hypothesis and an analytic that can be validated against known benign and suspicious events.','Use synthetic log fixtures, map a detection to observable behavior and measure false positives before rollout.'],
+ forensics:['Evidence integrity and safe analysis','Defensive analysis preserves provenance and hashes, isolates risky artifacts and records the observations supporting each conclusion.','Hash a harmless test file, record metadata and use synthetic indicators rather than executing unknown samples.'],
+ infrastructure:['Infrastructure exposure and segmentation','Infrastructure security limits reachable paths and privileges while keeping configuration, telemetry and recovery controls reviewable.','Review a sample policy for excessive access and prove expected allowed and denied paths in a lab.'],
+ governance:['Risk and control evidence','Governance connects a business risk to an owned control, evidence, a test result, remediation and residual-risk acceptance.','Write one risk-register row with owner, impact, evidence and a dated remediation action.'],
+ 'ai-foundations':['Reliable AI application design','An AI application must turn model behavior into a measurable, bounded and auditable software capability.','Validate structured outputs and evaluate representative examples before trusting model responses.'],
+ 'security-foundations':['Security methodology','A security workflow should reduce risk, respect authorization and produce evidence another analyst can reproduce.','Record scope, assumptions, expected behavior, observed evidence and remediation.']
+ };
+ let codeLines=[],sourceLinks=[];
+ if(/Agentic AI Engineer/.test(title)){
+  codeLines=["from typing import Callable","","def run_tool(name: str, argument: str, tools: dict[str, Callable[[str], str]], allowed: set[str]) -> str:","    if name not in allowed or name not in tools:","        raise PermissionError('Tool is not approved')","    if len(argument) > 200:","        raise ValueError('Argument exceeds workflow limit')","    return tools[name](argument)","","tools = {'lookup_ticket': lambda ticket_id: f'ticket:{ticket_id}'}","print(run_tool('lookup_ticket', 'A-104', tools, {'lookup_ticket'}))"];
+  sourceLinks=[['Python Tutorial','https://docs.python.org/3/tutorial/'],['LangGraph Documentation','https://docs.langchain.com/oss/python/langgraph/overview'],['OWASP GenAI Security Project','https://genai.owasp.org/']];
+ }else if(/RAG Engineer/.test(title)){
+  codeLines=["documents = [","    {'id': 'policy-1', 'text': 'Refunds are available within 30 days.'},","    {'id': 'policy-2', 'text': 'Damaged items may be replaced.'},","]","","def retrieve(question: str, docs: list[dict]) -> list[dict]:","    terms = set(question.lower().split())","    ranked = sorted(docs, key=lambda d: len(terms & set(d['text'].lower().split())), reverse=True)","    return [doc for doc in ranked if terms & set(doc['text'].lower().split())]","","print([item['id'] for item in retrieve('refund within 30 days', documents)])"];
+  sourceLinks=[['Google ML Crash Course','https://developers.google.com/machine-learning/crash-course'],['Chroma Documentation','https://docs.trychroma.com/'],['OWASP GenAI Security Project','https://genai.owasp.org/']];
+ }else if(/LLM Evaluation Engineer/.test(title)){
+  codeLines=["cases = [","    {'expected': 'refund_policy', 'actual': 'refund_policy'},","    {'expected': 'shipping_policy', 'actual': 'refund_policy'},","    {'expected': 'account_help', 'actual': 'account_help'},","]","passed = sum(case['expected'] == case['actual'] for case in cases)","print(f'Exact-match pass rate: {passed / len(cases):.0%}')"];
+  sourceLinks=[['OpenAI Evals guide','https://platform.openai.com/docs/guides/evals'],['scikit-learn model evaluation','https://scikit-learn.org/stable/modules/model_evaluation.html']];
+ }else if(/AI Safety & Security Engineer/.test(title)){
+  codeLines=["ALLOWED_TOOLS = {'search_public_docs'}","","def validate_action(action: dict) -> dict:","    if action.get('tool') not in ALLOWED_TOOLS:","        raise PermissionError('Tool is not approved')","    if action.get('contains_secret'):","        raise ValueError('Sensitive data must not leave the trust boundary')","    return action","","print(validate_action({'tool': 'search_public_docs', 'contains_secret': False}))"];
+  sourceLinks=[['OWASP GenAI Security Project','https://genai.owasp.org/'],['NIST AI Risk Management Framework','https://www.nist.gov/itl/ai-risk-management-framework']];
+ }else if(ai){
+  codeLines=["from pydantic import BaseModel, Field","","class SupportAnswer(BaseModel):","    answer: str = Field(min_length=1, max_length=1200)","    source_ids: list[str] = Field(min_length=1)","    needs_human_review: bool = False","","raw = {'answer': 'Refunds are available within 30 days.', 'source_ids': ['policy-1']}","answer = SupportAnswer.model_validate(raw)","print(answer.model_dump())"];
+  sourceLinks=[['Python Tutorial','https://docs.python.org/3/tutorial/'],['Pydantic Models','https://docs.pydantic.dev/latest/concepts/models/'],['OWASP GenAI Security Project','https://genai.owasp.org/']];
+ }else if(/Blue Team Analyst/.test(title)){
+  codeLines=["from collections import Counter","","events = [","    'user=alex event=login_failed source=192.0.2.10',","    'user=alex event=login_failed source=192.0.2.10',","    'user=sam event=login_success source=192.0.2.11',","]","failed = [line for line in events if 'event=login_failed' in line]","sources = Counter(line.split('source=')[1] for line in failed)","print(sources)"];
+  sourceLinks=[['MITRE ATT&CK','https://attack.mitre.org/'],['Sigma Detection Rules','https://sigmahq.io/'],['NIST Incident Response','https://csrc.nist.gov/projects/incident-response']];
+ }else if(/Defensive Malware Analyst/.test(title)){
+  codeLines=["from hashlib import sha256","from pathlib import Path","","sample = Path('sample.bin')  # use a harmless lab fixture","digest = sha256(sample.read_bytes()).hexdigest()","print({'file': sample.name, 'sha256': digest})","# A hash identifies a file; it does not prove that the file is malicious."];
+  sourceLinks=[['YARA Documentation','https://yara.readthedocs.io/'],['NIST Computer Forensics Tool Testing','https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt']];
+ }else if(/Cloud Security Specialist/.test(title)){
+  codeLines=["# Illustrative policy shape only; validate provider-specific schema.","policy:","  purpose: read-only-reporting","  resources:","    - reports/quarterly/*","  actions:","    - read","  denied:","    - write","    - delete","  review:","    owner: platform-security","    expires: 2026-12-31"];
+  sourceLinks=[['AWS IAM best practices','https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html'],['CIS Benchmarks','https://www.cisecurity.org/cis-benchmarks']];
+ }else if(/Identity & Access/.test(title)){
+  codeLines=["def authorize(user: dict, action: str, resource_owner: str) -> bool:","    if not user.get('active'):","        return False","    if action == 'read' and user['id'] == resource_owner:","        return True","    return 'support_admin' in user.get('roles', [])","","print(authorize({'id': 'u-7', 'active': True, 'roles': []}, 'read', 'u-7'))","print(authorize({'id': 'u-8', 'active': True, 'roles': []}, 'read', 'u-7'))"];
+  sourceLinks=[['OWASP Authorization Cheat Sheet','https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html'],['OpenID Connect','https://openid.net/developers/how-connect-works/']];
+ }else if(/Bug Bounty Researcher/.test(title)){
+  codeLines=["from urllib.request import Request, urlopen","","# Run only against localhost or a program-approved test target.","target = 'http://127.0.0.1:8000/health'","request = Request(target, headers={'User-Agent': 'CodeAtlas-Lab-Check'})","with urlopen(request, timeout=3) as response:","    print('status:', response.status)","    print('content-type:', response.headers.get('Content-Type'))","    print('cache-control:', response.headers.get('Cache-Control'))"];
+  sourceLinks=[['PortSwigger Web Security Academy','https://portswigger.net/web-security'],['OWASP Web Security Testing Guide','https://owasp.org/www-project-web-security-testing-guide/']];
+ }else if(/Network Security Engineer/.test(title)){
+  codeLines=["from ipaddress import ip_network, ip_address","","trusted_admin = ip_network('192.0.2.0/24')  # documentation-only range","client = ip_address('192.0.2.42')","print('allowed admin network:', client in trusted_admin)","# Validate rule changes in a lab before applying them to a live firewall."];
+  sourceLinks=[['CISA Secure by Design','https://www.cisa.gov/securebydesign'],['NIST Cybersecurity','https://csrc.nist.gov/']];
+ }else if(/GRC Analyst/.test(title)){
+  codeLines=["risk = {","    'asset': 'customer-reporting',","    'threat': 'unauthorized data disclosure',","    'likelihood': 3, 'impact': 5,","    'control_owner': 'platform-team',","    'evidence': 'access-review-2026-10',","    'status': 'remediation-open',","}","risk['inherent_score'] = risk['likelihood'] * risk['impact']","print(risk['inherent_score'])"];
+  sourceLinks=[['NIST Cybersecurity Framework','https://www.nist.gov/cyberframework'],['NIST Risk Management','https://csrc.nist.gov/projects/risk-management']];
+ }else{
+  codeLines=["scope = {'target': '127.0.0.1', 'authorized': True}","if not scope['authorized']:","    raise PermissionError('Written authorization is required')","print('Proceed only within the approved lab scope')"];
+  sourceLinks=[['OWASP Web Security Testing Guide','https://owasp.org/projects/web-security-testing-guide'],['MITRE ATT&CK','https://attack.mitre.org/']];
+ }
+ const d=definitions[category]||definitions[ai?'ai-foundations':'security-foundations'];
+ const parts=[
+  ['Definition and boundaries',d[1]+' Identify what this concept does and what it explicitly does not guarantee.','Explain it using one small example from '+title+'.'],
+  ['Inputs, state and permissions','List the inputs, the state that changes, and any identity or trust boundary that controls the operation.','Trace one normal input and one denied or invalid input.'],
+  ['Verification and evidence','Choose an observable result, test expected behavior, and retain enough evidence for another learner to reproduce it.','Record expected output, actual output and the reason for any mismatch.'],
+  ['Failure modes and trade-offs','Account for ambiguity, partial failure, false positives, resource limits and operational ownership.','Change one assumption, rerun the test and document how the result changes.']
+ ];
+ return {name:t,definition:d[1],parts,scenario:'Work through '+t+' as a reproducible '+title+' exercise. State assumptions first, use synthetic or authorized data, test the normal path and a boundary/failure path, and record evidence plus remediation.',code:codeLines.join('\\n'),lab:'Step 1: read the linked official guide. Step 2: reproduce the code in a virtual environment or safe lab. Step 3: write three test cases. Step 4: change one input and predict the result. Step 5: record expected/actual output, limitations and one improvement.',gotcha:cyber?'Never test a real person, account, network or service without explicit authorization. Do not execute unknown samples on a normal workstation; preserve evidence and follow lab or incident-handling rules.':'A model response is not automatically correct or grounded. Validate schemas, evidence, permissions, cost and failure behavior before integrating it into a production workflow.',advanced:'Add automated tests, adversarial or boundary cases, reproducible configuration, monitoring and a versioned decision record. Compare at least two approaches and explain measured trade-offs.',sources:sourceLinks,reference:'Examples use synthetic data and safe defaults. Verify package versions and provider-specific syntax against official references before adapting them.'};
+}
+
 function topicDossier(topic,role,deep){
+ const specialist=specialistDossier(topic,role,deep); if(specialist)return specialist;
  const topicText=String(topic||'').toLowerCase();
  const roleText=(String(role.title||'')+' '+String(role.domain||'')).toLowerCase();
  const genericTopic=/foundation|capstone|professional practice|workflow|overview|fundamentals|introduction|portfolio project/i.test(topicText);
