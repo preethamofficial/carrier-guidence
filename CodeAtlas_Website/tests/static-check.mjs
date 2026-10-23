@@ -372,7 +372,7 @@ if(failed)process.exitCode=1;
 check('Configured employer directory has official career pages and unique ATS boards',()=>{
  const companies=JSON.parse(fs.readFileSync(path.join(root,'data/companies.json'),'utf8'));
  assert.ok(companies.length>=30,'Expected broader employer coverage');
- assert.ok(companies.every(company=>company.name&&/^https:\\/\\//.test(company.careers_url||'')),'Every configured employer must have an HTTPS careers URL');
+ assert.ok(companies.every(company=>company.name&&String(company.careers_url||'').startsWith('https://')),'Every configured employer must have an HTTPS careers URL');
  const keys=companies.map(company=>company.ats+':'+company.token);
  assert.equal(new Set(keys).size,keys.length,'ATS board keys must be unique');
 });
