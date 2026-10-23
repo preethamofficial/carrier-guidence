@@ -123,3 +123,13 @@ Assessment answers, graduate profile, My Path progress and resume content stay i
 This is still a static, local-first site. Supabase login and RLS-backed cross-device sync, a server-side AI counsellor, live job-feed integration with source/date metadata, mentor/contact forms backed by a service, and end-to-end browser tests are not complete just because their goals appear in the product roadmap. They require deliberate implementation, service credentials/configuration where applicable, tests and deployment verification. Do not put provider secrets in frontend code or imply that an unconfigured service is active.
 
 The deployed URL is documented for navigation, but live uptime, mobile rendering, screen-reader behavior and Lighthouse scores must be verified against the actual deployment. Use `npm test`, inspect browser console/network errors, and complete the manual launch checklist in `SEO_DEPLOYMENT.md`.
+
+
+## More graduate workflow features (October 2026)
+
+- `lesson-checkpoint.js` adds a four-question comprehension checkpoint to each core learning lesson. Learners need at least three correct answers before new lesson completion can be marked. Checkpoint results stay in browser storage.
+- Career Studio now has HR/motivation, technical, coding/problem-solving, behavioural/STAR and workplace-scenario interview rounds, a ten-minute practice timer, and a self-rating saved with on-device answer notes.
+- `auth.html`, `cloud-sync.js`, `supabase-config.js`, `supabase/schema.sql` and `supabase/functions/delete-account/index.ts` provide an optional Supabase setup scaffold. The browser config is intentionally blank by default; guest mode remains active until the owner configures the project, applies RLS policies, configures OAuth and deploys the account-deletion Edge Function. See `../SUPABASE_SETUP.md`.
+- `sitemap.xml`, updated `robots.txt`, canonical tags, `404.html`, `offline.html` and `privacy.html` improve discoverability, fallback behavior and data transparency. Verify live behavior after each deployment.
+
+The optional Supabase scaffold is not active just because the page exists. Cloud sync, account deletion, live AI counselling, a live legal job API and a hosted contact/mentor workflow remain dependent on service configuration and additional verification. The AI counsellor is not enabled here because it would require a server-side provider key and may incur usage charges; do not promise free AI inference without a genuinely free provider or explicit cost controls.
