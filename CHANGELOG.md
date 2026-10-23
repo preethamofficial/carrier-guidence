@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-23 — Daily employer job feed expansion
+
+- Expanded the configured public job-board source list from 15 to 49 employers, adding official career-page URLs for direct verification.
+- Scheduled the collector for 10:00 AM India Standard Time (04:30 UTC), with actual refresh time shown in IST.
+- Added direct employer careers links to each matching job card and loaded the directory from the shared company source data.
+- Changed successful board refreshes to remove postings no longer advertised by that source; temporarily unavailable boards retain last-known records with a visible warning.
+- Added scraper regression tests for stale-job removal, failed-board fallback and source URL coverage; the scheduled workflow runs them before publishing.
+
+
 ## 2026-10-23 — Documentation and release hygiene
 
 - Rewrote `CodeAtlas_Website/README.md` to describe the current pages, local setup, validation commands, data handling and the actual status of optional services.
