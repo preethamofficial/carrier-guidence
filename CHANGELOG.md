@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-23 — Documentation and release hygiene
+
+- Rewrote `CodeAtlas_Website/README.md` to describe the current pages, local setup, validation commands, data handling and the actual status of optional services.
+- Added a root MIT `LICENSE` and `CONTRIBUTING.md` with setup, test, security and pull-request guidance.
+- Verified the career feedback and mentor-request tables and user-scoped RLS policies are present in `supabase/schema.sql`; these forms still require the owner to configure Supabase before use.
+- Closed PR #11 as superseded because its older branch overlaps with the Career Growth Planner already present on `main`; left a comment explaining the decision.
+- GitHub Actions passed for the website README refresh. Follow-up checks for the new license and contribution guide were still running at the time of this update.
+
+
 ## 2026-10-23 — Graduate career journey foundation
 
 - Added a 30-question weighted career assessment with 12 role profiles spanning technical, analytical, design, business, writing and people-centred work.
