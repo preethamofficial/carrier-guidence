@@ -111,9 +111,9 @@ check('Company directory and recent jobs pages are connected',()=>{
  assert.ok(Array.isArray(payload.jobs),'jobs feed should expose an array');
  for(const job of payload.jobs){assert.ok(job.title&&job.company&&job.apply_url,'Incomplete job listing');assert.match(job.apply_url,/^https:\/\//,'Application links must use HTTPS');}
 });
-check('Job feed is scheduled daily at 9 AM IST and auto-published',()=>{
+check('Job feed is scheduled daily at 10 AM IST and auto-published',()=>{
  const workflow=fs.readFileSync(path.resolve(root,'../.github/workflows/scrape-jobs.yml'),'utf8');
- assert.ok(workflow.includes('cron: "30 3 * * *"'),'03:30 UTC is 09:00 IST');
+ assert.ok(workflow.includes('cron: "30 4 * * *"'),'04:30 UTC is 10:00 IST');
  assert.ok(workflow.includes('git push origin HEAD:main'),'Daily feed changes must publish automatically');
  assert.ok(workflow.includes('workflow_dispatch'),'Manual refresh must be available');
  assert.ok(workflow.includes('contents: write'),'Workflow needs content write permission');
@@ -368,3 +368,11 @@ check('Optional cloud sync is disabled until configured and protected by RLS',()
 });
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
+
+check('Configured employer directory has official career pages and unique ATS boards',()=>{
+ const companies=JSON.parse(fs.readFileSync(path.join(root,'data/companies.json'),'utf8'));
+ assert.ok(companies.length>=30,'Expected broader employer coverage');
+ assert.ok(companies.every(company=>company.name&&/^https:\\/\\//.test(company.careers_url||'')),'Every configured employer must have an HTTPS careers URL');
+ const keys=companies.map(company=>company.ats+':'+company.token);
+ assert.equal(new Set(keys).size,keys.length,'ATS board keys must be unique');
+});
