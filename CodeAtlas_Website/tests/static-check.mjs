@@ -340,5 +340,17 @@ check('Advanced technology roadmap cards open and every module has expanded expl
  console.log('✓ Advanced roadmap cards and all 56 module explanations validated');
 });
 
+check('Core lessons require a passing checkpoint before marking new completion',()=>{
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
+ const checkpoint=fs.readFileSync(path.join(root,'lesson-checkpoint.js'),'utf8');
+ const styles=fs.readFileSync(path.join(root,'styles.css'),'utf8');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ assert.ok(home.includes('lesson-checkpoint.js')&&home.indexOf('lesson-checkpoint.js')<home.indexOf('app.js'),'Checkpoint engine must load before the lesson renderer');
+ assert.ok(app.includes('CodeAtlasLessonCheckpoint.render(currentTopic)')&&app.includes('CodeAtlasLessonCheckpoint.mount(currentTopic'),'Core lesson renderer must add and mount checkpoints');
+ assert.ok(checkpoint.includes('score>=3')&&checkpoint.includes('completeButton.disabled'),'Lesson completion must be gated on a passing quiz');
+ assert.ok(checkpoint.includes('lesson-checkpoints.v1')&&styles.includes('.checkpoint-question'),'Checkpoint progress and accessible styles are required');
+ assert.ok(sw.includes('./lesson-checkpoint.js'),'Checkpoint engine must be cached for offline use');
+});
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
