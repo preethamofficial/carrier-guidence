@@ -235,6 +235,107 @@ function deepContentFor(topic,role){
 function topicDossier(topic,role,deep){
  const t=(topic+' '+role.title+' '+role.domain).toLowerCase();
  const bank=[
+ {re:/computer vision|nlp engineer|natural language processing|speech recognition|ocr|image classification|object detection/,name:'Computer vision and language processing',definition:'Computer vision and NLP convert unstructured images, audio or text into representations and predictions. Quality depends on labelled data, consistent preprocessing, task-specific evaluation and handling of ambiguous inputs.',parts:[
+ ['Task and labels','Define the prediction task and annotation policy before choosing a model. Labels need consistent rules and review for disagreement.','For object detection, decide how partially visible objects should be labelled.'],
+ ['Preprocessing and representation','Resize, normalize, tokenize or segment inputs consistently between training and inference.','Use the same image normalization at inference that was used during training.'],
+ ['Baseline and model','Compare a simple baseline with a model appropriate to the task and resource budget.','Compare a pretrained image model against a simple baseline on a fixed validation set.'],
+ ['Evaluation and error analysis','Metrics must match the task; inspect errors by class, language, lighting, image quality and data source.','Review false negatives separately from false positives.']],
+ scenario:'Build a reproducible image or text classifier, evaluate held-out examples and inspect failures rather than reporting only aggregate accuracy.',
+ code:`from sklearn.metrics import classification_report
+
+# y_true: verified labels; y_pred: model predictions
+print(classification_report(y_true, y_pred, zero_division=0))`,
+ lab:'Document the dataset source, label policy, preprocessing and class balance; inspect incorrect predictions and group failure patterns.',
+ gotcha:'High aggregate accuracy can hide poor performance on rare classes, unfamiliar languages or data that differs from training.',
+ advanced:'Study data-centric iteration, transfer learning, calibration, dataset shift, human review and model/data versioning.'},
+ {re:/mlops|model registry|model serving|model drift|feature store|training pipeline|experiment tracking/,name:'MLOps and model lifecycle engineering',definition:'MLOps applies software delivery discipline to machine-learning systems so data, code, configuration, model artifacts and evaluation results can be reproduced and monitored.',parts:[
+ ['Reproducible experiments','Track dataset version, code revision, parameters, seeds and environment so results can be compared.','Re-run a training job from a recorded configuration and compare metrics.'],
+ ['Pipeline and lineage','A pipeline makes data validation, training, evaluation and packaging explicit stages with recorded inputs and outputs.','Reject promotion if an evaluation artifact is missing.'],
+ ['Registry and promotion','A model registry records versions and status; promotion rules separate experiments from approved releases.','Deploy only a model version that passed a fixed evaluation suite.'],
+ ['Serving and monitoring','Serving exposes predictions; monitoring tracks latency, errors, input quality and data drift.','Alert on elevated prediction failures and investigate schema changes.']],
+ scenario:'Create a train-evaluate-package pipeline and promote a model only when its versioned evaluation passes defined criteria.',
+ code:`def approve_model(metrics, minimum_f1=0.82):
+    if metrics["f1"] < minimum_f1:
+        raise ValueError("Model did not meet promotion threshold")
+    if metrics["evaluation_rows"] < 500:
+        raise ValueError("Evaluation set is too small")
+    return {"status": "approved", "f1": metrics["f1"]}`,
+ lab:'Record model, data and code versions; force an evaluation failure and verify the release is blocked with a clear reason.',
+ gotcha:'A model file without its data lineage, preprocessing contract and evaluation context is not a reproducible release artifact.',
+ advanced:'Study registries, data contracts, shadow deployments, canary releases, drift monitoring, rollback and retraining triggers.'},
+ {re:/blockchain|web3|smart contract|solidity|distributed ledger/,name:'Blockchain and smart-contract engineering',definition:'A blockchain is a replicated state machine in which network participants agree on transaction ordering. Smart contracts encode state transitions that may be costly or difficult to reverse after deployment.',parts:[
+ ['Accounts and transactions','A transaction is a signed request to change shared state; execution can fail or cost fees.','Check the transaction receipt status rather than assuming submission means success.'],
+ ['State and invariants','A contract defines state and functions; invariants must remain true after every permitted transition.','A withdrawal must never exceed the caller’s recorded balance.'],
+ ['Authorization and external calls','Access control, reentrancy and untrusted token behavior are key trust boundaries.','Test a malicious receiver against withdrawal logic in a local test chain.'],
+ ['Testing and deployment','Unit, fuzz and invariant tests explore state transitions; deployment scripts must verify network and artifact.','Verify the deployed bytecode and configuration before publishing an address.']],
+ scenario:'Implement a small local contract with explicit invariants and test normal, rejected and adversarial call sequences.',
+ code:`// Solidity teaching fragment: checks-effects-interactions
+function withdraw(uint256 amount) external {
+    require(amount > 0, "amount must be positive");
+    require(balance[msg.sender] >= amount, "insufficient balance");
+    balance[msg.sender] -= amount;
+    (bool ok, ) = msg.sender.call{value: amount}("");
+    require(ok, "transfer failed");
+}`,
+ lab:'Test zero amount, insufficient balance, failed transfer and reentrancy; run static analysis locally.',
+ gotcha:'A contract that compiles is not necessarily secure. External calls, privileged roles and economic assumptions need independent review.',
+ advanced:'Study consensus assumptions, MEV, oracle manipulation, formal verification, key management and reproducible builds.'},
+ {re:/digital forensics|forensic|evidence acquisition|chain of custody|disk imaging|memory forensics/,name:'Digital forensics and evidence handling',definition:'Digital forensics acquires, preserves and analyzes digital artifacts so conclusions are reproducible and evidence integrity is defensible. Reports must distinguish observed facts from interpretations.',parts:[
+ ['Scope and authority','Define authorized systems, time range, questions and handling restrictions before collection.','Record the case identifier, source device and approved acquisition method.'],
+ ['Acquisition and integrity','Acquire data with a documented process and use cryptographic hashes to detect unintended changes.','Hash an acquired image and verify the hash again before analysis.'],
+ ['Timeline and artifacts','Logs and filesystem metadata can be correlated, while clock skew and missing records must be considered.','Normalize timestamps to a stated timezone but preserve the original values.'],
+ ['Reporting and limitations','Record methods, tool versions, findings, alternative explanations and limitations.','Separate “the log contains this entry” from “this proves a particular person did it.”']],
+ scenario:'Analyze a supplied training image or log bundle, preserve hashes and produce a timeline with evidence references.',
+ code:`sha256sum evidence-image.dd
+stat evidence-image.dd
+# Record tool versions, acquisition source, timestamps and hash in case notes`,
+ lab:'Use a synthetic lab dataset; preserve originals, hash working copies and write a finding with evidence, confidence and limitations.',
+ gotcha:'Analyzing a changing original or omitting chain-of-custody records can undermine conclusions.',
+ advanced:'Study memory acquisition, filesystem artifacts, log correlation, anti-forensics and reproducible forensic tooling.'},
+ {re:/qa automation|test automation|playwright|selenium|browser automation|end-to-end test/,name:'QA automation and test architecture',definition:'Test automation turns repeatable checks into executable feedback. Reliable automation focuses on user-visible behavior, stable test data and deterministic setup rather than fragile implementation details.',parts:[
+ ['Test intent and risk','Choose tests based on user impact and change risk; assert observable behavior.','Verify a user can sign in and reach a protected page.'],
+ ['Locators and synchronization','Prefer accessible roles, labels and stable test IDs; wait for meaningful conditions.','Locate a button by its accessible name and wait for the expected result.'],
+ ['Fixtures and isolation','Fixtures create known state and clean up; isolated data prevents order-dependent failures.','Give each test a unique record instead of sharing mutable state.'],
+ ['CI and flakiness','A flaky test passes and fails without meaningful code changes; retries can hide symptoms.','Capture traces, screenshots and console logs for failures.']],
+ scenario:'Automate one critical user journey with deterministic data, meaningful assertions and useful failure diagnostics.',
+ code:`import { test, expect } from '@playwright/test';
+
+test('learner can bookmark a topic', async ({ page }) => {
+  await page.goto('/roadmaps.html');
+  await page.getByRole('button', { name: 'Bookmark' }).click();
+  await expect(page.getByText('Saved to bookmarks')).toBeVisible();
+});`,
+ lab:'Run the test repeatedly and in CI; break the expected result and confirm the report identifies the failure.',
+ gotcha:'Fixed sleeps, brittle selectors and shared mutable accounts make suites slow and unreliable.',
+ advanced:'Study contract tests, accessibility automation, visual regression, parallel isolation and flaky-test telemetry.'},
+ {re:/performance|load testing|stress testing|capacity test|latency percentile|throughput benchmark/,name:'Performance and load testing',definition:'Performance testing measures responsiveness, throughput and resource use under a defined workload. Results need a stated workload, environment, warm-up and success criteria.',parts:[
+ ['Workload model','Describe concurrency, arrival rate, request mix, payload sizes and expected peaks.','Model a normal weekday and a short peak rather than an arbitrary burst.'],
+ ['Latency and throughput','Percentiles describe tail behavior; throughput counts completed work. Averages can hide slow requests.','Track p50, p95 and p99 latency alongside error rate and requests per second.'],
+ ['Bottleneck evidence','CPU, memory, database locks and downstream latency can each limit throughput.','Correlate a latency spike with database wait time before changing code.'],
+ ['Capacity and regression','Capacity testing estimates safe load; regression compares results under controlled conditions.','Set a release gate for p95 latency and error rate at a defined load.']],
+ scenario:'Establish a baseline for one endpoint, increase load gradually and identify the first constrained resource.',
+ code:`# Example command; use only an authorized test environment
+k6 run --vus 20 --duration 2m load-test.js
+# Compare p95 latency, request rate, errors and resource metrics`,
+ lab:'State the workload, record environment details and repeat the baseline to check consistency.',
+ gotcha:'A single uncontrolled run is weak evidence; load tests can overload shared services.',
+ advanced:'Study open versus closed workload models, coordinated omission, saturation signals, queueing theory and capacity headroom.'},
+ {re:/database administrator|\\bdba\\b|backup and recovery|query optimization|database performance/,name:'Database administration and recovery',definition:'Database administration maintains data integrity, availability, access control and performance. Operational readiness includes tested recovery procedures, not merely a successful backup command.',parts:[
+ ['Backup and restore','A backup is useful only if it can be restored within the required recovery objectives.','Restore a backup to an isolated instance and verify row counts.'],
+ ['Query plans and indexes','Indexes can speed reads but add storage and write overhead; query plans show how the engine accesses data.','Compare query plans before and after an index on representative data.'],
+ ['Availability and transactions','Replication, transaction isolation and failover affect consistency and recovery.','Test what happens when a client disconnects during commit.'],
+ ['Access and monitoring','Roles, audit logs, capacity metrics and alerts reveal risky access and slow queries.','Use a read-only role for reporting and alert on connection exhaustion.']],
+ scenario:'Create a recovery runbook and demonstrate a verified restore, slow-query investigation and least-privilege account.',
+ code:`-- PostgreSQL example: inspect a query plan
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT id, created_at
+FROM orders
+WHERE customer_id = 42
+ORDER BY created_at DESC
+LIMIT 20;`,
+ lab:'Use a disposable database, capture a baseline plan, add a justified index and record the read/write tradeoff.',
+ gotcha:'A backup that has never been restored is an assumption, and an index is not automatically beneficial.',
+ advanced:'Study point-in-time recovery, replication lag, vacuuming, lock analysis, connection pooling and failover testing.'},
  {re:/rag|retrieval|embedding|llm|generative ai|prompt|agent|model evaluation|ai engineer/,name:'AI systems, LLMs and retrieval',definition:'An AI application combines a model with data, instructions, tools and evaluation. Reliable behavior comes from controlling inputs, retrieving relevant evidence, constraining actions and measuring output quality—not from prompting alone.',parts:[
  ['Model and context window','The model predicts an output from the input tokens and learned parameters. Context includes instructions, user input and any retrieved evidence.','Compare the same question with and without a short, relevant context passage.'],
  ['Embeddings and retrieval','An embedding maps text to a numeric vector so semantically related passages can be searched. Retrieval quality depends on chunking, metadata, filters and the query.','Retrieve the top three chunks for a question and inspect whether each actually supports the answer.'],
