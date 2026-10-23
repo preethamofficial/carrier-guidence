@@ -271,7 +271,15 @@ function topicDossier(topic,role,deep){
  ['Transactions and idempotency','A transaction groups changes into an all-or-nothing unit. An idempotent job can safely be retried without duplicating effects.','Upsert using a stable event ID and record the processing watermark.'],
  ['Quality and lineage','Quality checks validate completeness, uniqueness, ranges and referential integrity. Lineage records where a value came from and how it changed.','Fail a daily load if a required column disappears or the row count drops outside an agreed range.']],
  scenario:'Design a daily ingestion job that validates input, deduplicates events, records failures and can safely rerun.',
- code:'BEGIN;\\nINSERT INTO daily_totals (day, total_amount)\\nSELECT order_day, SUM(amount)\\nFROM staging_orders\\nWHERE order_day = DATE \\'2026-10-22\\'\\nGROUP BY order_day\\nON CONFLICT (day) DO UPDATE\\nSET total_amount = EXCLUDED.total_amount;\\nCOMMIT;',
+ code:`BEGIN;
+INSERT INTO daily_totals (day, total_amount)
+SELECT order_day, SUM(amount)
+FROM staging_orders
+WHERE order_day = DATE '2026-10-22'
+GROUP BY order_day
+ON CONFLICT (day) DO UPDATE
+SET total_amount = EXCLUDED.total_amount;
+COMMIT;`,
  lab:'Define grain and primary keys, write row-count and null checks, simulate a partial failure, then demonstrate a safe retry.',
  gotcha:'A successful job exit code does not prove the data is correct. Late-arriving records, duplicate events and timezone conversion often break totals.',
  advanced:'Study CDC, event-time versus processing-time, schema evolution, SCD Type 2, partitioning, orchestration, backfills and data contracts.'},
