@@ -326,8 +326,11 @@ check('All 660 career topics render deep lessons with topic-specific steps, exam
   }
  }
  assert.equal(rendered,660,'Expected all 660 career topics to render');
- const mlEntry=[...list.innerHTML.matchAll(/<button[^>]*data-role="([^"]+)"[^>]*>([\\s\\S]*?)<\\/button>/g)].find(m=>m[2].includes('Machine Learning Engineer'));
- assert.ok(mlEntry,'Machine Learning Engineer must be selectable');
+ const mlPosition=list.innerHTML.indexOf('Machine Learning Engineer');
+ const mlRoleStart=list.innerHTML.lastIndexOf('data-role="',mlPosition);
+ const mlRoleEnd=list.innerHTML.indexOf('"',mlRoleStart+11);
+ const mlRoleId=mlRoleStart>=0&&mlRoleEnd>mlRoleStart?list.innerHTML.slice(mlRoleStart+11,mlRoleEnd):'';
+ assert.ok(mlRoleId,'Machine Learning Engineer must be selectable');
  list.listeners.click({target:{closest:()=>({dataset:{role:mlEntry[1]}})}});
  stage.listeners.click({target:{closest:()=>({dataset:{topic:'2'}})}});
  assert.ok(panel.innerHTML.includes('Define the prediction moment')&&panel.innerHTML.includes('Fit transformations without peeking'),'ML data-preparation lesson must explain leakage and safe preprocessing');
