@@ -886,7 +886,7 @@ k6 run --vus 20 --duration 2m load-test.js
  advanced:'Study open versus closed workload models, coordinated omission, saturation signals, queueing theory and capacity headroom.'}
 
  ];
- const specialistNames = new Set([
+ const specialistOrder = [
   'Semantic HTML and accessible document structure',
   'CSS layout, responsive design and visual systems',
   'JavaScript, browser events and component state',
@@ -923,8 +923,9 @@ k6 run --vus 20 --duration 2m load-test.js
   'Embedded systems and hardware-aware software',
   'Requirements, delivery and decision quality',
   'Algorithms, data structures and complexity'
- ]);
- const item=bank.find(x=>specialistNames.has(x.name)&&x.re.test(topicText))
+ ];
+ const specialistNames = new Set(specialistOrder);
+ const item=specialistOrder.map(name=>bank.find(x=>x.name===name&&x.re.test(topicText))).find(Boolean)
    || bank.find(x=>x.re.test(topicText))
    || (genericTopic ? bank.find(x=>x.re.test(roleText)) : null);
  const generic={name:'Core concepts and professional practice',definition:'A technical topic is a set of ideas, rules and techniques used to solve a class of problems. Mastery means being able to define it, recognize when it applies, implement a small example, test boundaries and explain its tradeoffs.',parts:[
