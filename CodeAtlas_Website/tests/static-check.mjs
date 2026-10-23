@@ -277,7 +277,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   assert.ok(rendered.includes('DEEP STUDY GUIDE')&&rendered.includes('Core concepts explained')&&rendered.includes('Practical lab'),track.title+' modules must render complete study guides');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
- console.log('✓ Career skills atlas contains 19 tracks, 152 advanced modules, topic maps and official references');
+ console.log('✓ Career skills atlas contains 20 tracks, 160 advanced modules, topic maps and official references');
 }
 
 
@@ -357,7 +357,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
   modules+=track.topics.length;
  }
  assert.equal(modules,160,'Every advanced roadmap module should be checked');
- console.log('✓ Advanced roadmap cards and all 152 module explanations validated');
+ console.log('✓ Advanced roadmap cards and all 160 module explanations validated');
 });
 
 
