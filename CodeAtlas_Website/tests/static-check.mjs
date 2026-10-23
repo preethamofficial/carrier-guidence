@@ -370,7 +370,7 @@ check('Optional cloud sync is disabled until configured and protected by RLS',()
 check('Career roadmap has researched topic-specific deep dives and code labs',()=>{
  const source=fs.readFileSync(path.join(root,'role-roadmaps.js'),'utf8');
  const topicSection=source.slice(0,source.indexOf('const stages'));
- const rows=[...topicSection.matchAll(/\\['([^']+)','([^']*)','([^']*)','([^']*)'\\]/g)];
+ const rows=[...topicSection.matchAll(/\['([^']+)','([^']*)','([^']*)','([^']*)'\]/g)];
  const topics=rows.flatMap(row=>row[4].split(';').map(topic=>topic.trim()).filter(Boolean));
  assert.equal(rows.length,41,'Expected all 41 role definitions');
  assert.equal(topics.length,492,'Every roadmap topic placement must remain defined');
