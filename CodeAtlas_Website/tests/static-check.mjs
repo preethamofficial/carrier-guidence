@@ -259,8 +259,11 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.ok(atlas&&atlas.tracks.length===7,'Expected seven additional career roadmaps');
- assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),56,'Expected 56 advanced learning modules');
+ assert.ok(atlas&&atlas.tracks.length===19,'Expected 19 advanced career roadmaps');
+ assert.equal(atlas.tracks.reduce((n,t)=>n+t.topics.length,0),152,'Expected 152 advanced learning modules');
+ assert.ok(atlas.tracks.some(t=>t.id==='agentic')&&atlas.tracks.some(t=>t.id==='rag-engineering'),'Agentic AI and RAG must have separate roadmaps');
+ for(const id of ['ethical-hacking','soc-threat-hunting','appsec','forensics','incident-response','cloud-security','iam','network-security','malware-defence','vulnerability-management']) assert.ok(atlas.tracks.some(t=>t.id===id),'Missing dedicated security specialization '+id);
+
  for(const track of atlas.tracks){
   assert.equal(track.topics.length,8,track.title+' should contain eight modules');
   assert.equal(track.branches.length,4,track.title+' needs four mind-map branches');
@@ -274,7 +277,7 @@ check('Web Development roadmap is loaded, searchable and fully structured',()=>{
   assert.ok(rendered.includes('DEEP STUDY GUIDE')&&rendered.includes('Core concepts explained')&&rendered.includes('Practical lab'),track.title+' modules must render complete study guides');
  }
  assert.ok(atlas.renderDirectory().includes('Cybersecurity')&&atlas.renderDirectory().includes('AI Tools'),'Directory should expose multiple tracks');
- console.log('✓ Career skills atlas contains 7 tracks, 56 advanced modules, topic maps and official references');
+ console.log('✓ Career skills atlas contains 19 tracks, 152 advanced modules, topic maps and official references');
 }
 
 
