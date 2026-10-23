@@ -352,5 +352,19 @@ check('Core lessons require a passing checkpoint before marking new completion',
  assert.ok(checkpoint.includes('lesson-checkpoints.v1')&&styles.includes('.checkpoint-question'),'Checkpoint progress and accessible styles are required');
  assert.ok(sw.includes('./lesson-checkpoint.js'),'Checkpoint engine must be cached for offline use');
 });
+check('Optional cloud sync is disabled until configured and protected by RLS',()=>{
+ const page=fs.readFileSync(path.join(root,'auth.html'),'utf8');
+ const config=fs.readFileSync(path.join(root,'supabase-config.js'),'utf8');
+ const cloud=fs.readFileSync(path.join(root,'cloud-sync.js'),'utf8');
+ const schema=fs.readFileSync(path.join(root,'..','..','supabase','schema.sql'),'utf8');
+ const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');
+ assert.ok(page.includes('cloud-sync.js')&&page.includes('Guest mode'),'Account page must preserve guest mode');
+ assert.ok(config.includes('url: ""')&&config.includes('anonKey: ""'),'Cloud sync must remain disabled without explicit public config');
+ assert.ok(!config.includes('SERVICE_ROLE')&&!cloud.includes('SUPABASE_SERVICE_ROLE_KEY'),'Private service-role credentials must never be placed in browser assets');
+ for(const table of ['profiles','progress','assessment_results','notes','applications'])assert.ok(schema.includes('alter table public.'+table+' enable row level security'),table+' must have RLS enabled');
+ assert.ok(schema.includes('auth.uid() = user_id')&&schema.includes('auth.uid() = id'),'Policies must scope access to the signed-in user');
+ assert.ok(cloud.includes('functions.invoke(\'delete-account\'')&&cloud.includes('Export local data'),'Cloud data controls must be available when configured');
+ assert.ok(sw.includes('./auth.html')&&sw.includes('./cloud-sync.js'),'Optional account page must be cached');
+});
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
 if(failed)process.exitCode=1;
