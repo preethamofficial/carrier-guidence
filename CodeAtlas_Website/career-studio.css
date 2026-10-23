@@ -28,3 +28,11 @@
 .growth-warning{border-left:3px solid var(--accent2);padding:10px 14px;color:var(--muted);background:#ffffff04}
 @media(max-width:700px){.growth-skills,.growth-summary,.growth-columns{grid-template-columns:1fr}}
 body.light .growth-metric,body.light .growth-card,body.light .growth-task{background:#ffffff}
+
+
+.interview-controls{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.interview-controls>label,.rating-label{display:grid;gap:6px;font-size:12px;font-weight:700;color:var(--muted)}
+.interview-controls select,.rating-label select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+.timer-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.timer-row strong{font:800 22px/1.2 ui-monospace,monospace;color:var(--accent);min-width:70px}
+.rating-label{margin:14px 0}
