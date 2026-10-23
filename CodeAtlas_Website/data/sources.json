@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "last_reviewed": "2026-10-23",
+  "note": "The sources below document the public job feed and optional integrations. CodeAtlas does not publish numeric salary estimates or live demand claims in this register.",
+  "sources": [
+    {
+      "id": "greenhouse",
+      "title": "Greenhouse Job Board API",
+      "url": "https://docs.greenhouse.io/job-board",
+      "region": "Global; employer-specific public boards",
+      "type": "Job listing source documentation",
+      "last_reviewed": "2026-10-23",
+      "used_for": "The job collector reads published listings from configured public Greenhouse boards and links back to the employer's original posting.",
+      "limits": "Board availability and posting dates vary by employer. A source date can reflect an update, and listings must be verified at the employer site."
+    },
+    {
+      "id": "lever",
+      "title": "Lever Postings API",
+      "url": "https://github.com/lever/postings-api",
+      "region": "Global and EU endpoints, depending on employer board",
+      "type": "Job listing source documentation",
+      "last_reviewed": "2026-10-23",
+      "used_for": "The job collector reads published postings from configured public Lever boards.",
+      "limits": "Only configured board identifiers are queried. A job appearing in this directory is not a guarantee that it remains open."
+    },
+    {
+      "id": "ashby",
+      "title": "Ashby Public Job Posting API",
+      "url": "https://developers.ashbyhq.com/docs/public-job-posting-api",
+      "region": "Employer-specific public boards",
+      "type": "Job listing source documentation",
+      "last_reviewed": "2026-10-23",
+      "used_for": "The job collector reads published postings from configured public Ashby boards.",
+      "limits": "Missing fields remain unknown rather than being guessed; direct employer posting is authoritative."
+    },
+    {
+      "id": "ncs",
+      "title": "National Career Service (Government of India)",
+      "url": "https://www.ncs.gov.in/",
+      "region": "India",
+      "type": "Official career and employment resource",
+      "last_reviewed": "2026-10-23",
+      "used_for": "A public source for Indian job search, career guidance, skill courses and mentorship information.",
+      "limits": "CodeAtlas does not claim affiliation with NCS. Verify details on the official government site; do not pay a recruiter to apply."
+    },
+    {
+      "id": "anthropic-models",
+      "title": "Anthropic model lifecycle documentation",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/model-deprecations",
+      "region": "Global API",
+      "type": "Optional AI provider technical reference",
+      "last_reviewed": "2026-10-23",
+      "used_for": "Checking that the optional server-side counsellor uses an active model identifier.",
+      "limits": "API use can incur charges. The AI counsellor remains disabled until the site owner configures a server-side key and endpoint."
+    }
+  ]
+}
