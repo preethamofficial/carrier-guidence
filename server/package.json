@@ -1,0 +1,8 @@
+{
+  "name": "codeatlas-counsellor-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional, rate-limited server-side AI career counsellor for CodeAtlas",
+  "scripts": { "start": "node index.js", "test": "node --test test.js" },
+  "engines": { "node": ">=20" }
+}
