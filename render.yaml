@@ -14,3 +14,17 @@ services:
       - path: /*
         name: X-Frame-Options
         value: DENY
+
+  - type: web
+    name: codeatlas-counsellor-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: SITE_ORIGIN
+        value: https://codeatlas-career-guidance.onrender.com
+      - key: ANTHROPIC_MODEL
+        value: claude-haiku-4-5-20251001
