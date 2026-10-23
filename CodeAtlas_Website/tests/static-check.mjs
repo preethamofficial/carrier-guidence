@@ -363,7 +363,7 @@ check('Optional cloud sync is disabled until configured and protected by RLS',()
  assert.ok(!config.includes('SERVICE_ROLE')&&!cloud.includes('SUPABASE_SERVICE_ROLE_KEY'),'Private service-role credentials must never be placed in browser assets');
  for(const table of ['profiles','progress','assessment_results','notes','applications'])assert.ok(schema.includes('alter table public.'+table+' enable row level security'),table+' must have RLS enabled');
  assert.ok(schema.includes('auth.uid() = user_id')&&schema.includes('auth.uid() = id'),'Policies must scope access to the signed-in user');
- assert.ok(cloud.includes('functions.invoke(\'delete-account\'')&&cloud.includes('Export local data'),'Cloud data controls must be available when configured');
+ assert.ok(cloud.includes('functions.invoke(\'delete-account\'')&&page.includes('Export local data'),'Cloud data controls must be available when configured');
  assert.ok(sw.includes('./auth.html')&&sw.includes('./cloud-sync.js'),'Optional account page must be cached');
 });
 console.log('Static validation finished for '+files.filter(f=>f.endsWith('.html')).length+' pages.');
