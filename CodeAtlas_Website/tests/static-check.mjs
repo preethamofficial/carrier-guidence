@@ -338,7 +338,7 @@ check('Advanced technology roadmap cards open and every module has expanded expl
  vm.runInNewContext(fs.readFileSync(path.join(root,'comprehensive-lessons.js'),'utf8'),context);
  vm.runInNewContext(source,context);
  const atlas=context.window.CodeAtlasCareerSkills;
- assert.equal(atlas.tracks.length,7);
+ assert.equal(atlas.tracks.length,19);
  let modules=0;
  for(const track of atlas.tracks){
   const html=atlas.renderTrack(track.id);
@@ -347,8 +347,8 @@ check('Advanced technology roadmap cards open and every module has expanded expl
   assert.ok(html.includes('Mental model:')&&html.includes('Check your understanding:'),track.title+' missing beginner guidance');
   modules+=track.topics.length;
  }
- assert.equal(modules,56,'Every advanced roadmap module should be checked');
- console.log('✓ Advanced roadmap cards and all 56 module explanations validated');
+ assert.equal(modules,150,'Every advanced roadmap module should be checked');
+ console.log('✓ Advanced roadmap cards and all 150 module explanations validated');
 });
 
 check('Core lessons require a passing checkpoint before marking new completion',()=>{
