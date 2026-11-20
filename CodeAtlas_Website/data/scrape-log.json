@@ -1,12 +1,12 @@
 {
-  "last_run": "2026-11-19T13:39:50.923744+00:00",
+  "last_run": "2026-11-20T13:21:15.313402+00:00",
   "companies_configured": 49,
   "companies_checked": 39,
-  "newly_discovered": 1769,
+  "newly_discovered": 1814,
   "request_or_parse_errors": 1,
   "failed_companies": [
     "Browserbase"
   ],
-  "jobs_retained": 5914,
-  "jobs_with_description": 5914
+  "jobs_retained": 5920,
+  "jobs_with_description": 5920
 }
